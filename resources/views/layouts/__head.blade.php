@@ -6,6 +6,7 @@
 <meta name="keywords"
     content="admin template, Frest admin template, dashboard template, flat admin template, responsive admin template, web app">
 <meta name="author" content="PIXINVENT">
+
 <title>Pacific</title>
 <link rel="apple-touch-icon" href="{{asset('assets/images/ico/apple-icon-120.html')}}">
 <link rel="shortcut icon" type="image/x-icon"

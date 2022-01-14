@@ -33,11 +33,11 @@ License: You must have a valid license purchased only from themeforest(the above
         rel="stylesheet">
 
     <!-- BEGIN: Vendor CSS-->
-    <link rel="stylesheet" type="text/css" href="assets/vendors/css/vendors.min.css">
+    <link rel="stylesheet" type="text/css" href="{{asset('assets/vendors/css/vendors.min.css')}}">
     <!-- END: Vendor CSS-->
 
     <!-- BEGIN: Theme CSS-->
-    <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{{asset('assets/css/bootstrap.min.css')}}">
     <link rel="stylesheet" type="text/css" href="assets/css/bootstrap-extended.min.css">
     <link rel="stylesheet" type="text/css" href="assets/css/colors.min.css">
     <link rel="stylesheet" type="text/css" href="assets/css/components.min.css">
