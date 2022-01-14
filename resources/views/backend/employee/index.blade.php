@@ -22,10 +22,10 @@
                     <form>
                         <div class="row border rounded py-2 mb-2">
                             <div class="col-12 col-sm-6 col-lg-3">
-                                <label for="users-list-verified">Tên chức vụ</label>
+                                <label for="users-list-verified">Tên nhân viên</label>
                                 <fieldset class="form-group">
                                     <input type="text" class="form-control" id="basicInput"
-                                        placeholder="Nhập tên chức vụ">
+                                        placeholder="Nhập tên nhân viên">
                                 </fieldset>
                             </div>
                             <div class="col-12 col-sm-6 col-lg-3">
@@ -45,7 +45,7 @@
                                         class="bx bx-search"></i></button>
                             </div>
                             <div class="col-12 col-sm-6 col-lg-2">
-                                <a href="/create-position" type="button" class="btn btn-primary btn-block my-2">
+                                <a href="/create-employee" type="button" class="btn btn-primary btn-block my-2">
                                     <i class="bx bx-plus"></i>
                                     <span>Thêm mới</span>
                                 </a>
@@ -62,7 +62,12 @@
                                     <thead>
                                         <tr>
                                             <th>id</th>
-                                            <th>Tên chức vụ</th>
+                                            <th>Tên nhân viên</th>
+                                            <th>Ngày sinh</th>
+                                            <th>Giới tính</th>
+                                            <th>Số điện thoại</th>
+                                            <th>Email</th>
+                                            <th>Vị trí công việc</th>
                                             <th>Thao tác</th>
                                         </tr>
                                     </thead>
@@ -70,27 +75,47 @@
                                         <tr>
                                             <td>1</td>
                                             <td>Dean Stanley</td>
+                                            <td>1/1/1999</td>
+                                            <td>Nam</td>
+                                            <td>0123123212</td>
+                                            <td>example@gmail.com</td>
+                                            <td>Nhân viên</td>
                                             <td><a href=""><i class="far fa-edit"></i></a>
                                                 <a href=""><i class="far fa-trash-alt ml-1"></i>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td>2</td>
-                                            <td>Zena Buckley</td>
+                                            <td>1</td>
+                                            <td>Dean Stanley</td>
+                                            <td>1/1/1999</td>
+                                            <td>Nam</td>
+                                            <td>0123123212</td>
+                                            <td>example@gmail.com</td>
+                                            <td>Nhân viên</td>
                                             <td><a href=""><i class="far fa-edit"></i></a>
                                                 <a href=""><i class="far fa-trash-alt ml-1"></i>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td>3</td>
-                                            <td>Delilah Moon</td>
+                                            <td>1</td>
+                                            <td>Dean Stanley</td>
+                                            <td>1/1/1999</td>
+                                            <td>Nam</td>
+                                            <td>0123123212</td>
+                                            <td>example@gmail.com</td>
+                                            <td>Nhân viên</td>
                                             <td><a href=""><i class="far fa-edit"></i></a>
                                                 <a href=""><i class="far fa-trash-alt ml-1"></i>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td>4</td>
-                                            <td>Hillary Rasmussen</td>
+                                            <td>1</td>
+                                            <td>Dean Stanley</td>
+                                            <td>1/1/1999</td>
+                                            <td>Nam</td>
+                                            <td>0123123212</td>
+                                            <td>example@gmail.com</td>
+                                            <td>Nhân viên</td>
                                             <td><a href=""><i class="far fa-edit"></i></a>
                                                 <a href=""><i class="far fa-trash-alt ml-1"></i>
                                             </td>

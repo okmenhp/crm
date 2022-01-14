@@ -1,7 +1,13 @@
 <!DOCTYPE html>
 <html class="loading" lang="en" data-textdirection="ltr">
     <head>
+        <!-- BEGIN: Head-->
         @include('layouts/__head')
+        <!-- END: Header-->
+
+        <!-- BEGIN: Page CSS-->
+        @yield('css')
+        <!-- END: Page CSS-->
     </head>
 
     <!-- BEGIN: Body-->
@@ -21,9 +27,11 @@
         <!-- BEGIN: Footer-->
         @include('layouts/__footer')
         <!-- END: Footer-->
-        </div>
 
-    </body>
-    @yield('script')   
+        <!-- BEGIN: Page JS-->
+        @yield('script')
+        <!-- END: Page JS-->  
+
+    </body> 
 </html>
 

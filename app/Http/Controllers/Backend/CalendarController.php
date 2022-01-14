@@ -6,7 +6,7 @@ namespace App\Http\Controllers\Backend;
 use Illuminate\Http\Request;
 use App\Http\Controllers\BaseController;
 
-class CalenderController extends BaseController
+class CalendarController extends BaseController
 {
 
     public function index()

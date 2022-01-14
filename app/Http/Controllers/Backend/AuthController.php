@@ -9,8 +9,15 @@ use App\Http\Controllers\BaseController;
 class AuthController extends BaseController
 {
 
-    public function login()
+        public function login()
     {
         return view('backend.auth.login');
     }
+
+        public function forgot_password()
+    {
+        return view('backend.auth.forgot_password');
+    }
+
+
 }
