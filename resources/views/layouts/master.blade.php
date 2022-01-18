@@ -1,37 +1,40 @@
 <!DOCTYPE html>
 <html class="loading" lang="en" data-textdirection="ltr">
-    <head>
-        <!-- BEGIN: Head-->
-        @include('layouts/__head')
-        <!-- END: Header-->
 
-        <!-- BEGIN: Page CSS-->
-        @yield('css')
-        <!-- END: Page CSS-->
-    </head>
+<head>
+    <!-- BEGIN: Head-->
+    @include('layouts/__head')
+    <!-- END: Header-->
 
-    <!-- BEGIN: Body-->
-    <body class="vertical-layout vertical-menu-modern semi-dark-layout 2-columns  navbar-sticky footer-static  " data-open="click" data-menu="vertical-menu-modern" data-col="2-columns" data-layout="semi-dark-layout">
-        <!-- BEGIN: Header-->
-        @include('layouts/__header')
-        <!-- END: Header-->
+    <!-- BEGIN: Page CSS-->
+    @yield('css')
+    <!-- END: Page CSS-->
+</head>
 
-        <!-- BEGIN: Main Menu-->
-        @include('layouts/__sidebar')
-        <!-- END: Main Menu-->
+<!-- BEGIN: Body-->
 
-        <!-- BEGIN: Content-->
-        @yield('content')
-        <!-- END: Content-->
+<body class="vertical-layout vertical-menu-modern semi-dark-layout 2-columns  navbar-sticky footer-static  "
+    data-open="click" data-menu="vertical-menu-modern" data-col="2-columns" data-layout="semi-dark-layout">
+    <!-- BEGIN: Header-->
+    @include('layouts/__header')
+    <!-- END: Header-->
 
-        <!-- BEGIN: Footer-->
-        @include('layouts/__footer')
-        <!-- END: Footer-->
+    <!-- BEGIN: Main Menu-->
+    @include('layouts/__sidebar')
+    <!-- END: Main Menu-->
 
-        <!-- BEGIN: Page JS-->
-        @yield('script')
-        <!-- END: Page JS-->  
+    <!-- BEGIN: Content-->
+    @yield('content')
+    <!-- END: Content-->
 
-    </body> 
+    <!-- BEGIN: Footer-->
+    @include('layouts/__footer')
+    <!-- END: Footer-->
+
+    <!-- BEGIN: Page JS-->
+    @yield('script')
+    <!-- END: Page JS-->
+
+</body>
+
 </html>
-

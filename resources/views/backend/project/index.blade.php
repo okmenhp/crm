@@ -22,17 +22,18 @@
                     <form>
                         <div class="row border rounded py-2 mb-2">
                             <div class="col-12 col-sm-6 col-lg-3">
-                                <label for="users-list-verified">Tên phòng ban</label>
+                                <label for="users-list-verified">Tên dự án</label>
                                 <fieldset class="form-group">
                                     <input type="text" class="form-control" id="basicInput"
-                                        placeholder="Nhập tên vị trí">
+                                        placeholder="Nhập tên dự án">
                                 </fieldset>
                             </div>
                             <div class="col-12 col-sm-6 col-lg-3">
-                                <label for="users-list-role">Khối</label>
+                                <label for="users-list-role">Phòng ban</label>
                                 <fieldset class="form-group">
                                     <select class="form-control" id="users-list-role">
-                                        <option value="">Chọn khối</option>
+                                        <option value="">Chọn phòng ban</option>
+                                        <option value="1">1</option>
                                         <option value="2">2</option>
                                     </select>
                                 </fieldset>
@@ -43,9 +44,8 @@
                                 <button type="button" class="btn btn-icon btn-outline-primary btn-search"><i
                                         class="bx bx-search"></i></button>
                             </div>
-
                             <div class="col-12 col-sm-6 col-lg-2">
-                                <a href="/create-department" type="button" class="btn btn-primary btn-block my-2">
+                                <a href="/create-position" type="button" class="btn btn-primary btn-block my-2">
                                     <i class="bx bx-plus"></i>
                                     <span>Thêm mới</span>
                                 </a>
@@ -62,10 +62,11 @@
                                     <thead>
                                         <tr>
                                             <th>id</th>
-                                            <th>Tên phòng ban</th>
-                                            <th>Tên khối</th>
-                                            <th>Trưởng phòng</th>
-                                            <th>Số lượng nhân viên</th>
+                                            <th>Dự án</th>
+                                            <th>Hợp đồng</th>
+                                            <th>Người phụ trách</th>
+                                            <th>Tiến độ</th>
+                                            <th>Tình trạng</th>
                                             <th>Thao tác</th>
                                         </tr>
                                     </thead>
@@ -73,40 +74,73 @@
                                         <tr>
                                             <td>1</td>
                                             <td>Dean Stanley</td>
+                                            <td>Project</td>
                                             <td>Dean Stanley</td>
-                                            <td>Dean Stanley</td>
-                                            <td>2</td>
-                                            <td><a href=""><i class="far fa-edit"></i></a>
+                                            <td>
+                                                <div class="progress-bar progress-bar-striped progress-bar-animated"
+                                                    role="progressbar" aria-valuenow="80" aria-valuemin="80"
+                                                    aria-valuemax="100" style="width:80%"></div>
+                                            </td>
+                                            <td>
+                                                <div class="badge badge-primary mr-1 mb-1">Đang diễn ra</div>
+                                                <div class="badge badge-secondary mr-1 mb-1">Chưa bắt đầu</div>
+                                                <div class="badge badge-success mr-1 mb-1">Đã hoàn thành</div>
+                                                <div class="badge badge-info mr-1 mb-1">Đơi xét duyệt</div>
+                                                <div class="badge badge-warning mr-1 mb-1">Chậm tiến độ</div>
+                                                <div class="badge badge-danger mb-1">Đã Huỷ</div>
+                                            </td>
+                                            <td><a href="/edit-project"><i class="far fa-edit"></i></a>
                                                 <a href=""><i class="far fa-trash-alt ml-1"></i>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>1</td>
                                             <td>Dean Stanley</td>
+                                            <td>Project</td>
                                             <td>Dean Stanley</td>
-                                            <td>Dean Stanley</td>
-                                            <td>2</td>
-                                            <td><a href=""><i class="far fa-edit"></i></a>
+                                            <td>
+                                                <div class="badge badge-primary mr-1 mb-1">Đang diễn ra</div>
+                                                <div class="badge badge-secondary mr-1 mb-1">Chưa bắt đầu</div>
+                                                <div class="badge badge-success mr-1 mb-1">Đã hoàn thành</div>
+                                                <div class="badge badge-info mr-1 mb-1">Đơi xét duyệt</div>
+                                                <div class="badge badge-warning mr-1 mb-1">Chậm tiến độ</div>
+                                                <div class="badge badge-danger mb-1">Đã Huỷ</div>
+                                            </td>
+                                            <td><a href="/edit-project"><i class="far fa-edit"></i></a>
                                                 <a href=""><i class="far fa-trash-alt ml-1"></i>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>1</td>
                                             <td>Dean Stanley</td>
+                                            <td>Project</td>
                                             <td>Dean Stanley</td>
-                                            <td>Dean Stanley</td>
-                                            <td>2</td>
-                                            <td><a href=""><i class="far fa-edit"></i></a>
+                                            <td>
+                                                <div class="badge badge-primary mr-1 mb-1">Đang diễn ra</div>
+                                                <div class="badge badge-secondary mr-1 mb-1">Chưa bắt đầu</div>
+                                                <div class="badge badge-success mr-1 mb-1">Đã hoàn thành</div>
+                                                <div class="badge badge-info mr-1 mb-1">Đơi xét duyệt</div>
+                                                <div class="badge badge-warning mr-1 mb-1">Chậm tiến độ</div>
+                                                <div class="badge badge-danger mb-1">Đã Huỷ</div>
+                                            </td>
+                                            <td><a href="/edit-project"><i class="far fa-edit"></i></a>
                                                 <a href=""><i class="far fa-trash-alt ml-1"></i>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>1</td>
                                             <td>Dean Stanley</td>
+                                            <td>Project</td>
                                             <td>Dean Stanley</td>
-                                            <td>Dean Stanley</td>
-                                            <td>2</td>
-                                            <td><a href=""><i class="far fa-edit"></i></a>
+                                            <td>
+                                                <div class="badge badge-primary mr-1 mb-1">Đang diễn ra</div>
+                                                <div class="badge badge-secondary mr-1 mb-1">Chưa bắt đầu</div>
+                                                <div class="badge badge-success mr-1 mb-1">Đã hoàn thành</div>
+                                                <div class="badge badge-info mr-1 mb-1">Đơi xét duyệt</div>
+                                                <div class="badge badge-warning mr-1 mb-1">Chậm tiến độ</div>
+                                                <div class="badge badge-danger mb-1">Đã Huỷ</div>
+                                            </td>
+                                            <td><a href="/edit-project"><i class="far fa-edit"></i></a>
                                                 <a href=""><i class="far fa-trash-alt ml-1"></i>
                                             </td>
                                         </tr>
@@ -119,13 +153,11 @@
                 </div>
             </section>
             <!-- users list ends -->
-
         </div>
     </div>
 </div>
 <!-- END: Content-->
 @stop
-
 @section('script')
 <!-- BEGIN: Page Vendor JS-->
 <script src="assets/vendors/js/tables/datatable/jquery.dataTables.min.js"></script>
@@ -133,8 +165,8 @@
 <script src="assets/vendors/js/tables/datatable/dataTables.buttons.min.js"></script>
 <script src="assets/vendors/js/tables/datatable/buttons.bootstrap4.min.js"></script>
 <!-- END: Page Vendor JS-->
-
-<!-- BEGIN: Page JS-->
-<script src="assets/js/scripts/pages/app-users.min.js"></script>
+<!--
+BEGIN: Page JS-->
+<scri pt src="assets/js/scripts/pages/app-users.min.js"></scri>
 <!-- END: Page JS-->
 @stop

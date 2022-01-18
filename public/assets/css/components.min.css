@@ -756,10 +756,8 @@ footer.footer span i {
 
 .main-menu .navbar-header .navbar-brand .brand-logo {
     height: 27px;
-    width: 35px;
+    width: 50px;
     float: left;
-    margin-top: .2rem;
-    margin-left: 3px
 }
 
 .main-menu .navbar-header .navbar-brand .brand-logo .logo {
@@ -769,7 +767,6 @@ footer.footer span i {
     display: -ms-flexbox;
     display: flex;
     position: relative;
-    left: 6px
 }
 
 .main-menu .navbar-header .navbar-brand .brand-text {
