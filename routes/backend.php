@@ -15,6 +15,6 @@ Route::group(['middleware' => 'admin'], function() {
 	Route::get('/login',  'Backend\AuthController@login');
 	Route::get('/register',  'Backend\AuthController@register');
 	Route::get('/file',  'Backend\FileController@index');
-	Route::get('/calender',  'Backend\CalenderController@index');
+	Route::get('/calendar',  'Backend\CalendarController@index');
 
 });

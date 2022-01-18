@@ -61,7 +61,7 @@ License: You must have a valid license purchased only from themeforest(the above
   <body class="vertical-layout vertical-menu-modern semi-dark-layout content-left-sidebar file-manager-application navbar-sticky footer-static  " data-open="click" data-menu="vertical-menu-modern" data-col="content-left-sidebar" data-layout="semi-dark-layout">
 
     <!-- BEGIN: Header-->
-    <div class="header-navbar-shadow"></div>
+  <div class="header-navbar-shadow"></div>
     <nav class="header-navbar main-header-navbar navbar-expand-lg navbar navbar-with-menu fixed-top ">
       <div class="navbar-wrapper">
         <div class="navbar-container content">
@@ -551,6 +551,32 @@ License: You must have a valid license purchased only from themeforest(the above
       </div>
     </div>
     <!-- END: Main Menu-->
+    
+    <!-- Modal upload -->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalCenterTitle">Upload file</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="mb-3">
+              <label for="formFileMultiple" class="form-label">Vui lòng chọn file</label>
+              <input class="form-control" type="file" id="formFileMultiple" multiple>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+<!--  End modal upload -->
+    
 
     <!-- BEGIN: Content-->
     <div class="app-content content">
@@ -564,9 +590,10 @@ License: You must have a valid license purchased only from themeforest(the above
     <!-- sidebar close icon ends -->
     <div class="form-group add-new-file text-center">
       <!-- Add File Button -->
-      <label for="getFile" class="btn btn-primary btn-block glow my-2 add-file-btn text-capitalize"><i
-          class="bx bx-plus"></i>Add File</label>
-      <input type="file" class="d-none" id="getFile">
+       <button type="button" style="width: 100%;" class="btn btn-primary mt-2" data-toggle="modal" data-target="#exampleModalCenter">
+        <i class="bx bx-plus"></i> Upload file
+      </button>
+     
     </div>
     <div class="app-file-sidebar-content">
       <!-- App File Left Sidebar - Drive Content Starts -->
