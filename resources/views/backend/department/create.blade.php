@@ -27,39 +27,41 @@
                                 <!-- users edit account form start -->
                                 <form class="form-validate">
                                     <div class="row">
-                                        <div class="col-12 col-sm-12">
+                                        <div class="col-12 col-sm-6">
                                             <div class="form-group">
                                                 <div class="controls">
-                                                    <label>Tên chức vụ</label>
+                                                    <label>Tên phòng ban</label>
                                                     <input type="text" class="form-control"
-                                                        placeholder="Nhập tên chức vụ" value="" name="username">
+                                                        placeholder="Nhập tên phòng ban" value="" name="username">
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-12 col-sm-6">
                                             <div class="form-group">
-                                                <label>Phòng ban</label>
+                                                <label>Chọn khối</label>
                                                 <select class="form-control">
-                                                    <option>1</option>
+                                                    <option>Chọn khối</option>
                                                     <option>2</option>
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="col-12 col-sm-6">
                                             <div class="form-group">
-                                                <label>Chức vụ</label>
+                                                <label>Trưởng phòng</label>
                                                 <select class="form-control">
-                                                    <option>1</option>
+                                                    <option>Nguyễn Ninh</option>
                                                     <option>2</option>
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-12">
-                                            <fieldset class="form-group">
-                                                <label>Mô tả</label>
-                                                <textarea class="form-control" id="basicTextarea" rows="3"
-                                                    placeholder="Textarea"></textarea>
-                                            </fieldset>
+                                        <div class="col-12 col-sm-6">
+                                            <div class="form-group">
+                                                <label>Phó phòng</label>
+                                                <select class="form-control">
+                                                    <option>Phạm Quang Minh</option>
+                                                    <option>2</option>
+                                                </select>
+                                            </div>
                                         </div>
                                         <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1">
                                             <button type="submit"

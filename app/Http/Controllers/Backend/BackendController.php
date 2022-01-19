@@ -17,7 +17,6 @@ class BackendController extends BaseController
     public function index()
     {
         $data = $this->userRepo->all();
-        dd($this->test());
-        return view('index');
+        return view('backend.index');
     }
 }

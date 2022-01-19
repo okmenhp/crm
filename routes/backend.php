@@ -4,17 +4,21 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::group(['middleware' => 'admin'], function() {
-	Route::get('/', function () {
-	    return view('welcome');
-	});
-	Route::get('/admin',  'Backend\BackendController@index');
-	Route::get('/position',  'Backend\PositionController@index');
-	Route::get('/edit-position',  'Backend\PositionController@edit');
-	Route::get('/create-position',  'Backend\PositionController@create');
+	Route::get('/home',  ['as' => 'admin.index', 'uses' => 'Backend\BackendController@index']);
 
-	Route::get('/login',  'Backend\AuthController@login');
-	Route::get('/register',  'Backend\AuthController@register');
-	Route::get('/file',  'Backend\FileController@index');
-	Route::get('/calendar',  'Backend\CalendarController@index');
+	Route::get('/position', ['as' => 'admin.position.index', 'uses' => 'Backend\PositionController@index']);
+	Route::get('/edit-position',  ['as' => 'admin.position.edit', 'uses' => 'Backend\PositionController@edit']);
+	Route::get('/create-position',  ['as' => 'admin.position.create', 'uses' => 'Backend\PositionController@create']);
 
+	Route::get('/department',  ['as' => 'admin.department.index', 'uses' => 'Backend\DepartmentController@index']);
+	Route::get('/edit-department',  ['as' => 'admin.department.edit', 'uses' => 'Backend\DepartmentController@edit']);
+	Route::get('/create-department',  ['as' => 'admin.department.create', 'uses' => 'Backend\DepartmentController@create']);
+
+    Route::get('/employee',  ['as' => 'admin.employee.index', 'uses' => 'Backend\EmployeeController@index']);
+	Route::get('/edit-employee',  ['as' => 'admin.employee.edit', 'uses' => 'Backend\EmployeeController@edit']);
+	Route::get('/create-employee',  ['as' => 'admin.employee.create', 'uses' => 'Backend\EmployeeController@create']);
+
+	Route::get('/forgot-password',  'Backend\AuthController@forgot_password');
+
+	Route::get('/calendar',  ['as' => 'admin.calendar.index', 'uses' => 'Backend\CalendarController@index']);
 });

@@ -22,18 +22,17 @@
                     <form>
                         <div class="row border rounded py-2 mb-2">
                             <div class="col-12 col-sm-6 col-lg-3">
-                                <label for="users-list-verified">Tên chức vụ</label>
+                                <label for="users-list-verified">Tên phòng ban</label>
                                 <fieldset class="form-group">
                                     <input type="text" class="form-control" id="basicInput"
-                                        placeholder="Nhập tên chức vụ">
+                                        placeholder="Nhập tên vị trí">
                                 </fieldset>
                             </div>
                             <div class="col-12 col-sm-6 col-lg-3">
-                                <label for="users-list-role">Phòng ban</label>
+                                <label for="users-list-role">Khối</label>
                                 <fieldset class="form-group">
                                     <select class="form-control" id="users-list-role">
-                                        <option value="">Chọn phòng ban</option>
-                                        <option value="1">1</option>
+                                        <option value="">Chọn khối</option>
                                         <option value="2">2</option>
                                     </select>
                                 </fieldset>
@@ -44,8 +43,9 @@
                                 <button type="button" class="btn btn-icon btn-outline-primary btn-search"><i
                                         class="bx bx-search"></i></button>
                             </div>
+
                             <div class="col-12 col-sm-6 col-lg-2">
-                                <a href="/create-position" type="button" class="btn btn-primary btn-block my-2">
+                                <a href="/create-department" type="button" class="btn btn-primary btn-block my-2">
                                     <i class="bx bx-plus"></i>
                                     <span>Thêm mới</span>
                                 </a>
@@ -62,7 +62,10 @@
                                     <thead>
                                         <tr>
                                             <th>id</th>
-                                            <th>Tên chức vụ</th>
+                                            <th>Tên phòng ban</th>
+                                            <th>Tên khối</th>
+                                            <th>Trưởng phòng</th>
+                                            <th>Số lượng nhân viên</th>
                                             <th>Thao tác</th>
                                         </tr>
                                     </thead>
@@ -70,27 +73,39 @@
                                         <tr>
                                             <td>1</td>
                                             <td>Dean Stanley</td>
-                                            <td><a href=""><i class="far fa-edit"></i></a>
-                                                <a href=""><i class="far fa-trash-alt ml-1"></i>
-                                            </td>
-                                        </tr>
-                                        <tr>
+                                            <td>Dean Stanley</td>
+                                            <td>Dean Stanley</td>
                                             <td>2</td>
-                                            <td>Zena Buckley</td>
                                             <td><a href=""><i class="far fa-edit"></i></a>
                                                 <a href=""><i class="far fa-trash-alt ml-1"></i>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td>3</td>
-                                            <td>Delilah Moon</td>
+                                            <td>1</td>
+                                            <td>Dean Stanley</td>
+                                            <td>Dean Stanley</td>
+                                            <td>Dean Stanley</td>
+                                            <td>2</td>
                                             <td><a href=""><i class="far fa-edit"></i></a>
                                                 <a href=""><i class="far fa-trash-alt ml-1"></i>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td>4</td>
-                                            <td>Hillary Rasmussen</td>
+                                            <td>1</td>
+                                            <td>Dean Stanley</td>
+                                            <td>Dean Stanley</td>
+                                            <td>Dean Stanley</td>
+                                            <td>2</td>
+                                            <td><a href=""><i class="far fa-edit"></i></a>
+                                                <a href=""><i class="far fa-trash-alt ml-1"></i>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>Dean Stanley</td>
+                                            <td>Dean Stanley</td>
+                                            <td>Dean Stanley</td>
+                                            <td>2</td>
                                             <td><a href=""><i class="far fa-edit"></i></a>
                                                 <a href=""><i class="far fa-trash-alt ml-1"></i>
                                             </td>
@@ -104,10 +119,13 @@
                 </div>
             </section>
             <!-- users list ends -->
+
         </div>
     </div>
 </div>
 <!-- END: Content-->
+
+
 <!-- demo chat-->
 <div class="widget-chat-demo">
     <!-- widget chat demo footer button start -->
@@ -173,10 +191,13 @@
         </div>
     </div>
     <!-- widget chat demo ends -->
+
 </div>
 <div class="sidenav-overlay"></div>
 <div class="drag-target"></div>
+
 @stop
+
 @section('script')
 <!-- BEGIN: Page Vendor JS-->
 <script src="assets/vendors/js/tables/datatable/jquery.dataTables.min.js"></script>
@@ -184,6 +205,7 @@
 <script src="assets/vendors/js/tables/datatable/dataTables.buttons.min.js"></script>
 <script src="assets/vendors/js/tables/datatable/buttons.bootstrap4.min.js"></script>
 <!-- END: Page Vendor JS-->
+
 <!-- BEGIN: Page JS-->
 <script src="assets/js/scripts/pages/app-users.min.js"></script>
 <!-- END: Page JS-->
