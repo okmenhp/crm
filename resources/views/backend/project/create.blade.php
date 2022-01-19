@@ -30,9 +30,9 @@
                                         <div class="col-12 col-sm-12">
                                             <div class="form-group">
                                                 <div class="controls">
-                                                    <label>Vị trí công việc</label>
-                                                    <input type="text" class="form-control" placeholder="Username"
-                                                        value="" name="username">
+                                                    <label>Tên chức vụ</label>
+                                                    <input type="text" class="form-control"
+                                                        placeholder="Nhập tên chức vụ" value="" name="username">
                                                 </div>
                                             </div>
                                         </div>
@@ -91,8 +91,7 @@
 <script src="assets/vendors/js/pickers/pickadate/picker.date.js"></script>
 <!-- END: Page Vendor JS-->
 
-<!--
-BEGIN: Page JS-->
+<!-- BEGIN: Page JS-->
 <script src="assets/js/scripts/pages/app-users.min.js"></script>
 <script src="assets/js/scripts/navs/navs.min.js"></script>
 <!-- END: Page JS-->

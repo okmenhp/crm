@@ -18,7 +18,9 @@ Route::group(['middleware' => 'admin'], function() {
 	Route::get('/edit-employee',  ['as' => 'admin.employee.edit', 'uses' => 'Backend\EmployeeController@edit']);
 	Route::get('/create-employee',  ['as' => 'admin.employee.create', 'uses' => 'Backend\EmployeeController@create']);
 
+
 	Route::get('/forgot-password',  'Backend\AuthController@forgot_password');
 
 	Route::get('/calendar',  ['as' => 'admin.calendar.index', 'uses' => 'Backend\CalendarController@index']);
 });
+
