@@ -46,6 +46,10 @@ abstract class AbstractRepository {
         return $this->model->orderBy('order', 'ASC')->orderBy('created_at', 'DESC')->get($columns);
     }
 
+    public function allParent($columns = array('*'), $parent_id) {
+        return $this->model->where('parent_id', $parent_id)->get($columns);
+    }
+
     public function selectArr() {
         $arr = [];
         $models = self::all();

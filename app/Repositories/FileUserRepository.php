@@ -13,9 +13,7 @@ class FileUserRepository extends AbstractRepository
     public function model() {
         return 'App\FileUser';
     }
-    public function getNewsIds($category_ids)
-    {
-        return $this->model->whereIn('category_id', $category_ids)->pluck('news_id');
-    }
+    
+    
 
 }

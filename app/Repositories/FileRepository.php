@@ -34,8 +34,18 @@ class FileRepository extends AbstractRepository {
         return $users;
     }
 
+    public function getFileByUid($uid){
+        $parent_folder = $this->model->where('uid', $uid)->first();
+        return $this->model->where('parent_id', $parent_folder->id)->get();
+    }
+
+    public function getChildren($id){
+        $children = $this->model->where('parent_id', $id)->get();
+        return $children;
+    }
+
     public function getParent($request, $uid){
-        if($uid != 0){
+        if($uid != "0"){
         $parent_id = $this->model->where('uid', $uid)->first()->id;
         return $parent_id;
         }

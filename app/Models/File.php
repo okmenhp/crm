@@ -8,6 +8,10 @@ class File extends Model
 {
     const TYPE_FOLDER = 1;
     const TYPE_FILE = 2;
+    
+    const STATUS_HIDE = 0;
+    const STATUS_ACTIVE = 1;
+    const STATUS_BIN = 2;
 
     protected $table = 'file';
     protected $fillable = ['uid','parent_id','created_by','type','format','name','link','size','user_id','status'];

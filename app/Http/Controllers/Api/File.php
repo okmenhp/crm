@@ -8,11 +8,9 @@ use
 
 class FileController extends BaseController
 {
-
     public function index()
     {
         return view('backend/file/index');
     }
 
- 
 }

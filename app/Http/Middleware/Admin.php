@@ -24,7 +24,7 @@ class Admin
         // }
 
         if (Auth::check() != false) {
-                if (Auth::user()->role_id <> User::ROLE_ADMINISTRATOR) {
+                if (Auth::user()->role_id <> \App\Models\User::ROLE_ADMINISTRATOR) {
                     if (!in_array($current_route, Auth::user()->role->route())) {
                         abort(403);
                     }

@@ -28,6 +28,7 @@ class AuthController extends Controller {
         ];
 
         if (Auth::attempt($input)) {
+            
             return Redirect::route('admin.index');
         }
         return Redirect::route('login')->with('error', 'Wrong login account');
