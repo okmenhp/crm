@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Repositories\FileRepository;
 use Auth;
 use Illuminate\Support\Str;
+use App\Models\File;
 
 class FileController extends BaseController
 {
@@ -19,16 +20,39 @@ class FileController extends BaseController
 
     public function index(Request $request, $uid)
     {   
+        $uid_clone = $uid;
         if($uid == "0"){
-            $records_folder = $this->fileRepo->allParent('*', null)->where('type', 1);
-            $records_file = $this->fileRepo->allParent('*', null)->where('type', 2);
+            $records_folder = $this->fileRepo->allParent($request, '*', null)->where('type', 1);
+            $records_file = $this->fileRepo->allParent($request, '*', null)->where('type', 2);
+            $records_folder = $this->getMoreInfoFolder($records_folder);
+            return view('backend/file/index', compact('uid','records_folder','records_file')); 
         }
         else{
-            $records_folder = $this->fileRepo->getFileByUid($uid)->where('type', 1);
-            $records_file = $this->fileRepo->getFileByUid($uid)->where('type', 2);
+            $records_folder = $this->fileRepo->getFileByUid($request, $uid)->where('type', 1);
+            $records_file = $this->fileRepo->getFileByUid($request, $uid)->where('type', 2);
+            $breadcumb = [];
+            do {
+                $record = File::where('uid', $uid_clone)->first();  
+                $uid_clone = File::where('id', $record->parent_id)->pluck('uid')->first();
+                $breadcumb[$uid_clone] =  $record->name;
+            }while ($uid_clone != null);
+            $records_folder = $this->getMoreInfoFolder($records_folder);
+            return view('backend/file/index', compact('uid','records_folder','records_file','breadcumb')); 
         }
-        $records_folder = $this->getMoreInfoFolder($records_folder);
-        return view('backend/file/index', compact('uid','records_folder','records_file'));
+        
+    }
+
+    public function breadcumb($breadcumb, $uid){
+        $record = File::where('uid', $uid)->first();
+        array_push($breadcumb, $record->name);
+        if($record->parent_id != null){
+            $parent_uid = File::where('id', $record->parent_id)->first()->uid;
+            $this->breadcumb($breadcumb, $parent_uid);
+        }else{
+            dd('1');
+        }
+        
+        
     }
 
     public function getMoreInfoFolder($records_folder){
@@ -77,9 +101,6 @@ class FileController extends BaseController
         return redirect()->route('admin.file.index', $uid);
     }
 
-    public function breadcumb($id, $parent_id){
-        
-    }
 
     public function remove(Request $request)
     {

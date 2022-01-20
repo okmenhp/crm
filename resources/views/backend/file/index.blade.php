@@ -24,6 +24,8 @@
     <!-- END: Main Menu-->
 
     <style type="text/css">
+        
+
         .icon-file{
             width: 30px;
             height: 30px;
@@ -122,14 +124,15 @@
                                 <!-- App File Left Sidebar - Drive Content Starts -->
                                 <label class="app-file-label">Quản lý tệp tin</label>
                                 <div class="list-group list-group-messages my-50">
-                                    <a href="javascript:void(0);"
-                                        class="list-group-item list-group-item-action pt-0 active">
+                                    <a href="{{route('admin.file.index', 0)}}"
+                                        class="list-group-item list-group-item-action pt-0">
+                                 
                                         <div class="fonticon-wrap d-inline mr-25">
                                             <i class="fal fa-folder"></i>
                                         </div>
                                         Tất cả tệp tin
-                                        <span
-                                            class="badge badge-light-danger badge-pill badge-round float-right mt-50">{{count($records_folder)}}</span>
+                                        <!-- <span
+                                            class="badge badge-light-danger badge-pill badge-round float-right mt-50">{{count($records_folder)}}</span> -->
                                     </a>
                                     <!-- <a href="javascript:void(0);" class="list-group-item list-group-item-action">
                                         <div class="fonticon-wrap d-inline mr-25">
@@ -148,7 +151,7 @@
                                         </div>
                                         Tệp tin quan trọng
                                     </a>
-                                    <a href="javascript:void(0);" class="list-group-item list-group-item-action">
+                                    <a href="{{url('file/0?is_bin=1')}}" class="list-group-item list-group-item-action">
                                         <div class="fonticon-wrap d-inline mr-25">
                                             <i class="fal fa-trash-alt"></i>
                                         </div>
@@ -428,22 +431,22 @@
                                                         <div
                                                             class="app-file-folder-name font-size-small font-weight-bold">
                                                             {{$record_folder->name}}</div>
-                                                        <div class="app-file-folder-size font-size-small text-muted">{{$record_folder->count}} files, {{$record_folder->size}}mb</div>
+                                                        <div class="app-file-folder-size font-size-small text-muted">{{$record_folder->count}} files, {{($record_folder->size)/1000}}kb</div>
                                                     </div>
                                                 </div>  
                                             </div>
                                         </div>
-                                        <div class="dropdown-menu dropdown-menu-sm" id="context-menu">
+                                       
+                                        <div class="dropdown-menu dropdown-menu-sm context-menu">
                                            <a class="dropdown-item" href="{{route('admin.file.index', $record_folder->uid)}}"><i class="fa fa-eye" aria-hidden="true"></i>&nbsp; Mở</a>
                                            <a class="dropdown-item" href="#"><i class="fas fa-edit"></i>&nbsp; Đổi tên</a>
-                                          <!--  <a class="dropdown-item" href="#"><i class="fas fa-file-export"></i>&nbsp; Chuyển tới</a> -->
                                            <a class="dropdown-item" href="#"><i class="fas fa-share-square"></i>&nbsp; Chia sẻ</a>
-                                            <form method="post" action="{{route('admin.file.delete', $record_folder->id)}}">
+                                           <a class="dropdown-item" href=""><i class="fas fa-file-alt"></i>&nbsp; Thông tin</a>
+                                            <form method="post" action="{{route('admin.file.delete', $record_folder->id)}}" class="text-center">
                                              {!! method_field('DELETE') !!}
                                              @csrf
-                                           <button type="submit"><i class="fas fa-trash-alt"></i>&nbsp; Xoá</button>
+                                           <button class="btn btn-primary text-center" style="width: 75%;" type="submit">&nbsp; Xoá</button>
                                            </form>
-                                           <a class="dropdown-item" href=""><i class="fas fa-file-alt"></i>&nbsp; Thông tin</a>
                                         </div>
                                     </div>
                                     @endforeach
@@ -476,12 +479,24 @@
                                                 <div class="app-file-details">
                                                     <div class="app-file-name font-size-small font-weight-bold">
                                                         {{$record_file->name}}</div>
-                                                    <div class="app-file-size font-size-small text-muted mb-25">{{$record_file->size}}kb
+                                                    <div class="app-file-size font-size-small text-muted mb-25">{{($record_file->size)/1000}}kb
                                                     </div>
                                                     <div class="app-file-type font-size-small text-muted">Sketch File
                                                     </div>
                                                 </div>
                                             </div>
+                                            
+                                        </div>
+                                        <div class="dropdown-menu dropdown-menu-sm context-menu">
+                                               <a class="dropdown-item" href="{{route('admin.file.index', $record_file->uid)}}"><i class="fa fa-eye" aria-hidden="true"></i>&nbsp; Mở</a>
+                                               <a class="dropdown-item" href="#"><i class="fas fa-edit"></i>&nbsp; Đổi tên</a>
+                                               <a class="dropdown-item" href="#"><i class="fas fa-share-square"></i>&nbsp; Chia sẻ</a>
+                                               <a class="dropdown-item" href=""><i class="fas fa-file-alt"></i>&nbsp; Thông tin</a>
+                                                <form method="post" action="{{route('admin.file.delete', $record_file->id)}}" class="text-center">
+                                                 {!! method_field('DELETE') !!}
+                                                 @csrf
+                                               <button class="btn btn-primary text-center" style="width: 75%;" type="submit">&nbsp; Xoá</button>
+                                               </form>
                                         </div>
                                     </div>
                                     @endforeach
@@ -604,22 +619,39 @@
     <script src="{{asset('assets/js/scripts/pages/app-file-manager.min.js')}}"></script>
     <!-- END: Page JS-->
      <script type="text/javascript">
+
          $('.app-file-info').on('contextmenu', function(e) {
-          var top = e.pageY - 250;
-          var left = e.pageX - 700;
-          $("#context-menu").css({
+          var top = e.pageY;
+          var left = e.pageX;
+          $(this).next(".context-menu").css({
             display: "block",
-            top: top,
-            left: left
+            position: "absolute",
+            top: "40px",
+            left: "130px",
           }).addClass("show");
           return false; //blocks default Webbrowser right click menu
         }).on("click", function() {
-          $("#context-menu").removeClass("show").hide();
+          $(".context-menu").removeClass("show").hide();
         });
 
-        $("#context-menu a").on("click", function() {
+        $(".context-menu a").on("click", function() {
           $(this).parent().removeClass("show").hide();
         });
+
+          // If the document is clicked somewhere
+        $(document).bind("mousedown", function (e) {
+            // If the clicked element is not the menu
+            if (!$(e.target).parents(".context-menu").length > 0) {
+                
+                // Hide it
+                $(".context-menu").hide(100);
+            }
+        });
+
+
+
+        
+
      </script>
 </body>
 <!-- END: Body-->

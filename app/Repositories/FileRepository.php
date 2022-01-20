@@ -34,10 +34,15 @@ class FileRepository extends AbstractRepository {
         return $users;
     }
 
-    public function getFileByUid($uid){
+    public function getFileByUid($request, $uid){
         $parent_folder = $this->model->where('uid', $uid)->first();
-        return $this->model->where('parent_id', $parent_folder->id)->get();
-    }
+        if($request->is_bin == 1){
+            $records = $this->model->where('status', 3)->where('parent_id', $parent_folder->id)->get();
+        }else{
+            $records = $this->model->where('status','!=', 3)->where('parent_id', $parent_folder->id)->get();
+        }
+        return $records;
+        }
 
     public function getChildren($id){
         $children = $this->model->where('parent_id', $id)->get();
