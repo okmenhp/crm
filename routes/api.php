@@ -20,4 +20,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('file/property','Api\FileController@property')->name('api.file.property');
 Route::post('file/rename','Api\FileController@rename')->name('api.file.rename');
-Route::post('file/dowload','Api\FileController@dowload')->name('api.file.dowload');
+Route::get('file/dowload','Api\FileController@dowload')->name('api.file.dowload');

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\BaseController;
 use App\Repositories\FileRepository;
 use App\Traits\ApiResponse;
+use Storage;
 
 class FileController extends BaseController
 {
@@ -44,6 +45,6 @@ class FileController extends BaseController
     public function dowload(Request $request){
     	$id = $request->id;
     	$link = $this->fileRepo->find($id)->link;
-    	return response()->download(storage_path('/app/public/'. $link));
+    	return Storage::download('public/'.$link);
     }
 }

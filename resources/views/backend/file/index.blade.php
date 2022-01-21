@@ -5,6 +5,7 @@
 
 <head>
     @include('layouts/__head')
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
     <link rel="stylesheet" type="text/css" href="{{asset('assets/css/pages/app-file-manager.min.css')}}">
 </head>
 <!-- END: Head-->
@@ -536,7 +537,7 @@
                                         </div>
                                         <div class="dropdown-menu dropdown-menu-sm context-menu">
                                                <a class="dropdown-item" href="{{route('admin.file.index', $record_file->uid)}}"><i class="fa fa-eye" aria-hidden="true"></i>&nbsp; Mở</a>
-                                               <a class="dropdown-item file-dowload" data-id="{{$record_file->id}}" href="#"><i class="fa fa-download" aria-hidden="true"></i>&nbsp; Tải xuống</a>
+                                               <a class="dropdown-item" data-id="{{$record_file->id}}" href="{{route('admin.file.dowload', $record_file->id)}}"><i class="fa fa-download" aria-hidden="true"></i>&nbsp; Tải xuống</a>
                                                <a class="dropdown-item modal-rename" data-id="{{$record_file->id}}" data-toggle="modal" data-target="#modalRename" href="#"><i class="fas fa-edit"></i>&nbsp; Đổi tên</a>
                                                <a class="dropdown-item" href="#"><i class="fas fa-share-square"></i>&nbsp; Chia sẻ</a>
                                                <a class="dropdown-item" href=""><i class="fas fa-file-alt"></i>&nbsp; Thông tin</a>
@@ -701,6 +702,8 @@
                 $(".context-menu").hide(100);
             }
         });
+
+     
         
         function getFileProperty(id){
             $.ajax({
@@ -734,7 +737,7 @@
         function fileDowload(id){
             $.ajax({
                 url: '/api/file/dowload',
-                type: 'post',
+                type: 'get',
                 dataType: 'json',
                 data: {
                     id: id
@@ -756,10 +759,10 @@
             fileRename(id, name);
         });
 
-         $('.file-dowload').on('click', function(){
-            let id = $(this).data('id');
-            fileDowload(id);
-        });
+        //  $('.file-dowload').on('click', function(){
+        //     let id = $(this).data('id');
+        //     fileDowload(id);
+        // });
 
 
 

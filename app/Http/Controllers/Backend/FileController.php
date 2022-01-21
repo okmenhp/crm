@@ -133,6 +133,11 @@ class FileController extends BaseController
         //
     }
 
+    public function dowload(Request $request, $id) {
+        $link = $this->fileRepo->find($id)->link;
+        return Storage::download('public/'.$link);
+    }
+
     public function destroy($id)
     {
         $record = $this->fileRepo->find($id);
