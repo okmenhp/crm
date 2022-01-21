@@ -27,14 +27,20 @@
         
 
         .icon-file{
-            width: 30px;
-            height: 30px;
+            width: 35px;
+            height: 35px;
         }
 
         .icon-image{
             width: 100%;
             height: 80px;
             object-fit: contain;
+        }
+
+        .btn-delete{
+            background: white;
+            color: #475f7b;
+            font-size: 95%;
         }
     </style>
     <!-- Modal upload -->
@@ -95,6 +101,36 @@
       </div>
     </div>
 <!--  End modal upload -->
+
+     <!-- Modal rename -->
+        <div class="modal fade" id="modalRename" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Rename</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+            
+              <div class="modal-body">
+                 
+                <div class="mb-3">
+
+                <label for="formFileMultiple" class="form-label">Vui lòng nhập tên</label>
+                <input required="" type="text" name="file-name" placeholder="" class="form-control file-name">
+                
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Huỷ</button>
+                <button type="button" class="btn btn-primary file-rename">Đổi tên</button>
+              </div>
+              </form>
+            </div>
+          </div>
+        </div>
+    <!--  End modal upload -->
     
 
     <!-- BEGIN: Content-->
@@ -219,9 +255,9 @@
                     <div class="app-file-sidebar-info">
                         <div class="card shadow-none mb-0 p-0 pb-1">
                             <div class="card-header d-flex justify-content-between align-items-center border-bottom">
-                                <h6 class="mb-0">Document.pdf</h6>
+                                <h6 class="mb-0 file-name">name</h6>
                                 <div class="app-file-action-icons d-flex align-items-center">
-                                    <i class="bx bx-trash cursor-pointer mr-50"></i>
+                                    <!-- <i class="bx bx-trash cursor-pointer mr-50"></i> -->
                                     <i class="bx bx-x close-icon cursor-pointer"></i>
                                 </div>
                             </div>
@@ -230,12 +266,12 @@
                                     <a class=" nav-link active d-flex align-items-center" id="details-tab"
                                         data-toggle="tab" href="#details" aria-controls="details" role="tab"
                                         aria-selected="true">
-                                        <i class="bx bx-file mr-50"></i>Details</a>
+                                        <i class="bx bx-file mr-50"></i>Chi tiết</a>
                                 </li>
                                 <li class="nav-item pt-50 ">
                                     <a class=" nav-link d-flex align-items-center" id="activity-tab" data-toggle="tab"
                                         href="#activity" aria-controls="activity" role="tab" aria-selected="false">
-                                        <i class="bx bx-pulse mr-50"></i>Activity</a>
+                                        <i class="bx bx-pulse mr-50"></i>Quyền hạn</a>
                                 </li>
                             </ul>
                             <div class="tab-content pl-0">
@@ -246,9 +282,9 @@
                                         <p class="mt-2">15.3mb</p>
                                     </div> -->
                                     <div class="card-body pt-2">
-                                        <label class="app-file-label">Setting</label>
+                                        <label class="app-file-label">Cài đặt</label>
                                         <div class="d-flex justify-content-between align-items-center mt-75">
-                                            <p>File Sharing</p>
+                                            <p>Chia sẻ</p>
                                             <div
                                                 class="custom-control custom-switch custom-switch-primary custom-switch-glow custom-control-inline">
                                                 <input type="checkbox" class="custom-control-input"
@@ -256,7 +292,7 @@
                                                 <label class="custom-control-label" for="customSwitchGlow1"></label>
                                             </div>
                                         </div>
-                                        <div class="d-flex justify-content-between align-items-center">
+                                       <!--  <div class="d-flex justify-content-between align-items-center">
                                             <p>Synchronization</p>
                                             <div
                                                 class="custom-control custom-switch custom-switch-primary custom-switch-glow custom-control-inline">
@@ -273,36 +309,36 @@
                                                     id="customSwitchGlow3">
                                                 <label class="custom-control-label" for="customSwitchGlow3"></label>
                                             </div>
-                                        </div>
+                                        </div> -->
 
-                                        <label class="app-file-label">Info</label>
+                                        <label class="app-file-label">Thông tin</label>
                                         <div class="d-flex justify-content-between align-items-center mt-75">
-                                            <p>Type</p>
-                                            <p class="font-weight-bold">PDF</p>
+                                            <p>Loại file</p>
+                                            <p class="font-weight-bold file-type">PDF</p>
                                         </div>
                                         <div class="d-flex justify-content-between align-items-center">
-                                            <p>Size</p>
-                                            <p class="font-weight-bold">15.6mb</p>
+                                            <p>Kích thước</p>
+                                            <p class="font-weight-bold file-size">15.6mb</p>
                                         </div>
                                         <div class="d-flex justify-content-between align-items-center">
-                                            <p>Location</p>
-                                            <p class="font-weight-bold">Files > Documents</p>
+                                            <p>Người sở hữu</p>
+                                            <p class="font-weight-bold file-own">Dat IT</p>
                                         </div>
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <p>Owner</p>
-                                            <p class="font-weight-bold">Elnora Reese</p>
-                                        </div>
-                                        <div class="d-flex justify-content-between align-items-center">
+                                       <!--  <div class="d-flex justify-content-between align-items-center">
                                             <p>Modified</p>
                                             <p class="font-weight-bold">September 4 2019</p>
-                                        </div>
-                                        <div class="d-flex justify-content-between align-items-center">
+                                        </div> -->
+                                        <!-- <div class="d-flex justify-content-between align-items-center">
                                             <p>Opened</p>
                                             <p class="font-weight-bold">July 8, 2019</p>
-                                        </div>
+                                        </div> -->
                                         <div class="d-flex justify-content-between align-items-center">
-                                            <p>Created</p>
-                                            <p class="font-weight-bold">July 1, 2019</p>
+                                            <p>Ngày tạo</p>
+                                            <p class="font-weight-bold file-create">19-12-2022</p>
+                                        </div>
+                                        <div class="d-flex justify-content-between align-items-center file-access">
+                                            <p>Quyền truy cập</p>
+                                            <p class="font-weight-bold">Xem và xoá</p>
                                         </div>
                                     </div>
                                 </div>
@@ -411,8 +447,12 @@
                                 <nav aria-label="breadcrumb">
                                   <ol class="breadcrumb">
                                     <li class="breadcrumb-item"><a href="{{route('admin.file.index', 0)}}">File của tôi</a></li>
-                                    <li class="breadcrumb-item"><a href="#">Folder</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">Folder1</li>
+                                    @if(isset($breadcumb))
+                                    @foreach($breadcumb as $key => $bread)
+                                    <li class="breadcrumb-item"><a href="{{route('admin.file.index', $key)}}">{{$bread}}</a></li>
+                                    @endforeach
+                                    @endif
+                                  <!--   <li class="breadcrumb-item active" aria-current="page">Folder1</li> -->
                                   </ol>
                                 </nav>
                                 <!-- App File - Folder Section Starts -->
@@ -439,13 +479,20 @@
                                        
                                         <div class="dropdown-menu dropdown-menu-sm context-menu">
                                            <a class="dropdown-item" href="{{route('admin.file.index', $record_folder->uid)}}"><i class="fa fa-eye" aria-hidden="true"></i>&nbsp; Mở</a>
-                                           <a class="dropdown-item" href="#"><i class="fas fa-edit"></i>&nbsp; Đổi tên</a>
+                                           <a class="dropdown-item modal-rename" data-id="{{$record_folder->id}}" data-toggle="modal" data-target="#modalRename" href="#"><i class="fas fa-edit"></i>&nbsp; Đổi tên</a>
                                            <a class="dropdown-item" href="#"><i class="fas fa-share-square"></i>&nbsp; Chia sẻ</a>
                                            <a class="dropdown-item" href=""><i class="fas fa-file-alt"></i>&nbsp; Thông tin</a>
+                                           @if(Request::get('is_bin') == 1)
+                                            <form method="post" action="{{route('admin.file.restore', $record_folder->id)}}" class="text-center">
+                                             @csrf
+                                           <button class="btn btn-delete text-left" style="width: 100%;" type="submit"><i class="fas fa-sync-alt">&nbsp; <span style="font-weight: 500;" >KHÔI PHỤC</i></span></button>
+                                           </form>
+                                           @endif
+
                                             <form method="post" action="{{route('admin.file.delete', $record_folder->id)}}" class="text-center">
                                              {!! method_field('DELETE') !!}
                                              @csrf
-                                           <button class="btn btn-primary text-center" style="width: 75%;" type="submit">&nbsp; Xoá</button>
+                                           <button class="btn btn-delete text-left" style="width: 100%;" type="submit"><i class="fa fa-trash" aria-hidden="true">&nbsp; <span style="font-weight: 500;">XOÁ</span></i></button>
                                            </form>
                                         </div>
                                     </div>
@@ -481,22 +528,29 @@
                                                         {{$record_file->name}}</div>
                                                     <div class="app-file-size font-size-small text-muted mb-25">{{($record_file->size)/1000}}kb
                                                     </div>
-                                                    <div class="app-file-type font-size-small text-muted">Sketch File
-                                                    </div>
+                                                    <!-- <div class="app-file-type font-size-small text-muted">Sketch File
+                                                    </div> -->
                                                 </div>
                                             </div>
                                             
                                         </div>
                                         <div class="dropdown-menu dropdown-menu-sm context-menu">
                                                <a class="dropdown-item" href="{{route('admin.file.index', $record_file->uid)}}"><i class="fa fa-eye" aria-hidden="true"></i>&nbsp; Mở</a>
-                                               <a class="dropdown-item" href="#"><i class="fas fa-edit"></i>&nbsp; Đổi tên</a>
+                                               <a class="dropdown-item file-dowload" data-id="{{$record_file->id}}" href="#"><i class="fa fa-download" aria-hidden="true"></i>&nbsp; Tải xuống</a>
+                                               <a class="dropdown-item modal-rename" data-id="{{$record_file->id}}" data-toggle="modal" data-target="#modalRename" href="#"><i class="fas fa-edit"></i>&nbsp; Đổi tên</a>
                                                <a class="dropdown-item" href="#"><i class="fas fa-share-square"></i>&nbsp; Chia sẻ</a>
                                                <a class="dropdown-item" href=""><i class="fas fa-file-alt"></i>&nbsp; Thông tin</a>
+                                               @if(Request::get('is_bin') == 1)
+                                                <form method="post" action="{{route('admin.file.restore', $record_file->id)}}" class="text-center">
+                                                @csrf
+                                                   <button class="btn btn-delete text-left" style="width: 100%;" type="submit"><i class="fas fa-sync-alt">&nbsp; <span style="font-weight: 500;" >KHÔI PHỤC</i></span></button>
+                                                   </form>
+                                                @endif
                                                 <form method="post" action="{{route('admin.file.delete', $record_file->id)}}" class="text-center">
-                                                 {!! method_field('DELETE') !!}
-                                                 @csrf
-                                               <button class="btn btn-primary text-center" style="width: 75%;" type="submit">&nbsp; Xoá</button>
-                                               </form>
+                                             {!! method_field('DELETE') !!}
+                                             @csrf
+                                           <button class="btn btn-delete text-left" style="width: 100%;" type="submit"><i class="fa fa-trash" aria-hidden="true">&nbsp; <span style="font-weight: 500;">XOÁ</span></i></button>
+                                           </form>
                                         </div>
                                     </div>
                                     @endforeach
@@ -627,7 +681,7 @@
             display: "block",
             position: "absolute",
             top: "40px",
-            left: "130px",
+            left: "80px",
           }).addClass("show");
           return false; //blocks default Webbrowser right click menu
         }).on("click", function() {
@@ -646,6 +700,65 @@
                 // Hide it
                 $(".context-menu").hide(100);
             }
+        });
+        
+        function getFileProperty(id){
+            $.ajax({
+                url: '/api/file/property',
+                type: 'get',
+                dataType: 'json',
+                data: {
+                    id: id
+                }
+            }).done(function(resp) {
+                $('.file-name').val(resp.data.name);
+                $('.file-rename').attr("data-id", resp.data.id);
+            });
+        }
+
+        function fileRename(id, name){
+            $.ajax({
+                url: '/api/file/rename',
+                type: 'post',
+                dataType: 'json',
+                data: {
+                    id: id,
+                    name: name
+                }
+            }).done(function(resp) {
+                window.location.reload();
+                //alert('Đổi tên thành công');
+            });
+        }
+
+        function fileDowload(id){
+            $.ajax({
+                url: '/api/file/dowload',
+                type: 'post',
+                dataType: 'json',
+                data: {
+                    id: id
+                }
+            }).done(function(resp) {
+                //window.location.reload();
+                //alert('Đổi tên thành công');
+            });
+        }
+
+        $('.modal-rename').on('click', function(){
+            let id = $(this).data('id');
+            getFileProperty(id);
+        });
+
+        $('.file-rename').on('click', function(){
+            let id = $(this).data('id');
+            let name = $('.file-name').val();
+            fileRename(id, name);
+        });
+
+         $('.file-dowload').on('click', function(){
+            let id = $(this).data('id');
+            fileDowload(id);
         });
 
 

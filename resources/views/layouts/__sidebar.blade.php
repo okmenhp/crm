@@ -34,10 +34,10 @@
             <li class=" nav-item"><a href="/employee"><i class="fal fa-users"></i><span class="menu-title text-truncate"
                         data-i18n="Todo">Quản lý nhân viên</span></a>
             </li>
-            <li class=" navigation-header text-truncate"><span data-i18n="Apps">Tệp tin</span>
+            <li class=" navigation-header text-truncate"><span data-i18n="Apps">File</span>
             </li>
-            <li class=" nav-item"><a href="/file"><i class="fal fa-folder-tree"></i><span
-                        class="menu-title text-truncate" data-i18n="Todo">Quản lý tệp tin</span></a>
+            <li class=" nav-item"><a href="{{route('admin.file.index', 0)}}"><i class="fal fa-folder-tree"></i><span
+                        class="menu-title text-truncate" data-i18n="Todo">Quản lý file</span></a>
             </li>
             <li class=" navigation-header text-truncate"><span data-i18n="Apps">Lịch trình</span>
             </li>

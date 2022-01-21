@@ -32,14 +32,14 @@ class FileController extends BaseController
             $records_file = $this->fileRepo->getFileByUid($request, $uid)->where('type', 2);
             $breadcumb = [];
             do {
-                $record = File::where('uid', $uid_clone)->first();  
-                $uid_clone = File::where('id', $record->parent_id)->pluck('uid')->first();
-                $breadcumb[$uid_clone] =  $record->name;
+                $record = File::where('uid', $uid_clone)->first();    //lấy link hiện tại
+                $uid_clone = File::where('id', $record->parent_id)->pluck('uid')->first();   //check parent_id
+                $breadcumb[$record->uid] =  $record->name;    //gán link vào tên folder
             }while ($uid_clone != null);
+            $breadcumb = array_reverse($breadcumb);
             $records_folder = $this->getMoreInfoFolder($records_folder);
             return view('backend/file/index', compact('uid','records_folder','records_file','breadcumb')); 
-        }
-        
+        }     
     }
 
     public function breadcumb($breadcumb, $uid){
@@ -50,9 +50,7 @@ class FileController extends BaseController
             $this->breadcumb($breadcumb, $parent_uid);
         }else{
             dd('1');
-        }
-        
-        
+        }    
     }
 
     public function getMoreInfoFolder($records_folder){
@@ -101,6 +99,14 @@ class FileController extends BaseController
         return redirect()->route('admin.file.index', $uid);
     }
 
+    public function restore(Request $request, $id){
+        $record = $this->fileRepo->find($id);
+        if($record->status == 3){
+            $record->update(['status' => 1]);
+        }
+        return redirect()->back();
+    }
+
 
     public function remove(Request $request)
     {
@@ -136,6 +142,8 @@ class FileController extends BaseController
                 foreach($childrens as $child){
                     $child->delete();
                 }
+                $record->delete();
+            }else{
                 $record->delete();
             }
         }
