@@ -13,13 +13,5 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
-
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/login', ['as' => 'login', 'uses' => 'Auth\AuthController@getLogin']);
+Route::post('/login', ['as' => 'postLogin', 'uses' => 'Auth\AuthController@postLogin']);

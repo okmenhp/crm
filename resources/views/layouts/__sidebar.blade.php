@@ -3,7 +3,7 @@
         <ul class="nav navbar-nav flex-row">
             <li class="nav-item mr-auto"><a class="navbar-brand" href="#">
                     <div class="brand-logo">
-                        <img class="logo" src="assets/images/logo/logo.png" alt="avatar" width="50px" height="auto">
+                        <img class="logo" src="{{asset('assets/images/logo/logo.png')}}" alt="avatar" width="50px" height="auto">
                         <title>icon</title>
                     </div>
                     <!-- <h2 class="brand-text mb-0">Frest</h2> -->

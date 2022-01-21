@@ -4,82 +4,144 @@ namespace App\Http\Controllers\Backend;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\BaseController;
+use DB;
+use Illuminate\Support\Facades\Storage;
+use App\Repositories\FileRepository;
+use Auth;
+use Illuminate\Support\Str;
+use App\Models\File;
 
 class FileController extends BaseController
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        return view('backend/file/index');
+
+    public function __construct(FileRepository $fileRepo) {
+        $this->fileRepo = $fileRepo;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        return view('backend/position/create');
+    public function index(Request $request, $uid)
+    {   
+        $uid_clone = $uid;
+        if($uid == "0"){
+            $records_folder = $this->fileRepo->allParent($request, '*', null)->where('type', 1);
+            $records_file = $this->fileRepo->allParent($request, '*', null)->where('type', 2);
+            $records_folder = $this->getMoreInfoFolder($records_folder);
+            return view('backend/file/index', compact('uid','records_folder','records_file')); 
+        }
+        else{
+            $records_folder = $this->fileRepo->getFileByUid($request, $uid)->where('type', 1);
+            $records_file = $this->fileRepo->getFileByUid($request, $uid)->where('type', 2);
+            $breadcumb = [];
+            do {
+                $record = File::where('uid', $uid_clone)->first();  
+                $uid_clone = File::where('id', $record->parent_id)->pluck('uid')->first();
+                $breadcumb[$uid_clone] =  $record->name;
+            }while ($uid_clone != null);
+            $records_folder = $this->getMoreInfoFolder($records_folder);
+            return view('backend/file/index', compact('uid','records_folder','records_file','breadcumb')); 
+        }
+        
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    public function breadcumb($breadcumb, $uid){
+        $record = File::where('uid', $uid)->first();
+        array_push($breadcumb, $record->name);
+        if($record->parent_id != null){
+            $parent_uid = File::where('id', $record->parent_id)->first()->uid;
+            $this->breadcumb($breadcumb, $parent_uid);
+        }else{
+            dd('1');
+        }
+        
+        
+    }
+
+    public function getMoreInfoFolder($records_folder){
+        foreach($records_folder as $key => $record_folder){
+            $children = $this->fileRepo->getChildren($record_folder->id);
+            $records_folder[$key]->size =  $children->sum('size');
+            $records_folder[$key]->count =  $children->count();
+        }
+        return $records_folder;
+    }
+
+    public function createFolder(Request $request, $uid){
+        $input['parent_id'] = $this->fileRepo->getParent($request, $uid);
+        $input['name'] = $request->folder;
+        $input['type'] = \App\Models\File::TYPE_FOLDER;
+        $input['created_by'] = Auth::user()->id;
+        $input['uid'] = Str::uuid();
+        $input['is_share'] = 0;
+        $input['status'] = 1;
+        $this->fileRepo->create($input);
+        return redirect()->route('admin.file.index', $uid);
+    }
+
+    public function openFolder(Request $request, $uid)
+    { 
+        
+        return view('backend/folder/index');
+    }
+
+    public function upload(Request $request, $uid)
+    {   
+        $file = $request->file('file');
+        $fileName = md5($file->getClientOriginalName() . time()) . "." . $file->getClientOriginalExtension();
+        $path = Storage::disk('public')->put($fileName,file_get_contents($file));
+        $input['parent_id'] = $this->fileRepo->getParent($request, $uid);
+        $input['size'] = $file->getSize();
+        $input['format'] = $file->extension();
+        $input['link'] = $fileName;
+        $input['name'] = $file->getClientOriginalName();
+        $input['created_by'] = Auth::user()->id;
+        $input['uid'] = Str::uuid();
+        $input['type'] = \App\Models\File::TYPE_FILE;
+        $input['is_share'] = 0;
+        $input['status'] = 1;
+        $this->fileRepo->create($input);
+        return redirect()->route('admin.file.index', $uid);
+    }
+
+
+    public function remove(Request $request)
+    {
+        
+    }
+
     public function store(Request $request)
     {
-        //
+        
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit()
     {
         return view('backend/position/edit');
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
-        //
+        $record = $this->fileRepo->find($id);
+        if($record->status == 3){
+            if($record->type == \App\Models\File::TYPE_FOLDER){
+                $childrens = $this->fileRepo->getChildren($record->id);
+                foreach($childrens as $child){
+                    $child->delete();
+                }
+                $record->delete();
+            }
+        }
+        else{
+            $record->update(['status' => 3]);
+        }
+        return redirect()->back();
     }
 }

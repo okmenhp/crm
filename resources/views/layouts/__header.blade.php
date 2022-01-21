@@ -63,7 +63,7 @@
                                     <div class="media d-flex align-items-center">
                                         <div class="media-left pr-0">
                                             <div class="avatar mr-1 m-0"><img
-                                                    src="assets/images/portrait/small/avatar-s-11.jpg" alt="avatar"
+                                                    src="{{asset('assets/images/portrait/small/avatar-s-11.jpg')}}" alt="avatar"
                                                     height="39" width="39"></div>
                                         </div>
                                         <div class="media-body">
@@ -77,7 +77,7 @@
                                     <div class="media d-flex align-items-center">
                                         <div class="media-left pr-0">
                                             <div class="avatar mr-1 m-0"><img
-                                                    src="assets/images/portrait/small/avatar-s-16.jpg" alt="avatar"
+                                                    src="{{asset('assets/images/portrait/small/avatar-s-16.jpg')}}" alt="avatar"
                                                     height="39" width="39"></div>
                                         </div>
                                         <div class="media-body">
@@ -194,7 +194,7 @@
                             href="javascript:void(0);" data-toggle="dropdown">
                             <div class="user-nav d-sm-flex d-none"><span class="user-name">Pacific</span><span
                                     class="user-status text-muted">Trực tuyến</span></div><span><img class="round"
-                                    src="assets/images/portrait/small/logo-account.jpg" alt="avatar" height="40"
+                                    src="{{asset('assets/images/portrait/small/logo-account.jpg')}}" alt="avatar" height="40"
                                     width="40"></span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right pb-0"><a class="dropdown-item"

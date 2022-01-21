@@ -23,8 +23,83 @@
     @include('layouts/__sidebar')
     <!-- END: Main Menu-->
 
+    <style type="text/css">
+        
+
+        .icon-file{
+            width: 30px;
+            height: 30px;
+        }
+
+        .icon-image{
+            width: 100%;
+            height: 80px;
+            object-fit: contain;
+        }
+    </style>
+    <!-- Modal upload -->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalCenterTitle">Upload file</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <form method="post" action="{{route('admin.file.upload', $uid)}}" enctype="multipart/form-data">
+            @csrf
+          <div class="modal-body">
+            <div class="mb-3">
+              <label for="formFileMultiple" class="form-label">Vui lòng chọn file</label>
+              <input class="form-control" type="file" name="file" id="formFileMultiple" multiple>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Huỷ</button>
+            <button type="submit" class="btn btn-primary">Tải lên</button>
+          </div>
+          </form>
+        </div>
+      </div>
+    </div>
+<!--  End modal upload -->
+
+
+    <!-- Modal folder -->
+    <div class="modal fade" id="modalFolder" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalCenterTitle">Thêm folder mới</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <form method="post" action="{{route('admin.file.createFolder', $uid)}}">
+            @csrf
+          <div class="modal-body">
+             
+            <div class="mb-3">
+
+              <label for="formFileMultiple" class="form-label">Vui lòng nhập tên folder</label>
+             <input required="" type="text" name="folder" placeholder="Nhập tên folder" class="form-control">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Huỷ</button>
+            <button type="submit" class="btn btn-primary">Lưu lại</button>
+          </div>
+          </form>
+        </div>
+      </div>
+    </div>
+<!--  End modal upload -->
+    
+
     <!-- BEGIN: Content-->
     <div class="app-content content">
+
         <div class="content-area-wrapper">
             <div class="sidebar-left">
                 <div class="sidebar">
@@ -36,23 +111,28 @@
                             <!-- sidebar close icon ends -->
                             <div class="form-group add-new-file text-center">
                                 <!-- Add File Button -->
-                                <label for="getFile"
-                                    class="btn btn-primary btn-block glow my-2 add-file-btn text-capitalize"><i
-                                        class="bx bx-plus"></i>Tạo tệp tin</label>
-                                <input type="file" class="d-none" id="getFile">
+                                
+                                 <button type="submit" style="width: 100%;" class="btn btn-warning mt-2" data-toggle="modal" data-target="#modalFolder">
+                                    <i class="bx bx-plus"></i> Folder mới
+                                  </button>
+                                <button type="submit" style="width: 100%;" class="btn btn-primary mt-2" data-toggle="modal" data-target="#exampleModalCenter">
+                                    <i class="bx bx-plus"></i> Thêm file
+                                  </button>
+                                
                             </div>
                             <div class="app-file-sidebar-content">
                                 <!-- App File Left Sidebar - Drive Content Starts -->
                                 <label class="app-file-label">Quản lý tệp tin</label>
                                 <div class="list-group list-group-messages my-50">
-                                    <a href="javascript:void(0);"
-                                        class="list-group-item list-group-item-action pt-0 active">
+                                    <a href="{{route('admin.file.index', 0)}}"
+                                        class="list-group-item list-group-item-action pt-0">
+                                 
                                         <div class="fonticon-wrap d-inline mr-25">
                                             <i class="fal fa-folder"></i>
                                         </div>
                                         Tất cả tệp tin
-                                        <span
-                                            class="badge badge-light-danger badge-pill badge-round float-right mt-50">2</span>
+                                        <!-- <span
+                                            class="badge badge-light-danger badge-pill badge-round float-right mt-50">{{count($records_folder)}}</span> -->
                                     </a>
                                     <!-- <a href="javascript:void(0);" class="list-group-item list-group-item-action">
                                         <div class="fonticon-wrap d-inline mr-25">
@@ -71,14 +151,15 @@
                                         </div>
                                         Tệp tin quan trọng
                                     </a>
-                                    <a href="javascript:void(0);" class="list-group-item list-group-item-action">
+                                    <a href="{{url('file/0?is_bin=1')}}" class="list-group-item list-group-item-action">
                                         <div class="fonticon-wrap d-inline mr-25">
                                             <i class="fal fa-trash-alt"></i>
                                         </div>
-                                        Tệp tin đã xoá
+                                        Thùng rác
                                     </a>
                                 </div>
                                 <!-- App File Left Sidebar - Drive Content Ends -->
+
 
                                 <!-- App File Left Sidebar - Labels Content Starts -->
                                 <!-- <label class="app-file-label">Labels</label>
@@ -159,11 +240,11 @@
                             </ul>
                             <div class="tab-content pl-0">
                                 <div class="tab-pane active" id="details" aria-labelledby="details-tab" role="tabpanel">
-                                    <div class="border-bottom d-flex align-items-center flex-column pb-1">
+                                   <!--  <div class="border-bottom d-flex align-items-center flex-column pb-1">
                                         <img src="assets/images/icon/pdf.png" alt="PDF" height="42" width="35"
                                             class="my-1">
                                         <p class="mt-2">15.3mb</p>
-                                    </div>
+                                    </div> -->
                                     <div class="card-body pt-2">
                                         <label class="app-file-label">Setting</label>
                                         <div class="d-flex justify-content-between align-items-center mt-75">
@@ -326,373 +407,102 @@
 
                             <!-- App File Content Starts -->
                             <div class="app-file-content p-2">
-                                <h5>Tất cả tệp tin</h5>
-
-                                <!-- App File - Recent Accessed Files Section Starts -->
-                                <!-- <label class="app-file-label">Recently Accessed Files</label>
-                                <div class="row app-file-recent-access">
-                                    <div class="col-md-3 col-6">
-                                        <div class="card border shadow-none mb-1 app-file-info">
-                                            <div class="app-file-content-logo card-img-top">
-                                                <img
-                                                    class="bx bx-dots-vertical-rounded app-file-edit-icon d-block float-right"></img>
-                                                <img class="d-block mx-auto" src="assets/images/icon/pdf.png"
-                                                    height="38" width="30" alt="Card image cap">
-                                            </div>
-                                            <div class="card-body p-50">
-                                                <div class="app-file-recent-details">
-                                                    <div class="app-file-name font-size-small font-weight-bold">Felecia
-                                                        Resume.pdf</div>
-                                                    <div class="app-file-size font-size-small text-muted mb-25">12.85kb
-                                                    </div>
-                                                    <div class="app-file-last-access font-size-small text-muted">Last
-                                                        accessed : 3 hours ago</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3 col-6">
-                                        <div class="card border shadow-none mb-1 app-file-info">
-                                            <div class="app-file-content-logo card-img-top">
-                                                <img
-                                                    class="bx bx-dots-vertical-rounded app-file-edit-icon d-block float-right"></img>
-                                                <img class="d-block mx-auto" src="assets/images/icon/psd.png"
-                                                    height="38" width="30" alt="Card image cap">
-                                            </div>
-                                            <div class="card-body p-50">
-                                                <div class="app-file-content-details">
-                                                    <div class="app-file-name font-size-small font-weight-bold">
-                                                        Logo_design.psd</div>
-                                                    <div class="app-file-size font-size-small text-muted mb-25">15.60mb
-                                                    </div>
-                                                    <div class="app-file-last-access font-size-small text-muted">Last
-                                                        accessed : 3 hours ago</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3 col-6">
-                                        <div class="card border shadow-none mb-1 app-file-info">
-                                            <div class="app-file-content-logo card-img-top">
-                                                <img
-                                                    class="bx bx-dots-vertical-rounded app-file-edit-icon d-block float-right"></img>
-                                                <img class="d-block mx-auto" src="assets/images/icon/doc.png"
-                                                    height="38" width="30" alt="Card image cap">
-                                            </div>
-                                            <div class="card-body p-50">
-                                                <div class="app-file-content-details">
-                                                    <div class="app-file-name font-size-small font-weight-bold">
-                                                        Music_Two.xyz</div>
-                                                    <div class="app-file-size font-size-small text-muted mb-25">1.2gb
-                                                    </div>
-                                                    <div class="app-file-last-access font-size-small text-muted">Last
-                                                        accessed : 3 hours ago</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3 col-6">
-                                        <div class="card border shadow-none mb-1 app-file-info">
-                                            <div class="app-file-content-logo card-img-top">
-                                                <i
-                                                    class="bx bx-dots-vertical-rounded app-file-edit-icon d-block float-right"></i>
-                                                <img class="d-block mx-auto" src="assets/images/icon/sketch.png"
-                                                    height="38" width="30" alt="Card image cap">
-                                            </div>
-                                            <div class="card-body p-50">
-                                                <div class="app-file-content-details">
-                                                    <div class="app-file-name font-size-small font-weight-bold">
-                                                        Application.sketch</div>
-                                                    <div class="app-file-size font-size-small text-muted mb-25">92.83kb
-                                                    </div>
-                                                    <div class="app-file-last-access font-size-small text-muted">Last
-                                                        accessed : 3 hours ago</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> -->
-                                <!-- App File - Recent Accessed Files Section Ends -->
-
+                               
+                                <nav aria-label="breadcrumb">
+                                  <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="{{route('admin.file.index', 0)}}">File của tôi</a></li>
+                                    <li class="breadcrumb-item"><a href="#">Folder</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page">Folder1</li>
+                                  </ol>
+                                </nav>
                                 <!-- App File - Folder Section Starts -->
+                                @if(count($records_folder) > 0 )
                                 <label class="app-file-label">Thư mục</label>
                                 <div class="row app-file-folder">
+                                    @foreach($records_folder as $record_folder)
                                     <div class="col-lg-3 col-md-4 col-6">
-                                        <div class="card border shadow-none mb-1 app-file-info">
+                                        <div class="card border shadow-none mb-1 app-file-info" data-uid="{{$record_folder->uid}}">
                                             <div class="card-body px-75 py-50">
                                                 <div class="app-file-folder-content d-flex align-items-center">
                                                     <div class="app-file-folder-logo mr-75">
-                                                        <i class="bx bx-folder font-medium-4"></i>
+                                                        <img class="icon-file" src="{{asset('assets/images/file/folder.png')}}">
                                                     </div>
                                                     <div class="app-file-folder-details">
                                                         <div
                                                             class="app-file-folder-name font-size-small font-weight-bold">
-                                                            Project</div>
-                                                        <div class="app-file-folder-size font-size-small text-muted">2
-                                                            files, 14.05mb</div>
+                                                            {{$record_folder->name}}</div>
+                                                        <div class="app-file-folder-size font-size-small text-muted">{{$record_folder->count}} files, {{($record_folder->size)/1000}}kb</div>
                                                     </div>
-                                                </div>
+                                                </div>  
                                             </div>
+                                        </div>
+                                       
+                                        <div class="dropdown-menu dropdown-menu-sm context-menu">
+                                           <a class="dropdown-item" href="{{route('admin.file.index', $record_folder->uid)}}"><i class="fa fa-eye" aria-hidden="true"></i>&nbsp; Mở</a>
+                                           <a class="dropdown-item" href="#"><i class="fas fa-edit"></i>&nbsp; Đổi tên</a>
+                                           <a class="dropdown-item" href="#"><i class="fas fa-share-square"></i>&nbsp; Chia sẻ</a>
+                                           <a class="dropdown-item" href=""><i class="fas fa-file-alt"></i>&nbsp; Thông tin</a>
+                                            <form method="post" action="{{route('admin.file.delete', $record_folder->id)}}" class="text-center">
+                                             {!! method_field('DELETE') !!}
+                                             @csrf
+                                           <button class="btn btn-primary text-center" style="width: 75%;" type="submit">&nbsp; Xoá</button>
+                                           </form>
                                         </div>
                                     </div>
-                                    <!-- <div class="col-lg-3 col-md-4 col-6">
-                                        <div class="card border shadow-none mb-1 app-file-info">
-                                            <div class="card-body px-75 py-50">
-                                                <div class="app-file-folder-content d-flex align-items-center">
-                                                    <div class="app-file-folder-logo mr-75">
-                                                        <i class="bx bx-folder font-medium-4"></i>
-                                                    </div>
-                                                    <div class="app-file-folder-details">
-                                                        <div
-                                                            class="app-file-folder-name font-size-small font-weight-bold">
-                                                            Video</div>
-                                                        <div class="app-file-folder-size font-size-small text-muted">130
-                                                            files, 890mb</div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3 col-md-4 col-6">
-                                        <div class="card border shadow-none mb-1 app-file-info">
-                                            <div class="card-body px-75 py-50">
-                                                <div class="app-file-folder-content d-flex align-items-center">
-                                                    <div class="app-file-folder-logo mr-75">
-                                                        <i class="bx bx-folder font-medium-4"></i>
-                                                    </div>
-                                                    <div class="app-file-folder-details">
-                                                        <div
-                                                            class="app-file-folder-name font-size-small font-weight-bold">
-                                                            Music</div>
-                                                        <div class="app-file-folder-size font-size-small text-muted">15
-                                                            files, 58mb</div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3 col-md-4 col-6">
-                                        <div class="card border shadow-none mb-1 app-file-info">
-                                            <div class="card-body px-75 py-50">
-                                                <div class="app-file-folder-content d-flex align-items-center">
-                                                    <div class="app-file-folder-logo mr-75">
-                                                        <i class="bx bx-folder font-medium-4"></i>
-                                                    </div>
-                                                    <div class="app-file-folder-details">
-                                                        <div
-                                                            class="app-file-folder-name font-size-small font-weight-bold">
-                                                            Documents</div>
-                                                        <div class="app-file-folder-size font-size-small text-muted">12
-                                                            files, 9.5mb</div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3 col-md-4 col-6">
-                                        <div class="card border shadow-none mb-1 app-file-info">
-                                            <div class="card-body px-75 py-50">
-                                                <div class="app-file-folder-content d-flex align-items-center">
-                                                    <div class="app-file-folder-logo mr-75">
-                                                        <i class="bx bx-folder font-medium-4"></i>
-                                                    </div>
-                                                    <div class="app-file-folder-details">
-                                                        <div
-                                                            class="app-file-folder-name font-size-small font-weight-bold">
-                                                            Application Design</div>
-                                                        <div class="app-file-folder-size font-size-small text-muted">1
-                                                            files, 36.25kb</div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div> -->
-                                    <div class="col-lg-3 col-md-4 col-6">
-                                        <div class="card border shadow-none mb-1 app-file-info">
-                                            <div class="card-body px-75 py-50">
-                                                <div class="app-file-folder-content d-flex align-items-center">
-                                                    <div class="app-file-folder-logo mr-75">
-                                                        <i class="bx bx-folder font-medium-4"></i>
-                                                    </div>
-                                                    <div class="app-file-folder-details">
-                                                        <div
-                                                            class="app-file-folder-name font-size-small font-weight-bold">
-                                                            Photos</div>
-                                                        <div class="app-file-folder-size font-size-small text-muted">
-                                                            3.6k files, 348mb</div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    @endforeach
                                 </div>
+                                @endif
                                 <!-- App File - Folder Section Ends -->
 
                                 <!-- App File - Files Section Starts -->
+                                @if(count($records_file) > 0 )
                                 <label class="app-file-label">Tệp tin</label>
                                 <div class="row app-file-files">
+                                    @foreach($records_file as $record_file)
                                     <div class="col-md-3 col-6">
                                         <div class="card border shadow-none mb-1 app-file-info">
                                             <div class="app-file-content-logo card-img-top">
-                                                <img
-                                                    class="bx bx-dots-vertical-rounded app-file-edit-icon d-block float-right"></img>
-                                                <img class="d-block mx-auto" src="assets/images/icon/pdf.png"
-                                                    height="38" width="30" alt="Card image cap">
+                                               <!--  <i class="bx bx-dots-vertical-rounded app-file-edit-icon d-block float-right"></i> -->
+                                                @if(in_array($record_file->format,['jpg','png','jpeg']))
+                                                <img class="d-block mx-auto icon-image" src="{{ Storage::url($record_file->link) }}"  alt="Card image cap">
+                                                @elseif(in_array($record_file->format,['doc','docx']))
+                                                <img class="d-block mx-auto" src="{{asset('assets/images/file/word.png')}}" height="80" width="55" alt="Card image cap">
+                                                @elseif(in_array($record_file->format,['xls','xlsx']))
+                                                <img class="d-block mx-auto" src="{{asset('assets/images/file/excel.png')}}" height="80" width="55" alt="Card image cap">
+                                                @elseif(in_array($record_file->format,['pdf']))
+                                                <img class="d-block mx-auto" src="{{asset('assets/images/file/pdf.png')}}" height="80" width="55" alt="Card image cap">
+                                                @else
+                                                <img class="d-block mx-auto" src="{{asset('assets/images/file/no-format.png')}}" height="80" width="55" alt="Card image cap">
+                                                @endif
                                             </div>
                                             <div class="card-body p-50">
                                                 <div class="app-file-details">
                                                     <div class="app-file-name font-size-small font-weight-bold">
-                                                        Banner.jpg</div>
-                                                    <div class="app-file-size font-size-small text-muted mb-25">13kb
-                                                    </div>
-                                                    <div class="app-file-type font-size-small text-muted">Image File
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3 col-6">
-                                        <div class="card border shadow-none mb-1 app-file-info">
-                                            <div class="app-file-content-logo card-img-top">
-                                                <img
-                                                    class="bx bx-dots-vertical-rounded app-file-edit-icon d-block float-right"></img>
-                                                <img class="d-block mx-auto" src="assets/images/icon/psd.png"
-                                                    height="38" width="30" alt="Card image cap">
-                                            </div>
-                                            <div class="card-body p-50">
-                                                <div class="app-file-details">
-                                                    <div class="app-file-name font-size-small font-weight-bold">
-                                                        Management.docx</div>
-                                                    <div class="app-file-size font-size-small text-muted mb-25">15.60mb
-                                                    </div>
-                                                    <div class="app-file-type font-size-small text-muted">Word Document
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3 col-6">
-                                        <div class="card border shadow-none mb-1 app-file-info">
-                                            <div class="app-file-content-logo card-img-top">
-                                                <img
-                                                    class="bx bx-dots-vertical-rounded app-file-edit-icon d-block float-right"></img>
-                                                <img class="d-block mx-auto" src="assets/images/icon/doc.png"
-                                                    height="38" width="30" alt="Card image cap">
-                                            </div>
-                                            <div class="card-body p-50">
-                                                <div class="app-file-details">
-                                                    <div class="app-file-name font-size-small font-weight-bold">
-                                                        Thunder.mp3</div>
-                                                    <div class="app-file-size font-size-small text-muted mb-25">3.4mb
-                                                    </div>
-                                                    <div class="app-file-type font-size-small text-muted">Mp3 File</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3 col-6">
-                                        <div class="card border shadow-none mb-1 app-file-info">
-                                            <div class="app-file-content-logo card-img-top">
-                                                <i
-                                                    class="bx bx-dots-vertical-rounded app-file-edit-icon d-block float-right"></i>
-                                                <img class="d-block mx-auto" src="assets/images/icon/sketch.png"
-                                                    height="38" width="30" alt="Card image cap">
-                                            </div>
-                                            <div class="card-body p-50">
-                                                <div class="app-file-details">
-                                                    <div class="app-file-name font-size-small font-weight-bold">
-                                                        Dashboard.sketch</div>
-                                                    <div class="app-file-size font-size-small text-muted mb-25">108kb
+                                                        {{$record_file->name}}</div>
+                                                    <div class="app-file-size font-size-small text-muted mb-25">{{($record_file->size)/1000}}kb
                                                     </div>
                                                     <div class="app-file-type font-size-small text-muted">Sketch File
                                                     </div>
                                                 </div>
                                             </div>
+                                            
+                                        </div>
+                                        <div class="dropdown-menu dropdown-menu-sm context-menu">
+                                               <a class="dropdown-item" href="{{route('admin.file.index', $record_file->uid)}}"><i class="fa fa-eye" aria-hidden="true"></i>&nbsp; Mở</a>
+                                               <a class="dropdown-item" href="#"><i class="fas fa-edit"></i>&nbsp; Đổi tên</a>
+                                               <a class="dropdown-item" href="#"><i class="fas fa-share-square"></i>&nbsp; Chia sẻ</a>
+                                               <a class="dropdown-item" href=""><i class="fas fa-file-alt"></i>&nbsp; Thông tin</a>
+                                                <form method="post" action="{{route('admin.file.delete', $record_file->id)}}" class="text-center">
+                                                 {!! method_field('DELETE') !!}
+                                                 @csrf
+                                               <button class="btn btn-primary text-center" style="width: 75%;" type="submit">&nbsp; Xoá</button>
+                                               </form>
                                         </div>
                                     </div>
+                                    @endforeach
                                 </div>
-                                <!-- <div class="row">
-                                    <div class="col-md-3 col-6">
-                                        <div class="card border shadow-none mb-1 app-file-info">
-                                            <div class="app-file-content-logo card-img-top">
-                                                <img
-                                                    class="bx bx-dots-vertical-rounded app-file-edit-icon d-block float-right"></img>
-                                                <img class="d-block mx-auto" src="assets/images/icon/psd.png"
-                                                    height="38" width="30" alt="Card image cap">
-                                            </div>
-                                            <div class="card-body p-50">
-                                                <div class="app-file-details">
-                                                    <div class="app-file-name font-size-small font-weight-bold">Logo.psd
-                                                    </div>
-                                                    <div class="app-file-size font-size-small text-muted mb-25">10.6kb
-                                                    </div>
-                                                    <div class="app-file-type font-size-small text-muted">Photoshop File
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3 col-6">
-                                        <div class="card border shadow-none mb-1 app-file-info">
-                                            <div class="app-file-content-logo card-img-top">
-                                                <i
-                                                    class="bx bx-dots-vertical-rounded app-file-edit-icon d-block float-right"></i>
-                                                <img class="d-block mx-auto" src="assets/images/icon/sketch.png"
-                                                    height="38" width="30" alt="Card image cap">
-                                            </div>
-                                            <div class="card-body p-50">
-                                                <div class="app-file-details">
-                                                    <div class="app-file-name font-size-small font-weight-bold">
-                                                        Logo_Design.sketch</div>
-                                                    <div class="app-file-size font-size-small text-muted mb-25">256.5kb
-                                                    </div>
-                                                    <div class="app-file-type font-size-small text-muted">Sketch File
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3 col-6">
-                                        <div class="card border shadow-none mb-1 app-file-info">
-                                            <div class="app-file-content-logo card-img-top">
-                                                <img
-                                                    class="bx bx-dots-vertical-rounded app-file-edit-icon d-block float-right"></img>
-                                                <img class="d-block mx-auto" src="assets/images/icon/doc.png"
-                                                    height="38" width="30" alt="Card image cap">
-                                            </div>
-                                            <div class="card-body p-50">
-                                                <div class="app-file-details">
-                                                    <div class="app-file-name font-size-small font-weight-bold">
-                                                        Bootstrap.xyz</div>
-                                                    <div class="app-file-size font-size-small text-muted mb-25">0.0kb
-                                                    </div>
-                                                    <div class="app-file-type font-size-small text-muted">Unknown File
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3 col-6">
-                                        <div class="card border shadow-none mb-1 app-file-info">
-                                            <div class="app-file-content-logo card-img-top">
-                                                <img
-                                                    class="bx bx-dots-vertical-rounded app-file-edit-icon d-block float-right"></img>
-                                                <img class="d-block mx-auto" src="assets/images/icon/pdf.png"
-                                                    height="38" width="30" alt="Card image cap">
-                                            </div>
-                                            <div class="card-body p-50">
-                                                <div class="app-file-details">
-                                                    <div class="app-file-name font-size-small font-weight-bold">
-                                                        Read_Me.pdf</div>
-                                                    <div class="app-file-size font-size-small text-muted mb-25">10.5kb
-                                                    </div>
-                                                    <div class="app-file-type font-size-small text-muted">PDF File</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> -->
-                                <!-- App File - Files Section Ends -->
+                                @endif
+                                
                             </div>
                         </div>
 
@@ -703,15 +513,149 @@
     </div>
     <!-- END: Content-->
 
+    </div>
+    <!-- demo chat-->
+    <div class="widget-chat-demo">
+        <!-- widget chat demo footer button start -->
+        <button class="btn btn-primary chat-demo-button glow px-1"><i class="fal fa-comments-alt"></i></button>
+        <!-- widget chat demo footer button ends -->
+        <!-- widget chat demo start -->
+        <div class="widget-chat widget-chat-demo d-none">
+            <div class="card mb-0">
+                <div class="card-header border-bottom p-0">
+                    <div class="media m-75">
+                        <a href="JavaScript:void(0);">
+                            <div class="avatar mr-75">
+                                <img src="assets/images/portrait/small/avatar-s-2.jpg" alt="avtar images" width="32"
+                                    height="32">
+                                <span class="avatar-status-online"></span>
+                            </div>
+                        </a>
+                        <div class="media-body">
+                            <h6 class="media-heading mb-0 pt-25"><a href="javaScript:void(0);">Kiara Cruiser</a></h6>
+                            <span class="text-muted font-small-3">Active</span>
+                        </div>
+                    </div>
+                    <div class="heading-elements">
+                        <i class="bx bx-x widget-chat-close float-right my-auto cursor-pointer"></i>
+                    </div>
+                </div>
+                <div class="card-body widget-chat-container widget-chat-demo-scroll">
+                    <div class="chat-content">
+                        <div class="badge badge-pill badge-light-secondary my-1">today</div>
+                        <div class="chat">
+                            <div class="chat-body">
+                                <div class="chat-message">
+                                    <p>How can we help? 😄</p>
+                                    <span class="chat-time">7:45 AM</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chat chat-left">
+                            <div class="chat-body">
+                                <div class="chat-message">
+                                    <p>Hey John, I am looking for the best admin template.</p>
+                                    <p>Could you please help me to find it out? 🤔</p>
+                                    <span class="chat-time">7:50 AM</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chat">
+                            <div class="chat-body">
+                                <div class="chat-message">
+                                    <p>Stack admin is the responsive bootstrap 4 admin template.</p>
+                                    <span class="chat-time">8:01 AM</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer border-top p-1">
+                    <form class="d-flex" onsubmit="widgetChatMessageDemo();" action="javascript:void(0);">
+                        <input type="text" class="form-control chat-message-demo mr-75" placeholder="Type here...">
+                        <button type="submit" class="btn btn-primary glow px-1"><i
+                                class="bx bx-paper-plane"></i></button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- widget chat demo ends -->
+
+    </div>
+    <div class="sidenav-overlay"></div>
+    <div class="drag-target"></div>
+
     <!-- BEGIN: Footer-->
-    @include('layouts/__footer')
+    <footer class="footer footer-static footer-light">
+        <p class="clearfix mb-0"><span class="float-left d-inline-block">2022 &copy; Pacific Logistics Group</span>
+            <button class="btn btn-primary btn-icon scroll-top" type="button"><i
+                    class="bx bx-up-arrow-alt"></i></button>
+        </p>
+    </footer>
     <!-- END: Footer-->
 
-    <!-- BEGIN: Page JS-->
-    <script src="assets/js/scripts/pages/app-file-manager.min.js"></script>
-    <!-- END: Page JS-->
 
+    <!-- BEGIN: Vendor JS-->
+    <script src="{{asset('assets/vendors/js/vendors.min.js')}}"></script>
+    <script src="{{asset('assets/fonts/LivIconsEvo/js/LivIconsEvo.tools.min.js')}}"></script>
+    <script src="{{asset('assets/fonts/LivIconsEvo/js/LivIconsEvo.defaults.min.js')}}"></script>
+    <script src="{{asset('assets/fonts/LivIconsEvo/js/LivIconsEvo.min.js')}}"></script>
+    <!-- BEGIN Vendor JS-->
+
+    <!-- BEGIN: Page Vendor JS-->
+    <!-- END: Page Vendor JS-->
+
+    <!-- BEGIN: Theme JS-->
+    <script src="{{asset('assets/js/scripts/configs/vertical-menu-dark.min.js')}}"></script>
+    <script src="{{asset('assets/js/core/app-menu.min.js')}}"></script>
+    <script src="{{asset('assets/js/core/app.min.js')}}"></script>
+    <script src="{{asset('assets/js/file/file.js')}}"></script>
+    <script src="{{asset('assets/js/scripts/components.min.js')}}"></script>
+    <script src="{{asset('assets/js/scripts/footer.min.js')}}"></script>
+    <script src="{{asset('assets/js/scripts/customizer.min.js')}}"></script>
+    <!-- END: Theme JS-->
+
+    <!-- BEGIN: Page JS-->
+    <script src="{{asset('assets/js/scripts/pages/app-file-manager.min.js')}}"></script>
+    <!-- END: Page JS-->
+     <script type="text/javascript">
+
+         $('.app-file-info').on('contextmenu', function(e) {
+          var top = e.pageY;
+          var left = e.pageX;
+          $(this).next(".context-menu").css({
+            display: "block",
+            position: "absolute",
+            top: "40px",
+            left: "130px",
+          }).addClass("show");
+          return false; //blocks default Webbrowser right click menu
+        }).on("click", function() {
+          $(".context-menu").removeClass("show").hide();
+        });
+
+        $(".context-menu a").on("click", function() {
+          $(this).parent().removeClass("show").hide();
+        });
+
+          // If the document is clicked somewhere
+        $(document).bind("mousedown", function (e) {
+            // If the clicked element is not the menu
+            if (!$(e.target).parents(".context-menu").length > 0) {
+                
+                // Hide it
+                $(".context-menu").hide(100);
+            }
+        });
+
+
+
+        
+
+     </script>
 </body>
 <!-- END: Body-->
+
+<!-- Mirrored from www.pixinvent.com/demo/frest-clean-bootstrap-admin-dashboard-template/html/ltr/vertical-menu-template-semi-dark/app-file-manager.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 03 Dec 2021 09:13:06 GMT -->
 
 </html>
