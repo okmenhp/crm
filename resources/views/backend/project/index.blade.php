@@ -65,7 +65,7 @@
                                             <th>Dự án</th>
                                             <th>Hợp đồng</th>
                                             <th>Người phụ trách</th>
-                                            <th>Tiến độ</th>
+                                            <!-- <th>Tiến độ</th> -->
                                             <th>Tình trạng</th>
                                             <th>Thao tác</th>
                                         </tr>
@@ -76,11 +76,11 @@
                                             <td>Dean Stanley</td>
                                             <td>Project</td>
                                             <td>Dean Stanley</td>
-                                            <td>
+                                            <!-- <td>
                                                 <div class="progress-bar progress-bar-striped progress-bar-animated"
                                                     role="progressbar" aria-valuenow="80" aria-valuemin="80"
                                                     aria-valuemax="100" style="width:80%"></div>
-                                            </td>
+                                            </td> -->
                                             <td>
                                                 <div class="badge badge-primary mr-1 mb-1">Đang diễn ra</div>
                                                 <div class="badge badge-secondary mr-1 mb-1">Chưa bắt đầu</div>

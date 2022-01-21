@@ -18,9 +18,17 @@ Route::group(['middleware' => 'admin'], function() {
 	Route::get('/edit-employee',  'Backend\EmployeeController@edit');
 	Route::get('/create-employee',  'Backend\EmployeeController@create');
 
+    Route::get('/role',  'Backend\RoleController@index');
+	Route::get('/edit-role',  'Backend\RoleController@edit');
+	Route::get('/create-role',  'Backend\RoleController@create');
+
     Route::get('/project',  'Backend\ProjectController@index');
 	Route::get('/edit-project',  'Backend\ProjectController@edit');
 	Route::get('/create-project',  'Backend\ProjectController@create');
+
+    Route::get('/customer',  'Backend\CustomerController@index');
+	Route::get('/edit-customer',  'Backend\CustomerController@edit');
+	Route::get('/create-customer',  'Backend\CustomerController@create');
 
 	Route::get('/',  'Backend\AuthController@login');
 	Route::get('/forgot-password',  'Backend\AuthController@forgot_password');

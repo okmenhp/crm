@@ -20,7 +20,7 @@
             data-icon-style="lines">
             <li class=" navigation-header text-truncate"><span data-i18n="Apps">Trang chủ</span>
             </li>
-            <li class=" nav-item"><a href="#"><i class="fal fa-home"></i><span class="menu-title text-truncate"
+            <li class=" nav-item"><a href="/home"><i class="fal fa-home"></i><span class="menu-title text-truncate"
                         data-i18n="Email">Trang chủ</span></a>
             </li>
             <li class=" navigation-header text-truncate"><span data-i18n="Apps">Nhân sự</span>
@@ -46,8 +46,18 @@
             </li>
             <li class=" navigation-header text-truncate"><span data-i18n="Apps">Dự án</span>
             </li>
-            <li class=" nav-item"><a href="/project"><i class="fal fa-calendar"></i><span
+            <li class=" nav-item"><a href="/project"><i class="fal fa-project-diagram"></i><span
                         class="menu-title text-truncate" data-i18n="Todo">Quản lý dự án</span></a>
+            </li>
+            <li class=" navigation-header text-truncate"><span data-i18n="Apps">Khách hàng</span>
+            </li>
+            <li class=" nav-item"><a href="/customer"><i class="fal fa-angel"></i><span class="menu-title text-truncate"
+                        data-i18n="Todo">Quản lý khách hàng</span></a>
+            </li>
+            <li class=" navigation-header text-truncate"><span data-i18n="Apps">Tài khoản</span>
+            </li>
+            <li class=" nav-item"><a href="/role"><i class="fal fa-user-lock"></i><span class="menu-title text-truncate"
+                        data-i18n="Todo">Quản lý tài khoản</span></a>
             </li>
 
         </ul>
