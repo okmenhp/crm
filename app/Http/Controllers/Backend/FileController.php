@@ -75,8 +75,7 @@ class FileController extends BaseController
     }
 
     public function openFolder(Request $request, $uid)
-    { 
-        
+    {    
         return view('backend/folder/index');
     }
 
