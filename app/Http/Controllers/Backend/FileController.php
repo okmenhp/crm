@@ -73,7 +73,7 @@ class FileController extends BaseController
         $this->fileRepo->create($input);
         return redirect()->route('admin.file.index', $uid);
     }
-
+     
     public function openFolder(Request $request, $uid)
     {    
         return view('backend/folder/index');
