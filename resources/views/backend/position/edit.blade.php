@@ -16,6 +16,7 @@
     <div class="content-wrapper">
         <div class="content-header row">
         </div>
+       @dd('123')
         <div class="content-body">
             <!-- users edit start -->
             <section class="users-edit">
@@ -25,35 +26,22 @@
                             <div class="tab-pane active fade show" id="account" aria-labelledby="account-tab"
                                 role="tabpanel">
                                 <!-- users edit account form start -->
-                                <form class="form-validate">
+                                <form class="form-validate" method="post" action="{{ route('admin.position.update', $record->id)}}">
                                     <div class="row">
                                         <div class="col-12 col-sm-12">
                                             <div class="form-group">
                                                 <div class="controls">
                                                     <label>Vị trí công việc</label>
                                                     <input type="text" class="form-control" placeholder="Username"
-                                                        value="" name="username">
+                                                        value="{{ $record->name }}" name="name">
+                                                        @if(isset($errors))
+                                                    {!! $errors->first('name', '<span class="text-danger">:message</span>') !!}
+                                                    @endif
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-12 col-sm-6">
-                                            <div class="form-group">
-                                                <label>Phòng ban</label>
-                                                <select class="form-control">
-                                                    <option>1</option>
-                                                    <option>2</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-sm-6">
-                                            <div class="form-group">
-                                                <label>Chức vụ</label>
-                                                <select class="form-control">
-                                                    <option>1</option>
-                                                    <option>2</option>
-                                                </select>
-                                            </div>
-                                        </div>
+
+
                                         <div class="col-12">
                                             <fieldset class="form-group">
                                                 <label>Mô tả</label>

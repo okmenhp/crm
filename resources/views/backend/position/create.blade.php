@@ -25,42 +25,18 @@
                             <div class="tab-pane active fade show" id="account" aria-labelledby="account-tab"
                                 role="tabpanel">
                                 <!-- users edit account form start -->
-                                <form class="form-validate">
+                                <form class="form-validate" method="post" action="{{route('admin.position.store')}}">
                                     <div class="row">
                                         <div class="col-12 col-sm-12">
                                             <div class="form-group">
                                                 <div class="controls">
                                                     <label>Tên chức vụ</label>
                                                     <input type="text" class="form-control"
-                                                        placeholder="Nhập tên chức vụ" value="" name="username">
+                                                        placeholder="Nhập tên chức vụ" value="" name="name">
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-12 col-sm-6">
-                                            <div class="form-group">
-                                                <label>Phòng ban</label>
-                                                <select class="form-control">
-                                                    <option>1</option>
-                                                    <option>2</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-sm-6">
-                                            <div class="form-group">
-                                                <label>Chức vụ</label>
-                                                <select class="form-control">
-                                                    <option>1</option>
-                                                    <option>2</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <fieldset class="form-group">
-                                                <label>Mô tả</label>
-                                                <textarea class="form-control" id="basicTextarea" rows="3"
-                                                    placeholder="Textarea"></textarea>
-                                            </fieldset>
-                                        </div>
+
                                         <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1">
                                             <button type="submit"
                                                 class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1">Lưu thay

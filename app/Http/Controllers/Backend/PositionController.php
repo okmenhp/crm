@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Backend;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\BaseController;
+use App\Models\Position;
+use Validator;
 
 class PositionController extends BaseController
 {
@@ -35,7 +37,16 @@ class PositionController extends BaseController
      */
     public function store(Request $request)
     {
-        //
+        $input = $request->all();
+        $validator = Validator::make($input, [
+            'name' => 'required|unique:position'
+        ]);
+
+        if ($validator->fails()) {
+            dd($validator->errors());
+        }
+        Position::create($input);
+        return redirect()->route('admin.position.index');
     }
 
     /**
@@ -55,21 +66,26 @@ class PositionController extends BaseController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit()
+    public function edit($id)
     {
-        return view('backend/position/edit');
+        $record = Position::find($id);
+        return view('backend/position/edit', compact('record'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(Request $request, $id)
     {
-        //
+        $input = $request->all();
+        $validator = Validator::make($input, [
+            'name' => 'required|unique:position,unique:position,name,' . $id . ',id'
+        ]);
+
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput($request->all());
+        }
+        Position::where('id', $id)->update($input);
+        return redirect()->route('admin.position.index');
     }
 
     /**
