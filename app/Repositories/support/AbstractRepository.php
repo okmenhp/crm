@@ -43,7 +43,7 @@ abstract class AbstractRepository {
     }
     
     public function allOrder($columns = array('*')) {
-        return $this->model->orderBy('order', 'ASC')->orderBy('created_at', 'DESC')->get($columns);
+        return $this->model->orderBy('ordering', 'ASC')->orderBy('created_at', 'DESC')->get($columns);
     }
 
     public function allParent($request, $columns = array('*'), $parent_id) {
@@ -92,24 +92,24 @@ abstract class AbstractRepository {
     }
 
     /**
-     * Delete a Eloquent model
-     * @param $id
-     * @return mixed
-     */
+    * Delete a Eloquent model
+    * @param $id
+    * @return mixed
+    */
+
     public function delete($id) {
         $model = $this->model->find($id);
         $model->delete();
     }
 
-   
     public function find($id, $columns = array('*')) {
         return $this->model->find($id, $columns);
     }
 
-    
     public function findBy($attribute, $value, $columns = array('*')) {
         return $this->model->where($attribute, '=', $value)->first($columns);
     }
+
     public function updateViewCount($id, $view_count) {
         return $this->model->where('id', $id)->update(['view_count' => $view_count+1]);
     }

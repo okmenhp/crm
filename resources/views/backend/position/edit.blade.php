@@ -11,12 +11,14 @@
 @extends('layouts.master')
 @section('content')
 <!-- BEGIN: Content-->
+@if(isset($errors))
+    dd($errors)
+@endif
 <div class="app-content content">
     <div class="content-overlay"></div>
     <div class="content-wrapper">
         <div class="content-header row">
         </div>
-       @dd('123')
         <div class="content-body">
             <!-- users edit start -->
             <section class="users-edit">
@@ -46,7 +48,7 @@
                                             <fieldset class="form-group">
                                                 <label>Mô tả</label>
                                                 <textarea class="form-control" id="basicTextarea" rows="3"
-                                                    placeholder="Textarea"></textarea>
+                                                    placeholder="Textarea">{{ $record->note }}</textarea>
                                             </fieldset>
                                         </div>
                                         <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1">

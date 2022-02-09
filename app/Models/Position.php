@@ -6,12 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Position extends Model
 {
-    const ACTIVE = 1;
-    const UNACTIVE = 0;
-
+    const STATUS_ACTIVE = 1;
+    const STATUS_UNACTIVE = 0;
 
     protected $table = 'position';
-    protected $fillable = ['name', 'status'];
+    protected $fillable = ['name', 'status', 'note'];
 
     public function created_at()
     {

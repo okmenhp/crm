@@ -6,9 +6,6 @@ use Illuminate\Support\Facades\Route;
 Route::group(['middleware' => 'admin'], function () {
     Route::get('/home',  ['as' => 'admin.index', 'uses' => 'Backend\BackendController@index']);
 
-    Route::get('/position', ['as' => 'admin.position.index', 'uses' => 'Backend\PositionController@index']);
-    Route::get('/edit-position',  ['as' => 'admin.position.edit', 'uses' => 'Backend\PositionController@edit']);
-    Route::get('/create-position',  ['as' => 'admin.position.create', 'uses' => 'Backend\PositionController@create']);
 
     Route::get('/department',  ['as' => 'admin.department.index', 'uses' => 'Backend\DepartmentController@index']);
     Route::get('/edit-department',  ['as' => 'admin.department.edit', 'uses' => 'Backend\DepartmentController@edit']);
@@ -42,4 +39,5 @@ Route::group(['middleware' => 'admin'], function () {
     Route::post('/positon/store',  ['as' => 'admin.position.store', 'uses' => 'Backend\PositionController@store']);
     Route::get('/positon/edit/{id}',  ['as' => 'admin.position.edit', 'uses' => 'Backend\PositionController@edit']);
     Route::post('/positon/update/{id}',  ['as' => 'admin.position.update', 'uses' => 'Backend\PositionController@update']);
+    Route::delete('/positon/delete/{id}',  ['as' => 'admin.position.destroy', 'uses' => 'Backend\PositionController@destroy']);
 });

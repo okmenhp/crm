@@ -36,6 +36,22 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="col-12 col-sm-12">
+                                            <div class="form-group">
+                                                <div class="controls">
+                                                    <label>Ghi chú</label>
+                                                    <textarea name="note" rows="3" placeholder="Nhập ghi chú" class=" form-control"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Default checked -->
+                                        <div class="col-12 col-sm-12">
+                                        <div class="form-check form-switch">
+                                          <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked>
+                                          <label class="form-check-label" for="flexSwitchCheckChecked">Kích hoạt</label>
+                                        </div>
+                                        </div>
 
                                         <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1">
                                             <button type="submit"

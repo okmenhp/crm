@@ -18,4 +18,8 @@
 <script src="{{asset('assets/js/scripts/components.min.js')}}"></script>
 <script src="{{asset('assets/js/scripts/footer.min.js')}}"></script>
 <script src="{{asset('assets/js/scripts/customizer.min.js')}}"></script>
+<script src="{{asset('assets/js/core/main.js')}}"></script>
+<script src="https://unpkg.com/sweetalert2@7.18.0/dist/sweetalert2.all.js"></script>
+
+
 <!-- END: Theme JS-->

@@ -28,4 +28,11 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+    public function department()
+    {
+        // belongsTo(RelatedModel, foreignKey = _id, keyOnRelatedModel = id)
+        return $this->belongsTo(Department::class , 'department_id', 'id');
+    }
 }
