@@ -5,7 +5,7 @@
     <!-- BEGIN: Head-->
     @include('layouts/__head')
     <!-- END: Header-->
-
+    @include('sweetalert::alert')
     <!-- BEGIN: Page CSS-->
     @yield('css')
     <!-- END: Page CSS-->

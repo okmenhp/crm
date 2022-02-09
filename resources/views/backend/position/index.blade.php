@@ -10,6 +10,7 @@
 @stop
 @extends('layouts.master')
 @section('content')
+
 <div class="app-content content">
     <div class="content-overlay"></div>
     <div class="content-wrapper">
@@ -45,7 +46,7 @@
                                         class="bx bx-search"></i></button>
                             </div>
                             <div class="col-12 col-sm-6 col-lg-2">
-                                <a href="/create-position" type="button" class="btn btn-primary btn-block my-2">
+                                <a href="{{route('admin.position.create')}}" type="button" class="btn btn-primary btn-block my-2">
                                     <i class="bx bx-plus"></i>
                                     <span>Thêm mới</span>
                                 </a>
@@ -67,34 +68,19 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @foreach($records as $key => $record)
                                         <tr>
-                                            <td>1</td>
-                                            <td>Dean Stanley</td>
-                                            <td><a href=""><i class="far fa-edit"></i></a>
-                                                <a href=""><i class="far fa-trash-alt ml-1"></i>
+                                            <td>{{++$key}}</td>
+                                            <td>{{$record->name}}</td>
+                                            <td><a href="{{route('admin.position.edit', $record->id)}}"><i class="far fa-edit"></i></a>
+                                                <form method="POST" action="{{ route('admin.position.destroy', $record->id) }}">
+                                                    @csrf
+                                                    <input name="_method" type="hidden" value="DELETE">
+                                                    <button type="submit" class="btn btn-xs btn-danger btn-flat show_confirm" data-toggle="tooltip" title='Delete'>Delete</button>
+                                                </form>
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>Zena Buckley</td>
-                                            <td><a href=""><i class="far fa-edit"></i></a>
-                                                <a href=""><i class="far fa-trash-alt ml-1"></i>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>3</td>
-                                            <td>Delilah Moon</td>
-                                            <td><a href=""><i class="far fa-edit"></i></a>
-                                                <a href=""><i class="far fa-trash-alt ml-1"></i>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>4</td>
-                                            <td>Hillary Rasmussen</td>
-                                            <td><a href=""><i class="far fa-edit"></i></a>
-                                                <a href=""><i class="far fa-trash-alt ml-1"></i>
-                                            </td>
-                                        </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
@@ -118,5 +104,6 @@
 <!-- END: Page Vendor JS-->
 <!-- BEGIN: Page JS-->
 <script src="assets/js/scripts/pages/app-users.min.js"></script>
+<script type="text/javascript"></script>
 <!-- END: Page JS-->
 @stop

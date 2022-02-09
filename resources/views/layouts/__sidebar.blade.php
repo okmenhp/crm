@@ -25,7 +25,7 @@
             </li>
             <li class=" navigation-header text-truncate"><span data-i18n="Apps">Nhân sự</span>
             </li>
-            <li class=" nav-item"><a href="/position"><i class="fal fa-poll-people"></i><span
+            <li class=" nav-item"><a href="{{route('admin.position.index')}}"><i class="fal fa-poll-people"></i><span
                         class="menu-title text-truncate" data-i18n="Email">Quản lý chức vụ</span></a>
             </li>
             <li class=" nav-item"><a href="/department"><i class="fal fa-users-class"></i><span

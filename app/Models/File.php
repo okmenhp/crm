@@ -24,7 +24,6 @@ class File extends Model
         return $this->hasOne('App\User', 'created_by');    
     }
 
-   
     public function Users() {
         return $this->hasMany('App\FileUser', 'user_id');    
     }
