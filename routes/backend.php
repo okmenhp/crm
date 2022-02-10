@@ -10,7 +10,6 @@ Route::group(['middleware' => 'admin'], function () {
     Route::get('/edit-employee',  ['as' => 'admin.employee.edit', 'uses' => 'Backend\EmployeeController@edit']);
     Route::get('/create-employee',  ['as' => 'admin.employee.create', 'uses' => 'Backend\EmployeeController@create']);
 
-
     Route::get('/role',  'Backend\RoleController@index');
     Route::get('/edit-role',  'Backend\RoleController@edit');
     Route::get('/create-role',  'Backend\RoleController@create');
@@ -40,3 +39,5 @@ Route::group(['middleware' => 'admin'], function () {
     Route::post('/department/update/{id}',  ['as' => 'admin.department.update', 'uses' => 'Backend\DepartmentController@update']);
     Route::delete('/department/delete/{id}',  ['as' => 'admin.department.destroy', 'uses' => 'Backend\DepartmentController@destroy']);
 });
+
+
