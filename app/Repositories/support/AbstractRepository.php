@@ -87,6 +87,10 @@ abstract class AbstractRepository {
             if (!is_null($searchBy) && $this->checkColumn($searchBy)) {
                 $query = $query->where($searchBy, 'LIKE', "%$searchText%");
             }
+            if (!is_null($searchText)) {
+                $query = $query->where('name', 'LIKE', "%" . $searchText . "%");
+            }
+
         }
         return $query->orderBy('id', 'DESC')->paginate($perPage, $columns);
     }

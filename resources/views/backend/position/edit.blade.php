@@ -33,8 +33,8 @@
                                         <div class="col-12 col-sm-12">
                                             <div class="form-group">
                                                 <div class="controls">
-                                                    <label>Vị trí công việc</label>
-                                                    <input type="text" class="form-control" placeholder="Username"
+                                                    <label>Tên chức vụ</label>
+                                                    <input type="text" class="form-control" placeholder="Nhập tên chứuc vụ"
                                                         value="{{ $record->name }}" name="name">
                                                         @if(isset($errors))
                                                     {!! $errors->first('name', '<span class="text-danger">:message</span>') !!}
@@ -42,14 +42,18 @@
                                                 </div>
                                             </div>
                                         </div>
-
-
                                         <div class="col-12">
                                             <fieldset class="form-group">
                                                 <label>Mô tả</label>
                                                 <textarea class="form-control" id="basicTextarea" rows="3"
-                                                    placeholder="Textarea">{{ $record->note }}</textarea>
+                                                    placeholder="Nhập mô tả">{{ $record->note }}</textarea>
                                             </fieldset>
+                                        </div>
+                                        <div class="col-12 col-sm-12">
+                                        <div class="form-check form-switch">
+                                          <input class="form-check-input" name="status" type="checkbox" id="" @if($record->status == 1) checked @endif>
+                                          <label class="form-check-label">Kích hoạt</label>
+                                        </div>
                                         </div>
                                         <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1">
                                             <button type="submit"
