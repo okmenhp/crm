@@ -33,6 +33,7 @@
                                                     <label>Tên chức vụ</label>
                                                     <input type="text" class="form-control"
                                                         placeholder="Nhập tên chức vụ" value="" name="name">
+                                                       {!! $errors->first('name', '<span class="text-danger">:message</span>') !!}
                                                 </div>
                                             </div>
                                         </div>

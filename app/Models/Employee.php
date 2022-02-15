@@ -8,25 +8,18 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable
+class Employee extends Authenticatable
 {
 
     use HasApiTokens, HasFactory, Notifiable;
 
     const ROLE_ADMINISTRATOR = 1;
+    const MALE = 0;
+    const FAMALE = 1;
     
-    protected $table = 'user';
+    protected $table = 'employee';
     protected $primaryKey = 'id';
-    protected $fillable = ['username','full_name','email','password','department_id','position_id','avatar','status','role_id','last_login','timekeeping_code','code'
-    ];
-
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
-
-    protected $casts = [
-        'email_verified_at' => 'datetime',
+    protected $fillable = ['name','avatar','birthday','folk','department_id','position_id','gender','status','uid','code','checkin_code','date_range','address','email','phone','social','tax_code','day_in','contacter','contacter_phone','id_card'
     ];
 
 

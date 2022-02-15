@@ -58,7 +58,11 @@ class DepartmentController extends BaseController
     
     public function destroy($id)
     {
+        $in_employee = \DB::table('employee')->where('department_id', $id)->first();
+        if($in_employee == null){
         $this->departmentRepo->delete($id);
         return redirect()->back()->with('success','Xóa thành công');
+        }
+        return redirect()->back()->with('error','Không thể xoá vì bản ghi đang được liên kết với nhân viên'); 
     }
 }

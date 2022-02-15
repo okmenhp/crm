@@ -10,6 +10,7 @@
 @stop
 @extends('layouts.master')
 @section('content')
+
 <div class="app-content content">
     <div class="content-overlay"></div>
     <div class="content-wrapper">
@@ -44,6 +45,15 @@
                         </div>
                     </form>
                 </div>
+                @if(Session::get('success'))
+                <div class="alert alert-success" role="alert">
+                    {{Session::get('success')}}
+                </div>
+                @elseif(Session::get('error'))
+                <div class="alert alert-danger" role="alert">
+                    {{Session::get('error')}}
+                </div>
+                @endif
                 <div class="users-list-table">
                     <div class="card">
                         <div class="card-body">
@@ -75,7 +85,7 @@
                                             <form style="display: inline-block" method="POST" action="{{ route('admin.department.destroy', $record->id) }}">
                                                 @csrf
                                                 <input name="_method" type="hidden" value="DELETE">
-                                                <a href="#" onclick="this.parentNode.submit();" class="show_confirm" data-toggle="tooltip" title='Delete'> <i class="fa fa-trash-alt"> </i></a>
+                                                <a href="#" class="show_confirm" data-toggle="tooltip" title='Delete'> <i class="fa fa-trash-alt"> </i></a>
                                             </form>
                                             </td>
                                         </tr>
@@ -102,7 +112,6 @@
 <!-- END: Content-->
 @stop
 @section('script')
-         
 <script src="assets/js/scripts/pages/app-users.min.js"></script>
 <script type="text/javascript"></script>
 <!-- END: Page JS-->

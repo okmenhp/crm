@@ -36,9 +36,7 @@
                                                     <label>Tên chức vụ</label>
                                                     <input type="text" class="form-control" placeholder="Nhập tên chứuc vụ"
                                                         value="{{ $record->name }}" name="name">
-                                                        @if(isset($errors))
-                                                    {!! $errors->first('name', '<span class="text-danger">:message</span>') !!}
-                                                    @endif
+                                                       {!! $errors->first('name', '<span class="text-danger">:message</span>') !!}
                                                 </div>
                                             </div>
                                         </div>

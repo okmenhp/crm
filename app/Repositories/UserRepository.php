@@ -17,15 +17,20 @@ class UserRepository extends AbstractRepository {
     public function validateCreate() {
         return $rules = [
             'username' => 'required|unique:user',
-            'password' => 'required|min:6|confirmed',
-            'password_confirmation' => 'required|min:6',
-            'role_id' => 'required'
+            'password' => 'required|min:6|max:32',
+            'c_password' => 'required|min:6|max:32|same:password',
         ];
     }
     public function validateUpdate($id) {
         return $rules = [
             'username' => 'required|unique:user,username,' . $id . ',id',
-            'role_id' => 'required'
+        ];
+    }
+    public function validateUpdateWithPassword($id) {
+        return $rules = [
+            'username' => 'required|unique:user,username,' . $id . ',id',
+            'password' => 'min:6|max:32',
+            'c_password' => 'min:6|max:32|same:password',
         ];
     }
 
@@ -33,4 +38,5 @@ class UserRepository extends AbstractRepository {
         $users = $this->model->where('role_id', '<>', \App\User::ROLE_ADMIN)->get();
         return $users;
     }
+
 }

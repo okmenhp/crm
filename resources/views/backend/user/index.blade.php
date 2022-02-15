@@ -20,9 +20,8 @@
             <section class="users-list-wrapper">
                 <div class="users-list-filter px-1">
                     <form>
-
                         <div class="row border rounded  mb-2">
-                            <form action="{{route('admin.employee.index')}}" method="get">
+                            <form action="{{route('admin.user.index')}}" method="get">
                             <div class="col-12 col-sm-6 col-lg-3">
                                 {{-- <label for="users-list-verified">Tên chức vụ</label> --}}
                                 <fieldset class="form-group pt-2">
@@ -37,7 +36,7 @@
                             </div>
                             </form>
                             <div class="col-12 col-sm-6 col-lg-2 float-end">
-                                <a href="{{route('admin.employee.create')}}" type="button" class="btn btn-primary btn-block my-2">
+                                <a href="{{route('admin.user.create')}}" type="button" class="btn btn-primary btn-block my-2">
                                     <i class="bx bx-plus"></i>
                                     <span>Thêm mới</span>
                                 </a>
@@ -45,17 +44,6 @@
                         </div>
                     </form>
                 </div>
-             
-                @if(Session::get('success'))
-                <div class="alert alert-success" role="alert">
-                    {{Session::get('success')}}
-                </div>
-                @elseif(Session::get('error'))
-                <div class="alert alert-danger" role="alert">
-                    {{Session::get('error')}}
-                </div>
-                @endif
-
                 <div class="users-list-table">
                     <div class="card">
                         <div class="card-body">
@@ -77,15 +65,15 @@
                                         @foreach($records as $key => $record)
                                         <tr>
                                             <td>
-                                                @if($record->avatar != null)
+                                                @if($record->record != null)
                                                 <img class="rounded-circle" height="40px;" width="40px;" src="{{asset($record->avatar)}}">
                                                 @else
                                                 <img class="rounded-circle" height="40px;" width="40px;" src="{{asset('assets/images/profile/account.png')}}">
                                                 @endif
-                                                {{$record->name}}</td>
+                                                {{$record->full_name}}</td>
                                             <td>{{$record->position->name}}</td>
                                             <td>{{$record->department->name}}</td>
-                                            <td>{{$record->day_in}}</td>
+                                            <td>{{$record->format_date($record->day_in)}}</td>
                                             <td>
                                                 @if($record->status == 1) 
                                                     <span class="badge badge-success">Hoạt động</span>
@@ -93,11 +81,11 @@
                                                     <span class="badge badge-secondary">Khoá</span>
                                                 @endif 
                                             </td>
-                                            <td><a href="{{route('admin.employee.edit', $record->id)}}"><i class="far fa-edit"></i></a>
-                                            <form style="display: inline-block" method="POST" action="{{ route('admin.employee.destroy', $record->id) }}">
+                                            <td><a href="{{route('admin.user.edit', $record->id)}}"><i class="far fa-edit"></i></a>
+                                            <form style="display: inline-block" method="POST" action="{{ route('admin.user.destroy', $record->id) }}">
                                                 @csrf
                                                 <input name="_method" type="hidden" value="DELETE">
-                                                <a href="#" class="show_confirm" data-toggle="tooltip" title='Delete'> <i class="fa fa-trash-alt"> </i></a>
+                                                <a href="#" onclick="this.parentNode.submit();" class="show_confirm" data-toggle="tooltip" title='Delete'> <i class="fa fa-trash-alt"> </i></a>
                                             </form>
                                             </td>
                                         </tr>
@@ -122,7 +110,8 @@
 </div>
 <!-- END: Content-->
 @stop
-@section('script')  
+@section('script')
+         
 <script src="assets/js/scripts/pages/app-users.min.js"></script>
 <script type="text/javascript"></script>
 <!-- END: Page JS-->

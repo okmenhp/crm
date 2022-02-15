@@ -16,7 +16,7 @@ class PositionController extends BaseController
 
     public function index(Request $request)
     {
-        $records = $this->positionRepo->paginate($request ,5);
+        $records = $this->positionRepo->paginate($request ,10);
         return view('backend/position/index',compact('records'));
     }
 
@@ -91,7 +91,11 @@ class PositionController extends BaseController
 
     public function destroy($id)
     {
+        $in_employee = \DB::table('employee')->where('position_id', $id)->first();
+        if($in_employee == null){
         $this->positionRepo->delete($id);
         return redirect()->back()->with('success','Xóa thành công');
+        }
+        return redirect()->back()->with('error','Không thể xoá vì bản ghi đang được liên kết với nhân viên'); 
     }
 }

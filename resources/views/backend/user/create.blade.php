@@ -25,15 +25,40 @@
                             <div class="tab-pane active fade show" id="account" aria-labelledby="account-tab"
                                 role="tabpanel">
                                 <!-- users edit account form start -->
-                                <form class="form-validate" method="post" action="{{route('admin.department.store')}}">
+                                <form class="form-validate" method="post" action="{{route('admin.user.store')}}">
                                     <div class="row">
-                                        <div class="col-12 col-sm-12">
+                                        
+                                        <div class="col-6 col-sm-6">
                                             <div class="form-group">
                                                 <div class="controls">
-                                                    <label>Tên phòng ban</label>
+                                                   <img src="..." class="img-thumbnail" alt="...">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6 col-sm-6">
+                                            <div class="form-group">
+                                                <div class="controls">
+                                                    <label>Tên nhân viên<span class="text-danger">*</span></label>
                                                     <input type="text" class="form-control"
-                                                        placeholder="Nhập tên phòng ban" value="" name="name">
-                                                        {!! $errors->first('name', '<span class="text-danger">:message</span>') !!}
+                                                        placeholder="Nhập tên nhân viên" value="" name="full_name">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6 col-sm-6">
+                                            <div class="form-group">
+                                                <div class="controls">
+                                                    <label>Mã nhân viên <span class="text-danger">*</span></label>
+                                                    <input type="text" class="form-control"
+                                                        placeholder="Nhập mã nhân viên" value="" name="code">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6 col-sm-6">
+                                            <div class="form-group">
+                                                <div class="controls">
+                                                    <label>Mã chấm công </label>
+                                                    <input type="text" class="form-control"
+                                                        placeholder="Nhập mã chấm công" value="" name="timekeeping_code">
                                                 </div>
                                             </div>
                                         </div>
@@ -41,7 +66,7 @@
                                             <div class="form-group">
                                                 <div class="controls">
                                                     <label>Mô tả</label>
-                                                    <textarea name="description" rows="3" placeholder="Nhập mô tả" class=" form-control"></textarea>
+                                                    <textarea name="note" rows="3" placeholder="Nhập mô tả" class=" form-control"></textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -50,15 +75,15 @@
                                         <div class="col-12 col-sm-12">
                                         <div class="form-check form-switch">
                                           <input class="form-check-input" name="status" type="checkbox" id="flexSwitchCheckChecked" checked>
-                                          <label class="form-check-label" for="flexSwitchCheckChecked">Kích hoạt</label>
+                                          <label class="form-check-label" for="flexSwitchCheckChecked">Hoạt động</label>
                                         </div>
                                         </div>
 
                                         <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1">
                                             <button type="submit"
-                                                class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1">Lưu lại
-                                            </button>
-                                            <button type="reset" class="btn btn-light"><a href="{{route('admin.department.index')}}">Huỷ</a></button>
+                                                class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1">Lưu thay
+                                                đổi</button>
+                                            <button type="reset" class="btn btn-light">Thoát</button>
                                         </div>
                                     </div>
                                 </form>

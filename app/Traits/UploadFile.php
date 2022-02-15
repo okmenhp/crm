@@ -2,11 +2,20 @@
 
 namespace App\Traits;
 use Illuminate\Support\Facades\Storage;
-use Auth:
+use File;
+use Auth;
 use App\User;
 
 trait UploadFile
 {
+
+    public static function uploadImage($image) {
+        $file = $image;
+        $fileName = md5($file->getClientOriginalName() . time()) . "." . $file->getClientOriginalExtension();
+        $file->move('./upload/images/', $fileName);
+        $url = "/upload/images/".$fileName;
+        return $url; 
+    }
 
     protected function uploadFile(Request $request, $file)
     {
