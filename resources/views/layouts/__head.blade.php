@@ -25,7 +25,6 @@
 <link rel="stylesheet" type="text/css" href="{{asset('assets/css/components.min.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('assets/css/themes/dark-layout.min.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('assets/css/themes/semi-dark-layout.min.css')}}">
-
 <!-- END: Theme CSS-->
 
 <!-- BEGIN: Page CSS-->
@@ -38,4 +37,5 @@
 
 <!-- BEGIN: Font-awesome CSS-->
 <link href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" rel="stylesheet">
+<link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css" rel="stylesheet" />
 <!-- END: Font-awesome CSS-->

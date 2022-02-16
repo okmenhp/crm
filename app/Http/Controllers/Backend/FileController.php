@@ -7,6 +7,8 @@ use App\Http\Controllers\BaseController;
 use DB;
 use Illuminate\Support\Facades\Storage;
 use App\Repositories\FileRepository;
+use App\Repositories\DepartmentRepository;
+use App\Repositories\EmployeeRepository;
 use Auth;
 use Illuminate\Support\Str;
 use App\Models\File;
@@ -14,18 +16,24 @@ use App\Models\File;
 class FileController extends BaseController
 {
 
-    public function __construct(FileRepository $fileRepo) {
+    public function __construct(FileRepository $fileRepo, EmployeeRepository $employeeRepo, DepartmentRepository $departmentRepo) {
         $this->fileRepo = $fileRepo;
+        $this->employeeRepo = $employeeRepo;
+        $this->departmentRepo = $departmentRepo;
     }
 
     public function index(Request $request, $uid)
     {   
         $uid_clone = $uid;
+        $employee_option = $this->employeeRepo->all();
+        $employee_html = \App\Helpers\StringHelper::getSelectNameOptions($employee_option);
+        $department_option = $this->departmentRepo->all();
+        $department_html = \App\Helpers\StringHelper::getSelectNameOptions($department_option);
         if($uid == "0"){
             $records_folder = $this->fileRepo->allParent($request, '*', null)->where('type', 1);
             $records_file = $this->fileRepo->allParent($request, '*', null)->where('type', 2);
             $records_folder = $this->getMoreInfoFolder($records_folder);
-            return view('backend/file/index', compact('uid','records_folder','records_file')); 
+            return view('backend/file/index', compact('uid','records_folder','records_file','department_html','employee_html')); 
         }
         else{
             $records_folder = $this->fileRepo->getFileByUid($request, $uid)->where('type', 1);
@@ -38,7 +46,7 @@ class FileController extends BaseController
             }while ($uid_clone != null);
             $breadcumb = array_reverse($breadcumb);
             $records_folder = $this->getMoreInfoFolder($records_folder);
-            return view('backend/file/index', compact('uid','records_folder','records_file','breadcumb')); 
+            return view('backend/file/index', compact('uid','records_folder','records_file','breadcumb','department_html','employee_html')); 
         }     
     }
 
@@ -68,7 +76,7 @@ class FileController extends BaseController
         $input['type'] = \App\Models\File::TYPE_FOLDER;
         $input['created_by'] = Auth::user()->id;
         $input['uid'] = Str::uuid();
-        $input['is_share'] = 0;
+        $input['share'] = 1;
         $input['status'] = 1;
         $this->fileRepo->create($input);
         return redirect()->route('admin.file.index', $uid);
@@ -92,7 +100,7 @@ class FileController extends BaseController
         $input['created_by'] = Auth::user()->id;
         $input['uid'] = Str::uuid();
         $input['type'] = \App\Models\File::TYPE_FILE;
-        $input['is_share'] = 0;
+        $input['share'] = 1;
         $input['status'] = 1;
         $this->fileRepo->create($input);
         return redirect()->route('admin.file.index', $uid);

@@ -33,14 +33,15 @@
                                                     <label>Tên chức vụ</label>
                                                     <input type="text" class="form-control"
                                                         placeholder="Nhập tên chức vụ" value="" name="name">
+                                                       {!! $errors->first('name', '<span class="text-danger">:message</span>') !!}
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-12 col-sm-12">
                                             <div class="form-group">
                                                 <div class="controls">
-                                                    <label>Ghi chú</label>
-                                                    <textarea name="note" rows="3" placeholder="Nhập ghi chú" class=" form-control"></textarea>
+                                                    <label>Mô tả</label>
+                                                    <textarea name="note" rows="3" placeholder="Nhập mô tả" class=" form-control"></textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -48,7 +49,7 @@
                                         <!-- Default checked -->
                                         <div class="col-12 col-sm-12">
                                         <div class="form-check form-switch">
-                                          <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked>
+                                          <input class="form-check-input" name="status" type="checkbox" id="flexSwitchCheckChecked" checked>
                                           <label class="form-check-label" for="flexSwitchCheckChecked">Kích hoạt</label>
                                         </div>
                                         </div>

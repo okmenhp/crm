@@ -24,137 +24,214 @@
                         <div class="tab-content">
                             <div class="tab-pane active fade show" id="account" aria-labelledby="account-tab"
                                 role="tabpanel">
-                                <!-- users edit media object start -->
-                                <div class="media mb-2">
-                                    <a class="mr-2" href="javascript:void(0);">
-                                        <img src="assets/images/portrait/small/avatar-s-26.jpg" alt="users avatar"
-                                            class="users-avatar-shadow rounded-circle" height="64" width="64">
-                                    </a>
-                                    <div class="media-body">
-                                        <h4 class="media-heading">Thông tin nhân viên</h4>
-                                        <div class="col-12 px-0 d-flex">
-                                            <a href="javascript:void(0);" class="btn btn-sm btn-primary mr-25">Bắt đầu
-                                                thử việc</a>
-                                            <a href="javascript:void(0);"
-                                                class="btn btn-sm btn-light-secondary mr-25">Nhân
-                                                viên chính thức</a>
-                                            <a href="javascript:void(0);" class="btn btn-sm btn-light-secondary">Đã nghỉ
-                                                việc</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- users edit media object ends -->
                                 <!-- users edit account form start -->
-                                <form class="form-validate">
+                                <form class="form-validate" method="post" action="{{route('admin.employee.store')}}">
+
                                     <div class="row">
+                                        <div class="col-2 col-sm-2 mt-1">
+                                            <div class="form-group">
+                                                <div class="controls row">
+                                                   <img height="200px" width="200px" src="{{asset('assets/images/profile/account.png')}}" class="img-thumbnail ml-1" alt="...">
+                                                   <div class="mb-3 ml-1">
+                                                      <input class="form-control" type="file" id="formFile">
+                                                    </div>
+                                                    {!! $errors->first('avatar', '<span class="text-danger">:message</span>') !!}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-10 col-sm-10 row">
+                                        <div class="col-6 col-sm-6">
+                                            <div class="form-group">
+                                                <div class="controls">
+                                                    <label>Tên nhân viên<span class="text-danger"> *</span></label>
+                                                    <input type="text" class="form-control"
+                                                         value="" name="name">
+                                                         {!! $errors->first('name', '<span class="text-danger">:message</span>') !!}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6 col-sm-6">
+                                            <div class="form-group">
+                                                <div class="controls">
+                                                    <label>Email<span class="text-danger"> *</span></label>
+                                                    <input type="text" class="form-control"
+                                                         value="" name="email">
+                                                         {!! $errors->first('email', '<span class="text-danger">:message</span>') !!}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6 col-sm-6">
+                                            <div class="form-group">
+                                                <div class="controls">
+                                                    <label>Ngày sinh<span class="text-danger"> *</span></label>
+                                                    <input type="date" class="form-control"
+                                                         value="" name="birthday">
+                                                         {!! $errors->first('date', '<span class="text-danger">:message</span>') !!}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6 col-sm-6">
+                                            <div class="form-group">
+                                                <div class="controls">
+                                                    <label>Số điện thoại</label>
+                                                    <input type="text" class="form-control"
+                                                         value="" name="phone">
+                                                         {!! $errors->first('phone', '<span class="text-danger">:message</span>') !!}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6 col-sm-6">
+                                            <div class="form-group">
+                                                <div class="controls">
+                                                    <label>Mã nhân viên <span class="text-danger">*</span></label>
+                                                    <input type="text" class="form-control"
+                                                        value="" name="code">
+                                                        {!! $errors->first('code', '<span class="text-danger">:message</span>') !!}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6 col-sm-6">
+                                            <div class="form-group">
+                                                <div class="controls">
+                                                    <label>Mã chấm công </label>
+                                                    <input type="text" class="form-control"
+                                                         value="" name="checkin_code">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6 col-sm-6">
+                                            <div class="form-group">
+                                                <div class="controls">
+                                                    <label>Chọn phòng ban <span class="text-danger"> *</span></label>
+                                                    <select class="form-control" name="department_id">
+                                                        {!! $department_html !!}
+                                                    </select>
+                                                    {!! $errors->first('department_id', '<span class="text-danger">:message</span>') !!}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6 col-sm-6">
+                                            <div class="form-group">
+                                                <div class="controls">
+                                                    <label>Chọn chức vụ <span class="text-danger"> *</span></label>
+                                                    <select class="form-control" name="position_id">
+                                                        {!! $position_html !!}
+                                                    </select>
+                                                    {!! $errors->first('position_id', '<span class="text-danger">:message</span>') !!}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6 col-sm-6">
+                                            <div class="form-group">
+                                                <div class="controls">
+                                                    <label>Mã số thuế cá nhân </label>
+                                                    <input type="text" class="form-control"
+                                                         value="" name="tax_code">
+                                                         {!! $errors->first('tax_code', '<span class="text-danger">:message</span>') !!}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6 col-sm-6">
+                                            <div class="form-group">
+                                                <div class="controls">
+                                                    <label>Dân tộc </label>
+                                                    <input type="text" class="form-control"
+                                                        value="" name="folk">
+                                                         {!! $errors->first('folk', '<span class="text-danger">:message</span>') !!}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6 col-sm-6">
+                                            <div class="form-group">
+                                                <div class="controls">
+                                                    <label>Số cmnd/cccd <span class="text-danger">*</span></label>
+                                                    <input type="text" class="form-control"
+                                                         value="" name="id_card">
+                                                         {!! $errors->first('id_card', '<span class="text-danger">:message</span>') !!}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6 col-sm-6">
+                                            <div class="form-group">
+                                                <div class="controls">
+                                                    <label>Ngày cấp cmnd/cccd </label>
+                                                    <input type="date" class="form-control"
+                                                         value="" name="date_range">
+                                                         {!! $errors->first('date_range', '<span class="text-danger">:message</span>') !!}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6 col-sm-6">
+                                            <div class="form-group">
+                                                <div class="controls">
+                                                    <label>Giới tính <span class="text-danger">*</span></label>
+                                                    <select class="form-control" name="gender">
+                                                        <option value="0">Nam</option>
+                                                        <option value="1">Nữ</option>
+                                                    </select>
+                                                    {!! $errors->first('gender', '<span class="text-danger">:message</span>') !!}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6 col-sm-6">
+                                            <div class="form-group">
+                                                <div class="controls">
+                                                    <label>Ngày vào </label>
+                                                    <input type="date" class="form-control"
+                                                         value="" name="day_in">
+                                                         {!! $errors->first('day_in', '<span class="text-danger">:message</span>') !!}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6 col-sm-6">
+                                            <div class="form-group">
+                                                <div class="controls">
+                                                    <label>Người liên hệ </label>
+                                                    <input type="text" class="form-control"
+                                                         value="" name="contacter">
+                                                         {!! $errors->first('contacter', '<span class="text-danger">:message</span>') !!}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6 col-sm-6">
+                                            <div class="form-group">
+                                                <div class="controls">
+                                                    <label>Số điện thoại người liên hệ </label>
+                                                    <input type="text" class="form-control"
+                                                         value="" name="contacter_phone">
+                                                          {!! $errors->first('contacter_phone', '<span class="text-danger">:message</span>') !!}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6 col-sm-6">
+                                            <div class="form-group">
+                                                <div class="controls">
+                                                    <label>Mạng xã hội </label>
+                                                    <input type="text" class="form-control"
+                                                         value="" name="social">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                       {{--  <div class="col-12 col-sm-12">
+                                            <div class="form-group">
+                                                <div class="controls">
+                                                    <label>Mô tả</label>
+                                                    <textarea name="note" rows="3" placeholder="Nhập mô tả" class=" form-control"></textarea>
+                                                </div>
+                                            </div>
+                                        </div> --}}
+                                        
+
+                                        <!-- Default checked -->
                                         <div class="col-12 col-sm-12">
-                                            <div class="form-group">
-                                                <div class="controls">
-                                                    <label>Tên nhân viên</label>
-                                                    <input type="text" class="form-control" placeholder="" value=""
-                                                        name="username">
-                                                </div>
-                                            </div>
+                                        <div class="form-check form-switch">
+                                          <input class="form-check-input" name="status" type="checkbox" id="flexSwitchCheckChecked" checked>
+                                          <label class="form-check-label" for="flexSwitchCheckChecked">Hoạt động</label>
                                         </div>
-                                        <div class="col-12 col-sm-6">
-                                            <div class="form-group">
-                                                <label>Giới tính</label>
-                                                <select class="form-control">
-                                                    <option>Nam</option>
-                                                    <option>Nữ</option>
-                                                </select>
-                                            </div>
                                         </div>
-                                        <div class="col-12 col-sm-6">
-                                            <div class="form-group">
-                                                <label>Phòng ban</label>
-                                                <select class="form-control">
-                                                    <option>IT</option>
-                                                    <option>2</option>
-                                                </select>
-                                            </div>
                                         </div>
-                                        <div class="col-12 col-sm-6">
-                                            <div class="form-group">
-                                                <div class="controls">
-                                                    <label>Ngày sinh</label>
-                                                    <input type="text" class="form-control" placeholder="" value=""
-                                                        name="username">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-sm-6">
-                                            <div class="form-group">
-                                                <label>Vị trí công việc</label>
-                                                <select class="form-control">
-                                                    <option>Nhân viên</option>
-                                                    <option>2</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-sm-6">
-                                            <div class="form-group">
-                                                <div class="controls">
-                                                    <label>Dân tộc</label>
-                                                    <input type="text" class="form-control" placeholder="" value=""
-                                                        name="username">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-sm-6">
-                                            <div class="form-group">
-                                                <div class="controls">
-                                                    <label>Điện thoại</label>
-                                                    <input type="text" class="form-control" placeholder="" value=""
-                                                        name="username">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-sm-6">
-                                            <div class="form-group">
-                                                <div class="controls">
-                                                    <label>Quốc tịch</label>
-                                                    <input type="text" class="form-control" placeholder="" value=""
-                                                        name="username">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-sm-6">
-                                            <div class="form-group">
-                                                <div class="controls">
-                                                    <label>Email</label>
-                                                    <input type="text" class="form-control" placeholder="" value=""
-                                                        name="username">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-sm-6">
-                                            <div class="form-group">
-                                                <div class="controls">
-                                                    <label>CMND</label>
-                                                    <input type="text" class="form-control" placeholder="" value=""
-                                                        name="username">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-sm-6">
-                                            <div class="form-group">
-                                                <label>Quản lý</label>
-                                                <select class="form-control">
-                                                    <option>Nguyễn Ninh</option>
-                                                    <option>2</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-sm-6">
-                                            <div class="form-group">
-                                                <label>Tài khoản</label>
-                                                <select class="form-control">
-                                                    <option>example@gmail.com</option>
-                                                    <option>2</option>
-                                                </select>
-                                            </div>
-                                        </div>
+
                                         <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1">
                                             <button type="submit"
                                                 class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1">Lưu thay

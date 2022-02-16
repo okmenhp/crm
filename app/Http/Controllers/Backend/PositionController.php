@@ -14,9 +14,9 @@ class PositionController extends BaseController
         $this->positionRepo = $positionRepo;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $records = $this->positionRepo->all();
+        $records = $this->positionRepo->paginate($request ,10);
         return view('backend/position/index',compact('records'));
     }
 
@@ -62,7 +62,7 @@ class PositionController extends BaseController
 
     //Use Reposiotry
     public function update(Request $request, $id)
-    {
+    { 
         $input = $request->all();
         $validator = \Validator::make($input, $this->positionRepo->validateUpdate($id));
         if ($validator->fails()) {
@@ -72,7 +72,7 @@ class PositionController extends BaseController
         $this->positionRepo->update($input, $id);
         return redirect()->route('admin.position.index')->with('success','Cập nhật thành công');;
     }
-
+    
     // Use Model
     // public function update(Request $request, $id)
     // {
@@ -91,7 +91,11 @@ class PositionController extends BaseController
 
     public function destroy($id)
     {
+        $in_employee = \DB::table('employee')->where('position_id', $id)->first();
+        if($in_employee == null){
         $this->positionRepo->delete($id);
         return redirect()->back()->with('success','Xóa thành công');
+        }
+        return redirect()->back()->with('error','Không thể xoá vì bản ghi đang được liên kết với nhân viên'); 
     }
 }

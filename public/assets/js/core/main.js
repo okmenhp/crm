@@ -15,8 +15,15 @@
 //             }
 //           });
 //       });
- $('.show_confirm').click(function(e) {
-        if(!confirm('Bạn có chắc chắn muốn xoá bản ghi này?')) {
-            e.preventDefault();
-        }
-    });
+
+$('.show_confirm').on('click', function(){
+                if(confirm('Bạn có chắc muốn xoá bản ghi này?')){
+                    this.parentNode.submit();
+                }else{
+                    return false;
+                }   
+            });
+
+setTimeout(() => {
+       $('.alert').alert('close');
+}, 3000);

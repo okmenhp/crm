@@ -70,8 +70,7 @@
         </div>
       </div>
     </div>
-<!--  End modal upload -->
-
+    <!--  End modal upload -->
 
     <!-- Modal folder -->
     <div class="modal fade" id="modalFolder" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -101,10 +100,10 @@
         </div>
       </div>
     </div>
-<!--  End modal upload -->
+    <!--  End modal upload -->
 
-     <!-- Modal rename -->
-        <div class="modal fade" id="modalRename" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <!-- Modal rename -->
+    <div class="modal fade" id="modalRename" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
               <div class="modal-header">
@@ -113,19 +112,77 @@
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
-            
               <div class="modal-body">
-                 
                 <div class="mb-3">
-
-                <label for="formFileMultiple" class="form-label">Vui lòng nhập tên</label>
+                <label for="formFileMultiple" class="form-label">Vui lòng nhập tên mới</label>
                 <input required="" type="text" name="file-name" placeholder="" class="form-control file-name">
-                
                 </div>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Huỷ</button>
                 <button type="button" class="btn btn-primary file-rename">Đổi tên</button>
+              </div>
+              </form>
+            </div>
+          </div>
+    </div>
+    <!--  End modal upload -->
+
+    <!-- Modal share file -->
+        <div class="modal fade" id="modalShareFile" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Chia sẻ folder/file</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+            
+              <div class="modal-body">
+               <div class="form-check">
+                  <input class="form-check-input" type="radio" name="permission" data-type="1" id="flexRadio1">
+                  <label class="form-check-label" for="flexRadioDefault1">
+                    Riêng tư
+                  </label>
+                  <p>Chỉ bạn và những người được chia sẻ mới truy cập được file</p>
+                  <div class="share_option">
+                <ul class="nav nav-tabs nav-tabs-highlight">
+                    <li class="nav-item"><a href="#left-icon-tab1" class="nav-link active" data-toggle="tab"><i class="icon-menu7"></i> Chọn nhân viên</a></li>
+                    <li class="nav-item"><a href="#left-icon-tab2" class="nav-link" data-toggle="tab"><i class="icon-stack2"></i> Chọn phòng ban</a></li>
+                </ul>
+                <div class="tab-content mb-3" style="padding-left: 0px !important;">
+                <div class="tab-pane fade show active" id="left-icon-tab1">
+                    <select class="form-control select2"  name="employee_id">
+                        {!! $employee_html !!}
+                    </select>
+                </div>
+                <div class="tab-pane fade" id="left-icon-tab2">
+                    <select class="form-control select2-selection" multiple="" name="department_id">
+                        {!! $department_html !!}
+                    </select>
+                </div>
+                </div>
+            </div>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="permission" data-type="2" id="flexRadio2" >
+                  <label class="form-check-label" for="flexRadioDefault2">
+                    Chỉ mình tôi 
+                  </label>
+                  <p>Chỉ bạn mới truy cập được file</p>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="permission" data-type="3" id="flexRadio3" >
+                  <label class="form-check-label" for="flexRadioDefault2">
+                    Công khai
+                  </label>
+                  <p>Mọi người đều truy cập được file</p>
+                </div>
+                </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Huỷ</button>
+                <button type="button" class="btn btn-primary file-rename">Xác nhận</button>
               </div>
               </form>
             </div>
@@ -159,7 +216,7 @@
                             </div>
                             <div class="app-file-sidebar-content">
                                 <!-- App File Left Sidebar - Drive Content Starts -->
-                                <label class="app-file-label">Quản lý tệp tin</label>
+                                <label class="app-file-label">Quản lý tài liệu</label>
                                 <div class="list-group list-group-messages my-50">
                                     <a href="{{route('admin.file.index', 0)}}"
                                         class="list-group-item list-group-item-action pt-0">
@@ -167,26 +224,27 @@
                                         <div class="fonticon-wrap d-inline mr-25">
                                             <i class="fal fa-folder"></i>
                                         </div>
-                                        Tất cả tệp tin
+                                        Tài liệu cá nhân
                                         <!-- <span
                                             class="badge badge-light-danger badge-pill badge-round float-right mt-50">{{count($records_folder)}}</span> -->
                                     </a>
-                                    <!-- <a href="javascript:void(0);" class="list-group-item list-group-item-action">
+                                    <a href="javascript:void(0);" class="list-group-item list-group-item-action">
                                         <div class="fonticon-wrap d-inline mr-25">
-                                            <i class="fal fa-desktop"></i>
+                                            <i class="fal fa-folder"></i>
                                         </div>
-                                        My Devices
-                                    </a> -->
-                                    <!-- <a href="javascript:void(0);" class="list-group-item list-group-item-action">
+                                        Tài liệu công ty
+                                    </a>
+                                     <a href="javascript:void(0);" class="list-group-item list-group-item-action">
                                         <div class="fonticon-wrap d-inline mr-25">
-                                            <i class="fal fa-clock"></i>
-                                        </div> Recents
-                                    </a> -->
+                                            <i class="fas fa-share"></i>
+                                        </div>
+                                        Tài liệu được chia sẻ
+                                    </a>
                                     <a href="javascript:void(0);" class="list-group-item list-group-item-action">
                                         <div class="fonticon-wrap d-inline mr-25">
                                             <i class="fal fa-star"></i>
                                         </div>
-                                        Tệp tin quan trọng
+                                        Tài liệu quan trọng
                                     </a>
                                     <a href="{{url('file/0?is_bin=1')}}" class="list-group-item list-group-item-action">
                                         <div class="fonticon-wrap d-inline mr-25">
@@ -277,7 +335,7 @@
                             </ul>
                             <div class="tab-content pl-0">
                                 <div class="tab-pane active" id="details" aria-labelledby="details-tab" role="tabpanel">
-                                   <!--  <div class="border-bottom d-flex align-items-center flex-column pb-1">
+                                    <!-- <div class="border-bottom d-flex align-items-center flex-column pb-1">
                                         <img src="assets/images/icon/pdf.png" alt="PDF" height="42" width="35"
                                             class="my-1">
                                         <p class="mt-2">15.3mb</p>
@@ -293,7 +351,7 @@
                                                 <label class="custom-control-label" for="customSwitchGlow1"></label>
                                             </div>
                                         </div>
-                                       <!--  <div class="d-flex justify-content-between align-items-center">
+                                        <!--  <div class="d-flex justify-content-between align-items-center">
                                             <p>Synchronization</p>
                                             <div
                                                 class="custom-control custom-switch custom-switch-primary custom-switch-glow custom-control-inline">
@@ -311,7 +369,6 @@
                                                 <label class="custom-control-label" for="customSwitchGlow3"></label>
                                             </div>
                                         </div> -->
-
                                         <label class="app-file-label">Thông tin</label>
                                         <div class="d-flex justify-content-between align-items-center mt-75">
                                             <p>Loại file</p>
@@ -481,7 +538,7 @@
                                         <div class="dropdown-menu dropdown-menu-sm context-menu">
                                            <a class="dropdown-item" href="{{route('admin.file.index', $record_folder->uid)}}"><i class="fa fa-eye" aria-hidden="true"></i>&nbsp; Mở</a>
                                            <a class="dropdown-item modal-rename" data-id="{{$record_folder->id}}" data-toggle="modal" data-target="#modalRename" href="#"><i class="fas fa-edit"></i>&nbsp; Đổi tên</a>
-                                           <a class="dropdown-item" href="#"><i class="fas fa-share-square"></i>&nbsp; Chia sẻ</a>
+                                           <a class="dropdown-item modal-share-file" data-share="{{$record_folder->share}}" data-id="{{$record_folder->id}}" data-toggle="modal" data-target="#modalShareFile" href="#"><i class="fas fa-edit"></i>&nbsp; Chia sẻ</a>
                                            <a class="dropdown-item" href=""><i class="fas fa-file-alt"></i>&nbsp; Thông tin</a>
                                            @if(Request::get('is_bin') == 1)
                                             <form method="post" action="{{route('admin.file.restore', $record_folder->id)}}" class="text-center">
@@ -758,6 +815,14 @@
             let name = $('.file-name').val();
             fileRename(id, name);
         });
+
+
+  $(document).ready(function() {
+    $(".select2").select2({
+    
+    });
+  });
+
 
         //  $('.file-dowload').on('click', function(){
         //     let id = $(this).data('id');

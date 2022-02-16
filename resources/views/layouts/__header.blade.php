@@ -34,6 +34,7 @@
                             </div>
                         </li>
                     </ul>
+                   
                 </div>
                 <ul class="nav navbar-nav float-right">
                     <li class="nav-item d-none d-lg-block"><a class="nav-link nav-link-expand"><i
@@ -208,7 +209,11 @@
                         </div>
                     </li>
                 </ul>
+
             </div>
+
         </div>
+
     </div>
+
 </nav>

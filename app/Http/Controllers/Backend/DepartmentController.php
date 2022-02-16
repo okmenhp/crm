@@ -4,82 +4,65 @@ namespace App\Http\Controllers\Backend;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\BaseController;
+use App\Models\Department;
+use Validator;
+use App\Repositories\DepartmentRepository;
 
 class DepartmentController extends BaseController
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        return view('backend/department/index');
+    public function __construct(DepartmentRepository $departmentRepo) {
+        $this->departmentRepo = $departmentRepo;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function index(Request $request)
     {
+        $records = $this->departmentRepo->paginate($request ,10);
+        return view('backend/department/index',compact('records'));
+    }
+
+    public function create()
+    {   
         return view('backend/department/create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    //Use Reposiotry
     public function store(Request $request)
     {
-        //
+        $input = $request->all();
+        $validator = \Validator::make($input, $this->departmentRepo->validateCreate());
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+        $input['status'] = isset($input['status']) ? 1 : 0;
+        $this->departmentRepo->create($input);
+        return redirect()->route('admin.department.index')->with('success','Thêm mới thành công');;
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    
+    public function edit($id)
     {
-        //
+        $record = $this->departmentRepo->find($id);
+        return view('backend/department/edit', compact('record'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit()
-    {
-        return view('backend/department/edit');
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
-    {
-        //
+    { 
+        $input = $request->all();
+        $validator = \Validator::make($input, $this->departmentRepo->validateUpdate($id));
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+        $input['status'] = isset($input['status']) ? 1 : 0;
+        $this->departmentRepo->update($input, $id);
+        return redirect()->route('admin.department.index')->with('success','Cập nhật thành công');;
     }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    
     public function destroy($id)
     {
-        //
+        $in_employee = \DB::table('employee')->where('department_id', $id)->first();
+        if($in_employee == null){
+        $this->departmentRepo->delete($id);
+        return redirect()->back()->with('success','Xóa thành công');
+        }
+        return redirect()->back()->with('error','Không thể xoá vì bản ghi đang được liên kết với nhân viên'); 
     }
 }

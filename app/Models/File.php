@@ -13,8 +13,12 @@ class File extends Model
     const STATUS_ACTIVE = 1;
     const STATUS_BIN = 2;
 
+    const SHARE_PUBLIC = 1;
+    const SHARE_PRIVATE = 2;
+    const SHARE_ONLY = 3;
+
     protected $table = 'file';
-    protected $fillable = ['uid','parent_id','created_by','type','format','name','link','size','user_id','status'];
+    protected $fillable = ['uid','parent_id','created_by','type','format','name','link','size','user_id','status','share'];
 
     public function created_at() {
         return date("d/m/Y", strtotime($this->created_at));

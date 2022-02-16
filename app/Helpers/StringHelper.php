@@ -5,7 +5,7 @@ use Illuminate\Support\Str;
 
 class StringHelper {
 
-    public static function getSelectOptions($options, $selected = '') {
+    public static function getSelectTitleOptions($options, $selected = '') {
         $html = '<option></option>';
         foreach ($options as $option) {
             $html .= '<option value="' . $option->id . '"' . ((is_array($selected) ? in_array($option->id, $selected) : $selected == $option->id) ? 'selected' : '') . '>' . $option->title . '</option>';
@@ -13,7 +13,7 @@ class StringHelper {
         return $html;
     }
     public static function getSelectNameOptions($options, $selected = '') {
-        $html = '<option></option>';
+        $html = '';
         foreach ($options as $option) {
             $html .= '<option value="' . $option->id . '"' . ((is_array($selected) ? in_array($option->id, $selected) : $selected == $option->id) ? 'selected' : '') . '>' . $option->name . '</option>';
         }
