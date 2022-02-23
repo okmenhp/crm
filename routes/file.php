@@ -14,5 +14,6 @@ Route::group(['middleware' => 'admin'], function() {
 	Route::get('file/property/{id}','Backend\FileController@property')->name('admin.file.property');
 	Route::post('file/rename/{id}','Backend\FileController@rename')->name('admin.file.rename');
 	Route::get('file/dowload/{id}','Backend\FileController@dowload')->name('admin.file.dowload');
+	Route::post('file/share/{id}','Backend\FileController@share')->name('admin.file.share');
     //Route::move('file/move/{token}','Backend\FileController@move');
 });

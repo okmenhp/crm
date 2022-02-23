@@ -57,7 +57,7 @@ class FileController extends BaseController
             $parent_uid = File::where('id', $record->parent_id)->first()->uid;
             $this->breadcumb($breadcumb, $parent_uid);
         }else{
-            dd('1');
+            
         }    
     }
 
@@ -112,6 +112,11 @@ class FileController extends BaseController
             $record->update(['status' => 1]);
         }
         return redirect()->back();
+    }
+
+    public function share(Request $request, $id){
+        $department_ids = $request->department_id;
+        $employee_ids = $request->employee_id;
     }
 
 

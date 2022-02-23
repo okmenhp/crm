@@ -28,7 +28,10 @@
  });
 
  $('.modal-share-file').on('click', function(){
-    type = $(this).data('share');
+    let type = $(this).data('share');
+    let id = $(this).data('id');
+    let baseUrl = window.location.origin;
+    $('.form-share').attr("action", baseUrl+"/file/share/"+id);
     if(type == 1) {
     	$('#flexRadio1').prop("checked", true);
     	$('.share_option').show();

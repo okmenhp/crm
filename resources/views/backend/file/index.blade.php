@@ -23,7 +23,7 @@
     <!-- BEGIN: Main Menu-->
     @include('layouts/__sidebar')
     <!-- END: Main Menu-->
-
+    
     <style type="text/css">
         
 
@@ -140,6 +140,7 @@
               </div>
             
               <div class="modal-body">
+                <form class="form-share" method="post" action="">
                <div class="form-check">
                   <input class="form-check-input" type="radio" name="permission" data-type="1" id="flexRadio1">
                   <label class="form-check-label" for="flexRadioDefault1">
@@ -158,7 +159,7 @@
                     </select>
                 </div>
                 <div class="tab-pane fade" id="left-icon-tab2">
-                    <select class="form-control select2-selection" multiple="" name="department_id">
+                    <select class="form-control select2" multiple="" name="department_id">
                         {!! $department_html !!}
                     </select>
                 </div>
@@ -182,7 +183,7 @@
                 </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Huỷ</button>
-                <button type="button" class="btn btn-primary file-rename">Xác nhận</button>
+                <button type="submit" class="btn btn-primary file-share">Xác nhận</button>
               </div>
               </form>
             </div>
@@ -726,7 +727,11 @@
     <script src="{{asset('assets/js/scripts/footer.min.js')}}"></script>
     <script src="{{asset('assets/js/scripts/customizer.min.js')}}"></script>
     <!-- END: Theme JS-->
-
+   <script type="text/javascript">
+         $(document).ready(function(){
+           $('.select2').select2();   
+       });
+    </script>
     <!-- BEGIN: Page JS-->
     <script src="{{asset('assets/js/scripts/pages/app-file-manager.min.js')}}"></script>
     <!-- END: Page JS-->
@@ -760,7 +765,8 @@
             }
         });
 
-     
+      
+
         
         function getFileProperty(id){
             $.ajax({
