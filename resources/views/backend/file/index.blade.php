@@ -126,7 +126,7 @@
             </div>
           </div>
     </div>
-    <!--  End modal upload -->
+    <!--  End modal rename -->
 
     <!-- Modal share file -->
         <div class="modal fade" id="modalShareFile" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -235,6 +235,28 @@
           </div>
         </div>
     <!--  End modal info file -->
+
+    <!-- Modal view -->
+    <div class="modal fade" id="modalViewFile" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalCenterTitle">View</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body view-file">
+            
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Huỷ</button>
+            <button type="submit" class="btn btn-primary">Tải lên</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--  End modal view -->
     
 
     <!-- BEGIN: Content-->
@@ -650,7 +672,9 @@
                                             
                                         </div>
                                         <div class="dropdown-menu dropdown-menu-sm context-menu">
-                                               <a class="dropdown-item" href="{{route('admin.file.index', $record_file->uid)}}"><i class="fa fa-eye" aria-hidden="true"></i>&nbsp; Mở</a>
+                                                @if(in_array($record_file->format,['jpg','png','jpeg']))
+                                                <a class="dropdown-item modal-view-file" data-toggle="modal" data-target="#modalViewFile" data-id="{{$record_file->id}}" href="#"><i class="fa fa-eye" aria-hidden="true"></i>&nbsp;  Mở</a>
+                                                @endif
                                                <a class="dropdown-item" data-id="{{$record_file->id}}" href="{{route('admin.file.dowload', $record_file->id)}}"><i class="fa fa-download" aria-hidden="true"></i>&nbsp; Tải xuống</a>
                                                <a class="dropdown-item modal-rename" data-id="{{$record_file->id}}" data-toggle="modal" data-target="#modalRename" href="#"><i class="fas fa-edit"></i>&nbsp; Đổi tên</a>
                                                <a class="dropdown-item modal-share-file" data-share="{{$record_file->share}}" data-id="{{$record_file->id}}" data-share_type="{{$record_file->share_type
