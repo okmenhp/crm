@@ -127,3 +127,48 @@
         }
     });
  }
+
+ //view file
+  $('.modal-view-file').on('click', function(){
+     let id = $(this).data('id');
+     modal_view_file(id);
+ });
+
+  function modal_view_file(id){
+    $.ajax({
+        url: '/api/file/info/' + id,
+        type: 'get',
+        data: {
+        }
+    }).done(function(resp) {
+        if(resp.data.type == 1){
+            $('#file_type').html('Folder');
+            $('#file_size').html('0');
+        }else{
+            $('#file_type').html(resp.data.format);
+            if(resp.data.size < 1000000){
+                $('#file_size').html(resp.data.size/1000 +"kb");
+            }else{
+                $('#file_size').html(resp.data.size/1000 +"mb");
+            }
+        }
+        $('#file_owl').html(resp.data.file_own);
+        $('#file_date').html(resp.data.created_at);
+        if(resp.data.status == 0){
+            $('#file_status').html("Ẩn");
+        }else if(resp.data.status == 1){
+            $('#file_status').html("Hoạt động");
+        }
+        else{
+            $('#file_status').html("Xoá tạm");
+        }
+        if(resp.data.share == 1){
+            $('#file_share').html("Riêng tư");
+        }else if(resp.data.status == 2){
+            $('#file_share').html("Chỉ mình tôi");
+        }
+        else{
+            $('#file_share').html("Công khai");
+        }
+    });
+ }

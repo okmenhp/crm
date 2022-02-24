@@ -128,7 +128,7 @@
             </div>
         </div>
     </div>
-    <!--  End modal upload -->
+    <!--  End modal rename -->
 
     <!-- Modal share file -->
     <div class="modal fade" id="modalShareFile" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
@@ -167,13 +167,6 @@
                                             name="employee_id[]">
                                             {!! $employee_html !!}
                                         </select>
-                                        <fieldset class="form-group">
-                                            <select class="js-example-basic-multiple" name="department_id[]"
-                                                multiple="multiple" style="width:100%;" required>
-                                                <option value="1">1
-                                                </option>
-                                            </select>
-                                        </fieldset>
                                     </div>
                                     <div class="tab-pane fade" id="left-icon-tab2">
                                         <select class="form-control select2" multiple="" id="department_select"
@@ -255,6 +248,29 @@
         </div>
     </div>
     <!--  End modal info file -->
+
+    <!-- Modal view -->
+    <div class="modal fade" id="modalViewFile" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">View</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body view-file">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Huỷ</button>
+                    <button type="submit" class="btn btn-primary">Tải lên</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--  End modal view -->
 
 
     <!-- BEGIN: Content-->
@@ -705,9 +721,11 @@
 
                                         </div>
                                         <div class="dropdown-menu dropdown-menu-sm context-menu">
-                                            <a class="dropdown-item"
-                                                href="{{route('admin.file.index', $record_file->uid)}}"><i
+                                            @if(in_array($record_file->format,['jpg','png','jpeg']))
+                                            <a class="dropdown-item modal-view-file" data-toggle="modal"
+                                                data-target="#modalViewFile" data-id="{{$record_file->id}}" href="#"><i
                                                     class="fa fa-eye" aria-hidden="true"></i>&nbsp; Mở</a>
+                                            @endif
                                             <a class="dropdown-item" data-id="{{$record_file->id}}"
                                                 href="{{route('admin.file.dowload', $record_file->id)}}"><i
                                                     class="fa fa-download" aria-hidden="true"></i>&nbsp; Tải xuống</a>
@@ -758,11 +776,109 @@
     <!-- END: Content-->
 
     </div>
-    @include('layouts/__footer')
-    <script>
+    <!-- demo chat-->
+    <div class="widget-chat-demo">
+        <!-- widget chat demo footer button start -->
+        <button class="btn btn-primary chat-demo-button glow px-1"><i class="fal fa-comments-alt"></i></button>
+        <!-- widget chat demo footer button ends -->
+        <!-- widget chat demo start -->
+        <div class="widget-chat widget-chat-demo d-none">
+            <div class="card mb-0">
+                <div class="card-header border-bottom p-0">
+                    <div class="media m-75">
+                        <a href="JavaScript:void(0);">
+                            <div class="avatar mr-75">
+                                <img src="assets/images/portrait/small/avatar-s-2.jpg" alt="avtar images" width="32"
+                                    height="32">
+                                <span class="avatar-status-online"></span>
+                            </div>
+                        </a>
+                        <div class="media-body">
+                            <h6 class="media-heading mb-0 pt-25"><a href="javaScript:void(0);">Kiara Cruiser</a></h6>
+                            <span class="text-muted font-small-3">Active</span>
+                        </div>
+                    </div>
+                    <div class="heading-elements">
+                        <i class="bx bx-x widget-chat-close float-right my-auto cursor-pointer"></i>
+                    </div>
+                </div>
+                <div class="card-body widget-chat-container widget-chat-demo-scroll">
+                    <div class="chat-content">
+                        <div class="badge badge-pill badge-light-secondary my-1">today</div>
+                        <div class="chat">
+                            <div class="chat-body">
+                                <div class="chat-message">
+                                    <p>How can we help? 😄</p>
+                                    <span class="chat-time">7:45 AM</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chat chat-left">
+                            <div class="chat-body">
+                                <div class="chat-message">
+                                    <p>Hey John, I am looking for the best admin template.</p>
+                                    <p>Could you please help me to find it out? 🤔</p>
+                                    <span class="chat-time">7:50 AM</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chat">
+                            <div class="chat-body">
+                                <div class="chat-message">
+                                    <p>Stack admin is the responsive bootstrap 4 admin template.</p>
+                                    <span class="chat-time">8:01 AM</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer border-top p-1">
+                    <form class="d-flex" onsubmit="widgetChatMessageDemo();" action="javascript:void(0);">
+                        <input type="text" class="form-control chat-message-demo mr-75" placeholder="Type here...">
+                        <button type="submit" class="btn btn-primary glow px-1"><i
+                                class="bx bx-paper-plane"></i></button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- widget chat demo ends -->
+
+    </div>
+    <div class="sidenav-overlay"></div>
+    <div class="drag-target"></div>
+
+    <!-- BEGIN: Footer-->
+    <footer class="footer footer-static footer-light">
+        <p class="clearfix mb-0"><span class="float-left d-inline-block">2022 &copy; Pacific Logistics Group</span>
+            <button class="btn btn-primary btn-icon scroll-top" type="button"><i
+                    class="bx bx-up-arrow-alt"></i></button>
+        </p>
+    </footer>
+    <!-- END: Footer-->
+
+
+    <!-- BEGIN: Vendor JS-->
+    <script src="{{asset('assets/vendors/js/vendors.min.js')}}"></script>
+    <script src="{{asset('assets/fonts/LivIconsEvo/js/LivIconsEvo.tools.min.js')}}"></script>
+    <script src="{{asset('assets/fonts/LivIconsEvo/js/LivIconsEvo.defaults.min.js')}}"></script>
+    <script src="{{asset('assets/fonts/LivIconsEvo/js/LivIconsEvo.min.js')}}"></script>
+    <!-- BEGIN Vendor JS-->
+
+    <!-- BEGIN: Page Vendor JS-->
+    <!-- END: Page Vendor JS-->
+
+    <!-- BEGIN: Theme JS-->
+    <script src="{{asset('assets/js/scripts/configs/vertical-menu-dark.min.js')}}"></script>
+    <script src="{{asset('assets/js/core/app-menu.min.js')}}"></script>
+    <script src="{{asset('assets/js/core/app.min.js')}}"></script>
+    <script src="{{asset('assets/js/file/file.js')}}"></script>
+    <script src="{{asset('assets/js/scripts/components.min.js')}}"></script>
+    <script src="{{asset('assets/js/scripts/footer.min.js')}}"></script>
+    <script src="{{asset('assets/js/scripts/customizer.min.js')}}"></script>
+    <!-- END: Theme JS-->
+    <script type="text/javascript">
     $(document).ready(function() {
-        $
-            ('.js-example-basic-multiple2').select2();
+        $('.select2').select2();
     });
     </script>
     <!-- BEGIN: Page JS-->
@@ -810,10 +926,10 @@
             }
         }).done(function(resp) {
             $('.file-name').val(resp.data.name);
+
             $('.file-rename').attr("data-id", resp.data.id);
         });
     }
-
 
     function fileRename(id, name) {
         $.ajax({
@@ -855,12 +971,19 @@
         fileRename(id, name);
     });
 
+
+    $(document).ready(function() {
+        $(".select2").select2({
+
+        });
+    });
+
+
     //  $('.file-dowload').on('click', function(){
     //     let id = $(this).data('id');
     //     fileDowload(id);
     // });
     </script>
-
 </body>
 <!-- END: Body-->
 
