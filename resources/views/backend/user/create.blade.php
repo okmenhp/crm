@@ -26,56 +26,136 @@
                                 role="tabpanel">
                                 <!-- users edit account form start -->
                                 <form class="form-validate" method="post" action="{{route('admin.user.store')}}">
+
                                     <div class="row">
+                                        <div class="col-2 col-sm-2 mt-1">
+                                            <div class="form-group">
+                                                <div class="controls row">
+                                                   <img height="200px" width="200px" src="{{asset('assets/images/profile/account.png')}}" class="img-thumbnail ml-1" alt="...">
+                                                   <div class="mb-3 ml-1">
+                                                      <input class="form-control" type="file" id="formFile">
+                                                    </div>
+                                                    {!! $errors->first('avatar', '<span class="text-danger">:message</span>') !!}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-10 col-sm-10 row">
+                                        <div class="col-6 col-sm-6">
+                                            <div class="form-group">
+                                                <div class="controls">
+                                                    <label>Tên người dùng<span class="text-danger"> *</span></label>
+                                                    <input type="text" class="form-control"
+                                                         value="" name="full_name">
+                                                         {!! $errors->first('full_name', '<span class="text-danger">:message</span>') !!}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6 col-sm-6">
+                                            <div class="form-group">
+                                                <div class="controls">
+                                                    <label>Tên tài khoản<span class="text-danger"> *</span></label>
+                                                    <input type="text" class="form-control"
+                                                         value="" name="username">
+                                                         {!! $errors->first('username', '<span class="text-danger">:message</span>') !!}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6 col-sm-6">
+                                            <div class="form-group">
+                                                <div class="controls">
+                                                    <label>Mật khẩu<span class="text-danger"> *</span></label>
+                                                    <input type="password" class="form-control"
+                                                         value="" name="password">
+                                                         {!! $errors->first('password', '<span class="text-danger">:message</span>') !!}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6 col-sm-6">
+                                            <div class="form-group">
+                                                <div class="controls">
+                                                    <label>Nhập lại mật khẩu<span class="text-danger"> *</span></label>
+                                                    <input type="password" class="form-control"
+                                                         value="" name="c_password">
+                                                         {!! $errors->first('c_password', '<span class="text-danger">:message</span>') !!}
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-6 col-sm-6">
+                                            <div class="form-group">
+                                                <div class="controls">
+                                                    <label>Email<span class="text-danger"> *</span></label>
+                                                    <input type="text" class="form-control"
+                                                         value="" name="email">
+                                                         {!! $errors->first('email', '<span class="text-danger">:message</span>') !!}
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-6 col-sm-6">
+                                            <div class="form-group">
+                                                <div class="controls">
+                                                    <label>Ngày sinh<span class="text-danger"> *</span></label>
+                                                    <input type="date" class="form-control"
+                                                         value="" name="birthday">
+                                                         {!! $errors->first('birthday', '<span class="text-danger">:message</span>') !!}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6 col-sm-6">
+                                            <div class="form-group">
+                                                <div class="controls">
+                                                    <label>Số điện thoại</label>
+                                                    <input type="text" class="form-control"
+                                                         value="" name="phone">
+                                                         {!! $errors->first('phone', '<span class="text-danger">:message</span>') !!}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6 col-sm-6">
+                                            <div class="form-group">
+                                                <div class="controls">
+                                                    <label>Mã người dùng <span class="text-danger">*</span></label>
+                                                    <input type="text" class="form-control"
+                                                        value="" name="code">
+                                                        {!! $errors->first('code', '<span class="text-danger">:message</span>') !!}
+                                                </div>
+                                            </div>
+                                        </div>
                                         
                                         <div class="col-6 col-sm-6">
                                             <div class="form-group">
                                                 <div class="controls">
-                                                   <img src="..." class="img-thumbnail" alt="...">
+                                                    <label>Chọn phòng ban <span class="text-danger"> *</span></label>
+                                                    <select class="form-control" name="department_id">
+                                                        {!! $department_html !!}
+                                                    </select>
+                                                    {!! $errors->first('department_id', '<span class="text-danger">:message</span>') !!}
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-6 col-sm-6">
                                             <div class="form-group">
                                                 <div class="controls">
-                                                    <label>Tên nhân viên<span class="text-danger">*</span></label>
-                                                    <input type="text" class="form-control"
-                                                        placeholder="Nhập tên nhân viên" value="" name="full_name">
+                                                    <label>Chọn chức vụ <span class="text-danger"> *</span></label>
+                                                    <select class="form-control" name="position_id">
+                                                        {!! $position_html !!}
+                                                    </select>
+                                                    {!! $errors->first('position_id', '<span class="text-danger">:message</span>') !!}
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-6 col-sm-6">
-                                            <div class="form-group">
-                                                <div class="controls">
-                                                    <label>Mã nhân viên <span class="text-danger">*</span></label>
-                                                    <input type="text" class="form-control"
-                                                        placeholder="Nhập mã nhân viên" value="" name="code">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-6 col-sm-6">
-                                            <div class="form-group">
-                                                <div class="controls">
-                                                    <label>Mã chấm công </label>
-                                                    <input type="text" class="form-control"
-                                                        placeholder="Nhập mã chấm công" value="" name="timekeeping_code">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-sm-12">
-                                            <div class="form-group">
-                                                <div class="controls">
-                                                    <label>Mô tả</label>
-                                                    <textarea name="note" rows="3" placeholder="Nhập mô tả" class=" form-control"></textarea>
-                                                </div>
-                                            </div>
-                                        </div>
+                                       
+                                    
+                                        
 
                                         <!-- Default checked -->
                                         <div class="col-12 col-sm-12">
                                         <div class="form-check form-switch">
                                           <input class="form-check-input" name="status" type="checkbox" id="flexSwitchCheckChecked" checked>
                                           <label class="form-check-label" for="flexSwitchCheckChecked">Hoạt động</label>
+                                        </div>
                                         </div>
                                         </div>
 

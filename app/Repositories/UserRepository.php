@@ -16,21 +16,44 @@ class UserRepository extends AbstractRepository {
 
     public function validateCreate() {
         return $rules = [
-            'username' => 'required|unique:user',
+            'full_name' => 'required',
+            'username' =>'required|unique:user',
+            'code' =>'required|unique:user',
+            'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'email' => 'email|unique:user',
+            'birthday' => 'required|before:today',
+            'department_id' => 'required',
+            'position_id' => 'required',
             'password' => 'required|min:6|max:32',
-            'c_password' => 'required|min:6|max:32|same:password',
+            'c_password' => 'required|same:password',
         ];
     }
+
     public function validateUpdate($id) {
         return $rules = [
-            'username' => 'required|unique:user,username,' . $id . ',id',
+            'full_name' => 'required',
+            'username' =>'required|unique:user,username,' . $id . ',id',
+            'code' =>'required|unique:user,code,' . $id . ',id',
+            'email' => 'email|required|unique:user,email,' . $id . ',id',
+            'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'birthday' => 'required|before:today',
+            'department_id' => 'required',
+            'position_id' => 'required',
         ];
     }
+
     public function validateUpdateWithPassword($id) {
         return $rules = [
-            'username' => 'required|unique:user,username,' . $id . ',id',
-            'password' => 'min:6|max:32',
-            'c_password' => 'min:6|max:32|same:password',
+            'full_name' => 'required',
+            'username' =>'required|unique:user,username,' . $id . ',id',
+            'code' =>'required|unique:user,code,' . $id . ',id',
+            'email' => 'email|unique:user,email,' . $id . ',id',
+            'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'birthday' => 'required|before:today',
+            'department_id' => 'required',
+            'position_id' => 'required',
+            'password' => 'required|min:6|max:32',
+            'c_password' => 'required|min:6|max:32|same:password',
         ];
     }
 

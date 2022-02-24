@@ -56,8 +56,8 @@
             </li>
             <li class=" navigation-header text-truncate"><span data-i18n="Apps">Tài khoản</span>
             </li>
-            <li class=" nav-item"><a href="/role"><i class="fal fa-user-lock"></i><span class="menu-title text-truncate"
-                        data-i18n="Todo">Quản lý tài khoản</span></a>
+            <li class=" nav-item"><a href="{{route('admin.user.index')}}"><i class="fal fa-user-lock"></i><span class="menu-title text-truncate"
+                        data-i18n="Todo">Tài khoản người dùng</span></a>
             </li>
 
         </ul>

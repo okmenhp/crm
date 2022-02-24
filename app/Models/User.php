@@ -17,7 +17,7 @@ class User extends Authenticatable
     
     protected $table = 'user';
     protected $primaryKey = 'id';
-    protected $fillable = ['username','full_name','email','password','department_id','position_id','avatar','status','role_id','last_login','timekeeping_code','code'
+    protected $fillable = ['username','full_name','email','password','department_id','position_id','avatar','status','role_id','last_login','timekeeping_code','code','birthday','phone'
     ];
 
     protected $hidden = [
@@ -29,6 +29,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function created_at() {
+        return date("d/m/Y", strtotime($this->created_at));
+    }
 
     public function department()
     {
