@@ -1,7 +1,6 @@
 @section('css')
 <!-- BEGIN: Vendor CSS-->
 <link rel="stylesheet" type="text/css" href="{{asset('assets/css/plugins/forms/validation/form-validation.css')}}">
-<link rel="stylesheet" type="text/css" href="{{asset('assets/vendors/css/forms/select/select2.min.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('assets/vendors/css/pickers/pickadate/pickadate.css')}}">
 <!-- END: Vendor CSS-->
 <!-- BEGIN: Page CSS-->
@@ -150,8 +149,6 @@
 
 @section('script')
 <!-- BEGIN: Page Vendor JS-->
-<script src="{{asset('assets/vendors/js/forms/select/select2.full.min.js')}}">
-</script>
 <script src="{{asset('assets/vendors/js/forms/validation/jquery.validate.min.js')}}"></script>
 <script src="{{asset('assets/vendors/js/pickers/pickadate/picker.js')}}"></script>
 <script src="{{asset('assets/vendors/js/pickers/pickadate/picker.date.js')}}"></script>
@@ -161,7 +158,6 @@
 <script src="{{asset('assets/js/scripts/pages/app-users.min.js')}}"></script>
 <scri pt src="{{asset('assets/js/scripts/navs/navs.min.js')}}"></scri>
 <script src="{{asset('assets/js/scripts/pickers/dateTime/pick-a-datetime.min.js')}}"></script>
-<script src="{{asset('assets/js/scripts/forms/select/form-select2.min.js')}}"></script>
 <!-- END: Page JS-->
 
 <script>

@@ -25,8 +25,9 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous">
 </script>
-
-<script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
+<script src="{{asset('assets/vendors/js/forms/select/select2.full.min.js')}}"></script>
+<!-- <script src="{{asset('assets/js/scripts/forms/select/form-select2.min.js')}}"></script> -->
+<!-- <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script> -->
 
 
 <!-- END: Theme JS-->

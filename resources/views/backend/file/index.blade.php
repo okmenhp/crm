@@ -23,188 +23,208 @@
     <!-- BEGIN: Main Menu-->
     @include('layouts/__sidebar')
     <!-- END: Main Menu-->
-    
+
     <style type="text/css">
-        
+    .icon-file {
+        width: 35px;
+        height: 35px;
+    }
 
-        .icon-file{
-            width: 35px;
-            height: 35px;
-        }
+    .icon-image {
+        width: 100%;
+        height: 80px;
+        object-fit: contain;
+    }
 
-        .icon-image{
-            width: 100%;
-            height: 80px;
-            object-fit: contain;
-        }
-
-        .btn-delete{
-            background: white;
-            color: #475f7b;
-            font-size: 95%;
-        }
+    .btn-delete {
+        background: white;
+        color: #475f7b;
+        font-size: 95%;
+    }
     </style>
     <!-- Modal upload -->
-    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalCenterTitle">Upload file</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <form method="post" action="{{route('admin.file.upload', $uid)}}" enctype="multipart/form-data">
-            @csrf
-          <div class="modal-body">
-            <div class="mb-3">
-              <label for="formFileMultiple" class="form-label">Vui lòng chọn file</label>
-              <input class="form-control" type="file" name="file" id="formFileMultiple" multiple>
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">Upload file</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form method="post" action="{{route('admin.file.upload', $uid)}}" enctype="multipart/form-data">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="formFileMultiple" class="form-label">Vui lòng chọn file</label>
+                            <input class="form-control" type="file" name="file" id="formFileMultiple" multiple>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Huỷ</button>
+                        <button type="submit" class="btn btn-primary">Tải lên</button>
+                    </div>
+                </form>
             </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Huỷ</button>
-            <button type="submit" class="btn btn-primary">Tải lên</button>
-          </div>
-          </form>
         </div>
-      </div>
     </div>
     <!--  End modal upload -->
 
     <!-- Modal folder -->
-    <div class="modal fade" id="modalFolder" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalCenterTitle">Thêm folder mới</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <form method="post" action="{{route('admin.file.createFolder', $uid)}}">
-            @csrf
-          <div class="modal-body">
-             
-            <div class="mb-3">
+    <div class="modal fade" id="modalFolder" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">Thêm folder mới</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form method="post" action="{{route('admin.file.createFolder', $uid)}}">
+                    @csrf
+                    <div class="modal-body">
 
-              <label for="formFileMultiple" class="form-label">Vui lòng nhập tên folder</label>
-             <input required="" type="text" name="folder" placeholder="Nhập tên folder" class="form-control">
+                        <div class="mb-3">
+
+                            <label for="formFileMultiple" class="form-label">Vui lòng nhập tên folder</label>
+                            <input required="" type="text" name="folder" placeholder="Nhập tên folder"
+                                class="form-control">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Huỷ</button>
+                        <button type="submit" class="btn btn-primary">Lưu lại</button>
+                    </div>
+                </form>
             </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Huỷ</button>
-            <button type="submit" class="btn btn-primary">Lưu lại</button>
-          </div>
-          </form>
         </div>
-      </div>
     </div>
     <!--  End modal upload -->
 
     <!-- Modal rename -->
-    <div class="modal fade" id="modalRename" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal fade" id="modalRename" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalCenterTitle">Rename</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                <div class="mb-3">
-                <label for="formFileMultiple" class="form-label">Vui lòng nhập tên mới</label>
-                <input required="" type="text" name="file-name" placeholder="" class="form-control file-name">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">Rename</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Huỷ</button>
-                <button type="button" class="btn btn-primary file-rename">Đổi tên</button>
-              </div>
-              </form>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="formFileMultiple" class="form-label">Vui lòng nhập tên mới</label>
+                        <input required="" type="text" name="file-name" placeholder="" class="form-control file-name">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Huỷ</button>
+                    <button type="button" class="btn btn-primary file-rename">Đổi tên</button>
+                </div>
+                </form>
             </div>
-          </div>
+        </div>
     </div>
     <!--  End modal upload -->
 
     <!-- Modal share file -->
-        <div class="modal fade" id="modalShareFile" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal fade" id="modalShareFile" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalCenterTitle">Chia sẻ tài liệu</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-            
-              <div class="modal-body">
-                <form class="form-share" method="post" action="">
-                  <input type="hidden" value="1" name="share_type" class="share_type">
-               <div class="form-check">
-                  <input class="form-check-input" type="radio" name="share"  value="1" data-type="1" id="flexRadio1">
-                  <label class="form-check-label" for="flexRadioDefault1">
-                    Riêng tư
-                  </label>
-                  <p>Chỉ bạn và những người được chia sẻ mới truy cập được file</p>
-                  <div class="share_option">
-                <ul class="nav nav-tabs nav-tabs-highlight">
-                    <li class="nav-item"><a href="#left-icon-tab1" id="left-icon-li1" class="nav-link share-type-tab active" data-toggle="tab" data-share_type="1"><i class="icon-menu7"></i> Chọn nhân viên</a></li>
-                    <li class="nav-item"><a href="#left-icon-tab2" id="left-icon-li2" class="nav-link share-type-tab" data-toggle="tab" data-share_type="2"><i class="icon-stack2"></i> Chọn phòng ban</a></li>
-                </ul>
-                <div class="tab-content mb-3" style="padding-left: 0px !important;">
-                <div class="tab-pane fade show active" id="left-icon-tab1">
-                    <select class="form-control select2" multiple="" id="employee_select" name="employee_id[]">
-                        {!! $employee_html !!}
-                    </select>
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">Chia sẻ tài liệu</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
-                <div class="tab-pane fade" id="left-icon-tab2">
-                    <select class="form-control select2" multiple="" id="department_select" name="department_id[]">
-                        {!! $department_html !!}
-                    </select>
+
+                <div class="modal-body">
+                    <form class="form-share" method="post" action="">
+                        <input type="hidden" value="1" name="share_type" class="share_type">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="share" value="1" data-type="1"
+                                id="flexRadio1">
+                            <label class="form-check-label" for="flexRadioDefault1">
+                                Riêng tư
+                            </label>
+                            <p>Chỉ bạn và những người được chia sẻ mới truy cập được file</p>
+                            <div class="share_option">
+                                <ul class="nav nav-tabs nav-tabs-highlight">
+                                    <li class="nav-item"><a href="#left-icon-tab1" id="left-icon-li1"
+                                            class="nav-link share-type-tab active" data-toggle="tab"
+                                            data-share_type="1"><i class="icon-menu7"></i> Chọn nhân viên</a></li>
+                                    <li class="nav-item"><a href="#left-icon-tab2" id="left-icon-li2"
+                                            class="nav-link share-type-tab" data-toggle="tab" data-share_type="2"><i
+                                                class="icon-stack2"></i> Chọn phòng ban</a></li>
+                                </ul>
+                                <div class="tab-content mb-3" style="padding-left: 0px !important;">
+                                    <div class="tab-pane fade show active" id="left-icon-tab1">
+                                        <select class="form-control select2" multiple="" id="employee_select"
+                                            name="employee_id[]">
+                                            {!! $employee_html !!}
+                                        </select>
+                                        <fieldset class="form-group">
+                                            <select class="js-example-basic-multiple" name="department_id[]"
+                                                multiple="multiple" style="width:100%;" required>
+                                                <option value="1">1
+                                                </option>
+                                            </select>
+                                        </fieldset>
+                                    </div>
+                                    <div class="tab-pane fade" id="left-icon-tab2">
+                                        <select class="form-control select2" multiple="" id="department_select"
+                                            name="department_id[]">
+                                            {!! $department_html !!}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="share" value="2" data-type="2"
+                                id="flexRadio2">
+                            <label class="form-check-label" for="flexRadioDefault2">
+                                Chỉ mình tôi
+                            </label>
+                            <p>Chỉ bạn mới truy cập được file</p>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="share" value="3" data-type="3"
+                                id="flexRadio3">
+                            <label class="form-check-label" for="flexRadioDefault2">
+                                Công khai
+                            </label>
+                            <p>Mọi người đều truy cập được file</p>
+                        </div>
                 </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Huỷ</button>
+                    <button type="submit" class="btn btn-primary file-share">Xác nhận</button>
                 </div>
+                </form>
             </div>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" name="share" value="2" data-type="2" id="flexRadio2" >
-                  <label class="form-check-label" for="flexRadioDefault2">
-                    Chỉ mình tôi 
-                  </label>
-                  <p>Chỉ bạn mới truy cập được file</p>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" name="share"  value="3" data-type="3" id="flexRadio3" >
-                  <label class="form-check-label" for="flexRadioDefault2">
-                    Công khai
-                  </label>
-                  <p>Mọi người đều truy cập được file</p>
-                </div>
-                </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Huỷ</button>
-                <button type="submit" class="btn btn-primary file-share">Xác nhận</button>
-              </div>
-              </form>
-            </div>
-          </div>
         </div>
+    </div>
     <!--  End modal upload -->
 
     <!-- Modal info file -->
-        <div class="modal fade" id="modaInfoFile" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal fade" id="modaInfoFile" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalCenterTitle">Thông tin tài liệu</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-            
-              <div class="modal-body">
-                   <label class="app-file-label">Thông tin</label>
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">Thông tin tài liệu</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <label class="app-file-label">Thông tin</label>
                     <div class="d-flex justify-content-between align-items-center mt-75">
                         <p>Loại tài liệu</p>
                         <p class="font-weight-bold file-type" id="file_type"></p>
@@ -217,7 +237,7 @@
                         <p>Người tạo</p>
                         <p class="font-weight-bold file-own" id="file_owl"></p>
                     </div>
-                     <div class="d-flex justify-content-between align-items-center">
+                    <div class="d-flex justify-content-between align-items-center">
                         <p>Ngày tạo</p>
                         <p class="font-weight-bold file-own" id="file_date"></p>
                     </div>
@@ -229,13 +249,13 @@
                         <p>Chia sẻ</p>
                         <p class="font-weight-bold file-own" id="file_share"></p>
                     </div>
-              </div>
-             
+                </div>
+
             </div>
-          </div>
         </div>
+    </div>
     <!--  End modal info file -->
-    
+
 
     <!-- BEGIN: Content-->
     <div class="app-content content">
@@ -251,14 +271,16 @@
                             <!-- sidebar close icon ends -->
                             <div class="form-group add-new-file text-center">
                                 <!-- Add File Button -->
-                                
-                                 <button type="submit" style="width: 100%;" class="btn btn-warning mt-2" data-toggle="modal" data-target="#modalFolder">
+
+                                <button type="submit" style="width: 100%;" class="btn btn-warning mt-2"
+                                    data-toggle="modal" data-target="#modalFolder">
                                     <i class="bx bx-plus"></i> Folder mới
-                                  </button>
-                                <button type="submit" style="width: 100%;" class="btn btn-primary mt-2" data-toggle="modal" data-target="#exampleModalCenter">
+                                </button>
+                                <button type="submit" style="width: 100%;" class="btn btn-primary mt-2"
+                                    data-toggle="modal" data-target="#exampleModalCenter">
                                     <i class="bx bx-plus"></i> Thêm file
-                                  </button>
-                                
+                                </button>
+
                             </div>
                             <div class="app-file-sidebar-content">
                                 <!-- App File Left Sidebar - Drive Content Starts -->
@@ -266,7 +288,7 @@
                                 <div class="list-group list-group-messages my-50">
                                     <a href="{{route('admin.file.index', 0)}}"
                                         class="list-group-item list-group-item-action pt-0">
-                                 
+
                                         <div class="fonticon-wrap d-inline mr-25">
                                             <i class="fal fa-folder"></i>
                                         </div>
@@ -280,7 +302,7 @@
                                         </div>
                                         Tài liệu công ty
                                     </a>
-                                     <a href="javascript:void(0);" class="list-group-item list-group-item-action">
+                                    <a href="javascript:void(0);" class="list-group-item list-group-item-action">
                                         <div class="fonticon-wrap d-inline mr-25">
                                             <i class="fas fa-share"></i>
                                         </div>
@@ -428,7 +450,7 @@
                                             <p>Người sở hữu</p>
                                             <p class="font-weight-bold file-own">Dat IT</p>
                                         </div>
-                                       <!--  <div class="d-flex justify-content-between align-items-center">
+                                        <!--  <div class="d-flex justify-content-between align-items-center">
                                             <p>Modified</p>
                                             <p class="font-weight-bold">September 4 2019</p>
                                         </div> -->
@@ -547,27 +569,29 @@
 
                             <!-- App File Content Starts -->
                             <div class="app-file-content p-2">
-                               
+
                                 <nav aria-label="breadcrumb">
-                                  <ol class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="{{route('admin.file.index', 0)}}">File của tôi</a></li>
-                                    @if(isset($breadcumb))
-                                    @foreach($breadcumb as $key => $bread)
-                                    <li class="breadcrumb-item"><a href="{{route('admin.file.index', $key)}}">{{$bread}}</a></li>
-                                    @endforeach
-                                    @endif
-                                  <!--   <li class="breadcrumb-item active" aria-current="page">Folder1</li> -->
-                                  </ol>
+                                    <ol class="breadcrumb">
+                                        <li class="breadcrumb-item"><a href="{{route('admin.file.index', 0)}}">File của
+                                                tôi</a></li>
+                                        @if(isset($breadcumb))
+                                        @foreach($breadcumb as $key => $bread)
+                                        <li class="breadcrumb-item"><a
+                                                href="{{route('admin.file.index', $key)}}">{{$bread}}</a></li>
+                                        @endforeach
+                                        @endif
+                                        <!--   <li class="breadcrumb-item active" aria-current="page">Folder1</li> -->
+                                    </ol>
                                 </nav>
 
                                 @if(Session::get('success'))
-                                  <div class="alert alert-success" role="alert">
-                                      {{Session::get('success')}}
-                                  </div>
-                                  @elseif(Session::get('error'))
-                                  <div class="alert alert-danger" role="alert">
-                                      {{Session::get('error')}}
-                                  </div>
+                                <div class="alert alert-success" role="alert">
+                                    {{Session::get('success')}}
+                                </div>
+                                @elseif(Session::get('error'))
+                                <div class="alert alert-danger" role="alert">
+                                    {{Session::get('error')}}
+                                </div>
                                 @endif
                                 <!-- App File - Folder Section Starts -->
                                 @if(count($records_folder) > 0 )
@@ -575,40 +599,61 @@
                                 <div class="row app-file-folder">
                                     @foreach($records_folder as $record_folder)
                                     <div class="col-lg-3 col-md-4 col-6">
-                                        <div class="card border shadow-none mb-1 app-file-info" data-uid="{{$record_folder->uid}}">
+                                        <div class="card border shadow-none mb-1 app-file-info"
+                                            data-uid="{{$record_folder->uid}}">
                                             <div class="card-body px-75 py-50">
                                                 <div class="app-file-folder-content d-flex align-items-center">
                                                     <div class="app-file-folder-logo mr-75">
-                                                        <img class="icon-file" src="{{asset('assets/images/file/folder.png')}}">
+                                                        <img class="icon-file"
+                                                            src="{{asset('assets/images/file/folder.png')}}">
                                                     </div>
                                                     <div class="app-file-folder-details">
                                                         <div
                                                             class="app-file-folder-name font-size-small font-weight-bold">
                                                             {{$record_folder->name}}</div>
-                                                        <div class="app-file-folder-size font-size-small text-muted">{{$record_folder->count}} files, {{($record_folder->size)/1000}}kb</div>
+                                                        <div class="app-file-folder-size font-size-small text-muted">
+                                                            {{$record_folder->count}} files,
+                                                            {{($record_folder->size)/1000}}kb</div>
                                                     </div>
-                                                </div>  
+                                                </div>
                                             </div>
                                         </div>
-                                       
-                                        <div class="dropdown-menu dropdown-menu-sm context-menu">
-                                           <a class="dropdown-item" href="{{route('admin.file.index', $record_folder->uid)}}"><i class="fa fa-eye" aria-hidden="true"></i>&nbsp; Mở</a>
-                                           <a class="dropdown-item modal-rename" data-id="{{$record_folder->id}}" data-toggle="modal" data-target="#modalRename" href="#"><i class="fas fa-edit"></i>&nbsp; Đổi tên</a>
-                                           <a class="dropdown-item modal-share-file" data-share="{{$record_folder->share}}" data-id="{{$record_folder->id}}" data-share_type="{{$record_folder->share_type
-                                           }}" data-toggle="modal" data-target="#modalShareFile" href="#"><i class="fas fa-edit"></i>&nbsp; Chia sẻ</a>
-                                           <a class="dropdown-item modal-info-file" data-toggle="modal" data-target="#modaInfoFile" data-id="{{$record_folder->id}}" href="#"><i class="fas fa-file-alt"></i>&nbsp; Thông tin</a>
-                                           @if(Request::get('is_bin') == 1)
-                                            <form method="post" action="{{route('admin.file.restore', $record_folder->id)}}" class="text-center">
-                                             @csrf
-                                           <button class="btn btn-delete text-left" style="width: 100%;" type="submit"><i class="fas fa-sync-alt">&nbsp; <span style="font-weight: 500;" >KHÔI PHỤC</i></span></button>
-                                           </form>
-                                           @endif
 
-                                            <form method="post" action="{{route('admin.file.delete', $record_folder->id)}}" class="text-center">
-                                             {!! method_field('DELETE') !!}
-                                             @csrf
-                                           <button class="btn btn-delete text-left" style="width: 100%;" type="submit"><i class="fa fa-trash" aria-hidden="true">&nbsp; <span style="font-weight: 500;">XOÁ</span></i></button>
-                                           </form>
+                                        <div class="dropdown-menu dropdown-menu-sm context-menu">
+                                            <a class="dropdown-item"
+                                                href="{{route('admin.file.index', $record_folder->uid)}}"><i
+                                                    class="fa fa-eye" aria-hidden="true"></i>&nbsp; Mở</a>
+                                            <a class="dropdown-item modal-rename" data-id="{{$record_folder->id}}"
+                                                data-toggle="modal" data-target="#modalRename" href="#"><i
+                                                    class="fas fa-edit"></i>&nbsp; Đổi tên</a>
+                                            <a class="dropdown-item modal-share-file"
+                                                data-share="{{$record_folder->share}}" data-id="{{$record_folder->id}}"
+                                                data-share_type="{{$record_folder->share_type
+                                           }}" data-toggle="modal" data-target="#modalShareFile" href="#"><i
+                                                    class="fas fa-edit"></i>&nbsp; Chia sẻ</a>
+                                            <a class="dropdown-item modal-info-file" data-toggle="modal"
+                                                data-target="#modaInfoFile" data-id="{{$record_folder->id}}" href="#"><i
+                                                    class="fas fa-file-alt"></i>&nbsp; Thông tin</a>
+                                            @if(Request::get('is_bin') == 1)
+                                            <form method="post"
+                                                action="{{route('admin.file.restore', $record_folder->id)}}"
+                                                class="text-center">
+                                                @csrf
+                                                <button class="btn btn-delete text-left" style="width: 100%;"
+                                                    type="submit"><i class="fas fa-sync-alt">&nbsp; <span
+                                                            style="font-weight: 500;">KHÔI PHỤC</i></span></button>
+                                            </form>
+                                            @endif
+
+                                            <form method="post"
+                                                action="{{route('admin.file.delete', $record_folder->id)}}"
+                                                class="text-center">
+                                                {!! method_field('DELETE') !!}
+                                                @csrf
+                                                <button class="btn btn-delete text-left" style="width: 100%;"
+                                                    type="submit"><i class="fa fa-trash" aria-hidden="true">&nbsp; <span
+                                                            style="font-weight: 500;">XOÁ</span></i></button>
+                                            </form>
                                         </div>
                                     </div>
                                     @endforeach
@@ -624,55 +669,84 @@
                                     <div class="col-md-3 col-6">
                                         <div class="card border shadow-none mb-1 app-file-info">
                                             <div class="app-file-content-logo card-img-top">
-                                               <!--  <i class="bx bx-dots-vertical-rounded app-file-edit-icon d-block float-right"></i> -->
+                                                <!--  <i class="bx bx-dots-vertical-rounded app-file-edit-icon d-block float-right"></i> -->
                                                 @if(in_array($record_file->format,['jpg','png','jpeg']))
-                                                <img class="d-block mx-auto icon-image" src="{{ Storage::url($record_file->link) }}"  alt="Card image cap">
+                                                <img class="d-block mx-auto icon-image"
+                                                    src="{{ Storage::url($record_file->link) }}" alt="Card image cap">
                                                 @elseif(in_array($record_file->format,['doc','docx']))
-                                                <img class="d-block mx-auto" src="{{asset('assets/images/file/word.png')}}" height="80" width="55" alt="Card image cap">
+                                                <img class="d-block mx-auto"
+                                                    src="{{asset('assets/images/file/word.png')}}" height="80"
+                                                    width="55" alt="Card image cap">
                                                 @elseif(in_array($record_file->format,['xls','xlsx']))
-                                                <img class="d-block mx-auto" src="{{asset('assets/images/file/excel.png')}}" height="80" width="55" alt="Card image cap">
+                                                <img class="d-block mx-auto"
+                                                    src="{{asset('assets/images/file/excel.png')}}" height="80"
+                                                    width="55" alt="Card image cap">
                                                 @elseif(in_array($record_file->format,['pdf']))
-                                                <img class="d-block mx-auto" src="{{asset('assets/images/file/pdf.png')}}" height="80" width="55" alt="Card image cap">
+                                                <img class="d-block mx-auto"
+                                                    src="{{asset('assets/images/file/pdf.png')}}" height="80" width="55"
+                                                    alt="Card image cap">
                                                 @else
-                                                <img class="d-block mx-auto" src="{{asset('assets/images/file/no-format.png')}}" height="80" width="55" alt="Card image cap">
+                                                <img class="d-block mx-auto"
+                                                    src="{{asset('assets/images/file/no-format.png')}}" height="80"
+                                                    width="55" alt="Card image cap">
                                                 @endif
                                             </div>
                                             <div class="card-body p-50">
                                                 <div class="app-file-details">
                                                     <div class="app-file-name font-size-small font-weight-bold">
                                                         {{$record_file->name}}</div>
-                                                    <div class="app-file-size font-size-small text-muted mb-25">{{($record_file->size)/1000}}kb
+                                                    <div class="app-file-size font-size-small text-muted mb-25">
+                                                        {{($record_file->size)/1000}}kb
                                                     </div>
                                                     <!-- <div class="app-file-type font-size-small text-muted">Sketch File
                                                     </div> -->
                                                 </div>
                                             </div>
-                                            
+
                                         </div>
                                         <div class="dropdown-menu dropdown-menu-sm context-menu">
-                                               <a class="dropdown-item" href="{{route('admin.file.index', $record_file->uid)}}"><i class="fa fa-eye" aria-hidden="true"></i>&nbsp; Mở</a>
-                                               <a class="dropdown-item" data-id="{{$record_file->id}}" href="{{route('admin.file.dowload', $record_file->id)}}"><i class="fa fa-download" aria-hidden="true"></i>&nbsp; Tải xuống</a>
-                                               <a class="dropdown-item modal-rename" data-id="{{$record_file->id}}" data-toggle="modal" data-target="#modalRename" href="#"><i class="fas fa-edit"></i>&nbsp; Đổi tên</a>
-                                               <a class="dropdown-item modal-share-file" data-share="{{$record_file->share}}" data-id="{{$record_file->id}}" data-share_type="{{$record_file->share_type
-                                           }}" data-toggle="modal" data-target="#modalShareFile" href="#"><i class="fas fa-edit"></i>&nbsp; Chia sẻ</a>
-                                                <a class="dropdown-item modal-info-file" data-toggle="modal" data-target="#modaInfoFile" data-id="{{$record_file->id}}" href="#"><i class="fas fa-file-alt"></i>&nbsp; Thông tin</a>
-                                               @if(Request::get('is_bin') == 1)
-                                                <form method="post" action="{{route('admin.file.restore', $record_file->id)}}" class="text-center">
+                                            <a class="dropdown-item"
+                                                href="{{route('admin.file.index', $record_file->uid)}}"><i
+                                                    class="fa fa-eye" aria-hidden="true"></i>&nbsp; Mở</a>
+                                            <a class="dropdown-item" data-id="{{$record_file->id}}"
+                                                href="{{route('admin.file.dowload', $record_file->id)}}"><i
+                                                    class="fa fa-download" aria-hidden="true"></i>&nbsp; Tải xuống</a>
+                                            <a class="dropdown-item modal-rename" data-id="{{$record_file->id}}"
+                                                data-toggle="modal" data-target="#modalRename" href="#"><i
+                                                    class="fas fa-edit"></i>&nbsp; Đổi tên</a>
+                                            <a class="dropdown-item modal-share-file"
+                                                data-share="{{$record_file->share}}" data-id="{{$record_file->id}}"
+                                                data-share_type="{{$record_file->share_type
+                                           }}" data-toggle="modal" data-target="#modalShareFile" href="#"><i
+                                                    class="fas fa-edit"></i>&nbsp; Chia sẻ</a>
+                                            <a class="dropdown-item modal-info-file" data-toggle="modal"
+                                                data-target="#modaInfoFile" data-id="{{$record_file->id}}" href="#"><i
+                                                    class="fas fa-file-alt"></i>&nbsp; Thông tin</a>
+                                            @if(Request::get('is_bin') == 1)
+                                            <form method="post"
+                                                action="{{route('admin.file.restore', $record_file->id)}}"
+                                                class="text-center">
                                                 @csrf
-                                                   <button class="btn btn-delete text-left" style="width: 100%;" type="submit"><i class="fas fa-sync-alt">&nbsp; <span style="font-weight: 500;" >KHÔI PHỤC</i></span></button>
-                                                   </form>
-                                                @endif
-                                                <form method="post" action="{{route('admin.file.delete', $record_file->id)}}" class="text-center">
-                                             {!! method_field('DELETE') !!}
-                                             @csrf
-                                           <button class="btn btn-delete text-left" style="width: 100%;" type="submit"><i class="fa fa-trash" aria-hidden="true">&nbsp; <span style="font-weight: 500;">XOÁ</span></i></button>
-                                           </form>
+                                                <button class="btn btn-delete text-left" style="width: 100%;"
+                                                    type="submit"><i class="fas fa-sync-alt">&nbsp; <span
+                                                            style="font-weight: 500;">KHÔI PHỤC</i></span></button>
+                                            </form>
+                                            @endif
+                                            <form method="post"
+                                                action="{{route('admin.file.delete', $record_file->id)}}"
+                                                class="text-center">
+                                                {!! method_field('DELETE') !!}
+                                                @csrf
+                                                <button class="btn btn-delete text-left" style="width: 100%;"
+                                                    type="submit"><i class="fa fa-trash" aria-hidden="true">&nbsp; <span
+                                                            style="font-weight: 500;">XOÁ</span></i></button>
+                                            </form>
                                         </div>
                                     </div>
                                     @endforeach
                                 </div>
                                 @endif
-                                
+
                             </div>
                         </div>
 
@@ -684,219 +758,109 @@
     <!-- END: Content-->
 
     </div>
-    <!-- demo chat-->
-    <div class="widget-chat-demo">
-        <!-- widget chat demo footer button start -->
-        <button class="btn btn-primary chat-demo-button glow px-1"><i class="fal fa-comments-alt"></i></button>
-        <!-- widget chat demo footer button ends -->
-        <!-- widget chat demo start -->
-        <div class="widget-chat widget-chat-demo d-none">
-            <div class="card mb-0">
-                <div class="card-header border-bottom p-0">
-                    <div class="media m-75">
-                        <a href="JavaScript:void(0);">
-                            <div class="avatar mr-75">
-                                <img src="assets/images/portrait/small/avatar-s-2.jpg" alt="avtar images" width="32"
-                                    height="32">
-                                <span class="avatar-status-online"></span>
-                            </div>
-                        </a>
-                        <div class="media-body">
-                            <h6 class="media-heading mb-0 pt-25"><a href="javaScript:void(0);">Kiara Cruiser</a></h6>
-                            <span class="text-muted font-small-3">Active</span>
-                        </div>
-                    </div>
-                    <div class="heading-elements">
-                        <i class="bx bx-x widget-chat-close float-right my-auto cursor-pointer"></i>
-                    </div>
-                </div>
-                <div class="card-body widget-chat-container widget-chat-demo-scroll">
-                    <div class="chat-content">
-                        <div class="badge badge-pill badge-light-secondary my-1">today</div>
-                        <div class="chat">
-                            <div class="chat-body">
-                                <div class="chat-message">
-                                    <p>How can we help? 😄</p>
-                                    <span class="chat-time">7:45 AM</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="chat chat-left">
-                            <div class="chat-body">
-                                <div class="chat-message">
-                                    <p>Hey John, I am looking for the best admin template.</p>
-                                    <p>Could you please help me to find it out? 🤔</p>
-                                    <span class="chat-time">7:50 AM</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="chat">
-                            <div class="chat-body">
-                                <div class="chat-message">
-                                    <p>Stack admin is the responsive bootstrap 4 admin template.</p>
-                                    <span class="chat-time">8:01 AM</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-footer border-top p-1">
-                    <form class="d-flex" onsubmit="widgetChatMessageDemo();" action="javascript:void(0);">
-                        <input type="text" class="form-control chat-message-demo mr-75" placeholder="Type here...">
-                        <button type="submit" class="btn btn-primary glow px-1"><i
-                                class="bx bx-paper-plane"></i></button>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <!-- widget chat demo ends -->
-
-    </div>
-    <div class="sidenav-overlay"></div>
-    <div class="drag-target"></div>
-
-    <!-- BEGIN: Footer-->
-    <footer class="footer footer-static footer-light">
-        <p class="clearfix mb-0"><span class="float-left d-inline-block">2022 &copy; Pacific Logistics Group</span>
-            <button class="btn btn-primary btn-icon scroll-top" type="button"><i
-                    class="bx bx-up-arrow-alt"></i></button>
-        </p>
-    </footer>
-    <!-- END: Footer-->
-
-
-    <!-- BEGIN: Vendor JS-->
-    <script src="{{asset('assets/vendors/js/vendors.min.js')}}"></script>
-    <script src="{{asset('assets/fonts/LivIconsEvo/js/LivIconsEvo.tools.min.js')}}"></script>
-    <script src="{{asset('assets/fonts/LivIconsEvo/js/LivIconsEvo.defaults.min.js')}}"></script>
-    <script src="{{asset('assets/fonts/LivIconsEvo/js/LivIconsEvo.min.js')}}"></script>
-    <!-- BEGIN Vendor JS-->
-
-    <!-- BEGIN: Page Vendor JS-->
-    <!-- END: Page Vendor JS-->
-
-    <!-- BEGIN: Theme JS-->
-    <script src="{{asset('assets/js/scripts/configs/vertical-menu-dark.min.js')}}"></script>
-    <script src="{{asset('assets/js/core/app-menu.min.js')}}"></script>
-    <script src="{{asset('assets/js/core/app.min.js')}}"></script>
-    <script src="{{asset('assets/js/file/file.js')}}"></script>
-    <script src="{{asset('assets/js/scripts/components.min.js')}}"></script>
-    <script src="{{asset('assets/js/scripts/footer.min.js')}}"></script>
-    <script src="{{asset('assets/js/scripts/customizer.min.js')}}"></script>
-    <!-- END: Theme JS-->
-   <script type="text/javascript">
-         $(document).ready(function(){
-           $('.select2').select2();   
-       });
+    @include('layouts/__footer')
+    <script>
+    $(document).ready(function() {
+        $
+            ('.js-example-basic-multiple2').select2();
+    });
     </script>
     <!-- BEGIN: Page JS-->
     <script src="{{asset('assets/js/scripts/pages/app-file-manager.min.js')}}"></script>
     <!-- END: Page JS-->
-     <script type="text/javascript">
-
-         $('.app-file-info').on('contextmenu', function(e) {
-          var top = e.pageY;
-          var left = e.pageX;
-          $(this).next(".context-menu").css({
+    <script type="text/javascript">
+    $('.app-file-info').on('contextmenu', function(e) {
+        var top = e.pageY;
+        var left = e.pageX;
+        $(this).next(".context-menu").css({
             display: "block",
             position: "absolute",
             top: "40px",
             left: "80px",
-          }).addClass("show");
-          return false; //blocks default Webbrowser right click menu
-        }).on("click", function() {
-          $(".context-menu").removeClass("show").hide();
-        });
-
-        $(".context-menu a").on("click", function() {
-          $(this).parent().removeClass("show").hide();
-        });
-
-          // If the document is clicked somewhere
-        $(document).bind("mousedown", function (e) {
-            // If the clicked element is not the menu
-            if (!$(e.target).parents(".context-menu").length > 0) {
-                
-                // Hide it
-                $(".context-menu").hide(100);
-            }
-        });
-
-      
-
-        
-        function getFileProperty(id){
-            $.ajax({
-                url: '/api/file/property',
-                type: 'get',
-                dataType: 'json',
-                data: {
-                    id: id
-                }
-            }).done(function(resp) {
-                $('.file-name').val(resp.data.name);
-                $('.file-rename').attr("data-id", resp.data.id);
-            });
-        }
-
-        function fileRename(id, name){
-            $.ajax({
-                url: '/api/file/rename',
-                type: 'post',
-                dataType: 'json',
-                data: {
-                    id: id,
-                    name: name
-                }
-            }).done(function(resp) {
-                window.location.reload();
-                //alert('Đổi tên thành công');
-            });
-        }
-
-        function fileDowload(id){
-            $.ajax({
-                url: '/api/file/dowload',
-                type: 'get',
-                dataType: 'json',
-                data: {
-                    id: id
-                }
-            }).done(function(resp) {
-                //window.location.reload();
-                //alert('Đổi tên thành công');
-            });
-        }
-
-        $('.modal-rename').on('click', function(){
-            let id = $(this).data('id');
-            getFileProperty(id);
-        });
-
-        $('.file-rename').on('click', function(){
-            let id = $(this).data('id');
-            let name = $('.file-name').val();
-            fileRename(id, name);
-        });
-
-
-  $(document).ready(function() {
-    $(".select2").select2({
-    
+        }).addClass("show");
+        return false; //blocks default Webbrowser right click menu
+    }).on("click", function() {
+        $(".context-menu").removeClass("show").hide();
     });
-  });
+
+    $(".context-menu a").on("click", function() {
+        $(this).parent().removeClass("show").hide();
+    });
+
+    // If the document is clicked somewhere
+    $(document).bind("mousedown", function(e) {
+        // If the clicked element is not the menu
+        if (!$(e.target).parents(".context-menu").length > 0) {
+
+            // Hide it
+            $(".context-menu").hide(100);
+        }
+    });
 
 
-        //  $('.file-dowload').on('click', function(){
-        //     let id = $(this).data('id');
-        //     fileDowload(id);
-        // });
 
 
+    function getFileProperty(id) {
+        $.ajax({
+            url: '/api/file/property',
+            type: 'get',
+            dataType: 'json',
+            data: {
+                id: id
+            }
+        }).done(function(resp) {
+            $('.file-name').val(resp.data.name);
+            $('.file-rename').attr("data-id", resp.data.id);
+        });
+    }
 
-        
 
-     </script>
+    function fileRename(id, name) {
+        $.ajax({
+            url: '/api/file/rename',
+            type: 'post',
+            dataType: 'json',
+            data: {
+                id: id,
+                name: name
+            }
+        }).done(function(resp) {
+            window.location.reload();
+            //alert('Đổi tên thành công');
+        });
+    }
+
+    function fileDowload(id) {
+        $.ajax({
+            url: '/api/file/dowload',
+            type: 'get',
+            dataType: 'json',
+            data: {
+                id: id
+            }
+        }).done(function(resp) {
+            //window.location.reload();
+            //alert('Đổi tên thành công');
+        });
+    }
+
+    $('.modal-rename').on('click', function() {
+        let id = $(this).data('id');
+        getFileProperty(id);
+    });
+
+    $('.file-rename').on('click', function() {
+        let id = $(this).data('id');
+        let name = $('.file-name').val();
+        fileRename(id, name);
+    });
+
+    //  $('.file-dowload').on('click', function(){
+    //     let id = $(this).data('id');
+    //     fileDowload(id);
+    // });
+    </script>
+
 </body>
 <!-- END: Body-->
 
