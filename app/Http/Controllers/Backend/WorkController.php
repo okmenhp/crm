@@ -4,11 +4,11 @@ namespace App\Http\Controllers\Backend;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\BaseController;
-use App\Repositories\ProjectRepository;
+use App\Repositories\WorkRepository;
 use App\Repositories\EmployeeRepository;
 use App\Repositories\DepartmentRepository;
 
-class ProjectController extends BaseController
+class WorkController extends BaseController
 {
     /**
      * Display a listing of the resource.
@@ -16,18 +16,18 @@ class ProjectController extends BaseController
      * @return \Illuminate\Http\Response
      */
 
-    public function __construct(ProjectRepository $projectRepo, EmployeeRepository $employeeRepo, DepartmentRepository $departmentRepo) {
-        $this->projectRepo = $projectRepo;
+    public function __construct(WorkRepository $workRepo, EmployeeRepository $employeeRepo, DepartmentRepository $departmentRepo) {
+        $this->workRepo = $workRepo;
         $this->employeeRepo = $employeeRepo;
         $this->departmentRepo = $departmentRepo;
     }
 
     public function index(Request $request)
     {
-        $records = $this->projectRepo->readFE($request);
+        $records = $this->workRepo->readFE($request);
         $employee_array = $this->employeeRepo->all();
         $department_array = $this->departmentRepo->all();
-        return view('backend/project/index', compact('records','employee_array','department_array'));
+        return view('backend/work/index', compact('records','employee_array','department_array'));
     }
 
     /**
@@ -39,7 +39,7 @@ class ProjectController extends BaseController
     {
         $employee_array = $this->employeeRepo->all();
         $department_array = $this->departmentRepo->all();
-        return view('backend/project/create', compact('employee_array','department_array'));
+        return view('backend/work/create', compact('employee_array','department_array'));
     }
 
     /**
@@ -51,9 +51,8 @@ class ProjectController extends BaseController
     public function store(Request $request)
     {
         $input = $request->all();
-        $input['start_date'] = date('Y-m-d', strtotime($input['start_date']));
-        $input['end_date'] = date('Y-m-d', strtotime($input['end_date']));
-        $input['department_id'] = implode(',', $input['department_id']);
+        $input['start_date'] = date('Y-m-d H:i:s', strtotime($input['start_date']));
+        $input['end_date'] = date('Y-m-d H:i:s', strtotime($input['end_date']));
         $validator = \Validator::make($input, $this->projectRepo->validateCreate());
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
@@ -85,13 +84,9 @@ class ProjectController extends BaseController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit()
     {
-        $record = $this->projectRepo->find($id);
-        $record['department_id'] = explode(',', $record['department_id']);
-        $employee_array = $this->employeeRepo->all();
-        $department_array = $this->departmentRepo->all();
-        return view('backend/project/edit', compact('employee_array','department_array','record'));
+        return view('backend/department/edit');
     }
 
     /**
@@ -103,20 +98,7 @@ class ProjectController extends BaseController
      */
     public function update(Request $request, $id)
     {
-        $input = $request->all();
-        $input['start_date'] = date('Y-m-d', strtotime($input['start_date']));
-        $input['end_date'] = date('Y-m-d', strtotime($input['end_date']));
-        $validator = \Validator::make($input, $this->projectRepo->validateUpdate($id));
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
-        }
-        $res = $this->projectRepo->update($input, $id);
-        if($res){
-            return redirect()->route('admin.project.index')->with('success', 'Cập nhật thành công');
-        }
-        else{
-            return redirect()->route('admin.project.index')->with('error', 'Cập nhật thất bại');
-        }
+        //
     }
 
     /**
@@ -127,7 +109,6 @@ class ProjectController extends BaseController
      */
     public function destroy($id)
     {
-        $this->projectRepo->delete($id);
-        return redirect()->route('admin.project.index')->with('success', 'Xoá thành công');
+        //
     }
 }

@@ -1,11 +1,11 @@
 @section('css')
 <!-- BEGIN: Vendor CSS-->
-<link rel="stylesheet" type="text/css" href="assets/css/plugins/forms/validation/form-validation.css">
-<link rel="stylesheet" type="text/css" href="assets/vendors/css/forms/select/select2.min.css">
-<link rel="stylesheet" type="text/css" href="assets/vendors/css/pickers/pickadate/pickadate.css">
+<link rel="stylesheet" type="text/css" href="{{asset('assets/css/plugins/forms/validation/form-validation.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('assets/vendors/css/forms/select/select2.min.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('assets/vendors/css/pickers/pickadate/pickadate.css')}}">
 <!-- END: Vendor CSS-->
 <!-- BEGIN: Page CSS-->
-<link rel="stylesheet" type="text/css" href="assets/css/pages/app-users.min.css">
+<link rel="stylesheet" type="text/css" href="{{asset('assets/css/pages/app-users.min.css')}}">
 <!-- END: Page CSS-->
 @stop
 @extends('layouts.master')
@@ -109,7 +109,7 @@
                                                 <div class="controls">
                                                     <label>Chọn phòng ban <span class="text-danger"> *</span></label>
                                                     <select class="form-control" name="department_id">
-                                                        {!! $department_html !!}   
+                                                        {!! $department_html !!}
                                                     </select>
                                                     {!! $errors->first('department_id', '<span class="text-danger">:message</span>') !!}
                                                 </div>
@@ -224,7 +224,7 @@
                                                 </div>
                                             </div>
                                         </div> --}}
-                                        
+
 
                                         <!-- Default checked -->
                                         <div class="col-12 col-sm-12">

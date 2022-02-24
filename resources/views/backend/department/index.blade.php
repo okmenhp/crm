@@ -1,11 +1,11 @@
 @section('css')
 <!-- BEGIN: Vendor CSS-->
-<link rel="stylesheet" type="text/css" href="assets/vendors/css/tables/datatable/dataTables.bootstrap4.min.css">
-<link rel="stylesheet" type="text/css" href="assets/vendors/css/tables/datatable/responsive.bootstrap4.min.css">
-<link rel="stylesheet" type="text/css" href="assets/vendors/css/tables/datatable/buttons.bootstrap4.min.css">
+<link rel="stylesheet" type="text/css" href="{{asset('assets/vendors/css/tables/datatable/dataTables.bootstrap4.min.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('assets/vendors/css/tables/datatable/responsive.bootstrap4.min.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('assets/vendors/css/tables/datatable/buttons.bootstrap4.min.css')}}">
 <!-- END: Vendor CSS-->
 <!-- BEGIN: Page CSS-->
-<link rel="stylesheet" type="text/css" href="assets/css/pages/app-users.min.css">
+<link rel="stylesheet" type="text/css" href="{{asset('assets/css/pages/app-users.min.css')}}">
 <!-- END: Page CSS-->
 @stop
 @extends('layouts.master')
@@ -75,11 +75,11 @@
                                             <td>{{++$key}}</td>
                                             <td>{{$record->name}}</td>
                                             <td>
-                                                @if($record->status == 1) 
+                                                @if($record->status == 1)
                                                     <span class="badge badge-success">Hoạt động</span>
                                                 @else
                                                     <span class="badge badge-secondary">Khoá</span>
-                                                @endif 
+                                                @endif
                                             </td>
                                             <td><a href="{{route('admin.department.edit', $record->id)}}"><i class="far fa-edit"></i></a>
                                             <form style="display: inline-block" method="POST" action="{{ route('admin.department.destroy', $record->id) }}">
@@ -95,14 +95,14 @@
                                 <div style="vertical-align: middle;">
                                  {!! $records->links() !!}
                                 </div>
-                            </div>  
+                            </div>
                             @else
                             <b>Không tìm thấy kết quả</b>
-                            @endif      
+                            @endif
                             <!-- datatable ends -->
                         </div>
                     </div>
-                   
+
                 </div>
             </section>
             <!-- users list ends -->

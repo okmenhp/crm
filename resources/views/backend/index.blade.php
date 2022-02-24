@@ -1,6 +1,6 @@
 @section('css')
 <!-- BEGIN: Page CSS-->
-<link rel="stylesheet" type="text/css" href="assets/css/pages/dashboard-ecommerce.min.css">
+<link rel="stylesheet" type="text/css" href="{{asset('assets/css/pages/dashboard-ecommerce.min.css')}}">
 <!-- END: Page CSS-->
 @stop
 @extends('layouts.master')

@@ -25,60 +25,42 @@
                             <div class="tab-pane active fade show" id="account" aria-labelledby="account-tab"
                                 role="tabpanel">
                                 <!-- users edit account form start -->
-                                <form class="form-validate" method="post" action="{{route('admin.user.store')}}">
+                                <form class="form-validate">
                                     <div class="row">
-
-                                        <div class="col-6 col-sm-6">
-                                            <div class="form-group">
-                                                <div class="controls">
-                                                   <img src="..." class="img-thumbnail" alt="...">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-6 col-sm-6">
-                                            <div class="form-group">
-                                                <div class="controls">
-                                                    <label>Tên nhân viên<span class="text-danger">*</span></label>
-                                                    <input type="text" class="form-control"
-                                                        placeholder="Nhập tên nhân viên" value="" name="full_name">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-6 col-sm-6">
-                                            <div class="form-group">
-                                                <div class="controls">
-                                                    <label>Mã nhân viên <span class="text-danger">*</span></label>
-                                                    <input type="text" class="form-control"
-                                                        placeholder="Nhập mã nhân viên" value="" name="code">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-6 col-sm-6">
-                                            <div class="form-group">
-                                                <div class="controls">
-                                                    <label>Mã chấm công </label>
-                                                    <input type="text" class="form-control"
-                                                        placeholder="Nhập mã chấm công" value="" name="timekeeping_code">
-                                                </div>
-                                            </div>
-                                        </div>
                                         <div class="col-12 col-sm-12">
                                             <div class="form-group">
                                                 <div class="controls">
-                                                    <label>Mô tả</label>
-                                                    <textarea name="note" rows="3" placeholder="Nhập mô tả" class=" form-control"></textarea>
+                                                    <label>Vị trí công việc</label>
+                                                    <input type="text" class="form-control" placeholder="Username"
+                                                        value="" name="username">
                                                 </div>
                                             </div>
                                         </div>
-
-                                        <!-- Default checked -->
-                                        <div class="col-12 col-sm-12">
-                                        <div class="form-check form-switch">
-                                          <input class="form-check-input" name="status" type="checkbox" id="flexSwitchCheckChecked" checked>
-                                          <label class="form-check-label" for="flexSwitchCheckChecked">Hoạt động</label>
+                                        <div class="col-12 col-sm-6">
+                                            <div class="form-group">
+                                                <label>Phòng ban</label>
+                                                <select class="form-control">
+                                                    <option>1</option>
+                                                    <option>2</option>
+                                                </select>
+                                            </div>
                                         </div>
+                                        <div class="col-12 col-sm-6">
+                                            <div class="form-group">
+                                                <label>Chức vụ</label>
+                                                <select class="form-control">
+                                                    <option>1</option>
+                                                    <option>2</option>
+                                                </select>
+                                            </div>
                                         </div>
-
+                                        <div class="col-12">
+                                            <fieldset class="form-group">
+                                                <label>Mô tả</label>
+                                                <textarea class="form-control" id="basicTextarea" rows="3"
+                                                    placeholder="Textarea"></textarea>
+                                            </fieldset>
+                                        </div>
                                         <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1">
                                             <button type="submit"
                                                 class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1">Lưu thay
@@ -109,7 +91,8 @@
 <script src="assets/vendors/js/pickers/pickadate/picker.date.js"></script>
 <!-- END: Page Vendor JS-->
 
-<!-- BEGIN: Page JS-->
+<!--
+BEGIN: Page JS-->
 <script src="assets/js/scripts/pages/app-users.min.js"></script>
 <script src="assets/js/scripts/navs/navs.min.js"></script>
 <!-- END: Page JS-->
