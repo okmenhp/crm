@@ -133,7 +133,7 @@
           <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalCenterTitle">Chia sẻ folder/file</h5>
+                <h5 class="modal-title" id="exampleModalCenterTitle">Chia sẻ tài liệu</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
@@ -141,25 +141,26 @@
             
               <div class="modal-body">
                 <form class="form-share" method="post" action="">
+                  <input type="hidden" value="1" name="share_type" class="share_type">
                <div class="form-check">
-                  <input class="form-check-input" type="radio" name="permission" data-type="1" id="flexRadio1">
+                  <input class="form-check-input" type="radio" name="share"  value="1" data-type="1" id="flexRadio1">
                   <label class="form-check-label" for="flexRadioDefault1">
                     Riêng tư
                   </label>
                   <p>Chỉ bạn và những người được chia sẻ mới truy cập được file</p>
                   <div class="share_option">
                 <ul class="nav nav-tabs nav-tabs-highlight">
-                    <li class="nav-item"><a href="#left-icon-tab1" class="nav-link active" data-toggle="tab"><i class="icon-menu7"></i> Chọn nhân viên</a></li>
-                    <li class="nav-item"><a href="#left-icon-tab2" class="nav-link" data-toggle="tab"><i class="icon-stack2"></i> Chọn phòng ban</a></li>
+                    <li class="nav-item"><a href="#left-icon-tab1" id="left-icon-li1" class="nav-link share-type-tab active" data-toggle="tab" data-share_type="1"><i class="icon-menu7"></i> Chọn nhân viên</a></li>
+                    <li class="nav-item"><a href="#left-icon-tab2" id="left-icon-li2" class="nav-link share-type-tab" data-toggle="tab" data-share_type="2"><i class="icon-stack2"></i> Chọn phòng ban</a></li>
                 </ul>
                 <div class="tab-content mb-3" style="padding-left: 0px !important;">
                 <div class="tab-pane fade show active" id="left-icon-tab1">
-                    <select class="form-control select2"  name="employee_id">
+                    <select class="form-control select2" multiple="" id="employee_select" name="employee_id[]">
                         {!! $employee_html !!}
                     </select>
                 </div>
                 <div class="tab-pane fade" id="left-icon-tab2">
-                    <select class="form-control select2" multiple="" name="department_id">
+                    <select class="form-control select2" multiple="" id="department_select" name="department_id[]">
                         {!! $department_html !!}
                     </select>
                 </div>
@@ -167,14 +168,14 @@
             </div>
                 </div>
                 <div class="form-check">
-                  <input class="form-check-input" type="radio" name="permission" data-type="2" id="flexRadio2" >
+                  <input class="form-check-input" type="radio" name="share" value="2" data-type="2" id="flexRadio2" >
                   <label class="form-check-label" for="flexRadioDefault2">
                     Chỉ mình tôi 
                   </label>
                   <p>Chỉ bạn mới truy cập được file</p>
                 </div>
                 <div class="form-check">
-                  <input class="form-check-input" type="radio" name="permission" data-type="3" id="flexRadio3" >
+                  <input class="form-check-input" type="radio" name="share"  value="3" data-type="3" id="flexRadio3" >
                   <label class="form-check-label" for="flexRadioDefault2">
                     Công khai
                   </label>
@@ -190,6 +191,50 @@
           </div>
         </div>
     <!--  End modal upload -->
+
+    <!-- Modal info file -->
+        <div class="modal fade" id="modaInfoFile" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Thông tin tài liệu</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+            
+              <div class="modal-body">
+                   <label class="app-file-label">Thông tin</label>
+                    <div class="d-flex justify-content-between align-items-center mt-75">
+                        <p>Loại tài liệu</p>
+                        <p class="font-weight-bold file-type" id="file_type"></p>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <p>Kích thước</p>
+                        <p class="font-weight-bold file-size" id="file_size"></p>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <p>Người tạo</p>
+                        <p class="font-weight-bold file-own" id="file_owl"></p>
+                    </div>
+                     <div class="d-flex justify-content-between align-items-center">
+                        <p>Ngày tạo</p>
+                        <p class="font-weight-bold file-own" id="file_date"></p>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <p>Trạng thái</p>
+                        <p class="font-weight-bold file-own" id="file_status"></p>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <p>Chia sẻ</p>
+                        <p class="font-weight-bold file-own" id="file_share"></p>
+                    </div>
+              </div>
+             
+            </div>
+          </div>
+        </div>
+    <!--  End modal info file -->
     
 
     <!-- BEGIN: Content-->
@@ -514,6 +559,16 @@
                                   <!--   <li class="breadcrumb-item active" aria-current="page">Folder1</li> -->
                                   </ol>
                                 </nav>
+
+                                @if(Session::get('success'))
+                                  <div class="alert alert-success" role="alert">
+                                      {{Session::get('success')}}
+                                  </div>
+                                  @elseif(Session::get('error'))
+                                  <div class="alert alert-danger" role="alert">
+                                      {{Session::get('error')}}
+                                  </div>
+                                @endif
                                 <!-- App File - Folder Section Starts -->
                                 @if(count($records_folder) > 0 )
                                 <label class="app-file-label">Thư mục</label>
@@ -539,8 +594,9 @@
                                         <div class="dropdown-menu dropdown-menu-sm context-menu">
                                            <a class="dropdown-item" href="{{route('admin.file.index', $record_folder->uid)}}"><i class="fa fa-eye" aria-hidden="true"></i>&nbsp; Mở</a>
                                            <a class="dropdown-item modal-rename" data-id="{{$record_folder->id}}" data-toggle="modal" data-target="#modalRename" href="#"><i class="fas fa-edit"></i>&nbsp; Đổi tên</a>
-                                           <a class="dropdown-item modal-share-file" data-share="{{$record_folder->share}}" data-id="{{$record_folder->id}}" data-toggle="modal" data-target="#modalShareFile" href="#"><i class="fas fa-edit"></i>&nbsp; Chia sẻ</a>
-                                           <a class="dropdown-item" href=""><i class="fas fa-file-alt"></i>&nbsp; Thông tin</a>
+                                           <a class="dropdown-item modal-share-file" data-share="{{$record_folder->share}}" data-id="{{$record_folder->id}}" data-share_type="{{$record_folder->share_type
+                                           }}" data-toggle="modal" data-target="#modalShareFile" href="#"><i class="fas fa-edit"></i>&nbsp; Chia sẻ</a>
+                                           <a class="dropdown-item modal-info-file" data-toggle="modal" data-target="#modaInfoFile" data-id="{{$record_folder->id}}" href="#"><i class="fas fa-file-alt"></i>&nbsp; Thông tin</a>
                                            @if(Request::get('is_bin') == 1)
                                             <form method="post" action="{{route('admin.file.restore', $record_folder->id)}}" class="text-center">
                                              @csrf
@@ -597,8 +653,9 @@
                                                <a class="dropdown-item" href="{{route('admin.file.index', $record_file->uid)}}"><i class="fa fa-eye" aria-hidden="true"></i>&nbsp; Mở</a>
                                                <a class="dropdown-item" data-id="{{$record_file->id}}" href="{{route('admin.file.dowload', $record_file->id)}}"><i class="fa fa-download" aria-hidden="true"></i>&nbsp; Tải xuống</a>
                                                <a class="dropdown-item modal-rename" data-id="{{$record_file->id}}" data-toggle="modal" data-target="#modalRename" href="#"><i class="fas fa-edit"></i>&nbsp; Đổi tên</a>
-                                               <a class="dropdown-item" href="#"><i class="fas fa-share-square"></i>&nbsp; Chia sẻ</a>
-                                               <a class="dropdown-item" href=""><i class="fas fa-file-alt"></i>&nbsp; Thông tin</a>
+                                               <a class="dropdown-item modal-share-file" data-share="{{$record_file->share}}" data-id="{{$record_file->id}}" data-share_type="{{$record_file->share_type
+                                           }}" data-toggle="modal" data-target="#modalShareFile" href="#"><i class="fas fa-edit"></i>&nbsp; Chia sẻ</a>
+                                                <a class="dropdown-item modal-info-file" data-toggle="modal" data-target="#modaInfoFile" data-id="{{$record_file->id}}" href="#"><i class="fas fa-file-alt"></i>&nbsp; Thông tin</a>
                                                @if(Request::get('is_bin') == 1)
                                                 <form method="post" action="{{route('admin.file.restore', $record_file->id)}}" class="text-center">
                                                 @csrf

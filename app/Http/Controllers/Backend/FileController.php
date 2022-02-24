@@ -106,7 +106,7 @@ class FileController extends BaseController
         return redirect()->route('admin.file.index', $uid);
     }
 
-    public function restore(Request $request, $id){
+    public function restore(Request $request, $id) {
         $record = $this->fileRepo->find($id);
         if($record->status == 3){
             $record->update(['status' => 1]);
@@ -115,8 +115,30 @@ class FileController extends BaseController
     }
 
     public function share(Request $request, $id){
-        $department_ids = $request->department_id;
-        $employee_ids = $request->employee_id;
+        $input = $request->all();
+        if($input['share'] == 1){
+            if($input['share_type'] == null){
+                $input['share_type'] = 1;
+            }
+            if($input['share_type'] == 1){
+                $input['share_for'] = implode(',', $input['employee_id']);
+            }
+            elseif($input['share_type'] == 2){
+               $input['share_for'] = implode(',', $input['department_id']);
+            }
+        }
+        else{
+            unset($input['share_type']);
+        }
+        unset($input['employee_id']);
+        unset($input['department_id']);
+        //dd($input);
+        $res = $this->fileRepo->update($input, $id);
+        if($res){
+            return redirect()->back()->with('success','Share thành công');
+        }else{
+            return redirect()->back()->with('error','Có lỗi trong quá trình xử lý');
+        }
     }
 
 
