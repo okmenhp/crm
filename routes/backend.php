@@ -10,9 +10,21 @@ Route::group(['middleware' => 'admin'], function () {
     Route::get('/edit-role',  'Backend\RoleController@edit');
     Route::get('/create-role',  'Backend\RoleController@create');
 
-    Route::get('/project',  'Backend\ProjectController@index');
-    Route::get('/edit-project',  'Backend\ProjectController@edit');
-    Route::get('/create-project',  'Backend\ProjectController@create');
+    //Dự án
+    Route::get('/project',  ['as' => 'admin.project.index', 'uses' => 'Backend\ProjectController@index']);
+    Route::get('/project/create',  ['as' => 'admin.project.create', 'uses' => 'Backend\ProjectController@create']);
+    Route::post('/project/store',  ['as' => 'admin.project.store', 'uses' => 'Backend\ProjectController@store']);
+    Route::get('/project/edit/{id}',  ['as' => 'admin.project.edit', 'uses' => 'Backend\ProjectController@edit']);
+    Route::post('/project/update/{id}',  ['as' => 'admin.project.update', 'uses' => 'Backend\ProjectController@update']);
+    Route::delete('/project/delete/{id}',  ['as' => 'admin.project.destroy', 'uses' => 'Backend\ProjectController@destroy']);
+
+    //Công việc
+    Route::get('/work',  ['as' => 'admin.work.index', 'uses' => 'Backend\WorkController@index']);
+    Route::get('/work/create',  ['as' => 'admin.work.create', 'uses' => 'Backend\WorkController@create']);
+    Route::post('/work/store',  ['as' => 'admin.work.store', 'uses' => 'Backend\WorkController@store']);
+    Route::get('/work/edit/{id}',  ['as' => 'admin.work.edit', 'uses' => 'Backend\WorkController@edit']);
+    Route::post('/work/update/{id}',  ['as' => 'admin.work.update', 'uses' => 'Backend\WorkController@update']);
+    Route::delete('/work/delete/{id}',  ['as' => 'admin.work.destroy', 'uses' => 'Backend\WorkController@destroy']);
 
     Route::get('/customer',  'Backend\CustomerController@index');
     Route::get('/edit-customer',  'Backend\CustomerController@edit');

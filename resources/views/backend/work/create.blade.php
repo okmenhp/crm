@@ -1,6 +1,7 @@
 @section('css')
 <!-- BEGIN: Vendor CSS-->
 <link rel="stylesheet" type="text/css" href="{{asset('assets/css/plugins/forms/validation/form-validation.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('assets/vendors/css/forms/select/select2.min.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('assets/vendors/css/pickers/pickadate/pickadate.css')}}">
 <!-- END: Vendor CSS-->
 <!-- BEGIN: Page CSS-->
@@ -30,24 +31,32 @@
                                             <div class="col-12 col-sm-12">
                                                 <div class="form-group">
                                                     <div class="controls">
-                                                        <label>Tên dự án</label>
+                                                        <label>Tên công việc</label>
                                                         <input type="text" class="form-control"
-                                                            placeholder="Nhập tên dự án" value="" name="name" required>
+                                                            placeholder="Nhập tên công việc" value="" name="name"
+                                                            required>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-12 col-sm-12">
                                                 <div class="form-group">
-
-                                                    <label>Người phụ trách</label>
-                                                    <select class="form-control" name="member_id">
+                                                    <label>Người thực hiện</label>
+                                                    <select class="select2 form-control">
                                                         @foreach($employee_array as $key => $employee)
                                                         <option value="{{$employee->id}}">{{$employee->name}}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div class=" col-12 col-sm-12">
+                                            <div class="col-12 col-sm-12">
+                                                <div class="form-group">
+                                                    <label>Thuộc hợp đồng</label>
+                                                    <select class="select2 form-control">
+                                                        <option value="1">1</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-sm-12">
                                                 <div class="form-group">
                                                     <div class="mb-1">
                                                         <h6>Ngày bắt đầu</h6>
@@ -98,20 +107,16 @@
                                             <div class="col-12 col-sm-12">
                                                 <div class="form-group">
                                                     <h6>Phòng ban</h6>
-                                                    <!-- <select class="form-control" name="department_id">
-                                                            @foreach($employee_array as $key => $record)
-                                                            <option value="1">IT</option>
-                                                            @endforeach
-                                                        </select> -->
-                                                    <fieldset class="form-group">
+                                                    <select class="form-control" name="department_id">
+                                                        <option value="1">IT</option>
+                                                        <option>2</option>
+                                                    </select>
+                                                    <!-- <fieldset class="form-group">
                                                         <select class="js-example-basic-multiple" name="department_id[]"
                                                             multiple="multiple" style="width:100%;" required>
-                                                            @foreach($department_array as $key => $department)
-                                                            <option value="{{$department->id}}">{{$department->name}}
-                                                            </option>
-                                                            @endforeach
+                                                            <option value="1">IT</option>
                                                         </select>
-                                                    </fieldset>
+                                                    </fieldset> -->
 
                                                 </div>
                                             </div>
@@ -149,6 +154,8 @@
 
 @section('script')
 <!-- BEGIN: Page Vendor JS-->
+<script src="{{asset('assets/vendors/js/forms/select/select2.full.min.js')}}">
+</script>
 <script src="{{asset('assets/vendors/js/forms/validation/jquery.validate.min.js')}}"></script>
 <script src="{{asset('assets/vendors/js/pickers/pickadate/picker.js')}}"></script>
 <script src="{{asset('assets/vendors/js/pickers/pickadate/picker.date.js')}}"></script>
@@ -158,12 +165,12 @@
 <script src="{{asset('assets/js/scripts/pages/app-users.min.js')}}"></script>
 <scri pt src="{{asset('assets/js/scripts/navs/navs.min.js')}}"></scri>
 <script src="{{asset('assets/js/scripts/pickers/dateTime/pick-a-datetime.min.js')}}"></script>
+<script src="{{asset('assets/js/scripts/forms/select/form-select2.min.js')}}"></script>
 <!-- END: Page JS-->
 
-<script>
-$(document).ready(function() {
-    $
-        ('.js-example-basic-multiple').select2();
-});
-</script>
+<scr>
+    $(document).ready(function() {
+    $('.js-example-basic-multiple').select2();
+    });
+</scr ipt>
 @stop

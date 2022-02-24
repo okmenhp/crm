@@ -12,8 +12,6 @@ class FileUserRepository extends AbstractRepository
 
     public function model() {
         return 'App\FileUser';
-    }
-    
-    
+    } 
 
 }

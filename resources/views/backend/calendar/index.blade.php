@@ -1,12 +1,12 @@
 @extends('layouts.master')
 @section('css')
 <!-- BEGIN: Vendor CSS-->
-<link rel="stylesheet" type="text/css" href="assets/vendors/css/calendars/tui-time-picker.css">
-<link rel="stylesheet" type="text/css" href="assets/vendors/css/calendars/tui-date-picker.css">
-<link rel="stylesheet" type="text/css" href="assets/vendors/css/calendars/tui-calendar.min.css">
+<link rel="stylesheet" type="text/css" href="{{asset('assets/vendors/css/calendars/tui-time-picker.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('assets/vendors/css/calendars/tui-date-picker.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('assets/vendors/css/calendars/tui-calendar.min.css')}}">
 <!-- END: Vendor CSS-->
 <!-- BEGIN: Page CSS-->
-<link rel="stylesheet" type="text/css" href="assets/css/plugins/calendars/app-calendar.min.css">
+<link rel="stylesheet" type="text/css" href="{{asset('assets/css/plugins/calendars/app-calendar.min.css')}}">
 <!-- END: Page CSS-->
 @stop
 @section('content')

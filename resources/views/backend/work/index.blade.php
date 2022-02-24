@@ -25,10 +25,11 @@
                     <form action="{{route('admin.project.index')}}" method="get">
                         <div class="row border rounded py-2 mb-2">
                             <div class="col-12 col-sm-6 col-lg-3">
-                                <label for="users-list-verified">Tên dự án</label>
+                                <label for="users-list-verified">Tên công việc</label>
                                 <fieldset class="form-group">
-                                    <input type="text" class="form-control" id="basicInput" placeholder="Nhập tên dự án"
-                                        name="keywords_search" value="{{Request::get('keywords')}}">
+                                    <input type="text" class="form-control" id="basicInput"
+                                        placeholder="Nhập tên công việc" name="keywords_search"
+                                        value="{{Request::get('keywords')}}">
                                 </fieldset>
                             </div>
                             <div class="col-12 col-sm-6 col-lg-3">
@@ -49,7 +50,7 @@
                                         class="bx bx-search"></i></button>
                             </div>
                             <div class="col-12 col-sm-6 col-lg-2">
-                                <a href="{{route('admin.project.create')}}" type="button"
+                                <a href="{{route('admin.work.create')}}" type="button"
                                     class="btn btn-primary btn-block my-2">
                                     <i class="bx bx-plus"></i>
                                     <span>Thêm mới</span>

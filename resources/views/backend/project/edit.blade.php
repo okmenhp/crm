@@ -1,11 +1,11 @@
 @section('css')
 <!-- BEGIN: Vendor CSS-->
-<link rel="stylesheet" type="text/css" href="assets/css/plugins/forms/validation/form-validation.css">
-<link rel="stylesheet" type="text/css" href="assets/vendors/css/forms/select/select2.min.css">
-<link rel="stylesheet" type="text/css" href="assets/vendors/css/pickers/pickadate/pickadate.css">
+<link rel="stylesheet" type="text/css" href="{{asset('assets/css/plugins/forms/validation/form-validation.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('assets/vendors/css/forms/select/select2.min.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('assets/vendors/css/pickers/pickadate/pickadate.css')}}">
 <!-- END: Vendor CSS-->
 <!-- BEGIN: Page CSS-->
-<link rel="stylesheet" type="text/css" href="assets/css/pages/app-users.min.css">
+<link rel="stylesheet" type="text/css" href="{{asset('assets/css/pages/app-users.min.css')}}">
 <!-- END: Page CSS-->
 @stop
 @extends('layouts.master')
@@ -25,47 +25,118 @@
                             <div class="tab-pane active fade show" id="account" aria-labelledby="account-tab"
                                 role="tabpanel">
                                 <!-- users edit account form start -->
-                                <form class="form-validate">
+                                <form method="post" action="{{route('admin.project.update', $record->id)}}"
+                                    enctype='multipart/form-data'>
                                     <div class="row">
-                                        <div class="col-12 col-sm-12">
-                                            <div class="form-group">
-                                                <div class="controls">
-                                                    <label>Vị trí công việc</label>
-                                                    <input type="text" class="form-control" placeholder="Username"
-                                                        value="" name="username">
+                                        <div class="col-6 col-sm-6">
+                                            <div class="col-12 col-sm-12">
+                                                <div class="form-group">
+                                                    <div class="controls">
+                                                        <label>Tên dự án</label>
+                                                        <input type="text" class="form-control"
+                                                            placeholder="Nhập tên dự án" value="{{$record->name}}"
+                                                            name="name" required>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="col-12 col-sm-6">
-                                            <div class="form-group">
-                                                <label>Phòng ban</label>
-                                                <select class="form-control">
-                                                    <option>1</option>
-                                                    <option>2</option>
-                                                </select>
+                                            <div class="col-12 col-sm-12">
+                                                <div class="form-group">
+
+                                                    <label>Người phụ trách</label>
+                                                    <select class="form-control" name="member_id">
+                                                        @foreach($employee_array as $key => $employee)
+                                                        <option value="{{$employee->id}}" @if($record->
+                                                            member_id==$employee->id) {{"selected"}}@endif>
+                                                            {{$employee->name}}
+                                                        </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class=" col-12 col-sm-12">
+                                                <div class="form-group">
+                                                    <div class="mb-1">
+                                                        <h6>Ngày bắt đầu</h6>
+                                                        <fieldset class="form-group position-relative has-icon-left">
+                                                            <input type="text" class="form-control pickadate"
+                                                                placeholder="Chọn ngày bắt đầu
+                                                                " name="start_date" value="{{$record->start_date}}">
+                                                            <div class="form-control-position">
+                                                                <i class='bx bx-calendar'></i>
+                                                            </div>
+                                                        </fieldset>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-sm-12">
+                                                <div class="form-group">
+                                                    <div class="mb-1">
+                                                        <h6>Ngày kết thúc</h6>
+                                                        <fieldset class="form-group position-relative has-icon-left">
+                                                            <input type="text" class="form-control pickadate"
+                                                                placeholder="Chọn ngày kết thúc
+                                                                " name="end_date" value="{{$record->end_date}}">
+                                                            <div class=" form-control-position">
+                                                                <i class='bx bx-calendar'></i>
+                                                            </div>
+                                                        </fieldset>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-sm-12">
+                                                <div class="form-group">
+                                                    <label>Hợp đồng</label>
+                                                    <select class="form-control">
+                                                        <option>1</option>
+                                                        <option>2</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-sm-12">
+                                                <div class="form-group">
+                                                    <label>Phân loại</label>
+                                                    <select class="form-control">
+                                                        <option>1</option>
+                                                        <option>2</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-sm-12">
+                                                <div class="form-group">
+                                                    <h6>Phòng ban</h6>
+                                                    <!-- <select class="form-control" name="department_id">
+                                                            @foreach($employee_array as $key => $record)
+                                                            <option value="1">IT</option>
+                                                            @endforeach
+                                                        </select> -->
+                                                    <fieldset class="form-group">
+                                                        <select class="js-example-basic-multiple" name="department_id[]"
+                                                            multiple="multiple" style="width:100%;">
+                                                            @foreach($department_array as $key => $department)
+                                                            <option value="{{$department->id}}">
+                                                                {{$department->name}}
+                                                            </option>
+                                                            @endforeach
+                                                        </select>
+                                                    </fieldset>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1">
+                                                <button type="submit"
+                                                    class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1">Lưu thay
+                                                    đổi</button>
+                                                <button type="reset" class="btn btn-light">Thoát</button>
                                             </div>
                                         </div>
-                                        <div class="col-12 col-sm-6">
-                                            <div class="form-group">
-                                                <label>Chức vụ</label>
-                                                <select class="form-control">
-                                                    <option>1</option>
-                                                    <option>2</option>
-                                                </select>
+                                        <div class="col-6 col-sm-6">
+                                            <div class="col-12">
+                                                <fieldset class="form-group">
+                                                    <label>Tin nhắn</label>
+                                                    <textarea class="form-control" id="basicTextarea" rows="3"
+                                                        placeholder="Nhập tin nhắn"></textarea>
+                                                </fieldset>
                                             </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <fieldset class="form-group">
-                                                <label>Mô tả</label>
-                                                <textarea class="form-control" id="basicTextarea" rows="3"
-                                                    placeholder="Textarea"></textarea>
-                                            </fieldset>
-                                        </div>
-                                        <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1">
-                                            <button type="submit"
-                                                class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1">Lưu thay
-                                                đổi</button>
-                                            <button type="reset" class="btn btn-light">Thoát</button>
                                         </div>
                                     </div>
                                 </form>
@@ -85,15 +156,24 @@
 
 @section('script')
 <!-- BEGIN: Page Vendor JS-->
-<script src="assets/vendors/js/forms/select/select2.full.min.js"></script>
-<script src="assets/vendors/js/forms/validation/jquery.validate.min.js"></script>
-<script src="assets/vendors/js/pickers/pickadate/picker.js"></script>
-<script src="assets/vendors/js/pickers/pickadate/picker.date.js"></script>
+<script src="{{asset('assets/vendors/js/forms/select/select2.full.min.js')}}">
+</script>
+<script src="{{asset('assets/vendors/js/forms/validation/jquery.validate.min.js')}}"></script>
+<script src="{{asset('assets/vendors/js/pickers/pickadate/picker.js')}}"></script>
+<script src="{{asset('assets/vendors/js/pickers/pickadate/picker.date.js')}}"></script>
 <!-- END: Page Vendor JS-->
 
-<!--
-BEGIN: Page JS-->
-<script src="assets/js/scripts/pages/app-users.min.js"></script>
-<script src="assets/js/scripts/navs/navs.min.js"></script>
+<!-- BEGIN: Page JS-->
+<script src="{{asset('assets/js/scripts/pages/app-users.min.js')}}"></script>
+<scri pt src="{{asset('assets/js/scripts/navs/navs.min.js')}}"></scri>
+<script src="{{asset('assets/js/scripts/pickers/dateTime/pick-a-datetime.min.js')}}"></script>
+<script src="{{asset('assets/js/scripts/forms/select/form-select2.min.js')}}"></script>
 <!-- END: Page JS-->
+
+<script>
+$(document).ready(function() {
+    $
+        ('.js-example-basic-multiple').select2();
+});
+</script>
 @stop

@@ -3,7 +3,8 @@
         <ul class="nav navbar-nav flex-row">
             <li class="nav-item mr-auto"><a class="navbar-brand" href="#">
                     <div class="brand-logo">
-                        <img class="logo" src="{{asset('assets/images/logo/logo.png')}}" alt="avatar" width="50px" height="auto">
+                        <img class="logo" src="{{asset('assets/images/logo/logo.png')}}" alt="avatar" width="50px"
+                            height="auto">
                         <title>icon</title>
                     </div>
                     <!-- <h2 class="brand-text mb-0">Frest</h2> -->
@@ -44,10 +45,13 @@
             <li class=" nav-item"><a href="/calendar"><i class="fal fa-calendar"></i><span
                         class="menu-title text-truncate" data-i18n="Todo">Quản lý lịch trình</span></a>
             </li>
-            <li class=" navigation-header text-truncate"><span data-i18n="Apps">Dự án</span>
+            <li class=" navigation-header text-truncate"><span data-i18n="Apps">Công việc</span>
             </li>
             <li class=" nav-item"><a href="/project"><i class="fal fa-project-diagram"></i><span
                         class="menu-title text-truncate" data-i18n="Todo">Quản lý dự án</span></a>
+            </li>
+            <li class=" nav-item"><a href="/work"><i class="fal fa-briefcase"></i><span class="menu-title text-truncate"
+                        data-i18n="Todo">Quản lý công việc</span></a>
             </li>
             <li class=" navigation-header text-truncate"><span data-i18n="Apps">Khách hàng</span>
             </li>
