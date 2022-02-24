@@ -1,11 +1,11 @@
 @section('css')
 <!-- BEGIN: Vendor CSS-->
-<link rel="stylesheet" type="text/css" href="assets/vendors/css/tables/datatable/dataTables.bootstrap4.min.css">
-<link rel="stylesheet" type="text/css" href="assets/vendors/css/tables/datatable/responsive.bootstrap4.min.css">
-<link rel="stylesheet" type="text/css" href="assets/vendors/css/tables/datatable/buttons.bootstrap4.min.css">
+<link rel="stylesheet" type="text/css" href="{{asset('assets/vendors/css/tables/datatable/dataTables.bootstrap4.min.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('assets/vendors/css/tables/datatable/responsive.bootstrap4.min.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('assets/vendors/css/tables/datatable/buttons.bootstrap4.min.css')}}">
 <!-- END: Vendor CSS-->
 <!-- BEGIN: Page CSS-->
-<link rel="stylesheet" type="text/css" href="assets/css/pages/app-users.min.css">
+<link rel="stylesheet" type="text/css" href="{{asset('assets/css/pages/app-users.min.css')}}">
 <!-- END: Page CSS-->
 @stop
 @extends('layouts.master')

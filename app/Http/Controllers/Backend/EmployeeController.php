@@ -18,7 +18,7 @@ class EmployeeController extends BaseController
         $this->positionRepo = $positionRepo;
         $this->departmentRepo = $departmentRepo;
     }
-   
+
     public function index(Request $request)
     {
         $records = $this->employeeRepo->paginate($request ,10);
@@ -53,7 +53,7 @@ class EmployeeController extends BaseController
             return redirect()->route('admin.employee.index')->with('error', 'Thêm mới thất bại');
         }
     }
- 
+
     public function edit(Request $request , $id)
     {
         $record = $this->employeeRepo->find($id);

@@ -1,11 +1,11 @@
 @section('css')
 <!-- BEGIN: Vendor CSS-->
-<link rel="stylesheet" type="text/css" href="assets/css/plugins/forms/validation/form-validation.css">
-<link rel="stylesheet" type="text/css" href="assets/vendors/css/forms/select/select2.min.css">
-<link rel="stylesheet" type="text/css" href="assets/vendors/css/pickers/pickadate/pickadate.css">
+<link rel="stylesheet" type="text/css" href="{{asset('assets/css/plugins/forms/validation/form-validation.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('assets/vendors/css/forms/select/select2.min.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('assets/vendors/css/pickers/pickadate/pickadate.css')}}">
 <!-- END: Vendor CSS-->
 <!-- BEGIN: Page CSS-->
-<link rel="stylesheet" type="text/css" href="assets/css/pages/app-users.min.css">
+<link rel="stylesheet" type="text/css" href="{{asset('assets/css/pages/app-users.min.css')}}">
 <!-- END: Page CSS-->
 @stop
 @extends('layouts.master')
@@ -221,7 +221,7 @@
                                                 </div>
                                             </div>
                                         </div> --}}
-                                        
+
 
                                         <!-- Default checked -->
                                         <div class="col-12 col-sm-12">
