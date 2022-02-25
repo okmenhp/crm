@@ -4,14 +4,14 @@ namespace App\Repositories;
 
 use App\Repositories\Support\AbstractRepository;
 
-class WorkRepository extends AbstractRepository {
+class TaskRepository extends AbstractRepository {
 
     public function __construct(\Illuminate\Container\Container $app) {
         parent::__construct($app);
     }
 
     public function model() {
-        return 'App\Models\Work';
+        return 'App\Models\Task';
     }
 
     public function validateCreate() {

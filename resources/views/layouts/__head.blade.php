@@ -38,5 +38,4 @@
 
 <!-- BEGIN: Font-awesome CSS-->
 <link href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" rel="stylesheet">
-<!-- <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css" rel="stylesheet" /> -->
 <!-- END: Font-awesome CSS-->

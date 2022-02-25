@@ -50,7 +50,7 @@
             <li class=" nav-item"><a href="/project"><i class="fal fa-project-diagram"></i><span
                         class="menu-title text-truncate" data-i18n="Todo">Quản lý dự án</span></a>
             </li>
-            <li class=" nav-item"><a href="/work"><i class="fal fa-briefcase"></i><span class="menu-title text-truncate"
+            <li class=" nav-item"><a href="/task"><i class="fal fa-briefcase"></i><span class="menu-title text-truncate"
                         data-i18n="Todo">Quản lý công việc</span></a>
             </li>
             <li class=" navigation-header text-truncate"><span data-i18n="Apps">Khách hàng</span>
