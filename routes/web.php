@@ -15,3 +15,11 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/login', ['as' => 'login', 'uses' => 'Auth\AuthController@getLogin']);
 Route::post('/login', ['as' => 'postLogin', 'uses' => 'Auth\AuthController@postLogin']);
+Route::get('/logout', ['as' => 'logout', 'uses' => 'Auth\AuthController@logout']);
+
+Route::get('/get-otp', ['as' => 'get_otp', 'uses' => 'Auth\AuthController@get_otp']);
+Route::post('/send-otp', ['as' => 'send_otp', 'uses' => 'Auth\AuthController@send_otp']);
+Route::get('/forgot-password', ['as' => 'forgot_password', 'uses' => 'Auth\AuthController@forgot_password']);
+Route::post('/change-password', ['as' => 'change_password', 'uses' => 'Auth\AuthController@change_password']);
+
+

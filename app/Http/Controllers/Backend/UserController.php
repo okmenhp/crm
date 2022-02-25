@@ -101,4 +101,43 @@ class UserController extends BaseController
     {
         //
     }
+
+    public function editProfile($id)
+    {
+        $record = $this->userRepo->find($id);
+        $option_department = $this->departmentRepo->all();
+        $department_html = \App\Helpers\StringHelper::getSelectNameOptions($option_department, $record->department_id);
+        $option_position = $this->positionRepo->all();
+        $position_html = \App\Helpers\StringHelper::getSelectNameOptions($option_position, $record->position_id);
+        return view('backend/profile/edit', compact('record','department_html','position_html'));
+    }
+
+    public function updateProfile(Request $request, $id)
+    {
+        $input = $request->all();
+        if($input['password'] != null){
+            $validator = \Validator::make($input, $this->userRepo->validateUpdateWithPassword($id));
+            $input['password'] = bcrypt($input['password']);
+            if ($validator->fails()) {
+                return redirect()->back()->withErrors($validator)->withInput();
+            }
+        }else{
+            unset($input['password']);
+            $validator = \Validator::make($input, $this->userRepo->validateUpdate($id));
+            if ($validator->fails()) {
+                return redirect()->back()->withErrors($validator)->withInput();
+            }
+        }
+        $input['status'] = isset($input['status']) ? 1 : 0;
+        if(isset($input['avatar'])){
+            $input['avatar'] = $this->uploadImage($input['avatar']);
+        }
+        $res = $this->userRepo->update($input, $id);
+        if($res){
+            return redirect()->route('admin.user.index_profile', $id)->with('success', 'Cập nhật thành công');
+        }
+        else{
+            return redirect()->route('admin.user.index_profile', $id)->with('error', 'Cập nhật thất bại');
+        }
+    }
 }

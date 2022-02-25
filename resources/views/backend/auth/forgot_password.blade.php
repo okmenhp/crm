@@ -20,11 +20,12 @@
                                     </div>
                                 </div>
                                 <div class="card-body">
-                                    <form class="mb-2" action="">
+                                    <form class="mb-2" method="post" action="{{route('send_otp')}}">
+                                        @csrf
                                         <div class="form-group mb-2">
                                             <label class="text-bold-600" for="exampleInputEmailPhone1">Nhập địa chỉ email</label>
                                             <input type="text" class="form-control" id="exampleInputEmailPhone1"
-                                        placeholder="Email or Phone"></div>
+                                        placeholder="Email" name="email"></div>
                                         <button type="submit" class="btn btn-primary glow position-relative w-100">Gửi yêu cầu<i id="icon-arrow" class="bx bx-right-arrow-alt"></i></button>
                                     </form>
                                     <div class="text-center mb-4"><a href="/login"><small class="text-muted">Trở lại đăng nhập</small></a></div>
