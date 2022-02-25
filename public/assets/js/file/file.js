@@ -66,7 +66,7 @@
         data: {
         }
     }).done(function(resp) {
-        $('#employee_select').html(resp.employee_html);
+        $('#user_select').html(resp.user_html);
         $('#department_select').html(resp.department_html);
         if(resp.share_type == 1){
             $("#left-icon-li1").addClass('active');

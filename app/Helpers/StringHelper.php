@@ -19,6 +19,13 @@ class StringHelper {
         }
         return $html;
     }
+    public static function getSelectFullNameOptions($options, $selected = '') {
+        $html = '';
+        foreach ($options as $option) {
+            $html .= '<option value="' . $option->id . '"' . ((is_array($selected) ? in_array($option->id, $selected) : $selected == $option->id) ? 'selected' : '') . '>' . $option->full_name . '</option>';
+        }
+        return $html;
+    }
     public static function getSelectRoleOptions($options, $selected = '') {
         $html = '<option></option>';
         foreach ($options as $option) {

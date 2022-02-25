@@ -30,7 +30,6 @@
                                 </fieldset>
                             </div>
                             <div class="col-12 col-sm-6 col-lg-1 pt-2">
-                                {{-- <label for="users-list-role">Tìm kiếm</label> --}}
                                 <button type="submit"  class="btn btn-icon btn-outline-primary btn-search "><i
                                         class="bx bx-search"></i></button>
                             </div>
@@ -53,10 +52,10 @@
                                 <table id="" class="table table-striped">
                                     <thead>
                                         <tr>
-                                            <th>Tên nhân viên</th>
+                                            <th>Tên người dùng</th>
                                             <th>Chức vụ</th>
                                             <th>Phòng ban</th>
-                                            <th>Ngày vào</th>
+                                            <th>Ngày tạo</th>
                                             <th>Trạng thái</th>
                                             <th>Thao tác</th>
                                         </tr>
@@ -73,7 +72,7 @@
                                                 {{$record->full_name}}</td>
                                             <td>{{$record->position->name}}</td>
                                             <td>{{$record->department->name}}</td>
-                                            <td>{{$record->format_date($record->day_in)}}</td>
+                                            <td>{{$record->created_at()}}</td>
                                             <td>
                                                 @if($record->status == 1)
                                                     <span class="badge badge-success">Hoạt động</span>

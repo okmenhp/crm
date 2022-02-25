@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Repositories\FileRepository;
 use App\Repositories\DepartmentRepository;
 use App\Repositories\EmployeeRepository;
+use App\Repositories\UserRepository;
 use Auth;
 use Illuminate\Support\Str;
 use App\Models\File;
@@ -16,24 +17,25 @@ use App\Models\File;
 class FileController extends BaseController
 {
 
-    public function __construct(FileRepository $fileRepo, EmployeeRepository $employeeRepo, DepartmentRepository $departmentRepo) {
+    public function __construct(FileRepository $fileRepo, EmployeeRepository $employeeRepo, DepartmentRepository $departmentRepo, UserRepository $userRepo) {
         $this->fileRepo = $fileRepo;
         $this->employeeRepo = $employeeRepo;
         $this->departmentRepo = $departmentRepo;
+        $this->userRepo = $userRepo;
     }
 
     public function index(Request $request, $uid)
     {   
         $uid_clone = $uid;
-        $employee_option = $this->employeeRepo->all();
-        $employee_html = \App\Helpers\StringHelper::getSelectNameOptions($employee_option);
+        $user_option = $this->userRepo->all()->where('id','!=', Auth::user()->id);
+        $user_html = \App\Helpers\StringHelper::getSelectFullNameOptions($user_option);
         $department_option = $this->departmentRepo->all();
         $department_html = \App\Helpers\StringHelper::getSelectNameOptions($department_option);
         if($uid == "0"){
-            $records_folder = $this->fileRepo->allParent($request, '*', null)->where('type', 1);
-            $records_file = $this->fileRepo->allParent($request, '*', null)->where('type', 2);
+            $records_folder = $this->fileRepo->listFile($request, '*', null)->where('type', 1);
+            $records_file = $this->fileRepo->listFile($request, '*', null)->where('type', 2);
             $records_folder = $this->getMoreInfoFolder($records_folder);
-            return view('backend/file/index', compact('uid','records_folder','records_file','department_html','employee_html')); 
+            return view('backend/file/index', compact('uid','records_folder','records_file','department_html','user_html')); 
         }
         else{
             $records_folder = $this->fileRepo->getFileByUid($request, $uid)->where('type', 1);
@@ -46,7 +48,7 @@ class FileController extends BaseController
             }while ($uid_clone != null);
             $breadcumb = array_reverse($breadcumb);
             $records_folder = $this->getMoreInfoFolder($records_folder);
-            return view('backend/file/index', compact('uid','records_folder','records_file','breadcumb','department_html','employee_html')); 
+            return view('backend/file/index', compact('uid','records_folder','records_file','breadcumb','department_html','user_html')); 
         }     
     }
 
@@ -121,7 +123,7 @@ class FileController extends BaseController
                 $input['share_type'] = 1;
             }
             if($input['share_type'] == 1){
-                $input['share_for'] = implode(',', $input['employee_id']);
+                $input['share_for'] = implode(',', $input['user_id']);
             }
             elseif($input['share_type'] == 2){
                $input['share_for'] = implode(',', $input['department_id']);
@@ -130,7 +132,7 @@ class FileController extends BaseController
         else{
             unset($input['share_type']);
         }
-        unset($input['employee_id']);
+        unset($input['user_id']);
         unset($input['department_id']);
         //dd($input);
         $res = $this->fileRepo->update($input, $id);
