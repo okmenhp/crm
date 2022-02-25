@@ -98,11 +98,6 @@
                                             <div class="col-12 col-sm-12">
                                                 <div class="form-group">
                                                     <h6>Phòng ban</h6>
-                                                    <!-- <select class="form-control" name="department_id">
-                                                            @foreach($employee_array as $key => $record)
-                                                            <option value="1">IT</option>
-                                                            @endforeach
-                                                        </select> -->
                                                     <fieldset class="form-group">
                                                         <select class="js-example-basic-multiple" name="department_id[]"
                                                             multiple="multiple" style="width:100%;" required>

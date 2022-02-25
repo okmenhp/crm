@@ -4,11 +4,13 @@ namespace App\Http\Controllers\Backend;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\BaseController;
-use App\Repositories\WorkRepository;
+use App\Repositories\TaskRepository;
 use App\Repositories\EmployeeRepository;
 use App\Repositories\DepartmentRepository;
+use App\Repositories\ProjectRepository;
+use App\Repositories\UserTaskRepository;
 
-class WorkController extends BaseController
+class TaskController extends BaseController
 {
     /**
      * Display a listing of the resource.
@@ -16,18 +18,19 @@ class WorkController extends BaseController
      * @return \Illuminate\Http\Response
      */
 
-    public function __construct(WorkRepository $workRepo, EmployeeRepository $employeeRepo, DepartmentRepository $departmentRepo) {
-        $this->workRepo = $workRepo;
+    public function __construct(TaskRepository $taskRepo, EmployeeRepository $employeeRepo, DepartmentRepository $departmentRepo, ProjectRepository $projectRepo, UserTaskRepository $usertaskRepo) {
+        $this->taskRepo = $taskRepo;
         $this->employeeRepo = $employeeRepo;
         $this->departmentRepo = $departmentRepo;
+        $this->projectRepo = $projectRepo;
     }
 
     public function index(Request $request)
     {
-        $records = $this->workRepo->readFE($request);
+        $records = $this->taskRepo->readFE($request);
         $employee_array = $this->employeeRepo->all();
         $department_array = $this->departmentRepo->all();
-        return view('backend/work/index', compact('records','employee_array','department_array'));
+        return view('backend/task/index', compact('records','employee_array','department_array'));
     }
 
     /**
@@ -38,8 +41,8 @@ class WorkController extends BaseController
     public function create()
     {
         $employee_array = $this->employeeRepo->all();
-        $department_array = $this->departmentRepo->all();
-        return view('backend/work/create', compact('employee_array','department_array'));
+        $project_array = $this->projectRepo->all();
+        return view('backend/task/create', compact('employee_array','project_array'));
     }
 
     /**
@@ -51,19 +54,22 @@ class WorkController extends BaseController
     public function store(Request $request)
     {
         $input = $request->all();
-        $input['start_date'] = date('Y-m-d H:i:s', strtotime($input['start_date']));
-        $input['end_date'] = date('Y-m-d H:i:s', strtotime($input['end_date']));
-        $validator = \Validator::make($input, $this->projectRepo->validateCreate());
+        $input['date'] = date('Y-m-d H:i:s', strtotime($input['date']));
+        $input['user_id'] = implode(',', $input['user_id']);
+        $validator = \Validator::make($input, $this->taskRepo->validateCreate());
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        $res = $this->projectRepo->create($input);
+        $res = $this->taskRepo->create($input);
+
+        // $res = $this->usertaskRepo->create($input);
+
         if($res){
-            return redirect()->route('admin.project.index')->with('success', 'Thêm mới thành công');
+            return redirect()->route('admin.task.index')->with('success', 'Thêm mới thành công');
         }
         else{
-            return redirect()->route('admin.project.index')->with('error', 'Thêm mới thất bại');
+            return redirect()->route('admin.task.index')->with('error', 'Thêm mới thất bại');
         }
     }
 

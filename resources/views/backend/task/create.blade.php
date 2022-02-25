@@ -1,7 +1,6 @@
 @section('css')
 <!-- BEGIN: Vendor CSS-->
 <link rel="stylesheet" type="text/css" href="{{asset('assets/css/plugins/forms/validation/form-validation.css')}}">
-<link rel="stylesheet" type="text/css" href="{{asset('assets/vendors/css/forms/select/select2.min.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('assets/vendors/css/pickers/pickadate/pickadate.css')}}">
 <!-- END: Vendor CSS-->
 <!-- BEGIN: Page CSS-->
@@ -25,7 +24,7 @@
                             <div class="tab-pane active fade show" id="account" aria-labelledby="account-tab"
                                 role="tabpanel">
                                 <!-- users edit account form start -->
-                                <form method="post" action="{{route('admin.project.store')}}">
+                                <form method="post" action="{{route('admin.task.store')}}">
                                     <div class="row">
                                         <div class="col-6 col-sm-6">
                                             <div class="col-12 col-sm-12">
@@ -40,8 +39,8 @@
                                             </div>
                                             <div class="col-12 col-sm-12">
                                                 <div class="form-group">
-                                                    <label>Người thực hiện</label>
-                                                    <select class="select2 form-control">
+                                                    <label>Người phụ trách</label>
+                                                    <select class="select2 form-control" name="master_id">
                                                         @foreach($employee_array as $key => $employee)
                                                         <option value="{{$employee->id}}">{{$employee->name}}</option>
                                                         @endforeach
@@ -50,20 +49,23 @@
                                             </div>
                                             <div class="col-12 col-sm-12">
                                                 <div class="form-group">
-                                                    <label>Thuộc hợp đồng</label>
-                                                    <select class="select2 form-control">
-                                                        <option value="1">1</option>
+                                                    <label>Người thực hiện</label>
+                                                    <select class="select2 form-control" multiple="multiple"
+                                                        name="user_id[]" style="width:100%;">
+                                                        @foreach($employee_array as $key => $employee)
+                                                        <option value="{{$employee->id}}">{{$employee->name}}</option>
+                                                        @endforeach
                                                     </select>
                                                 </div>
                                             </div>
                                             <div class="col-12 col-sm-12">
                                                 <div class="form-group">
                                                     <div class="mb-1">
-                                                        <h6>Ngày bắt đầu</h6>
+                                                        <h6>Thời hạn</h6>
                                                         <fieldset class="form-group position-relative has-icon-left">
                                                             <input type="text" class="form-control pickadate"
-                                                                placeholder="Chọn ngày bắt đầu
-                                                                " name="start_date">
+                                                                placeholder="Chọn thời hạn
+                                                                " name="date">
                                                             <div class="form-control-position">
                                                                 <i class='bx bx-calendar'></i>
                                                             </div>
@@ -73,25 +75,30 @@
                                             </div>
                                             <div class="col-12 col-sm-12">
                                                 <div class="form-group">
-                                                    <div class="mb-1">
-                                                        <h6>Ngày kết thúc</h6>
-                                                        <fieldset class="form-group position-relative has-icon-left">
-                                                            <input type="text" class="form-control pickadate"
-                                                                placeholder="Chọn ngày kết thúc
-                                                                " name="end_date">
-                                                            <div class="form-control-position">
-                                                                <i class='bx bx-calendar'></i>
-                                                            </div>
-                                                        </fieldset>
+                                                    <div class="controls">
+                                                        <label>Số giờ dự kiến</label>
+                                                        <input type="text" class="form-control"
+                                                            placeholder="Nhập số giờ" value="" name="time" required>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-12 col-sm-12">
                                                 <div class="form-group">
-                                                    <label>Hợp đồng</label>
-                                                    <select class="form-control">
-                                                        <option>1</option>
-                                                        <option>2</option>
+                                                    <label>Thuộc dự án</label>
+                                                    <select class="select2 form-control" name="project_id">
+                                                        @foreach($project_array as $key => $project)
+                                                        <option value="{{$project->id}}">{{$project->name}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-sm-12">
+                                                <div class="form-group">
+                                                    <label>Độ khó</label>
+                                                    <select class="form-control" name="level">
+                                                        <option value="1">Dễ</option>
+                                                        <option value="2">Trung bình</option>
+                                                        <option value="3">Khó</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -106,25 +113,13 @@
                                             </div>
                                             <div class="col-12 col-sm-12">
                                                 <div class="form-group">
-                                                    <h6>Phòng ban</h6>
-                                                    <select class="form-control" name="department_id">
-                                                        <option value="1">IT</option>
-                                                        <option>2</option>
-                                                    </select>
-                                                    <!-- <fieldset class="form-group">
-                                                        <select class="js-example-basic-multiple" name="department_id[]"
-                                                            multiple="multiple" style="width:100%;" required>
-                                                            <option value="1">IT</option>
-                                                        </select>
-                                                    </fieldset> -->
-
+                                                    <label>Hoàn thành</label>
+                                                    <div class="progress progress-bar-primary mb-2">
+                                                        <div class="progress-bar progress-bar-striped progress-bar-animated"
+                                                            role="progressbar" aria-valuenow="20" aria-valuemin="20"
+                                                            aria-valuemax="100" style="width:20%"></div>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1">
-                                                <button type="submit"
-                                                    class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1">Lưu thay
-                                                    đổi</button>
-                                                <button type="reset" class="btn btn-light">Thoát</button>
                                             </div>
                                         </div>
                                         <div class="col-6 col-sm-6">
@@ -136,6 +131,56 @@
                                                 </fieldset>
                                             </div>
                                         </div>
+                                    </div>
+                                    <div id="basic-datatable">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="card">
+                                                    <div class="card-body card-dashboard">
+                                                        <div class="table-responsive">
+                                                            <table class="table zero-configuration">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>Id</th>
+                                                                        <th>Nhiệm vụ</th>
+                                                                        <th>Người thực hiện</th>
+                                                                        <th>Thời gian</th>
+                                                                        <th>Ngày thực hiện</th>
+                                                                        <th>Xoá</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>1</td>
+                                                                        <td>2</td>
+                                                                        <td>Project</td>
+                                                                        <td>
+                                                                            3
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                                <tfoot>
+                                                                    <tr>
+                                                                        <th>Id</th>
+                                                                        <th>Nhiệm vụ</th>
+                                                                        <th>Người thực hiện</th>
+                                                                        <th>Thời gian</th>
+                                                                        <th>Ngày thực hiện</th>
+                                                                        <th>Xoá</th>
+                                                                    </tr>
+                                                                </tfoot>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1">
+                                        <button type="submit" class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1">Lưu
+                                            thay
+                                            đổi</button>
+                                        <button type="reset" class="btn btn-light">Thoát</button>
                                     </div>
                                 </form>
                                 <!-- users edit account form ends -->
@@ -166,11 +211,7 @@
 <scri pt src="{{asset('assets/js/scripts/navs/navs.min.js')}}"></scri>
 <script src="{{asset('assets/js/scripts/pickers/dateTime/pick-a-datetime.min.js')}}"></script>
 <script src="{{asset('assets/js/scripts/forms/select/form-select2.min.js')}}"></script>
-<!-- END: Page JS-->
-
-<scr>
-    $(document).ready(function() {
-    $('.js-example-basic-multiple').select2();
-    });
-</scr ipt>
+<!--
+END:
+Page JS-->
 @stop

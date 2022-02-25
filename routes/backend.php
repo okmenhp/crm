@@ -23,12 +23,12 @@ Route::group(['middleware' => 'admin'], function () {
     Route::delete('/project/delete/{id}',  ['as' => 'admin.project.destroy', 'uses' => 'Backend\ProjectController@destroy']);
 
     //Công việc
-    Route::get('/work',  ['as' => 'admin.work.index', 'uses' => 'Backend\WorkController@index']);
-    Route::get('/work/create',  ['as' => 'admin.work.create', 'uses' => 'Backend\WorkController@create']);
-    Route::post('/work/store',  ['as' => 'admin.work.store', 'uses' => 'Backend\WorkController@store']);
-    Route::get('/work/edit/{id}',  ['as' => 'admin.work.edit', 'uses' => 'Backend\WorkController@edit']);
-    Route::post('/work/update/{id}',  ['as' => 'admin.work.update', 'uses' => 'Backend\WorkController@update']);
-    Route::delete('/work/delete/{id}',  ['as' => 'admin.work.destroy', 'uses' => 'Backend\WorkController@destroy']);
+    Route::get('/task',  ['as' => 'admin.task.index', 'uses' => 'Backend\TaskController@index']);
+    Route::get('/task/create',  ['as' => 'admin.task.create', 'uses' => 'Backend\TaskController@create']);
+    Route::post('/task/store',  ['as' => 'admin.task.store', 'uses' => 'Backend\TaskController@store']);
+    Route::get('/task/edit/{id}',  ['as' => 'admin.task.edit', 'uses' => 'Backend\TaskController@edit']);
+    Route::post('/task/update/{id}',  ['as' => 'admin.task.update', 'uses' => 'Backend\TaskController@update']);
+    Route::delete('/task/delete/{id}',  ['as' => 'admin.task.destroy', 'uses' => 'Backend\TaskController@destroy']);
 
     Route::get('/customer',  'Backend\CustomerController@index');
     Route::get('/edit-customer',  'Backend\CustomerController@edit');
