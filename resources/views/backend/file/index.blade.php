@@ -163,9 +163,9 @@
                                 </ul>
                                 <div class="tab-content mb-3" style="padding-left: 0px !important;">
                                     <div class="tab-pane fade show active" id="left-icon-tab1">
-                                        <select class="form-control select2" multiple="" id="employee_select"
-                                            name="employee_id[]">
-                                            {!! $employee_html !!}
+                                        <select class="form-control select2" multiple="" id="user_select"
+                                            name="user_id[]">
+                                            {!! $user_html !!}
                                         </select>
                                     </div>
                                     <div class="tab-pane fade" id="left-icon-tab2">
@@ -308,28 +308,28 @@
                                         <div class="fonticon-wrap d-inline mr-25">
                                             <i class="fal fa-folder"></i>
                                         </div>
-                                        Tài liệu cá nhân
+                                        Tài liệu của tôi
                                         <!-- <span
                                             class="badge badge-light-danger badge-pill badge-round float-right mt-50">{{count($records_folder)}}</span> -->
                                     </a>
-                                    <a href="javascript:void(0);" class="list-group-item list-group-item-action">
+                                   {{--  <a href="javascript:void(0);" class="list-group-item list-group-item-action">
                                         <div class="fonticon-wrap d-inline mr-25">
                                             <i class="fal fa-folder"></i>
                                         </div>
                                         Tài liệu công ty
-                                    </a>
-                                    <a href="javascript:void(0);" class="list-group-item list-group-item-action">
+                                    </a> --}}
+                                    <a href="{{url('file/0?is_share=1')}}" class="list-group-item list-group-item-action">
                                         <div class="fonticon-wrap d-inline mr-25">
                                             <i class="fas fa-share"></i>
                                         </div>
                                         Tài liệu được chia sẻ
                                     </a>
-                                    <a href="javascript:void(0);" class="list-group-item list-group-item-action">
+                                    {{-- <a href="javascript:void(0);" class="list-group-item list-group-item-action">
                                         <div class="fonticon-wrap d-inline mr-25">
                                             <i class="fal fa-star"></i>
                                         </div>
                                         Tài liệu quan trọng
-                                    </a>
+                                    </a> --}}
                                     <a href="{{url('file/0?is_bin=1')}}" class="list-group-item list-group-item-action">
                                         <div class="fonticon-wrap d-inline mr-25">
                                             <i class="fal fa-trash-alt"></i>
@@ -559,13 +559,13 @@
                                     <div class="sidebar-toggle d-block d-lg-none">
                                         <i class="bx bx-menu"></i>
                                     </div>
-                                    <fieldset class="form-group position-relative has-icon-left m-0">
+                                    {{-- <fieldset class="form-group position-relative has-icon-left m-0">
                                         <input type="text" class="form-control border-0 shadow-none" id="file-search"
                                             placeholder="Tìm kiếm">
                                         <div class="form-control-position">
                                             <i class="bx bx-search"></i>
                                         </div>
-                                    </fieldset>
+                                    </fieldset> --}}
                                 </div>
                                 <!-- Header search bar Ends -->
                                 <!-- Header Icons Starts -->
@@ -588,8 +588,7 @@
 
                                 <nav aria-label="breadcrumb">
                                     <ol class="breadcrumb">
-                                        <li class="breadcrumb-item"><a href="{{route('admin.file.index', 0)}}">File của
-                                                tôi</a></li>
+                                        <li class="breadcrumb-item"><a href="{{route('admin.file.index', 0)}}">Tài liệu</a></li>
                                         @if(isset($breadcumb))
                                         @foreach($breadcumb as $key => $bread)
                                         <li class="breadcrumb-item"><a

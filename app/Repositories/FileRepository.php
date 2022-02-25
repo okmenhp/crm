@@ -35,10 +35,28 @@ class FileRepository extends AbstractRepository {
     }
 
     public function getFileByUid($request, $uid){
+        $user_id = \Auth::user()->id;
         $parent_folder = $this->model->where('uid', $uid)->first();
         if($request->is_bin == 1){
             $records = $this->model->where('status', 3)->where('parent_id', $parent_folder->id)->get();
-        }else{
+        }elseif($request->is_share == 1){
+            $department_id = \Auth::user()->department->id;
+            $records = $this->model->where('status', '!=', 3)->where('created_by' , '!=', $user_id)->where('parent_id', $parent_folder->id)->get($columns);
+            foreach($records as $key => $record){
+                if($record->share_type == 1){
+                    if(!in_array($user_id, explode(',', $record->share_for))){
+                        unset($records[$key]);
+                    }
+                }elseif($record->share_type == 2){
+                    if(!in_array($department_id, explode(',', $record->share_for))){
+                        unset($records[$key]);
+                    }
+                }else{
+                    unset($records[$key]);
+                }
+            }
+        }
+        else{
             $records = $this->model->where('status','!=', 3)->where('parent_id', $parent_folder->id)->get();
         }
         return $records;
@@ -55,5 +73,42 @@ class FileRepository extends AbstractRepository {
         return $parent_id;
         }
         return $parent_id = null;
+    }
+
+    public function listFile($request, $columns = array('*'), $parent_id) {
+        $user_id = \Auth::user()->id;
+        if($request->is_bin == 1){
+            $records = $this->model->where('status', 3)->where('created_by', $user_id)->where('parent_id', $parent_id)->get($columns);;
+        }elseif($request->is_share == 1){
+            $department_id = \Auth::user()->department->id;
+            $records = $this->model->where('status', '!=', 3)->where('created_by' , '!=', $user_id)->where('parent_id', $parent_id);
+            $records = $records->get($columns);
+            foreach($records as $key => $record){
+                if($record->share_type == 1){
+                    if(!in_array($user_id, explode(',', $record->share_for))){
+                        unset($records[$key]);
+                    }
+                }elseif($record->share_type == 2){
+                    if(!in_array($department_id, explode(',', $record->share_for))){
+                        unset($records[$key]);
+                    }
+                }else{
+                    unset($records[$key]);
+                }
+            }
+        }
+        else{
+            $records = $this->model->where('parent_id', $parent_id)->where('created_by', $user_id)->where('status', '!=', 3)->get($columns);;
+        }
+        return $records;
+    }
+
+    public function readSharedFile($request, $columns = array('*'), $parent_id) {
+        if($request->is_bin == 1){
+            $records = $this->model->where('status', 3)->where('parent_id', $parent_id)->get($columns);
+        }else{
+            $records = $this->model->where('parent_id', $parent_id)->where('status', '!=', 3)->get($columns);
+        }
+        return $records;
     }
 }

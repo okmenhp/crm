@@ -9,15 +9,17 @@ use Storage;
 use App\Repositories\FileRepository;
 use App\Repositories\DepartmentRepository;
 use App\Repositories\EmployeeRepository;
+use App\Repositories\UserRepository;
 
 class FileController extends BaseController
 {
 	use ApiResponse;
 
-    public function __construct(FileRepository $fileRepo, EmployeeRepository $employeeRepo, DepartmentRepository $departmentRepo) {
+      public function __construct(FileRepository $fileRepo, EmployeeRepository $employeeRepo, DepartmentRepository $departmentRepo, UserRepository $userRepo) {
         $this->fileRepo = $fileRepo;
         $this->employeeRepo = $employeeRepo;
         $this->departmentRepo = $departmentRepo;
+        $this->userRepo = $userRepo;
     }
 
 
@@ -56,11 +58,11 @@ class FileController extends BaseController
 
     public function load_share_for(Request $request, $id){
         $record = $this->fileRepo->find($id);
-        $employee_option = $this->employeeRepo->all();
-        $employee_html = \App\Helpers\StringHelper::getSelectNameOptions($employee_option, explode(',', $record->share_for));
+        $user_option = $this->userRepo->all()->where('id','!=', \Auth::user()->id);
+        $user_html = \App\Helpers\StringHelper::getSelectFullNameOptions($user_option, explode(',',$record->share_for));
         $department_option = $this->departmentRepo->all();
         $department_html = \App\Helpers\StringHelper::getSelectNameOptions($department_option, explode(',',$record->share_for));
-        return response()->json(['success' => 1 , 'employee_html' => $employee_html, 'department_html' => $department_html ,'share_type' => $record->share_type]);
+        return response()->json(['success' => 1 , 'user_html' => $user_html, 'department_html' => $department_html ,'share_type' => $record->share_type]);
     }
 
     public function info(Request $request, $id){
