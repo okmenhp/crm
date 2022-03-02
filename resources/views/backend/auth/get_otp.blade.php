@@ -35,7 +35,7 @@
                                         </div>
                                         <div
                                             class="form-group d-flex flex-md-row flex-column justify-content-between align-items-center">
-                                            <div class="text-right"><a href="{{route('get_otp')}}"
+                                            <div class="text-right"><a href="/forgot-password"
                                             class="card-link"><small>Quên mật khẩu?</small></a></div>
                                         </div>
                                         <button type="submit" class="btn btn-primary glow w-100 position-relative">Đăng nhập<i

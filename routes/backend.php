@@ -10,6 +10,10 @@ Route::group(['middleware' => 'admin'], function () {
     Route::get('/edit-role',  'Backend\RoleController@edit');
     Route::get('/create-role',  'Backend\RoleController@create');
 
+    //profile
+    Route::get('/user/edit_profile/{id}', ['as' => 'admin.user.index_profile', 'uses' => 'Backend\UserController@editProfile']);
+    Route::post('/user/update_profile/{id}', ['as' => 'admin.user.update_profile', 'uses' => 'Backend\UserController@updateProfile']);
+
     //Dự án
     Route::get('/project',  ['as' => 'admin.project.index', 'uses' => 'Backend\ProjectController@index']);
     Route::get('/project/create',  ['as' => 'admin.project.create', 'uses' => 'Backend\ProjectController@create']);
@@ -30,7 +34,7 @@ Route::group(['middleware' => 'admin'], function () {
     Route::get('/edit-customer',  'Backend\CustomerController@edit');
     Route::get('/create-customer',  'Backend\CustomerController@create');
     Route::get('/',  'Backend\AuthController@login');
-    Route::get('/forgot-password',  'Backend\AuthController@forgot_password');
+    // Route::get('/forgot-password',  'Backend\AuthController@forgot_password');
     Route::get('/calendar',  ['as' => 'admin.calendar.index', 'uses' => 'Backend\CalendarController@index']);
     //Người dùng hệ thống user
     Route::get('/user',  ['as' => 'admin.user.index', 'uses' => 'Backend\UserController@index']);

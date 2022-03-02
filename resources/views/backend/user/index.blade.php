@@ -43,6 +43,15 @@
                         </div>
                     </form>
                 </div>
+                @if(Session::get('success'))
+                <div class="alert alert-success" role="alert">
+                    {{Session::get('success')}}
+                </div>
+                @elseif(Session::get('error'))
+                <div class="alert alert-danger" role="alert">
+                    {{Session::get('error')}}
+                </div>
+                @endif
                 <div class="users-list-table">
                     <div class="card">
                         <div class="card-body">
