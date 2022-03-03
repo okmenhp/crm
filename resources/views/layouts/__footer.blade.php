@@ -9,6 +9,7 @@
 <script src="{{asset('assets/fonts/LivIconsEvo/js/LivIconsEvo.tools.min.js')}}"></script>
 <script src="{{asset('assets/fonts/LivIconsEvo/js/LivIconsEvo.defaults.min.js')}}"></script>
 <script src="{{asset('assets/fonts/LivIconsEvo/js/LivIconsEvo.min.js')}}"></script>
+<script src="{{asset('assets/vendors/js/forms/select/select2.full.min.js')}}"></script>
 <!-- BEGIN Vendor JS-->
 
 <!-- BEGIN: Theme JS-->
@@ -26,4 +27,5 @@
     integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous">
 </script>
 <script src="{{asset('assets/vendors/js/forms/select/select2.full.min.js')}}"></script>
+<script src="{{asset('assets/js/scripts/forms/select/form-select2.min.js')}}"></script>
 <!-- END: Theme JS-->

@@ -1,7 +1,6 @@
 @section('css')
 <!-- BEGIN: Vendor CSS-->
 <link rel="stylesheet" type="text/css" href="{{asset('assets/css/plugins/forms/validation/form-validation.css')}}">
-<link rel="stylesheet" type="text/css" href="{{asset('assets/vendors/css/forms/select/select2.min.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('assets/vendors/css/pickers/pickadate/pickadate.css')}}">
 <!-- END: Vendor CSS-->
 <!-- BEGIN: Page CSS-->
@@ -29,11 +28,23 @@
                                     <div class="row">
                                         <div class="col-12 col-sm-12">
                                             <div class="form-group">
+                                                <label>Phòng ban cha</label>
+                                                <select class="select2 form-control" name="parent_id">
+                                                    <option value="">Chọn phòng ban cha</option>
+                                                    @foreach($department_array as $key => $department)
+                                                    <option value="{{$department->id}}">{{$department->name}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-sm-12">
+                                            <div class="form-group">
                                                 <div class="controls">
                                                     <label>Tên phòng ban</label>
                                                     <input type="text" class="form-control"
                                                         placeholder="Nhập tên phòng ban" value="" name="name">
-                                                        {!! $errors->first('name', '<span class="text-danger">:message</span>') !!}
+                                                    {!! $errors->first('name', '<span
+                                                        class="text-danger">:message</span>') !!}
                                                 </div>
                                             </div>
                                         </div>
@@ -41,24 +52,28 @@
                                             <div class="form-group">
                                                 <div class="controls">
                                                     <label>Mô tả</label>
-                                                    <textarea name="description" rows="3" placeholder="Nhập mô tả" class=" form-control"></textarea>
+                                                    <textarea name="description" rows="3" placeholder="Nhập mô tả"
+                                                        class=" form-control"></textarea>
                                                 </div>
                                             </div>
                                         </div>
 
                                         <!-- Default checked -->
                                         <div class="col-12 col-sm-12">
-                                        <div class="form-check form-switch">
-                                          <input class="form-check-input" name="status" type="checkbox" id="flexSwitchCheckChecked" checked>
-                                          <label class="form-check-label" for="flexSwitchCheckChecked">Kích hoạt</label>
-                                        </div>
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" name="status" type="checkbox"
+                                                    id="flexSwitchCheckChecked" checked>
+                                                <label class="form-check-label" for="flexSwitchCheckChecked">Kích
+                                                    hoạt</label>
+                                            </div>
                                         </div>
 
                                         <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1">
                                             <button type="submit"
                                                 class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1">Lưu lại
                                             </button>
-                                            <button type="reset" class="btn btn-light"><a href="{{route('admin.department.index')}}">Huỷ</a></button>
+                                            <button type="reset" class="btn btn-light"><a
+                                                    href="{{route('admin.department.index')}}">Huỷ</a></button>
                                         </div>
                                     </div>
                                 </form>
