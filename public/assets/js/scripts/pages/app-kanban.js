@@ -1,18 +1,16 @@
-/*=========================================================================================
-    File Name: kanban.js
-    Description: kanban plugin
-    ----------------------------------------------------------------------------------------
-    Item Name: Frest HTML Admin Template
-    Version: 1.0
-    Author: PIXINVENT
-    Author URL: http://www.themeforest.net/user/pixinvent
-==========================================================================================*/
+
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
 
 $(function () {
   'use strict';
   var kanban_curr_el, kanban_curr_item_id, kanban_item_title, kanban_data, kanban_item, kanban_users;
 
   // Kanban Board and Item Data passed by json
+  //Khai báo dữ liệu kanban mẫu. Thực tế sẽ dùng ajax để push dữ liệu vào biến kanban_board_data
   var kanban_board_data = [{
       id: "kanban-board-1",
       title: "Marketing",
@@ -103,7 +101,7 @@ $(function () {
     },
     {
       id: "kanban-board-3",
-      title: "Developing",
+      title: "Done",
       item: [{
           id: "31",
           title: "Database Management System (DBMS) is a collection of programs",
@@ -151,7 +149,8 @@ $(function () {
 
     // click on current kanban-item
     click: function (el) {
-      // kanban-overlay and sidebar display block on click of kanban-item
+
+      //Bật side bar khi click 1 card 
       $(".kanban-overlay").addClass("show");
       $(".kanban-sidebar").addClass("show");
 
@@ -167,9 +166,10 @@ $(function () {
     },
 
     buttonClick: function (el, boardId) {
-      // create a form to add add new element
+      // Tạo thêm 1 card
       var formItem = document.createElement("form");
       formItem.setAttribute("class", "itemform");
+      //Bắn ra texarea nhập title card
       formItem.innerHTML =
         '<div class="form-group">' +
         '<textarea class="form-control add-new-item" rows="2" autofocus required></textarea>' +
@@ -179,7 +179,7 @@ $(function () {
         '<button type="button" id="CancelBtn" class="btn btn-sm btn-danger">Cancel</button>' +
         "</div>";
 
-      // add new item on submit click
+      // add new card on submit click
       KanbanExample.addForm(boardId, formItem);
       formItem.addEventListener("submit", function (e) {
         e.preventDefault();
@@ -189,6 +189,7 @@ $(function () {
         });
         formItem.parentNode.removeChild(formItem);
       });
+      //Cancel add card
       $(document).on("click", "#CancelBtn", function () {
         $(this).closest(formItem).remove();
       })
@@ -199,9 +200,10 @@ $(function () {
 
   // Add html for Custom Data-attribute to Kanban item
   var board_item_id, board_item_el, board_item_badge = "",board_item_users="",board_item_dueDate = "", board_item_comment="", board_item_attachment="",board_item_image="";
-  // Kanban board loop
+  // Kanban board(list) loop
   for (kanban_data in kanban_board_data) {
-    // Kanban board items loop
+    // console.log('kanban_board_data', kanban_board_data);
+    // Kanban board items (card) loop
     for (kanban_item in kanban_board_data[kanban_data].item) {
       var board_item_details = kanban_board_data[kanban_data].item[kanban_item]; // set item details
       board_item_id = $(board_item_details).attr("id"); // set 'id' attribute of kanban-item
@@ -305,7 +307,7 @@ $(function () {
     }
   }
 
-  // Add new kanban board
+  // Add new kanban board (list)
   //---------------------
   var addBoardDefault = document.getElementById("add-kanban");
   var i = 1;
@@ -314,8 +316,19 @@ $(function () {
       id: "kanban-" + i, // generate random id for each new kanban
       title: "Default Title"
     }]);
+    $.ajax({
+        type: "post",
+        url: '/api/kanban/create-board',
+        dataType: 'JSON',
+        data: {
+          project_id: $('#project_id').val(),
+          name: "Default Title"
+        }
+      }).done(function(resp) {
+        alert('success');
+      });
     var kanbanNewBoard = KanbanExample.findBoard("kanban-" + i)
-
+    
     if (kanbanNewBoard) {
       $(".kanban-title-board").on("mouseenter", function () {
         $(this).attr("contenteditable", "true");
