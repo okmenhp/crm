@@ -70,5 +70,5 @@ Route::group(['middleware' => 'admin'], function () {
     Route::delete('/department/delete/{id}',  ['as' => 'admin.department.destroy', 'uses' => 'Backend\DepartmentController@destroy']);
 
     //Kanban
-    Route::get('/kanban',  ['as' => 'admin.kanban.index', 'uses' => 'Backend\KanbanController@index']);
+    Route::get('/kanban/{project_id}',  ['as' => 'admin.kanban.index', 'uses' => 'Backend\KanbanController@index']);
 });

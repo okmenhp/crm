@@ -1,7 +1,7 @@
 @extends('layouts.master')
 @section('css')
 
-<!-- BEGIN: Vendor CSS-->
+<!-- @đBEGIN: Vendor CSS-->
 <link rel="stylesheet" type="text/css" href="{{asset('assets/vendors/css/jkanban/jkanban.min.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('assets/vendors/css/editors/quill/quill.snow.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('assets/vendors/css/pickers/pickadate/pickadate.css')}}">
@@ -16,6 +16,7 @@
 @section('content')
 <!-- BEGIN: Content-->
 <!-- BEGIN: Content-->
+<input type="hidden" name="" id="project_id" value="{{$project_id}}">
 <div class="app-content content">
     <div class="content-overlay"></div>
     <div class="content-wrapper">
@@ -143,14 +144,15 @@
 @section('script')
 
 <!-- BEGIN: Page Vendor JS-->
-<script src="assets/vendors/js/jkanban/jkanban.min.js"></script>
-<script src="assets/vendors/js/editors/quill/quill.min.js"></script>
-<script src="assets/vendors/js/pickers/pickadate/picker.js"></script>
-<script src="assets/vendors/js/pickers/pickadate/picker.date.js"></script>
+<script src="{{asset('assets/vendors/js/jkanban/jkanban.min.js')}}"></script>
+<script src="{{asset('assets/vendors/js/editors/quill/quill.min.js')}}"></script>
+<script src="{{asset('assets/vendors/js/pickers/pickadate/picker.js')}}"></script>
+<script src="{{asset('assets/vendors/js/pickers/pickadate/picker.date.js')}}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <!-- END: Page Vendor JS-->
 
 <!-- BEGIN: Page JS-->
-<script src="assets/js/scripts/pages/app-kanban.js"></script>
+<script src="{{asset('assets/js/scripts/pages/app-kanban.js')}}"></script>
 <!-- END: Page JS-->
 
 @stop

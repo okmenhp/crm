@@ -113,6 +113,9 @@ abstract class AbstractRepository {
     public function findBy($attribute, $value, $columns = array('*')) {
         return $this->model->where($attribute, '=', $value)->first($columns);
     }
+    public function countByForeignId($foreign_id, $foreign_attr){
+        return $this->model->where($foreign_attr, $foreign_id)->count();
+    }
 
     public function updateViewCount($id, $view_count) {
         return $this->model->where('id', $id)->update(['view_count' => $view_count+1]);

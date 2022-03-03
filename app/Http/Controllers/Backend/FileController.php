@@ -31,7 +31,7 @@ class FileController extends BaseController
         $user_html = \App\Helpers\StringHelper::getSelectFullNameOptions($user_option);
         $department_option = $this->departmentRepo->all();
         $department_html = \App\Helpers\StringHelper::getSelectNameOptions($department_option);
-        $path = ( Storage::disk('public')->get('f11214226655d71169776a35d8c23d11.docx'));
+        $path = ( Storage::disk('public')->get('4074c9344515778cdd316325cea217cd.txt'));
         if($uid == "0"){
             $records_folder = $this->fileRepo->listFile($request, '*', null)->where('type', 1);
             $records_file = $this->fileRepo->listFile($request, '*', null)->where('type', 2);

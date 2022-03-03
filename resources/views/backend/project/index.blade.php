@@ -117,7 +117,7 @@
                                                 <div class="badge badge-danger mb-1">Đã Huỷ</div> -->
                                                     </td>
                                                     <td>
-                                                        <a href="{{route('admin.project.edit', $record->id)}}"
+                                                        <a href="{{route('admin.kanban.index', $record->id)}}"
                                                             title='Sửa'><i class="far fa-edit"></i></a>
                                                         <form style="display: inline-block" method="POST"
                                                             action="{{ route('admin.project.destroy', $record->id) }}">
@@ -130,7 +130,7 @@
                                                 </tr>
                                                 @endforeach
                                             </tbody>
-                                            <tfoot>
+                                           {{--  <tfoot>
                                                 <tr>
                                                     <th>id</th>
                                                     <th>Dự án</th>
@@ -140,7 +140,7 @@
                                                     <th>Tình trạng</th>
                                                     <th>Thao tác</th>
                                                 </tr>
-                                            </tfoot>
+                                            </tfoot> --}}
                                         </table>
                                     </div>
                                 </div>

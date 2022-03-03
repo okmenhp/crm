@@ -2,27 +2,25 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Model;
 
-class Project extends Authenticatable
+class Project extends Model
 {
+   
 
-    use HasApiTokens, HasFactory, Notifiable;
-
-    const ROLE_ADMINISTRATOR = 1;
-    const MALE = 0;
-    const FAMALE = 1;
+    const TYPE_PUBLIC = 1; 
+    const TYPE_PRIVATE = 2;
 
     protected $table = 'project';
     protected $primaryKey = 'id';
-    protected $fillable = ['name','member_id','department_id','start_date','end_date'];
+    protected $fillable = ['name','created_by','manager','name','description','visibility','attachment','status'];
 
-    public function format_date($time){
-        date('d-m-Y', strtotime($time));
+     public function created_at() {
+        return date("d/m/Y", strtotime($this->created_at));
+    }
+
+    public function createdBy() {
+        return $this->hasOne('App\Models\User', 'id','created_by');    
     }
 
 }
