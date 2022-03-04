@@ -4,27 +4,30 @@ namespace App\Http\Controllers\Backend;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\BaseController;
+use App\Models\Problem;
 use App\Models\Department;
 use Validator;
+use App\Repositories\ProblemRepository;
 use App\Repositories\DepartmentRepository;
 
-class DepartmentController extends BaseController
+class ProblemController extends BaseController
 {
-    public function __construct(DepartmentRepository $departmentRepo) {
+    public function __construct(ProblemRepository $problemRepo, DepartmentRepository $departmentRepo) {
+        $this->problemRepo = $problemRepo;
         $this->departmentRepo = $departmentRepo;
     }
 
     public function index(Request $request)
     {
-        $records = $this->departmentRepo->paginate($request ,10);
         $department_array = $this->departmentRepo->all();
-        return view('backend/department/index',compact('records','department_array'));
+        $records = $this->problemRepo->readFE($request);
+        return view('backend/problem/index',compact('records','department_array'));
     }
 
     public function create()
     {
         $department_array = $this->departmentRepo->all();
-        return view('backend/department/create',compact('department_array'));
+        return view('backend/problem/create',compact('department_array'));
     }
 
     //Use Reposiotry

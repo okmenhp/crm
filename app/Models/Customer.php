@@ -4,10 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Department extends Model
+class Customer extends Model
 {
-    protected $table = 'department';
-    protected $fillable = ['name','parent_id','status','ordering','description'];
+    protected $table = 'customer';
+    protected $fillable = ['name','email','phone','status'];
 
     public function created_at() {
         return date("d/m/Y", strtotime($this->created_at));

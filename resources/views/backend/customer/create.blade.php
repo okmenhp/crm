@@ -28,120 +28,167 @@
                                 <!-- users edit account form start -->
                                 <form class="form-validate">
                                     <div class="row">
-                                        <div class="col-12 col-sm-6">
-                                            <div class="form-group">
-                                                <div class="controls">
-                                                    <label>Tên khách hàng</label>
-                                                    <input type="text" class="form-control"
-                                                        placeholder="Nhập tên khách hàng" value="" name="username">
+                                        <div class="col-6 col-sm-6">
+                                            <div class="col-12">
+                                                <div class="form-group">
+                                                    <div class="controls">
+                                                        <label>Tên khách hàng</label>
+                                                        <input type="text" class="form-control"
+                                                            placeholder="Nhập tên khách hàng" value="" name="username">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="form-group">
+                                                    <label>Loại khách hàng</label>
+                                                    <select class="form-control">
+                                                        <option>Công ty</option>
+                                                        <option>Cá nhân</option>
+                                                        <option>...</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="form-group">
+                                                    <div class="controls">
+                                                        <label>Mã số thuế</label>
+                                                        <input type="text" class="form-control" placeholder="" value=""
+                                                            name="username">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="form-group">
+                                                    <div class="controls">
+                                                        <label>Điện thoại</label>
+                                                        <input type="text" class="form-control" placeholder="" value=""
+                                                            name="username">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="form-group">
+                                                    <div class="controls">
+                                                        <label>Email</label>
+                                                        <input type="text" class="form-control" placeholder="" value=""
+                                                            name="username">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="form-group">
+                                                    <div class="controls">
+                                                        <label>Skype</label>
+                                                        <input type="text" class="form-control" placeholder="" value=""
+                                                            name="username">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="form-group">
+                                                    <div class="controls">
+                                                        <label>Zalo</label>
+                                                        <input type="text" class="form-control" placeholder="" value=""
+                                                            name="username">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="form-group">
+                                                    <div class="controls">
+                                                        <label>Wechat</label>
+                                                        <input type="text" class="form-control" placeholder="" value=""
+                                                            name="username">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="form-group">
+                                                    <div class="controls">
+                                                        <label>Whatsapp</label>
+                                                        <input type="text" class="form-control" placeholder="" value=""
+                                                            name="username">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="form-group">
+                                                    <div class="controls">
+                                                        <label>Địa chỉ</label>
+                                                        <input type="text" class="form-control" placeholder="" value=""
+                                                            name="username">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="form-group">
+                                                    <div class="controls">
+                                                        <label>Quốc gia</label>
+                                                        <input type="text" class="form-control" placeholder="" value=""
+                                                            name="username">
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-12 col-sm-6">
-                                            <div class="form-group">
-                                                <label>Loại khách hàng</label>
-                                                <select class="form-control">
-                                                    <option>Công ty</option>
-                                                    <option>2</option>
-                                                </select>
+                                        <div class="col-6 col-sm-6">
+                                            <div class="col-12">
+                                                <fieldset class="form-group">
+                                                    <label>Tin nhắn</label>
+                                                    <textarea class="form-control" id="basicTextarea" rows="3"
+                                                        placeholder="Nhập tin nhắn"></textarea>
+                                                </fieldset>
                                             </div>
                                         </div>
-                                        <div class="col-12 col-sm-6">
-                                            <div class="form-group">
-                                                <div class="controls">
-                                                    <label>Mã số thuế</label>
-                                                    <input type="text" class="form-control" placeholder="" value=""
-                                                        name="username">
+                                    </div>
+                                    <div id="basic-datatable">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="card">
+                                                    <div class="card-body card-dashboard">
+                                                        <div class="table-responsive">
+                                                            <table class="table zero-configuration">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>Id</th>
+                                                                        <th>Người liên lạc</th>
+                                                                        <th>SĐT</th>
+                                                                        <th>Giới tính</th>
+                                                                        <th>Chức vụ</th>
+                                                                        <th>Thao tác</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>1</td>
+                                                                        <td>2</td>
+                                                                        <td>Project</td>
+                                                                        <td>
+                                                                            3
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                                <tfoot>
+                                                                    <tr>
+                                                                        <th>Id</th>
+                                                                        <th>Người liên lạc</th>
+                                                                        <th>SĐT</th>
+                                                                        <th>Giới tính</th>
+                                                                        <th>Chức vụ</th>
+                                                                        <th>Thao tác</th>
+                                                                    </tr>
+                                                                </tfoot>
+                                                            </table>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-12 col-sm-6">
-                                            <div class="form-group">
-                                                <div class="controls">
-                                                    <label>Điện thoại</label>
-                                                    <input type="text" class="form-control" placeholder="" value=""
-                                                        name="username">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-sm-6">
-                                            <div class="form-group">
-                                                <div class="controls">
-                                                    <label>Email</label>
-                                                    <input type="text" class="form-control" placeholder="" value=""
-                                                        name="username">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-sm-6">
-                                            <div class="form-group">
-                                                <div class="controls">
-                                                    <label>Skype</label>
-                                                    <input type="text" class="form-control" placeholder="" value=""
-                                                        name="username">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-sm-6">
-                                            <div class="form-group">
-                                                <div class="controls">
-                                                    <label>Zalo</label>
-                                                    <input type="text" class="form-control" placeholder="" value=""
-                                                        name="username">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-sm-6">
-                                            <div class="form-group">
-                                                <div class="controls">
-                                                    <label>Wechat</label>
-                                                    <input type="text" class="form-control" placeholder="" value=""
-                                                        name="username">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-sm-6">
-                                            <div class="form-group">
-                                                <div class="controls">
-                                                    <label>Whatsapp</label>
-                                                    <input type="text" class="form-control" placeholder="" value=""
-                                                        name="username">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-sm-6">
-                                            <div class="form-group">
-                                                <div class="controls">
-                                                    <label>Địa chỉ</label>
-                                                    <input type="text" class="form-control" placeholder="" value=""
-                                                        name="username">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-sm-6">
-                                            <div class="form-group">
-                                                <div class="controls">
-                                                    <label>Quốc gia</label>
-                                                    <input type="text" class="form-control" placeholder="" value=""
-                                                        name="username">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label>Người liên lạc</label>
-                                                <select class="select2 form-control" multiple="multiple">
-                                                    <option value="1">Đặng Thị Hoài</option>
-                                                    <option value="2">Phạm Quang Minh</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1">
-                                            <button type="submit"
-                                                class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1">Lưu thay
-                                                đổi</button>
-                                            <button type="reset" class="btn btn-light">Thoát</button>
-                                        </div>
+                                    </div>
+                                    <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1">
+                                        <button type="submit" class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1">Lưu
+                                            thay
+                                            đổi</button>
+                                        <button type="reset" class="btn btn-light">Thoát</button>
                                     </div>
                                 </form>
                                 <!-- users edit account form ends -->

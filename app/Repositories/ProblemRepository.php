@@ -4,14 +4,14 @@ namespace App\Repositories;
 
 use App\Repositories\Support\AbstractRepository;
 
-class TaskRepository extends AbstractRepository {
+class ProblemRepository extends AbstractRepository {
 
     public function __construct(\Illuminate\Container\Container $app) {
         parent::__construct($app);
     }
 
     public function model() {
-        return 'App\Models\Task';
+        return 'App\Models\Problem';
     }
 
     public function validateCreate() {
@@ -23,14 +23,6 @@ class TaskRepository extends AbstractRepository {
     public function validateUpdate($id) {
         return $rules = [
             'name' => 'required',
-        ];
-    }
-
-    public function validateUpdateWithPassword($id) {
-        return $rules = [
-            'username' => 'required|unique:user,username,' . $id . ',id',
-            'password' => 'min:6|max:32',
-            'c_password' => 'min:6|max:32|same:password',
         ];
     }
 
@@ -49,7 +41,5 @@ class TaskRepository extends AbstractRepository {
         }
         return $query->orderBy('id', 'DESC')->get();
     }
-
-
 
 }

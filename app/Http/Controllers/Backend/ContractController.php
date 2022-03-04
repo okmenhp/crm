@@ -6,26 +6,30 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\BaseController;
 use App\Models\Department;
 use App\Models\Customer;
+use App\Models\Contract;
 use App\Repositories\DepartmentRepository;
 use App\Repositories\CustomerRepository;
+use App\Repositories\ContractRepository;
 
-class CustomerController extends BaseController
+class ContractController extends BaseController
 {
 
-    public function __construct(DepartmentRepository $departmentRepo, CustomerRepository $customerRepo) {
+    public function __construct(DepartmentRepository $departmentRepo, CustomerRepository $customerRepo, Contract $contractRepo) {
         $this->departmentRepo = $departmentRepo;
         $this->customerRepo = $customerRepo;
+        $this->contractRepo = $contractRepo;
     }
 
     public function index()
     {
         $department_array = $this->departmentRepo->all();
-        return view('backend/customer/index',compact('department_array'));
+        $records = $this->contractRepo->all();
+        return view('backend/contract/index',compact('department_array','records'));
     }
 
     public function create()
     {
-        return view('backend/customer/create');
+        return view('backend/contract/create');
     }
 
     public function store(Request $request)

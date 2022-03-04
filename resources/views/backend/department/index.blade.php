@@ -80,9 +80,7 @@
                                             <td>{{++$key}}</td>
                                             <td>{{$record->name}}</td>
                                             <td>
-                                                @foreach($department_array)
-                                                @if($record->parent_id=>"")@endif
-                                                @endforeach
+                                                {{$record->parents()}}
                                             </td>
                                             <td>
                                                 @if($record->status == 1)
