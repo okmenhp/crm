@@ -17,6 +17,6 @@ class KanbanController extends BaseController
     public function index($project_id)
     {
         $records = $this->listRepo->all()->where('project_id',$project_id);
-        return view('backend/kanban/index');
+        return view('backend/kanban/index', compact('records','project_id'));
     }
 }
