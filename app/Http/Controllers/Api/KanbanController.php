@@ -28,7 +28,7 @@ class KanbanController extends BaseController
         $input = $request->all();
         $res = \DB::table('list')->where('list.project_id', $input['project_id'])->join('task','list.id','=','task.list_id')->get()->groupBy('list');
         foreach($res as $key => $r){
-
+            
         }
         return $this->success($res);
     }
