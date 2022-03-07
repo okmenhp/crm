@@ -10,6 +10,17 @@
 <!-- BEGIN: Page CSS-->
 <link rel="stylesheet" type="text/css" href="{{asset('assets/css/pages/app-users.min.css')}}">
 <!-- END: Page CSS-->
+
+<!-- BEGIN: Todo CSS-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn3.devexpress.com/jslib/21.2.5/css/dx.common.css" />
+<link rel="stylesheet" type="text/css" href="https://cdn3.devexpress.com/jslib/21.2.5/css/dx.light.css" />
+<script src="https://cdn3.devexpress.com/jslib/21.2.5/js/dx.all.js"></script>
+<script src="{{asset('assets/treelist/data.js')}}"></script>
+<link rel="stylesheet" type="text/css" href="{{asset('assets/treelist/styles.css')}}">
+<script src="{{asset('assets/treelist/index.js')}}"></script>
+<!-- END: Todo CSS-->
+
 @stop
 @extends('layouts.master')
 @section('content')
@@ -130,7 +141,7 @@
                                                 </tr>
                                                 @endforeach
                                             </tbody>
-                                           {{--  <tfoot>
+                                            {{--  <tfoot>
                                                 <tr>
                                                     <th>id</th>
                                                     <th>Dự án</th>
@@ -149,6 +160,13 @@
                     </div>
                 </div>
                 <!--/ Zero configuration table -->
+
+                <body class="dx-viewport">
+                    <div class="demo-container">
+                        <div id="tasks"></div>
+                    </div>
+                </body>
+
             </section>
             <!-- users list ends -->
         </div>
