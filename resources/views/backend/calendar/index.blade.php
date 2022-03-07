@@ -14,6 +14,7 @@
 
     <!-- BEGIN: Page CSS-->
     <link rel="stylesheet" type="text/css" href="{{asset('assets/css/plugins/calendars/app-calendar.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('assets/css/pages/calendar-custom.css')}}">
     <!-- END: Page CSS-->
 
 </head>
@@ -91,35 +92,35 @@
                                         <a class="dropdown-menu-title dropdown-item" role="menuitem"
                                             data-action="toggle-daily">
                                             <i class="bx bx-calendar-alt mr-50"></i>
-                                            <span>Daily</span>
+                                            <span>Ngày</span>
                                         </a>
                                     </li>
                                     <li role="presentation">
                                         <a class="dropdown-menu-title dropdown-item" role="menuitem"
                                             data-action="toggle-weekly">
                                             <i class='bx bx-calendar-event mr-50'></i>
-                                            <span>Weekly</span>
+                                            <span>Tuần</span>
                                         </a>
                                     </li>
                                     <li role="presentation">
-                                        <a class="dropdown-menu-title dropdown-item" role="menuitem"
+                                        <a class="active dropdown-menu-title dropdown-item" role="menuitem"
                                             data-action="toggle-monthly">
                                             <i class="bx bx-calendar mr-50"></i>
-                                            <span>Month</span>
+                                            <span>Tháng</span>
                                         </a>
                                     </li>
                                     <li role="presentation">
                                         <a class="dropdown-menu-title dropdown-item" role="menuitem"
                                             data-action="toggle-weeks2">
                                             <i class='bx bx-calendar-check mr-50'></i>
-                                            <span>2 weeks</span>
+                                            <span>2 tuần</span>
                                         </a>
                                     </li>
                                     <li role="presentation">
                                         <a class="dropdown-menu-title dropdown-item" role="menuitem"
                                             data-action="toggle-weeks3">
                                             <i class='bx bx-calendar-check mr-50'></i>
-                                            <span>3 weeks</span>
+                                            <span>3 tuần</span>
                                         </a>
                                     </li>
                                     <li role="presentation" class="dropdown-divider"></li>
@@ -128,7 +129,7 @@
                                             <input type="checkbox" class="tui-full-calendar-checkbox-square"
                                                 value="toggle-workweek" checked>
                                             <span class="checkbox-title bg-primary"></span>
-                                            <span>Show weekends</span>
+                                            <span>Hiển thị ngày cuối tuần</span>
                                         </div>
                                     </li>
 
@@ -137,23 +138,23 @@
                                             <input type="checkbox" class="tui-full-calendar-checkbox-square"
                                                 value="toggle-start-day-1">
                                             <span class="checkbox-title"></span>
-                                            <span>Start Week on Monday</span>
+                                            <span>Bắt đầu từ thứ 2</span>
                                         </div>
                                     </li>
-                                    <li role="presentation">
+                                    {{-- <li role="presentation">
                                         <div role="menuitem" data-action="toggle-narrow-weekend" class="dropdown-item">
                                             <input type="checkbox" class="tui-full-calendar-checkbox-square"
                                                 value="toggle-narrow-weekend">
                                             <span class="checkbox-title"></span>
                                             <span>Narrower than weekdays</span>
                                         </div>
-                                    </li>
+                                    </li> --}}
                                 </ul>
                             </div>
                             <!-- calenadar next and previous navigate button -->
                             <span id="menu-navi" class="menu-navigation">
                                 <button type="button" class="btn btn-action move-today mr-50 px-75"
-                                    data-action="move-today">Today</button>
+                                    data-action="move-today">Hôm nay</button>
                                 <button type="button" class="btn btn-icon btn-action  move-day mr-50 px-50"
                                     data-action="move-prev">
                                     <i class="bx bx-chevron-left" data-action="move-prev"></i>
@@ -171,6 +172,107 @@
                     <!-- calendar view end  -->
                 </div>
             </div>
+            <div class="modal fade" id="calendarModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="title" class="col-form-label">Lịch trình:</label>
+                                <input type="text" class="form-control" id="title">
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-6">
+                                    <label for="date-from" class="col-form-label">Từ:</label>
+                                    <input type="datetime-local" class="form-control" id="date-from">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="date-to" class="col-form-label">Đến:</label>
+                                    <input type="datetime-local" class="form-control" id="date-to">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-6">
+                                    <label for="location" class="col-form-label">Địa điểm:</label>
+                                    <input type="text" class="form-control" id="location">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="meeting-room" class="col-form-label">Phòng họp:</label>
+                                    <select id="meeting-room" class="form-control">
+                                        <option value="">phòng họp 1</option>
+                                        <option value="">phòng họp 2</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-6">
+                                    <label for="attendees" class="col-form-label">Tham gia:</label>
+                                    <select id="attendees" class="form-control">
+                                        <option value="all" disabled selected>CHọn</option>
+                                        <option value="2">Nguyễn Thành lam</option>
+                                        <option value="3">Nguyễn Công Thành</option>
+                                    </select>
+                                    <div class="attendees d-flex flex-wrap mt-1">
+                                        <a class="attendee-box mr-1" data-attendee-id="1" data-attendee-name="Nguyễn Tuấn Anh">
+                                            <span>Nguyễn Tuấn Anh</span>
+                                            <button class="border border-0 bg-white" aria-hidden="true">&times;</button>
+                                        </a>
+                                        <a class="attendee-box mr-1" data-attendee-id="4" data-attendee-name="Nguyễn Trình Tình">
+                                            <span>Nguyễn Trình Tình</span>
+                                            <button class="border border-0 bg-white" aria-hidden="true">&times;</button>
+                                        </a>
+                                        <a class="attendee-box mr-1" data-attendee-id="5" data-attendee-name="Lê Văn A">
+                                            <span>Lê Văn A</span>
+                                            <button class="border border-0 bg-white" aria-hidden="true">&times;</button>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="type" class="col-form-label">Phân loại:</label>
+                                    <select id="type" class="form-control">
+                                        <option value="">Gặp khách hàng</option>
+                                        <option value="">Ăn tất niên</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="message-text" class="col-form-label">Mô tả:</label>
+                                <textarea class="form-control" id="message-text"></textarea>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="addAttendees" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Thêm người tham gia</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="user-name" placeholder="Tìm kiếm">
+                                <div class="attendees-box mt-1">
+                                    <div class="form-control bg-light px-1 py-1 mt-1">
+                                        <span class="text-dark">Nguyễn Tuấn Anh</span>
+                                    </div>
+                                    <div class="form-control bg-light px-1 py-1 mt-1">
+                                        <span class="text-dark">Nguyễn Công Thành</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Chấp nhận</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <!-- END: Content-->
@@ -185,12 +287,17 @@
     <script src="{{asset('assets/vendors/js/extensions/moment.min.js')}}"></script>
     <script src="{{asset('assets/vendors/js/calendar/chance.min.js')}}"></script>
     <script src="{{asset('assets/vendors/js/calendar/tui-calendar.min.js')}}"></script>
+    <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css"
+         rel = "stylesheet">
+    {{-- <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script> --}}
+    <script src="{{asset('assets/js/scripts/pages/custom-calendar.js')}}"></script>
     <!-- END: Page Vendor JS-->
 
     <!-- BEGIN: Page JS-->
-    <script src="{{asset('assets/js/scripts/extensions/calendar/calendars-data.min.js')}}"></script>
+    {{-- <script src="{{asset('assets/js/scripts/extensions/calendar/calendars-data.min.js')}}"></script>
     <script src="{{asset('assets/js/scripts/extensions/calendar/schedules.min.js')}}"></script>
-    <script src="{{asset('assets/js/scripts/extensions/calendar/app-calendar.min.js')}}"></script>
+    <script src="{{asset('assets/js/scripts/extensions/calendar/app-calendar.min.js')}}"></script> --}}
     <!-- END: Page JS-->
 
 </body>
