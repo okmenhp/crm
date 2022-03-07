@@ -80,7 +80,7 @@
                                             <td>{{++$key}}</td>
                                             <td>{{$record->name}}</td>
                                             <td>
-                                                {{$record->parents()}}
+                                                {{$record->parent_id}}
                                             </td>
                                             <td>
                                                 @if($record->status == 1)

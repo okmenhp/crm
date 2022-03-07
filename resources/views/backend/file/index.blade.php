@@ -42,10 +42,10 @@
         font-size: 95%;
     }
     </style>
- 
+
     {{-- <iframe src="http://erp.local:8080/assets/file/2.xls" width="800" height="600"></iframe> --}}
 
- 
+
     <!-- Modal upload -->
     <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -57,7 +57,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-               
+
                 <form method="post" action="{{route('admin.file.upload', $uid)}}" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body">
@@ -171,8 +171,8 @@
                                 </ul>
                                 <div class="tab-content mb-3" style="padding-left: 0px !important;">
                                     <div class="tab-pane fade show active" id="left-icon-tab1">
-                                        <select placeholder="Chọn" class="form-control select2" multiple="" id="user_select"
-                                            name="user_id[]" style="width:100%;">
+                                        <select placeholder="Chọn" class="form-control select2" multiple=""
+                                            id="user_select" name="user_id[]" style="width:100%;">
                                             {!! $user_html !!}
                                         </select>
                                     </div>
@@ -223,7 +223,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                 
+
                 <div class="modal-body">
                     <label class="app-file-label">Thông tin</label>
                     <div class="d-flex justify-content-between align-items-center mt-75">
@@ -608,7 +608,7 @@
                                         <!--   <li class="breadcrumb-item active" aria-current="page">Folder1</li> -->
                                     </ol>
                                 </nav>
-                                
+
 
                                 @if(Session::get('success'))
                                 <div class="alert alert-success" role="alert">

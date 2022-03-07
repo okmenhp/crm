@@ -39,7 +39,7 @@
 }
 
 .calendar-wrapper .calendar-view {
-    width: 100%;
+    width: calc(100% - 190px);
     background-color: #FFF;
     height: 100%;
     float: right;
