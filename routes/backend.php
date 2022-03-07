@@ -96,4 +96,12 @@ Route::group(['middleware' => 'admin'], function () {
 
     //Kanban
     Route::get('/kanban/{project_id}',  ['as' => 'admin.kanban.index', 'uses' => 'Backend\KanbanController@index']);
+
+    // Loai Du an
+    Route::get('/project-type',  ['as' => 'admin.project-type.index', 'uses' => 'Backend\ProjectTypeController@index']);
+    Route::get('/project-type/create',  ['as' => 'admin.project-type.create', 'uses' => 'Backend\ProjectTypeController@create']);
+    Route::post('/project-type/store',  ['as' => 'admin.project-type.store', 'uses' => 'Backend\ProjectTypeController@store']);
+    Route::get('/project-type/edit/{id}',  ['as' => 'admin.project-type.edit', 'uses' => 'Backend\ProjectTypeController@edit']);
+    Route::post('/project-type/update/{id}',  ['as' => 'admin.project-type.update', 'uses' => 'Backend\ProjectTypeController@update']);
+    Route::delete('/project-type/delete/{id}',  ['as' => 'admin.project-type.destroy', 'uses' => 'Backend\ProjectTypeController@destroy']);
 });
