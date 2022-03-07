@@ -31,11 +31,12 @@ class FileController extends BaseController
         $user_html = \App\Helpers\StringHelper::getSelectFullNameOptions($user_option);
         $department_option = $this->departmentRepo->all();
         $department_html = \App\Helpers\StringHelper::getSelectNameOptions($department_option);
+        $path = ( Storage::disk('public')->get('4074c9344515778cdd316325cea217cd.txt'));
         if($uid == "0"){
             $records_folder = $this->fileRepo->listFile($request, '*', null)->where('type', 1);
             $records_file = $this->fileRepo->listFile($request, '*', null)->where('type', 2);
             $records_folder = $this->getMoreInfoFolder($records_folder);
-            return view('backend/file/index', compact('uid','records_folder','records_file','department_html','user_html')); 
+            return view('backend/file/index', compact('uid','records_folder','records_file','department_html','user_html','path')); 
         }
         else{
             $records_folder = $this->fileRepo->getFileByUid($request, $uid)->where('type', 1);
@@ -48,7 +49,7 @@ class FileController extends BaseController
             }while ($uid_clone != null);
             $breadcumb = array_reverse($breadcumb);
             $records_folder = $this->getMoreInfoFolder($records_folder);
-            return view('backend/file/index', compact('uid','records_folder','records_file','breadcumb','department_html','user_html')); 
+            return view('backend/file/index', compact('uid','records_folder','records_file','breadcumb','department_html','user_html','path')); 
         }     
     }
 

@@ -25,12 +25,14 @@
                     <form action="{{route('admin.project.index')}}" method="get">
                         <div class="row border rounded py-2 mb-2">
                             <div class="col-12 col-sm-6 col-lg-3">
-                                <label for="users-list-verified">Tên dự án</label>
+                                <label for="users-list-verified">Tên nhân viên</label>
                                 <fieldset class="form-group">
-                                    <input type="text" class="form-control" id="basicInput" placeholder="Nhập tên dự án"
-                                        name="keywords_search" value="{{Request::get('keywords')}}">
+                                    <input type="text" class="form-control" id="basicInput"
+                                        placeholder="Nhập tên nhân viên" name="keywords_search"
+                                        value="{{Request::get('keywords')}}">
                                 </fieldset>
                             </div>
+
                             <div class="col-12 col-sm-6 col-lg-3">
                                 <label for="users-list-role">Phòng ban</label>
                                 <fieldset class="form-group">
@@ -49,7 +51,7 @@
                                         class="bx bx-search"></i></button>
                             </div>
                             <div class="col-12 col-sm-6 col-lg-2">
-                                <a href="{{route('admin.project.create')}}" type="button"
+                                <a href="{{route('admin.problem.create')}}" type="button"
                                     class="btn btn-primary btn-block my-2">
                                     <i class="bx bx-plus"></i>
                                     <span>Thêm mới</span>
@@ -78,11 +80,10 @@
                                         <table class="table zero-configuration">
                                             <thead>
                                                 <tr>
-                                                    <th>id</th>
-                                                    <th>Dự án</th>
-                                                    <th>Hợp đồng</th>
-                                                    <th>Người phụ trách</th>
-                                                    <!-- <th>Tiến độ</th> -->
+                                                    <th>Id</th>
+                                                    <th>Vấn đề</th>
+                                                    <th>Phân loại</th>
+                                                    <th>Ngày phát sinh</th>
                                                     <th>Tình trạng</th>
                                                     <th>Thao tác</th>
                                                 </tr>
@@ -130,7 +131,7 @@
                                                 </tr>
                                                 @endforeach
                                             </tbody>
-                                           {{--  <tfoot>
+                                            {{--  <tfoot>
                                                 <tr>
                                                     <th>id</th>
                                                     <th>Dự án</th>

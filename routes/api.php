@@ -25,3 +25,11 @@ Route::get('file/load-share-for/{id}','Api\FileController@load_share_for')->name
 Route::get('file/info/{id}','Api\FileController@info')->name('api.file.info');
 Route::get('file/view/{id}','Api\FileController@view')->name('api.file.view');
 
+//kanban
+Route::post('kanban/index','Api\KanbanController@index')->name('api.kanban.index');
+Route::post('kanban/create-card','Api\KanbanController@create_card')->name('api.kanban.create_card');
+Route::post('kanban/create-board','Api\KanbanController@create_board')->name('api.kanban.create_board');
+Route::post('kanban/update-card','Api\KanbanController@update_card')->name('api.kanban.update_card');
+Route::post('kanban/update-board','Api\KanbanController@update_board')->name('api.kanban.update_board');
+//Route::post('kanban/add-card','Api\KanbanController@add_card')->name('api.kanban.add_card');
+

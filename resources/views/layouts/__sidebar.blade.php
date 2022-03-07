@@ -58,10 +58,17 @@
             <li class=" nav-item"><a href="/task"><i class="fal fa-briefcase"></i><span
                         class="menu-title text-truncate" data-i18n="Todo">Quản lý công việc</span></a>
             </li>
+            <li class=" nav-item"><a href="/problem"><i class="fal fa-exclamation-square"></i><span
+                        class="menu-title text-truncate" data-i18n="Todo">Quản lý vấn đề</span></a>
+            </li>
             <li class=" navigation-header text-truncate"><span data-i18n="Apps">Khách hàng</span>
             </li>
-            <li class=" nav-item"><a href="/customer"><i class="fal fa-angel"></i><span
+            <li class=" nav-item"><a href="{{ route('admin.customer.index') }}"><i class="fal fa-angel"></i><span
                         class="menu-title text-truncate" data-i18n="Todo">Quản lý khách hàng</span></a>
+            </li>
+            <li class=" nav-item"><a href="{{ route('admin.contract.index') }}"><i
+                        class="fal fa-file-signature"></i><span class="menu-title text-truncate" data-i18n="Todo">Quản
+                        lý hợp đồng</span></a>
             </li>
             <li class=" navigation-header text-truncate"><span data-i18n="Apps">Tài khoản</span>
             </li>

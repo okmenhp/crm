@@ -1,8 +1,11 @@
 @section('css')
 <!-- BEGIN: Vendor CSS-->
-<link rel="stylesheet" type="text/css" href="{{asset('assets/vendors/css/tables/datatable/dataTables.bootstrap4.min.css')}}">
-<link rel="stylesheet" type="text/css" href="{{asset('assets/vendors/css/tables/datatable/responsive.bootstrap4.min.css')}}">
-<link rel="stylesheet" type="text/css" href="{{asset('assets/vendors/css/tables/datatable/buttons.bootstrap4.min.css')}}">
+<link rel="stylesheet" type="text/css"
+    href="{{asset('assets/vendors/css/tables/datatable/dataTables.bootstrap4.min.css')}}">
+<link rel="stylesheet" type="text/css"
+    href="{{asset('assets/vendors/css/tables/datatable/responsive.bootstrap4.min.css')}}">
+<link rel="stylesheet" type="text/css"
+    href="{{asset('assets/vendors/css/tables/datatable/buttons.bootstrap4.min.css')}}">
 <!-- END: Vendor CSS-->
 <!-- BEGIN: Page CSS-->
 <link rel="stylesheet" type="text/css" href="{{asset('assets/css/pages/app-users.min.css')}}">
@@ -29,6 +32,18 @@
                                 </fieldset>
                             </div>
 
+                            <div class="col-12 col-sm-6 col-lg-3">
+                                <label for="users-list-role">Phòng ban</label>
+                                <fieldset class="form-group">
+                                    <select class="form-control" id="users-list-role" name="department_search">
+                                        <option value="">Chọn phòng ban</option>
+                                        @foreach($department_array as $key => $department)
+                                        <option value="{{$department->id}}">{{$department->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </fieldset>
+                            </div>
+
                             <div class="col-12 col-sm-6 col-lg-1">
                                 <label for="users-list-role">Tìm kiếm</label>
                                 <button type="button" class="btn btn-icon btn-outline-primary btn-search"><i
@@ -36,7 +51,8 @@
                             </div>
 
                             <div class="col-12 col-sm-6 col-lg-2">
-                                <a href="/create-customer" type="button" class="btn btn-primary btn-block my-2">
+                                <a href="{{route('admin.customer.create')}}" type="button"
+                                    class="btn btn-primary btn-block my-2">
                                     <i class="bx bx-plus"></i>
                                     <span>Thêm mới</span>
                                 </a>
@@ -54,7 +70,9 @@
                                         <tr>
                                             <th>id</th>
                                             <th>Tên khách hàng</th>
+                                            <th>Email</th>
                                             <th>Điện thoại</th>
+                                            <th>Địa chỉ</th>
                                             <th>Quốc gia</th>
                                             <th>Thao tác</th>
                                         </tr>
@@ -63,39 +81,15 @@
                                         <tr>
                                             <td>1</td>
                                             <td>Dean Stanley</td>
+                                            <td>info@example.com</td>
                                             <td>012354789</td>
-                                            <td>Mỹ</td>
+                                            <th>Toà nhà Thành Đạt 3</th>
+                                            <td>Việt Nam</td>
                                             <td><a href=""><i class="far fa-edit"></i></a>
                                                 <a href=""><i class="far fa-trash-alt ml-1"></i>
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Dean Stanley</td>
-                                            <td>012354789</td>
-                                            <td>Mỹ</td>
-                                            <td><a href=""><i class="far fa-edit"></i></a>
-                                                <a href=""><i class="far fa-trash-alt ml-1"></i>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Dean Stanley</td>
-                                            <td>012354789</td>
-                                            <td>Mỹ</td>
-                                            <td><a href=""><i class="far fa-edit"></i></a>
-                                                <a href=""><i class="far fa-trash-alt ml-1"></i>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Dean Stanley</td>
-                                            <td>012354789</td>
-                                            <td>Mỹ</td>
-                                            <td><a href=""><i class="far fa-edit"></i></a>
-                                                <a href=""><i class="far fa-trash-alt ml-1"></i>
-                                            </td>
-                                        </tr>
+
                                     </tbody>
                                 </table>
                             </div>

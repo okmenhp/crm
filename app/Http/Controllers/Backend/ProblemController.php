@@ -3,29 +3,31 @@
 namespace App\Http\Controllers\Backend;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\BaseController;
+use App\Models\Problem;
 use App\Models\Department;
 use Validator;
+use App\Repositories\ProblemRepository;
 use App\Repositories\DepartmentRepository;
 
-class DepartmentController extends Controller
+class ProblemController extends BaseController
 {
-    public function __construct(DepartmentRepository $departmentRepo)
-    {
+    public function __construct(ProblemRepository $problemRepo, DepartmentRepository $departmentRepo) {
+        $this->problemRepo = $problemRepo;
         $this->departmentRepo = $departmentRepo;
     }
 
     public function index(Request $request)
     {
-        $records = $this->departmentRepo->paginate($request, 10);
         $department_array = $this->departmentRepo->all();
-        return view('backend/department/index', compact('records', 'department_array'));
+        $records = $this->problemRepo->readFE($request);
+        return view('backend/problem/index',compact('records','department_array'));
     }
 
     public function create()
     {
         $department_array = $this->departmentRepo->all();
-        return view('backend/department/create', compact('department_array'));
+        return view('backend/problem/create',compact('department_array'));
     }
 
     //Use Reposiotry
@@ -38,14 +40,14 @@ class DepartmentController extends Controller
         }
         $input['status'] = isset($input['status']) ? 1 : 0;
         $this->departmentRepo->create($input);
-        return redirect()->route('admin.department.index')->with('success', 'Thêm mới thành công');;
+        return redirect()->route('admin.department.index')->with('success','Thêm mới thành công');;
     }
 
     public function edit($id)
     {
         $record = $this->departmentRepo->find($id);
         $department_array = $this->departmentRepo->all();
-        return view('backend/department/edit', compact('record', 'department_array'));
+        return view('backend/department/edit', compact('record','department_array'));
     }
 
     public function update(Request $request, $id)
@@ -57,16 +59,16 @@ class DepartmentController extends Controller
         }
         $input['status'] = isset($input['status']) ? 1 : 0;
         $this->departmentRepo->update($input, $id);
-        return redirect()->route('admin.department.index')->with('success', 'Cập nhật thành công');;
+        return redirect()->route('admin.department.index')->with('success','Cập nhật thành công');;
     }
 
     public function destroy($id)
     {
         $in_employee = \DB::table('employee')->where('department_id', $id)->first();
-        if ($in_employee == null) {
-            $this->departmentRepo->delete($id);
-            return redirect()->back()->with('success', 'Xóa thành công');
+        if($in_employee == null){
+        $this->departmentRepo->delete($id);
+        return redirect()->back()->with('success','Xóa thành công');
         }
-        return redirect()->back()->with('error', 'Không thể xoá vì bản ghi đang được liên kết với nhân viên');
+        return redirect()->back()->with('error','Không thể xoá vì bản ghi đang được liên kết với nhân viên');
     }
 }

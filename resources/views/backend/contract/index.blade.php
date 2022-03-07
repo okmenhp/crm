@@ -22,13 +22,14 @@
             <!-- users list start -->
             <section class="users-list-wrapper">
                 <div class="users-list-filter px-1">
-                    <form action="{{route('admin.project.index')}}" method="get">
+                    <form action="{{route('admin.contract.index')}}" method="get">
                         <div class="row border rounded py-2 mb-2">
                             <div class="col-12 col-sm-6 col-lg-3">
-                                <label for="users-list-verified">Tên dự án</label>
+                                <label for="users-list-verified">Tên hợp đồng</label>
                                 <fieldset class="form-group">
-                                    <input type="text" class="form-control" id="basicInput" placeholder="Nhập tên dự án"
-                                        name="keywords_search" value="{{Request::get('keywords')}}">
+                                    <input type="text" class="form-control" id="basicInput"
+                                        placeholder="Nhập tên hợp đồng" name="keywords_search"
+                                        value="{{Request::get('keywords')}}">
                                 </fieldset>
                             </div>
                             <div class="col-12 col-sm-6 col-lg-3">
@@ -49,7 +50,7 @@
                                         class="bx bx-search"></i></button>
                             </div>
                             <div class="col-12 col-sm-6 col-lg-2">
-                                <a href="{{route('admin.project.create')}}" type="button"
+                                <a href="{{route('admin.contract.create')}}" type="button"
                                     class="btn btn-primary btn-block my-2">
                                     <i class="bx bx-plus"></i>
                                     <span>Thêm mới</span>
@@ -79,15 +80,26 @@
                                             <thead>
                                                 <tr>
                                                     <th>id</th>
-                                                    <th>Dự án</th>
                                                     <th>Hợp đồng</th>
-                                                    <th>Người phụ trách</th>
-                                                    <!-- <th>Tiến độ</th> -->
-                                                    <th>Tình trạng</th>
+                                                    <th>Khách hàng</th>
+                                                    <th>Ngày kí kết</th>
+                                                    <th>Doanh thu</th>
+                                                    <th>Trạng thái</th>
                                                     <th>Thao tác</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                                <tr>
+                                                    <td>1</td>
+                                                    <td>Thiết kế Website</td>
+                                                    <td>Phạm Quang Minh</td>
+                                                    <td>1/3/2022</td>
+                                                    <td>500.000 VNĐ</td>
+                                                    <td>Hoàn thành</td>
+                                                    <td><a href=""><i class="far fa-edit"></i></a>
+                                                        <a href=""><i class="far fa-trash-alt ml-1"></i>
+                                                    </td>
+                                                </tr>
                                                 @foreach($records as $key => $record)
                                                 <tr>
                                                     <td>{{$key+1}}</td>
@@ -100,21 +112,10 @@
                                                         @endif
                                                         @endforeach
                                                     </td>
-                                                    <!-- <td>
-                                                <div class="progress-bar progress-bar-striped progress-bar-animated"
-                                                    role="progressbar" aria-valuenow="80" aria-valuemin="80"
-                                                    aria-valuemax="100" style="width:80%"></div>
-                                            </td> -->
                                                     <td>
                                                         @if($record->status == 0)
                                                         <div class="badge badge-secondary mr-1 mb-1">Chưa bắt đầu</div>
                                                         @endif
-                                                        <!-- <div class="badge badge-primary mr-1 mb-1">Đang diễn ra</div>
-                                                <div class="badge badge-secondary mr-1 mb-1">Chưa bắt đầu</div>
-                                                <div class="badge badge-success mr-1 mb-1">Đã hoàn thành</div>
-                                                <div class="badge badge-info mr-1 mb-1">Đơi xét duyệt</div>
-                                                <div class="badge badge-warning mr-1 mb-1">Chậm tiến độ</div>
-                                                <div class="badge badge-danger mb-1">Đã Huỷ</div> -->
                                                     </td>
                                                     <td>
                                                         <a href="{{route('admin.kanban.index', $record->id)}}"
@@ -130,7 +131,7 @@
                                                 </tr>
                                                 @endforeach
                                             </tbody>
-                                           {{--  <tfoot>
+                                            {{--  <tfoot>
                                                 <tr>
                                                     <th>id</th>
                                                     <th>Dự án</th>
@@ -168,5 +169,6 @@ BEGIN: Page JS-->
 <script src="assets/js/scripts/pages/app-users.min.js"></script>
 <script src="assets/js/scripts/datatables/datatable.min.js"></script>
 <!--
-END: Page JS-->
+END:
+Page JS-->
 @stop

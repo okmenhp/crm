@@ -68,7 +68,7 @@
                                         <table id="" class="table table-striped">
                                             <thead>
                                                 <tr>
-                                                    <th>id</th>
+                                                    <th>STT</th>
                                                     <th>Tên loại dự án</th>
                                                     <th>Trạng thái</th>
                                                     <th>Thao tác</th>
