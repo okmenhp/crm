@@ -5,91 +5,99 @@ $.ajaxSetup({
     }
 });
 
+function index(){
+   $.ajax({
+      type: "post",
+      url: '/api/kanban/index',
+      data: {
+        project_id: $('#project_id').val(),
+      }
+    }).done(function(resp) {
+       console.log('resp', resp);
+    });
+}
+
 $(function () {
   'use strict';
   var kanban_curr_el, kanban_curr_item_id, kanban_item_title, kanban_data, kanban_item, kanban_users;
-
+  index();
   // Kanban Board and Item Data passed by json
   //Khai báo dữ liệu kanban mẫu. Thực tế sẽ dùng ajax để push dữ liệu vào biến kanban_board_data
   var kanban_board_data = [{
-      id: "kanban-board-1",
-      title: "Marketing",
+      id: "1",
+      title: "Mới",
       item: [{
           id: "11",
-          title: "Facebook Campaign 😎",
+          title: "Viết test case",
           border: "success",
-          dueDate: "Feb 6",
+          dueDate: "22/2/2022",
           comment: 1,
           attachment: 3,
-          users: [
-            "../../../app-assets/images/portrait/small/avatar-s-11.jpg",
-            "../../../app-assets/images/portrait/small/avatar-s-12.jpg"
-          ]
+          // users: [
+          //   "../../../app-assets/images/portrait/small/avatar-s-11.jpg",
+          //   "../../../app-assets/images/portrait/small/avatar-s-12.jpg"
+          // ]
         },
         {
           id: "12",
-          title: "Type Something",
+          title: "Tets case",
           border: "info",
-          image: "../../../app-assets/images/banner/banner-21.jpg",
-          dueDate: "Feb 10"
+          image: "../../../assets/images/banner/banner-21.jpg",
+          dueDate: "22/2/2022",
         },
         {
           id: "13",
-          title: "Social Media Graphics",
+          title: "Lập trình chức năng quản lý công việc",
           border: "warning",
-          dueDate: "Jan 3",
+          dueDate: "22/2/2022",
           comment: 23,
           attachment: 4,
-          users: [
-            "../../../app-assets/images/portrait/small/avatar-s-1.jpg",
-            "../../../app-assets/images/portrait/small/avatar-s-18.jpg"
-          ]
+          // users: [
+          //   "../../../app-assets/images/portrait/small/avatar-s-1.jpg",
+          //   "../../../app-assets/images/portrait/small/avatar-s-18.jpg"
+          // ]
         },
         {
           id: "14",
-          title: "Book newspaper ads online in popular newspapers.",
+          title: "Thiết kế chức năng quản lý công việc",
           border: "danger",
           comment: 56,
           attachment: 2,
-          users: [
-            "../../../app-assets/images/portrait/small/avatar-s-26.jpg",
-            "../../../app-assets/images/portrait/small/avatar-s-16.jpg"
-          ]
-        },
-        {
-          id: "15",
-          title: "Twitter Marketing",
-          border: "secondary"
+          // users: [
+          //   "../../../app-assets/images/portrait/small/avatar-s-26.jpg",
+          //   "../../../app-assets/images/portrait/small/avatar-s-16.jpg"
+          // ]
         }
+       
       ]
     },
     {
       id: "kanban-board-2",
-      title: "UI Designing",
+      title: "Đang triển khai",
       item: [{
           id: "21",
-          title: "Flat UI Kit Design",
+          title: "Thiết kế csdl chức năng quản lý công việc",
           border: "secondary"
         },
         {
           id: "22",
-          title: "Drag people onto a card to indicate that.",
+          title: "Lập trình chức năng quản lý công việc",
           border: "info",
-          dueDate: "Jan 1",
+          dueDate: "22/2/2022",
           comment: 8,
-          users: [
-            "../../../app-assets/images/portrait/small/avatar-s-24.jpg",
-            "../../../app-assets/images/portrait/small/avatar-s-14.jpg"
-          ]
+          // users: [
+          //   "../../../app-assets/images/portrait/small/avatar-s-24.jpg",
+          //   "../../../app-assets/images/portrait/small/avatar-s-14.jpg"
+          // ]
         },
         {
           id: "23",
-          title: "Application Design",
+          title: "Phân công công việc",
           border: "warning"
         },
         {
           id: "24",
-          title: "BBQ Logo Design 😱",
+          title: "Viết báo cáo tuần",
           border: "primary",
           dueDate: "Jan 6",
           comment: 10,
@@ -101,37 +109,47 @@ $(function () {
     },
     {
       id: "kanban-board-3",
-      title: "Done",
+      title: "Hoàn thành",
       item: [{
           id: "31",
-          title: "Database Management System (DBMS) is a collection of programs",
+          title: "Gặp gỡ khách hàng",
           border: "warning",
-          dueDate: "Mar 1",
+          dueDate: "22/2/2022",
           comment: 10,
-          users: [
-            "../../../app-assets/images/portrait/small/avatar-s-20.jpg",
-            "../../../app-assets/images/portrait/small/avatar-s-22.jpg",
-            "../../../app-assets/images/portrait/small/avatar-s-13.jpg"
-          ]
+          // users: [
+          //   "../../../app-assets/images/portrait/small/avatar-s-20.jpg",
+          //   "../../../app-assets/images/portrait/small/avatar-s-22.jpg",
+          //   "../../../app-assets/images/portrait/small/avatar-s-13.jpg"
+          // ]
         },
         {
           id: "32",
-          title: "Admin Dashboard 🙂",
+          title: "Ký kết hợp đồng",
           border: "success",
-          dueDate: "Mar 6",
+          dueDate: "22/2/2022",
           comment: 7,
           badgeContent: "AD",
           badgeColor: "primary"
         },
         {
           id: "33",
-          title: "Fix bootstrap progress bar with & issue",
+          title: "Lên kế hoạch dự án",
           border: "primary",
-          dueDate: "Mar 9",
-          users: [
-            "../../../app-assets/images/portrait/small/avatar-s-1.jpg",
-            "../../../app-assets/images/portrait/small/avatar-s-2.jpg"
-          ]
+          dueDate: "22/2/2022",
+          // users: [
+          //   "../../../app-assets/images/portrait/small/avatar-s-1.jpg",
+          //   "../../../app-assets/images/portrait/small/avatar-s-2.jpg"
+          // ]
+        },
+         {
+          id: "33",
+          title: "Phân tích thiết kế hệ thống",
+          border: "primary",
+          dueDate: "22/2/2022",
+          // users: [
+          //   "../../../app-assets/images/portrait/small/avatar-s-1.jpg",
+          //   "../../../app-assets/images/portrait/small/avatar-s-2.jpg"
+          // ]
         }
       ]
     }
@@ -142,7 +160,7 @@ $(function () {
     element: "#kanban-wrapper", // selector of the kanban container
     itemAddOptions: {
       enabled: true,                                              // add a button to board for easy item creation
-      content: '+ Add New Item',                                                // text or html content of the board button
+      content: '+ Thêm thẻ mới',                                                // text or html content of the board button
       class: 'kanban-title-button btn btn-default btn-xs',         // default class of the button
       footer: false                                                // position the button on footer
     },
@@ -166,7 +184,7 @@ $(function () {
     },
 
     buttonClick: function (el, boardId) {
-      // Tạo thêm 1 card
+      // Xổ ra form tạo thêm 1 card
       var formItem = document.createElement("form");
       formItem.setAttribute("class", "itemform");
       //Bắn ra texarea nhập title card
@@ -175,8 +193,8 @@ $(function () {
         '<textarea class="form-control add-new-item" rows="2" autofocus required></textarea>' +
         "</div>" +
         '<div class="form-group">' +
-        '<button type="submit" class="btn btn-primary btn-sm mr-50">Submit</button>' +
-        '<button type="button" id="CancelBtn" class="btn btn-sm btn-danger">Cancel</button>' +
+        '<button type="submit" class="btn btn-primary btn-sm mr-50">Xác nhận</button>' +
+        '<button type="button" id="CancelBtn" class="btn btn-sm btn-danger">Huỷ</button>' +
         "</div>";
 
       // add new card on submit click
@@ -188,6 +206,7 @@ $(function () {
           title: text
         });
         formItem.parentNode.removeChild(formItem);
+        add_card(boardId, text);
       });
       //Cancel add card
       $(document).on("click", "#CancelBtn", function () {
@@ -197,6 +216,20 @@ $(function () {
     addItemButton: true, // add a button to board for easy item creation
     boards: kanban_board_data // data passed from defined variable
   });
+
+  function add_card(list_id, name){
+      $.ajax({
+        type: "post",
+        url: '/api/kanban/create-card',
+        data: {
+          project_id: $('#project_id').val(),
+          list_id: list_id,
+          name: name
+        }
+      }).done(function(resp) {
+        alert('Thêm mới thành công');
+      });
+  }
 
   // Add html for Custom Data-attribute to Kanban item
   var board_item_id, board_item_el, board_item_badge = "",board_item_users="",board_item_dueDate = "", board_item_comment="", board_item_attachment="",board_item_image="";
@@ -325,12 +358,12 @@ $(function () {
           name: "Default Title"
         }
       }).done(function(resp) {
-        alert('success');
+        alert('Thêm mới thành công');
       });
     var kanbanNewBoard = KanbanExample.findBoard("kanban-" + i)
     
     if (kanbanNewBoard) {
-      $(".kanban-title-board").on("mouseenter", function () {
+      $(".kanban-title-board").on("mouseenter", function () { //over chuộht lên board title
         $(this).attr("contenteditable", "true");
         $(this).addClass("line-ellipsis");
       });
@@ -417,7 +450,7 @@ $(function () {
 
   // Making Title of Board editable
   // ------------------------------
-  $(".kanban-title-board").on("mouseenter", function () {
+  $(".kanban-title-board").on("mouseenter", function () {  //đặt chuột lên title board
     $(this).attr("contenteditable", "true");
     $(this).addClass("line-ellipsis");
   });

@@ -29,7 +29,7 @@
                 <div class="row">
                     <div class="col-12">
                         <button type="button" class="btn btn-primary mb-1" id="add-kanban">
-                            <i class='bx bx-add-to-queue mr-50'></i> Add New Board
+                            <i class='bx bx-add-to-queue mr-50'></i> Thêm danh sách mới
                         </button>
                         <div id="kanban-app"></div>
                     </div>
@@ -40,36 +40,41 @@
                     <div class="card shadow-none quill-wrapper">
                         <div
                             class="card-header d-flex justify-content-between align-items-center border-bottom px-2 py-1">
-                            <h3 class="card-title">UI Design</h3>
+                            <h3 class="card-title">Thông tin công việc</h3>
                             <button type="button" class="close close-icon">
                                 <i class="bx bx-x"></i>
                             </button>
                         </div>
                         <!-- form start -->
-                        <form class="edit-kanban-item">
-                            <div class="kanban-edit-content">
+                        <form class="edit-kanban-item" >
+                            <div class="kanban-edit-content" style="overflow-y: scroll;">
                                 <div class="card-body">
                                     <div class="form-group">
-                                        <label>Card Title</label>
+                                        <label>Tiêu đề</label>
                                         <input type="text" class="form-control edit-kanban-item-title"
                                             placeholder="kanban Title">
                                     </div>
                                     <div class="form-group">
-                                        <label>Due Date</label>
-                                        <input type="text" class="form-control edit-kanban-item-date"
-                                            placeholder="21 August, 2019">
+                                        <label>Thời gian bắt đầu</label>
+                                        <input type="date" class="form-control edit-kanban-item-date"
+                                            placeholder="">
+                                    </div>
+                                     <div class="form-group">
+                                        <label>Thời gian kết thúc</label>
+                                        <input type="date" class="form-control edit-kanban-item-date"
+                                            placeholder="">
                                     </div>
                                     <div class="row">
                                         <div class="col-6">
                                             <div class="form-group">
-                                                <label>Label</label>
+                                                <label>Trạng thái</label>
                                                 <select class="form-control text-white">
-                                                    <option class="bg-primary" selected>Primary</option>
-                                                    <option class="bg-danger">Danger</option>
-                                                    <option class="bg-success">Success</option>
-                                                    <option class="bg-info">Info</option>
-                                                    <option class="bg-warning">Warning</option>
-                                                    <option class="bg-secondary">Secondary</option>
+                                                    <option class="bg-primary" selected>Đang xử lý</option>
+                                                    <option class="bg-danger">Quá hạn</option>
+                                                    <option class="bg-success">Hoàn thành</option>
+{{--                                                     <option class="bg-info">Info</option> --}}
+                                                    <option class="bg-warning">Sắp quá hạn</option>
+                                                    <option class="bg-secondary">Chưa xử lý</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -78,7 +83,7 @@
                                                 <label>Member</label>
                                                 <div class="d-flex align-items-center">
                                                     <div class="avatar m-0 mr-1">
-                                                        <img src="../../../app-assets/images/portrait/small/avatar-s-20.jpg"
+                                                        <img src="../../../assets/images/portrait/small/avatar-s-20.jpg"
                                                             height="36" width="36" alt="avtar img holder">
                                                     </div>
                                                     <div class="badge-circle badge-circle-light-secondary">
@@ -89,15 +94,16 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label>Attachment</label>
+                                        <label>Tài liệu</label>
                                         <div class="custom-file">
                                             <input type="file" class="custom-file-input" id="emailAttach">
-                                            <label class="custom-file-label" for="emailAttach">Attach file</label>
+                                            <label class="custom-file-label" for="emailAttach">Chọn tài liệu</label>
                                         </div>
                                     </div>
+                                  
                                     <!-- Compose mail Quill editor -->
                                     <div class="form-group">
-                                        <label>Comment</label>
+                                        <label>Bình luận</label>
                                         <div class="snow-container border rounded p-1">
                                             <div class="compose-editor"></div>
                                             <div class="d-flex justify-content-end">
@@ -109,7 +115,7 @@
                                                         <button class="ql-link"></button>
                                                         <button class="ql-image"></button>
                                                         <button
-                                                            class="btn btn-sm btn-primary btn-comment ml-25">Comment</button>
+                                                            class="btn btn-sm btn-primary btn-comment ml-25">Bình luận</button>
                                                     </span>
                                                 </div>
                                             </div>
@@ -121,11 +127,11 @@
                                 <button type="reset"
                                     class="btn btn-light-danger delete-kanban-item d-flex align-items-center mr-1">
                                     <i class='bx bx-trash mr-50'></i>
-                                    <span>Delete</span>
+                                    <span>Xoá</span>
                                 </button>
                                 <button class="btn btn-primary glow update-kanban-item d-flex align-items-center">
                                     <i class='bx bx-send mr-50'></i>
-                                    <span>Save</span>
+                                    <span>Xác nhận</span>
                                 </button>
                             </div>
                         </form>
