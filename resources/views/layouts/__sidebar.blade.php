@@ -61,8 +61,18 @@
             <li class=" nav-item"><a href="{{route('admin.customer.index')}}"><i class="fal fa-angel"></i><span
                         class="menu-title text-truncate" data-i18n="Todo">Quản lý khách hàng</span></a>
             </li>
+            <li class=" nav-item"><a href="{{route('admin.customer.index')}}"><i class="fal fa-angel"></i><span
+                        class="menu-title text-truncate" data-i18n="Todo">Group</span></a>
+                <ul class="menu-content">
+                    <li><a class="d-flex align-items-center" href="app-invoice-list.html"><i
+                                class="bx bx-right-arrow-alt"></i><span class="menu-item text-truncate"
+                                data-i18n="Invoice List">Example</span></a>
+                    </li>
+                </ul>
+            </li>
             <li class=" nav-item"><a href="{{route('admin.contract.index')}}"><i class="fal fa-file-signature"></i><span
                         class="menu-title text-truncate" data-i18n="Todo">Quản lý hợp đồng</span></a>
+
             </li>
             <li class=" navigation-header text-truncate"><span data-i18n="Apps">Tài khoản</span>
             </li>
