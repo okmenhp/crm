@@ -33,3 +33,5 @@ Route::post('kanban/update-card','Api\KanbanController@update_card')->name('api.
 Route::post('kanban/update-board','Api\KanbanController@update_board')->name('api.kanban.update_board');
 //Route::post('kanban/add-card','Api\KanbanController@add_card')->name('api.kanban.add_card');
 
+//schedule
+Route::post('schedule/index','Api\ScheduleController@index')->name('api.schedule.index');

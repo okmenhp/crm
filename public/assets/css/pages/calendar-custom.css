@@ -5,3 +5,7 @@
 .calendar-view .calendar-action .active i{
     color: #5a8dee;
 } */
+
+.active{
+    display: block !important;
+}

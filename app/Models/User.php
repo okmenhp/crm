@@ -49,4 +49,8 @@ class User extends Authenticatable
         date('d-m-Y', strtotime($time));
     }
 
+    public function schedules() {
+        return $this->belongsToMany('App\Models\Schedule', 'user_schedule', 'user_id', 'schedule_id');
+    }
+
 }

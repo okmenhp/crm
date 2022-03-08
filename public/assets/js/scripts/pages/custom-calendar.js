@@ -3,8 +3,11 @@ $('#calendarTypeName').html('Tháng')
 
 var calendar = new tui.Calendar('#calendar', {
     defaultView: 'month',
-    taskView: false,
+    taskView: true,
     narrowWeekend: false,
+    startDayOfWeek: 1,
+    visibleWeeksCount: 3,
+    visibleScheduleCount: 4,
     month: {isAlways6Week: false},
     useDetailPopup: false,
     useCreationPopup: true,
@@ -14,39 +17,73 @@ var calendar = new tui.Calendar('#calendar', {
         }
     }
 });
-
-calendar.createSchedules([
-    {
-        id: '1',
-        calendarId: '1',
-        title: 'my schedule',
-        category: 'time',
-        dueDateClass: '',
-        body: 'lksdjfl skdfj sdlfkj flkfj sdlkjsdf',
-        raw: {
-            hihi: 'hihihihih'
-          },
-        start: '2022-03-07T22:30:00+09:00',
-        end: '2022-03-09T02:30:00+09:00'
-    },
-    {
-        id: '2',
-        calendarId: '1',
-        title: 'second schedule',
-        category: 'time',
-        dueDateClass: '',
-        start: '2022-03-11T22:30:00+09:00',
-        end: '2022-03-15T02:30:00+09:00',
-        isReadOnly: true    // schedule is read-only
+// calendar.createSchedules([
+//     {
+//         'id': '1',
+//         'calendarId': '1',
+//         'title': 'Nhận lương',
+//         'category': 'time',
+//         'dueDateClass': '',
+//         'body': 'lksdjfl skdfj sdlfkj flkfj sdlkjsdf',
+//         // recurrenceRule: 'repeat',
+//         'isAllDay': true,
+//         'raw': {
+//             hihi: 'hihihihih'
+//           },
+//         'start': '2022-03-07T22:30:00+09:00',
+//         'end': '2022-03-09T02:30:00+09:00'
+//     }
+// ]);
+function getApi(type){
+    
+    var data = new FormData();
+    if(type == "toggle-monthly"){
+        start_date = moment(calendar._renderRange.start._date).format('YYYY/MM/DD h:mm:ss')
+        end_date = moment(calendar._renderRange.end._date).format('YYYY/MM/DD h:mm:ss')
+        data.append('type', type)
+        data.append('start_date', start_date)
+        data.append('end_date', end_date)
     }
-]);
+    
+    $.ajax({
+        url: "api/schedule/index",
+        type: "POST",
+        data: data,
+        processData: false,
+        contentType: false, 
+        enctype: 'multipart/form-data',
+        success: function(data){
+            // calendar.updateSchedule(data.data.id, data.data.calendarId, data.data);
+            // calendar.destroy()
+            // calendar = new tui.Calendar('#calendar', {
+            //     defaultView: 'month',
+            //     taskView: true,
+            //     narrowWeekend: false,
+            //     startDayOfWeek: 1,
+            //     visibleWeeksCount: 3,
+            //     visibleScheduleCount: 4,
+            //     month: {isAlways6Week: false},
+            //     useDetailPopup: false,
+            //     useCreationPopup: true,
+            //     template: {
+            //         monthDayname: function(dayname) {
+            //             return '<span class="calendar-week-dayname-name">' + dayname.label + '</span>';
+            //         }
+            //     }
+            // });
+            calendar.createSchedules(data.data)
+            console.log(data)
+        }
+    })
+}
+
 
 calendar.on({
     'clickSchedule': function(e) {
-        // console.log('clickSchedule', e);
+        console.log('clickSchedule', e);
         var modal = $('#calendarModal')
         modal.modal('toggle')
-        modal.find('button').html('Lưu')
+        modal.find('button.final-button').html('Lưu')
     },
     // 'beforeCreateSchedule': function(e) {
     //     console.log('beforeCreateSchedule', e);
@@ -65,10 +102,23 @@ calendar.on({
 });
 
 $(document).ready(function(){
-    var modal = $('#calendarModal')
-    modal.modal('show')
+    for(var i=1; i<=31; i++){
+        $('#day-in-week').append('<option value="'+i+'">'+i+'</option>')
+    }
+    
+    getApi($('.calendar-view .calendar-action .dropdown-menu .dropdown-item.active').data('action'))
 })
 $('#attendees').on('change', function() {
+    var text = $('#attendees option:selected').text()
+    var id = this.value
+    $('.attendees').append('<a class="attendee-box mr-1" data-attendee-id="'+id+'" data-attendee-name="'+text+'">'+
+        '<span>'+text+'</span>'+
+        '<button class="border border-0 bg-white" aria-hidden="true">&times;</button>'+
+    '</a>')
+    $("#attendees option[value='"+this.value+"']").remove();
+    this.value = "all"
+});
+$('#day-repeat-selected').on('change', function() {
     var text = $('#attendees option:selected').text()
     var id = this.value
     $('.attendees').append('<a class="attendee-box mr-1" data-attendee-id="'+id+'" data-attendee-name="'+text+'">'+
@@ -110,4 +160,5 @@ $('.calendar-view .calendar-action .dropdown-menu .dropdown-item').click(functio
         calendar.setOptions({month: {visibleWeeksCount: 3}}, true);
         calendar.changeView('month', true);
     }
+    // getApi($(this).data('action'))
 })
