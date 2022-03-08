@@ -16,6 +16,7 @@
 @section('content')
 <!-- BEGIN: Content-->
 <!-- BEGIN: Content-->
+
 <input type="hidden" name="" id="project_id" value="{{$project_id}}">
 <div class="app-content content">
     <div class="content-overlay"></div>
@@ -38,8 +39,7 @@
                 <!-- User new mail right area -->
                 <div class="kanban-sidebar">
                     <div class="card shadow-none quill-wrapper">
-                        <div
-                            class="card-header d-flex justify-content-between align-items-center border-bottom px-2 py-1">
+                        <div class="card-header d-flex justify-content-between align-items-center border-bottom px-2 py-1">
                             <h3 class="card-title">Thông tin công việc</h3>
                             <button type="button" class="close close-icon">
                                 <i class="bx bx-x"></i>
@@ -72,7 +72,7 @@
                                                     <option class="bg-primary" selected>Đang xử lý</option>
                                                     <option class="bg-danger">Quá hạn</option>
                                                     <option class="bg-success">Hoàn thành</option>
-{{--                                                     <option class="bg-info">Info</option> --}}
+                                                    {{-- <option class="bg-info">Info</option> --}}
                                                     <option class="bg-warning">Sắp quá hạn</option>
                                                     <option class="bg-secondary">Chưa xử lý</option>
                                                 </select>
@@ -159,6 +159,7 @@
 
 <!-- BEGIN: Page JS-->
 <script src="{{asset('assets/js/scripts/pages/app-kanban.js')}}"></script>
+<script src="{{asset('assets/js/scripts/pages/kanban-scroll.js')}}"></script>
 <!-- END: Page JS-->
 
 @stop

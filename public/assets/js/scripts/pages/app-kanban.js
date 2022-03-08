@@ -5,15 +5,19 @@ $.ajaxSetup({
     }
 });
 
+var kanban_board_data;
+
 function index(){
    $.ajax({
       type: "post",
       url: '/api/kanban/index',
+      async: false,
       data: {
         project_id: $('#project_id').val(),
       }
     }).done(function(resp) {
-       console.log('resp', resp);
+       kanban_board_data = resp.data;
+       console.log(kanban_board_data);
     });
 }
 
@@ -23,137 +27,138 @@ $(function () {
   index();
   // Kanban Board and Item Data passed by json
   //Khai báo dữ liệu kanban mẫu. Thực tế sẽ dùng ajax để push dữ liệu vào biến kanban_board_data
-  var kanban_board_data = [{
-      id: "1",
-      title: "Mới",
-      item: [{
-          id: "11",
-          title: "Viết test case",
-          border: "success",
-          dueDate: "22/2/2022",
-          comment: 1,
-          attachment: 3,
-          // users: [
-          //   "../../../app-assets/images/portrait/small/avatar-s-11.jpg",
-          //   "../../../app-assets/images/portrait/small/avatar-s-12.jpg"
-          // ]
-        },
-        {
-          id: "12",
-          title: "Tets case",
-          border: "info",
-          image: "../../../assets/images/banner/banner-21.jpg",
-          dueDate: "22/2/2022",
-        },
-        {
-          id: "13",
-          title: "Lập trình chức năng quản lý công việc",
-          border: "warning",
-          dueDate: "22/2/2022",
-          comment: 23,
-          attachment: 4,
-          // users: [
-          //   "../../../app-assets/images/portrait/small/avatar-s-1.jpg",
-          //   "../../../app-assets/images/portrait/small/avatar-s-18.jpg"
-          // ]
-        },
-        {
-          id: "14",
-          title: "Thiết kế chức năng quản lý công việc",
-          border: "danger",
-          comment: 56,
-          attachment: 2,
-          // users: [
-          //   "../../../app-assets/images/portrait/small/avatar-s-26.jpg",
-          //   "../../../app-assets/images/portrait/small/avatar-s-16.jpg"
-          // ]
-        }
+  // var kanban_board_data = [{
+  //     id: "1",
+  //     title: "Mới",
+  //     item: [{
+  //         id: "11",
+  //         title: "Viết test case",
+  //         border: "success",
+  //         dueDate: "22/2/2022",
+  //         comment: 1,
+  //         attachment: 3,
+  //         // users: [
+  //         //   "../../../app-assets/images/portrait/small/avatar-s-11.jpg",
+  //         //   "../../../app-assets/images/portrait/small/avatar-s-12.jpg"
+  //         // ]
+  //       },
+  //       {
+  //         id: "12",
+  //         title: "Tets case",
+  //         border: "info",
+  //         image: "../../../assets/images/banner/banner-21.jpg",
+  //         dueDate: "22/2/2022",
+  //       },
+  //       {
+  //         id: "13",
+  //         title: "Lập trình chức năng quản lý công việc",
+  //         border: "warning",
+  //         dueDate: "22/2/2022",
+  //         comment: 23,
+  //         attachment: 4,
+  //         // users: [
+  //         //   "../../../app-assets/images/portrait/small/avatar-s-1.jpg",
+  //         //   "../../../app-assets/images/portrait/small/avatar-s-18.jpg"
+  //         // ]
+  //       },
+  //       {
+  //         id: "14",
+  //         title: "Thiết kế chức năng quản lý công việc",
+  //         border: "danger",
+  //         comment: 56,
+  //         attachment: 2,
+  //         // users: [
+  //         //   "../../../app-assets/images/portrait/small/avatar-s-26.jpg",
+  //         //   "../../../app-assets/images/portrait/small/avatar-s-16.jpg"
+  //         // ]
+  //       }
        
-      ]
-    },
-    {
-      id: "kanban-board-2",
-      title: "Đang triển khai",
-      item: [{
-          id: "21",
-          title: "Thiết kế csdl chức năng quản lý công việc",
-          border: "secondary"
-        },
-        {
-          id: "22",
-          title: "Lập trình chức năng quản lý công việc",
-          border: "info",
-          dueDate: "22/2/2022",
-          comment: 8,
-          // users: [
-          //   "../../../app-assets/images/portrait/small/avatar-s-24.jpg",
-          //   "../../../app-assets/images/portrait/small/avatar-s-14.jpg"
-          // ]
-        },
-        {
-          id: "23",
-          title: "Phân công công việc",
-          border: "warning"
-        },
-        {
-          id: "24",
-          title: "Viết báo cáo tuần",
-          border: "primary",
-          dueDate: "Jan 6",
-          comment: 10,
-          attachment: 6,
-          badgeContent: "AK",
-          badgeColor: "danger"
-        }
-      ]
-    },
-    {
-      id: "kanban-board-3",
-      title: "Hoàn thành",
-      item: [{
-          id: "31",
-          title: "Gặp gỡ khách hàng",
-          border: "warning",
-          dueDate: "22/2/2022",
-          comment: 10,
-          // users: [
-          //   "../../../app-assets/images/portrait/small/avatar-s-20.jpg",
-          //   "../../../app-assets/images/portrait/small/avatar-s-22.jpg",
-          //   "../../../app-assets/images/portrait/small/avatar-s-13.jpg"
-          // ]
-        },
-        {
-          id: "32",
-          title: "Ký kết hợp đồng",
-          border: "success",
-          dueDate: "22/2/2022",
-          comment: 7,
-          badgeContent: "AD",
-          badgeColor: "primary"
-        },
-        {
-          id: "33",
-          title: "Lên kế hoạch dự án",
-          border: "primary",
-          dueDate: "22/2/2022",
-          // users: [
-          //   "../../../app-assets/images/portrait/small/avatar-s-1.jpg",
-          //   "../../../app-assets/images/portrait/small/avatar-s-2.jpg"
-          // ]
-        },
-         {
-          id: "33",
-          title: "Phân tích thiết kế hệ thống",
-          border: "primary",
-          dueDate: "22/2/2022",
-          // users: [
-          //   "../../../app-assets/images/portrait/small/avatar-s-1.jpg",
-          //   "../../../app-assets/images/portrait/small/avatar-s-2.jpg"
-          // ]
-        }
-      ]
-    }
-  ];
+  //     ]
+  //   },
+  //   {
+  //     id: "kanban-board-2",
+  //     title: "Đang triển khai",
+  //     item: [{
+  //         id: "21",
+  //         title: "Thiết kế csdl chức năng quản lý công việc",
+  //         border: "secondary"
+  //       },
+  //       {
+  //         id: "22",
+  //         title: "Lập trình chức năng quản lý công việc",
+  //         border: "info",
+  //         dueDate: "22/2/2022",
+  //         comment: 8,
+  //         // users: [
+  //         //   "../../../app-assets/images/portrait/small/avatar-s-24.jpg",
+  //         //   "../../../app-assets/images/portrait/small/avatar-s-14.jpg"
+  //         // ]
+  //       },
+  //       {
+  //         id: "23",
+  //         title: "Phân công công việc",
+  //         border: "warning"
+  //       },
+  //       {
+  //         id: "24",
+  //         title: "Viết báo cáo tuần",
+  //         border: "primary",
+  //         dueDate: "Jan 6",
+  //         comment: 10,
+  //         attachment: 6,
+  //         badgeContent: "AK",
+  //         badgeColor: "danger"
+  //       }
+  //     ]
+  //   },
+  //   {
+  //     id: "kanban-board-3",
+  //     title: "Hoàn thành",
+  //     item: [{
+  //         id: "31",
+  //         title: "Gặp gỡ khách hàng",
+  //         border: "warning",
+  //         dueDate: "22/2/2022",
+  //         comment: 10,
+  //         // users: [
+  //         //   "../../../app-assets/images/portrait/small/avatar-s-20.jpg",
+  //         //   "../../../app-assets/images/portrait/small/avatar-s-22.jpg",
+  //         //   "../../../app-assets/images/portrait/small/avatar-s-13.jpg"
+  //         // ]
+  //       },
+  //       {
+  //         id: "32",
+  //         title: "Ký kết hợp đồng",
+  //         border: "success",
+  //         dueDate: "22/2/2022",
+  //         comment: 7,
+  //         badgeContent: "AD",
+  //         badgeColor: "primary"
+  //       },
+  //       {
+  //         id: "33",
+  //         title: "Lên kế hoạch dự án",
+  //         border: "primary",
+  //         dueDate: "22/2/2022",
+  //         // users: [
+  //         //   "../../../app-assets/images/portrait/small/avatar-s-1.jpg",
+  //         //   "../../../app-assets/images/portrait/small/avatar-s-2.jpg"
+  //         // ]
+  //       },
+  //        {
+  //         id: "33",
+  //         title: "Phân tích thiết kế hệ thống",
+  //         border: "primary",
+  //         dueDate: "22/2/2022",
+  //         // users: [
+  //         //   "../../../app-assets/images/portrait/small/avatar-s-1.jpg",
+  //         //   "../../../app-assets/images/portrait/small/avatar-s-2.jpg"
+  //         // ]
+  //       }
+  //     ]
+  //   }
+  // ];
+  // console.log('kanban', kanban_board_data);
 
   // Kanban Board
   var KanbanExample = new jKanban({
@@ -227,7 +232,8 @@ $(function () {
           name: name
         }
       }).done(function(resp) {
-        alert('Thêm mới thành công');
+        // 
+        
       });
   }
 
@@ -344,23 +350,25 @@ $(function () {
   //---------------------
   var addBoardDefault = document.getElementById("add-kanban");
   var i = 1;
-  addBoardDefault.addEventListener("click", function () {
-    KanbanExample.addBoards([{
-      id: "kanban-" + i, // generate random id for each new kanban
-      title: "Default Title"
-    }]);
-    $.ajax({
+   $.ajax({
         type: "post",
         url: '/api/kanban/create-board',
         dataType: 'JSON',
+        async: false,
         data: {
           project_id: $('#project_id').val(),
           name: "Default Title"
         }
       }).done(function(resp) {
-        alert('Thêm mới thành công');
+        i = resp.data.id;
       });
-    var kanbanNewBoard = KanbanExample.findBoard("kanban-" + i)
+  addBoardDefault.addEventListener("click", function () {
+    KanbanExample.addBoards([{
+      id: i, // generate random id for each new kanban
+      title: "Default Title"
+    }]);
+   
+    var kanbanNewBoard = KanbanExample.findBoard(i)
     
     if (kanbanNewBoard) {
       $(".kanban-title-board").on("mouseenter", function () { //over chuộht lên board title
