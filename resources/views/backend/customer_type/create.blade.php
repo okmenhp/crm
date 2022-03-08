@@ -11,9 +11,6 @@
 @extends('layouts.master')
 @section('content')
     <!-- BEGIN: Content-->
-    @if (isset($errors))
-        dd($errors)
-    @endif
     <div class="app-content content">
         <div class="content-overlay"></div>
         <div class="content-wrapper">
@@ -29,33 +26,48 @@
                                     role="tabpanel">
                                     <!-- users edit account form start -->
                                     <form class="form-validate" method="post"
-                                        action="{{ route('admin.project-type.update', $record->id) }}">
+                                        action="{{ route('admin.customer_type.store') }}">
                                         <div class="row">
                                             <div class="col-12 col-sm-12">
                                                 <div class="form-group">
                                                     <div class="controls">
-                                                        <label>Tên loại dự án</label>
+                                                        <label>Tên loại khách hàng</label>
                                                         <input type="text" class="form-control"
-                                                            placeholder="Nhập tên loại dự án" value="{{ $record->name }}"
-                                                            name="name">
+                                                            placeholder="Nhập tên loại khách hàng" value="" name="name">
                                                         {!! $errors->first('name', '<span class="text-danger">:message</span>') !!}
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-12">
-                                                <fieldset class="form-group">
-                                                    <label>Mô tả</label>
-                                                    <textarea class="form-control" id="basicTextarea" rows="3"
-                                                        placeholder="Nhập mô tả">{{ $record->description }}</textarea>
-                                                </fieldset>
-                                            </div>
                                             <div class="col-12 col-sm-12">
-                                                <div class="form-check form-switch">
-                                                    <input class="form-check-input" name="status" type="checkbox" id=""
-                                                        @if ($record->status == 1) checked @endif>
-                                                    <label class="form-check-label">Kích hoạt</label>
+                                                <div class="form-group">
+                                                    <div class="controls">
+                                                        <label>Mã loại khách hàng</label>
+                                                        <input type="text" class="form-control"
+                                                            placeholder="Nhập mã loại khách hàng" value="" name="code">
+                                                        {!! $errors->first('code', '<span class="text-danger">:message</span>') !!}
+                                                    </div>
                                                 </div>
                                             </div>
+                                            <div class="col-12 col-sm-12">
+                                                <div class="form-group">
+                                                    <div class="controls">
+                                                        <label>Mô tả</label>
+                                                        <textarea name="description" rows="3" placeholder="Nhập mô tả"
+                                                            class=" form-control"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Default checked -->
+                                            <div class="col-12 col-sm-12">
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input" name="status" type="checkbox"
+                                                        id="flexSwitchCheckChecked" checked>
+                                                    <label class="form-check-label" for="flexSwitchCheckChecked">Kích
+                                                        hoạt</label>
+                                                </div>
+                                            </div>
+
                                             <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1">
                                                 <button type="submit"
                                                     class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1">Lưu thay
@@ -86,8 +98,7 @@
     <script src="assets/vendors/js/pickers/pickadate/picker.date.js"></script>
     <!-- END: Page Vendor JS-->
 
-    <!--
-            BEGIN: Page JS-->
+    <!-- BEGIN: Page JS-->
     <script src="assets/js/scripts/pages/app-users.min.js"></script>
     <script src="assets/js/scripts/navs/navs.min.js"></script>
     <!-- END: Page JS-->
