@@ -16,6 +16,20 @@
 @section('content')
 <!-- BEGIN: Content-->
 <!-- BEGIN: Content-->
+<<<<<<< HEAD
+=======
+<style>
+/* #kanban-wrapper {
+    display: table-cell;
+    margin: 0;
+    border: 1px solid #666;
+    padding: 5px;
+    width: auto;
+    overflow-y: auto;
+} */
+</style>
+>>>>>>> 3fde0750ae685fd5453da240d1cbeee98ebfb03a
+
 <input type="hidden" name="" id="project_id" value="{{$project_id}}">
 <div class="app-content content">
     <div class="content-overlay"></div>
@@ -32,21 +46,22 @@
                             <i class='bx bx-add-to-queue mr-50'></i> Thêm danh sách mới
                         </button>
                         <div id="kanban-app"></div>
+
                     </div>
                 </div>
+
 
                 <!-- User new mail right area -->
                 <div class="kanban-sidebar">
                     <div class="card shadow-none quill-wrapper">
-                        <div
-                            class="card-header d-flex justify-content-between align-items-center border-bottom px-2 py-1">
+                        <div class="card-header d-flex justify-content-between align-items-center border-bottom px-2 py-1">
                             <h3 class="card-title">Thông tin công việc</h3>
                             <button type="button" class="close close-icon">
                                 <i class="bx bx-x"></i>
                             </button>
                         </div>
                         <!-- form start -->
-                        <form class="edit-kanban-item" >
+                        <form class="edit-kanban-item">
                             <div class="kanban-edit-content" style="overflow-y: scroll;">
                                 <div class="card-body">
                                     <div class="form-group">
@@ -56,13 +71,11 @@
                                     </div>
                                     <div class="form-group">
                                         <label>Thời gian bắt đầu</label>
-                                        <input type="date" class="form-control edit-kanban-item-date"
-                                            placeholder="">
+                                        <input type="date" class="form-control edit-kanban-item-date" placeholder="">
                                     </div>
-                                     <div class="form-group">
+                                    <div class="form-group">
                                         <label>Thời gian kết thúc</label>
-                                        <input type="date" class="form-control edit-kanban-item-date"
-                                            placeholder="">
+                                        <input type="date" class="form-control edit-kanban-item-date" placeholder="">
                                     </div>
                                     <div class="row">
                                         <div class="col-6">
@@ -72,7 +85,11 @@
                                                     <option class="bg-primary" selected>Đang xử lý</option>
                                                     <option class="bg-danger">Quá hạn</option>
                                                     <option class="bg-success">Hoàn thành</option>
-{{--                                                     <option class="bg-info">Info</option> --}}
+<<<<<<< HEAD
+                                                    {{-- <option class="bg-info">Info</option> --}}
+=======
+                                                    {{--                                                     <option class="bg-info">Info</option> --}}
+>>>>>>> 3fde0750ae685fd5453da240d1cbeee98ebfb03a
                                                     <option class="bg-warning">Sắp quá hạn</option>
                                                     <option class="bg-secondary">Chưa xử lý</option>
                                                 </select>
@@ -97,10 +114,11 @@
                                         <label>Tài liệu</label>
                                         <div class="custom-file">
                                             <input type="file" class="custom-file-input" id="emailAttach">
-                                            <label class="custom-file-label" for="emailAttach">Chọn tài liệu</label>
+                                            <label class="custom-file-label" for="emailAttach">Chọn tài
+                                                liệu</label>
                                         </div>
                                     </div>
-                                  
+
                                     <!-- Compose mail Quill editor -->
                                     <div class="form-group">
                                         <label>Bình luận</label>
@@ -114,8 +132,8 @@
                                                         <button class="ql-underline"></button>
                                                         <button class="ql-link"></button>
                                                         <button class="ql-image"></button>
-                                                        <button
-                                                            class="btn btn-sm btn-primary btn-comment ml-25">Bình luận</button>
+                                                        <button class="btn btn-sm btn-primary btn-comment ml-25">Bình
+                                                            luận</button>
                                                     </span>
                                                 </div>
                                             </div>
@@ -159,6 +177,8 @@
 
 <!-- BEGIN: Page JS-->
 <script src="{{asset('assets/js/scripts/pages/app-kanban.js')}}"></script>
+<script src="{{asset('assets/js/scripts/pages/kanban-scroll.js')}}"></script>
 <!-- END: Page JS-->
+
 
 @stop

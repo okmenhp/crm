@@ -26,13 +26,18 @@ class KanbanController extends BaseController
 
     public function index(Request $request){
         $input = $request->all();
-        $res = \DB::table('list')->where('list.project_id', $input['project_id'])->join('task','list.id','=','task.list_id')->get()->groupBy('list');
+        $res = \DB::table('list')->where('list.project_id', $input['project_id'])->join('task','list.id','=','task.list_id')->select('task.id as id','task.created_at as dueDate','task.name as title', 'list.id as list_id','list.name as list_name')->get()->groupBy('list_id');
+        $item = [];
+        
         foreach($res as $key => $r){
-            
+            $object = new \stdClass();
+            $object->id = strval($key);
+            $object->title = $r['0']->list_name;
+            $object->item = $r;
+            $item[] = $object;
         }
-        return $this->success($res);
+        return $this->success($item);
     }
-
 
     public function create_board(Request $request)
     {  

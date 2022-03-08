@@ -29,16 +29,27 @@
                                     role="tabpanel">
                                     <!-- users edit account form start -->
                                     <form class="form-validate" method="post"
-                                        action="{{ route('admin.project-type.update', $record->id) }}">
+                                        action="{{ route('admin.customer_type.update', $record->id) }}">
                                         <div class="row">
                                             <div class="col-12 col-sm-12">
                                                 <div class="form-group">
                                                     <div class="controls">
-                                                        <label>Tên loại dự án</label>
+                                                        <label>Tên loại khách hàng</label>
                                                         <input type="text" class="form-control"
-                                                            placeholder="Nhập tên loại dự án" value="{{ $record->name }}"
-                                                            name="name">
+                                                            placeholder="Nhập tên loại khách hàng"
+                                                            value="{{ $record->name }}" name="name">
                                                         {!! $errors->first('name', '<span class="text-danger">:message</span>') !!}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-sm-12">
+                                                <div class="form-group">
+                                                    <div class="controls">
+                                                        <label>Mã loại khách hàng</label>
+                                                        <input type="text" class="form-control"
+                                                            placeholder="Nhập mã loại khách hàng"
+                                                            value="{{ $record->code }}" name="code">
+                                                        {!! $errors->first('code', '<span class="text-danger">:message</span>') !!}
                                                     </div>
                                                 </div>
                                             </div>
