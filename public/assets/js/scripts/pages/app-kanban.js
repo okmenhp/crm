@@ -172,10 +172,12 @@ $(function () {
 
     // click on current kanban-item
     click: function (el) {
-
       //Bật side bar khi click 1 card 
-      $(".kanban-overlay").addClass("show");
-      $(".kanban-sidebar").addClass("show");
+      // $(".kanban-overlay").addClass("show");
+      // $(".kanban-sidebar").addClass("show");
+
+      //bật modal info card
+      $('#exampleModal').modal();
 
       // Set el to var kanban_curr_el, use this variable when updating title
       kanban_curr_el = el;
