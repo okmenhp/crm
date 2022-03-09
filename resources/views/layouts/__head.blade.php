@@ -39,3 +39,4 @@
 <!-- BEGIN: Font-awesome CSS-->
 <link href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" rel="stylesheet">
 <!-- END: Font-awesome CSS-->
+<script src="{{asset('assets/vendors/js/vendors.min.js')}}"></script>

@@ -1,3 +1,4 @@
+<script>
 $(() => {
     const treeListData = $.map(tasks, (task) => {
         task.Task_Assigned_Employee = null;
@@ -11,8 +12,8 @@ $(() => {
 
     $('#tasks').dxTreeList({
         dataSource: treeListData,
-        keyExpr: 'Task_ID',
-        parentIdExpr: 'Task_Parent_ID',
+        keyExpr: 'id',
+        parentIdExpr: 'parent_id',
         columnAutoWidth: true,
         wordWrapEnabled: true,
         showBorders: true,
@@ -29,12 +30,46 @@ $(() => {
             mode: 'multiple',
         },
         columnChooser: {
-            enabled: true,
+            enabled: false,
         },
         columns: [{
-            dataField: 'Task_Subject',
+            dataField: 'name',
+            caption: "Tên công việc",
             width: 300,
-        }, {
+        },
+        {
+            dataField: 'user_id',
+            caption: "Người thực hiện",
+            width: 300,
+        },
+
+        {
+            dataField: 'parent_id',
+            caption: 'Assigned',
+            allowSorting: false,
+            minWidth: 200,
+            cellTemplate(container, options) {
+                const currentEmployee = options.data.Task_Assigned_Employee;
+                if (currentEmployee) {
+                    container
+                        .append($('<div>', {
+                            class: 'img',
+                            style: `background-image:url(${currentEmployee.Picture});`
+                        }))
+                        .append('\n')
+                        .append($('<span>', {
+                            class: 'name',
+                            text: currentEmployee.Name
+                        }));
+                }
+            },
+            lookup: {
+                dataSource: employees,
+                valueExpr: 'ID',
+                displayExpr: 'Name',
+            },
+        },
+        {
             dataField: 'Task_Assigned_Employee_ID',
             caption: 'Assigned',
             allowSorting: false,
@@ -43,9 +78,15 @@ $(() => {
                 const currentEmployee = options.data.Task_Assigned_Employee;
                 if (currentEmployee) {
                     container
-                        .append($('<div>', { class: 'img', style: `background-image:url(${currentEmployee.Picture});` }))
+                        .append($('<div>', {
+                            class: 'img',
+                            style: `background-image:url(${currentEmployee.Picture});`
+                        }))
                         .append('\n')
-                        .append($('<span>', { class: 'name', text: currentEmployee.Name }));
+                        .append($('<span>', {
+                            class: 'name',
+                            text: currentEmployee.Name
+                        }));
                 }
             },
             lookup: {
@@ -93,3 +134,4 @@ $(() => {
         }],
     });
 });
+</script>

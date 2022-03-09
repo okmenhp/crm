@@ -14,4 +14,9 @@ class UserTaskRepository extends AbstractRepository {
         return 'App\Models\UserTask';
     }
 
+    public function readFE($request)
+    {
+        return $this->model->all();
+    }
+
 }

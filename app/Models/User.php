@@ -14,7 +14,7 @@ class User extends Authenticatable
     use HasApiTokens, HasFactory, Notifiable;
 
     const ROLE_ADMINISTRATOR = 1;
-    
+
     protected $table = 'user';
     protected $primaryKey = 'id';
     protected $fillable = ['username','full_name','email','password','department_id','position_id','avatar','status','role_id','last_login','timekeeping_code','code','birthday','phone'
@@ -31,6 +31,10 @@ class User extends Authenticatable
 
     public function created_at() {
         return date("d/m/Y", strtotime($this->created_at));
+    }
+
+    public function Task() {
+        return $this->belongsToMany('App\Task', 'user_task', 'task_id', 'user_id');
     }
 
     public function department()

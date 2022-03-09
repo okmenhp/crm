@@ -3,6 +3,8 @@
 namespace App\Repositories;
 
 use App\Repositories\Support\AbstractRepository;
+use App\Models\User;
+use App\Models\Task;
 
 class TaskRepository extends AbstractRepository {
 
@@ -47,7 +49,11 @@ class TaskRepository extends AbstractRepository {
             }
 
         }
-        return $query->orderBy('id', 'DESC')->get();
+        // return $query->orderBy('task.id', 'DESC')->select('task.id','task.name','task.parent_id','task.user_id')->get();
+        return $query->orderBy('task.id', 'DESC')->join('industries', 'company.industry_id', '=', 'industries.id')
+        ->select('companies.name', 'industries.industry_name')
+        ->get();
+
     }
 
 

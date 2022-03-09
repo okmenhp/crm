@@ -9,6 +9,8 @@ use App\Repositories\EmployeeRepository;
 use App\Repositories\DepartmentRepository;
 use App\Repositories\ProjectRepository;
 use App\Repositories\UserTaskRepository;
+use App\Models\Task;
+use App\Models\User;
 
 class TaskController extends BaseController
 {
@@ -23,14 +25,16 @@ class TaskController extends BaseController
         $this->employeeRepo = $employeeRepo;
         $this->departmentRepo = $departmentRepo;
         $this->projectRepo = $projectRepo;
+        $this->usertaskRepo = $usertaskRepo;
     }
 
     public function index(Request $request)
     {
         $records = $this->taskRepo->readFE($request);
-        $employee_array = $this->employeeRepo->all();
+        $employee_data = $this->employeeRepo->readFE($request);
+        dd($records);
         $department_array = $this->departmentRepo->all();
-        return view('backend/task/index', compact('records','employee_array','department_array'));
+        return view('backend/task/index', compact('records','employee_data','department_array'));
     }
 
     /**
@@ -55,15 +59,18 @@ class TaskController extends BaseController
     {
         $input = $request->all();
         $input['date'] = date('Y-m-d H:i:s', strtotime($input['date']));
-        $input['user_id'] = implode(',', $input['user_id']);
+        // $input['user_id'] = implode(',', $input['user_id']);
         $validator = \Validator::make($input, $this->taskRepo->validateCreate());
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
+        //Them vao bang task
         $res = $this->taskRepo->create($input);
 
-        // $res = $this->usertaskRepo->create($input);
+        //Them quan he
+        $res->User()->attach($input['user_id']);
+
 
         if($res){
             return redirect()->route('admin.task.index')->with('success', 'Thêm mới thành công');
