@@ -35,3 +35,5 @@ Route::post('kanban/update-board','Api\KanbanController@update_board')->name('ap
 
 //schedule
 Route::post('schedule/index','Api\ScheduleController@index')->name('api.schedule.index');
+Route::post('schedule/detail','Api\ScheduleController@detail')->name('api.schedule.detail');
+Route::post('schedule/defaultFormInsert','Api\ScheduleController@defaultFormInsert')->name('api.schedule.defaultFormInsert');

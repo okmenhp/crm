@@ -6,6 +6,18 @@
     color: #5a8dee;
 } */
 
-.active{
-    display: block !important;
+.inactive{
+    display: none !important;
+}
+
+.disabledd{
+    user-select: none; /* supported by Chrome and Opera */
+   -webkit-user-select: none; /* Safari */
+   -khtml-user-select: none; /* Konqueror HTML */
+   -moz-user-select: none; /* Firefox */
+   -ms-user-select: none; /* Internet Explorer/Edge */
+}
+
+.disabled{
+    pointer-events: none;
 }

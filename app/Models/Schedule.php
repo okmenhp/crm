@@ -15,6 +15,6 @@ class Schedule extends Model
     protected $fillable = ['uid','title','start_date','end_date','location','meeting_id','description', 'pattern','type_id','all_day'];
 
     public function users() {
-        return $this->belongsToMany('\Models\User', 'schedule_user', 'schedule_id', 'user_id');
+        return $this->belongsToMany('App\Models\User', 'user_schedule', 'schedule_id', 'user_id');
     }
 }
