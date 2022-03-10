@@ -31,6 +31,7 @@ Route::post('kanban/create-card','Api\KanbanController@create_card')->name('api.
 Route::post('kanban/create-board','Api\KanbanController@create_board')->name('api.kanban.create_board');
 Route::post('kanban/update-card','Api\KanbanController@update_card')->name('api.kanban.update_card');
 Route::post('kanban/update-board','Api\KanbanController@update_board')->name('api.kanban.update_board');
+Route::post('kanban/card-detail','Api\KanbanController@card_detail')->name('api.kanban.card_detail');
 //Route::post('kanban/add-card','Api\KanbanController@add_card')->name('api.kanban.add_card');
 
 //project

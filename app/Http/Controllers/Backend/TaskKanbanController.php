@@ -11,14 +11,16 @@ use App\Repositories\ProjectRepository;
 use App\Repositories\UserTaskRepository;
 use App\Models\Task;
 use App\Models\User;
+use App\Traits\UploadFile;
 
-class TaskController extends BaseController
+class TaskKanbanController extends BaseController
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
+    use UploadFile;
 
     public function __construct(TaskRepository $taskRepo, EmployeeRepository $employeeRepo, DepartmentRepository $departmentRepo, ProjectRepository $projectRepo, UserTaskRepository $usertaskRepo) {
         $this->taskRepo = $taskRepo;
@@ -28,12 +30,18 @@ class TaskController extends BaseController
         $this->usertaskRepo = $usertaskRepo;
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+     public function store($subtask, $list_id, $task_id)
+    {  
+        foreach($subtask as $st){
+            $input['name'] = $st;
+            $input['list_id'] = $list_id;
+            $input['parent_id'] = $task_id;
+            $this->taskRepo->create($input);
+        }
+        
+    }
+
+    
     public function edit()
     {
         return view('backend/department/edit');
@@ -46,28 +54,24 @@ class TaskController extends BaseController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         $input = $request->all();
-        $input['date'] = date('Y-m-d H:i:s', strtotime($input['date']));
-        // $input['user_id'] = implode(',', $input['user_id']);
-        $validator = \Validator::make($input, $this->taskRepo->validateCreate());
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
-        }
-
-        //Them vao bang task
-        $res = $this->taskRepo->create($input);
-
+        //$validator = \Validator::make($input, $this->taskRepo->validateCreate());
+        // if ($validator->fails()) {
+        //     return redirect()->back()->withErrors($validator)->withInput();
+        // }
+        $res = $this->taskRepo->update($input, $input['card_id']);
+        $res = $this->taskRepo->find($input['card_id']);
+        $id = $input['card_id'];
+        $this->store($input['subtask'], $input['list_id'], $res->id);
         //Them quan he
-        $res->User()->attach($input['user_id']);
-
-
+        $res->User()->sync($input['user_id']);
         if($res){
-            return redirect()->route('admin.task.index')->with('success', 'Thêm mới thành công');
+            return redirect()->route('admin.kanban.index', $input['project_id'])->with('success', 'Cập nhật thành công');
         }
         else{
-            return redirect()->route('admin.task.index')->with('error', 'Thêm mới thất bại');
+            return redirect()->route('admin.kanban.index', $input['project_id'])->with('error', 'Cập nhật thất bại');
         }
     }
 
