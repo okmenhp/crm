@@ -49,9 +49,9 @@
             </li>
             <li class=" navigation-header text-truncate"><span data-i18n="Apps">Công việc</span>
             </li>
-            <li class=" nav-item"><a href="/project-type"><i class="fa-solid fa-bars-progress"></i><span
+            <!-- <li class=" nav-item"><a href="/project-type"><i class="fa-solid fa-bars-progress"></i><span
                         class="menu-title text-truncate" data-i18n="Todo">Quản lý loại dự án</span></a>
-            </li>
+            </li> -->
             <li class=" nav-item"><a href="/project"><i class="fal fa-project-diagram"></i><span
                         class="menu-title text-truncate" data-i18n="Todo">Quản lý dự án</span></a>
             </li>

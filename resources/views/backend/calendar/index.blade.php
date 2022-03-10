@@ -52,7 +52,7 @@
                             <!-- create new schedule button -->
                             <button id="btn-new-schedule" type="button"
                                 class="btn btn-primary btn-block sidebar-new-schedule-btn">
-                                New schedule
+                                Lịch trình mới
                             </button>
                         </div>
                         <!-- sidebar calendar labels -->
@@ -61,10 +61,17 @@
                                 <div class="sidebar-calendars-item">
                                     <!-- view All checkbox -->
                                     <div class="checkbox">
-                                        <input type="checkbox" class="checkbox-input tui-full-calendar-checkbox-square"
-                                            id="checkbox1" value="all" checked>
-                                        <label for="checkbox1">View all</label>
+                                        <input type="checkbox" name="type-schedule" class="checkbox-input tui-full-calendar-checkbox-square"
+                                            id="checkbox0" value="all" checked>
+                                        <label for="checkbox0">Xem tất cả</label>
                                     </div>
+                                    @foreach($types as $key => $type)
+                                        <div class="checkbox mt-1">
+                                            <input type="checkbox" name="type-schedule" class="checkbox-input tui-full-calendar-checkbox-square"
+                                                id="checkbox{{$type->id}}" value="{{$type->id}}" checked>
+                                            <label for="checkbox{{$type->id}}">{{$type->name}}</label>
+                                        </div>
+                                    @endforeach
                                 </div>
                             </div>
                             <div id="calendarList" class="sidebar-calendars-d1"></div>
@@ -123,7 +130,7 @@
                                             <span>3 tuần</span>
                                         </a>
                                     </li>
-                                    <li role="presentation" class="dropdown-divider"></li>
+                                    {{-- <li role="presentation" class="dropdown-divider"></li>
                                     <li role="presentation">
                                         <div role="menuitem" data-action="toggle-workweek" class="dropdown-item">
                                             <input type="checkbox" class="tui-full-calendar-checkbox-square"
@@ -132,7 +139,6 @@
                                             <span>Hiển thị ngày cuối tuần</span>
                                         </div>
                                     </li>
-
                                     <li role="presentation">
                                         <div role="menuitem" data-action="toggle-start-day-1" class="dropdown-item">
                                             <input type="checkbox" class="tui-full-calendar-checkbox-square"
@@ -141,7 +147,7 @@
                                             <span>Bắt đầu từ thứ 2</span>
                                         </div>
                                     </li>
-                                    {{-- <li role="presentation">
+                                    <li role="presentation">
                                         <div role="menuitem" data-action="toggle-narrow-weekend" class="dropdown-item">
                                             <input type="checkbox" class="tui-full-calendar-checkbox-square"
                                                 value="toggle-narrow-weekend">
@@ -176,18 +182,48 @@
                 <div class="modal-dialog modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-body">
+                            <div class="form-group row">
+                                <div class="col-md-6">
+                                    <label for="pattern-schedule" class="col-form-label">Kiểu lịch trình:</label>
+                                    <select id="pattern-schedule" class="form-control">
+                                        <option value="1">Thông thường</option>
+                                        <option value="2">lặp lại</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 row repeat-selection">
+                                    <div class="col-md-6">
+                                        <div class="w-100 d-flex align-items-center">
+                                            <input type="radio" id="dayweek" name="pattern" class="day-selection" value="2">
+                                            <label for="dayweek" class="col-form-label ml-1 mb-0" style="white-space:nowrap">Ngày trong tuần</label>
+                                        </div>
+                                        <div class="w-100 d-flex align-items-center">
+                                            <select name="wday" id="wday" class="form-control day-selection-option"></select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="w-100 d-flex align-items-center">
+                                            <input type="radio" id="daymonth" name="pattern" class="day-selection" value="3">
+                                            <label for="daymonth" class="col-form-label ml-1 mb-0" style="white-space:nowrap">Ngày trong tháng</label>
+                                        </div>
+                                        <div class="w-100 d-flex align-items-center">
+                                            <select name="mday" id="mday" class="form-control day-selection-option"></select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group repeat-selection repeat-day-selected"></div>
                             <div class="form-group">
-                                <label for="title" class="col-form-label">Lịch trình:</label>
+                                <label for="title" class="col-form-label"><span class="text-danger">*</span> Lịch trình:</label>
                                 <input type="text" class="form-control" id="title">
                             </div>
                             <div class="form-group row">
                                 <div class="col-md-6">
-                                    <label for="date-from" class="col-form-label">Từ:</label>
-                                    <input type="datetime-local" class="form-control" id="date-from">
+                                    <label for="start-date" class="col-form-label"><span class="text-danger">*</span> Từ:</label>
+                                    <input type="datetime-local" class="form-control" id="start-date">
                                 </div>
                                 <div class="col-md-6">
-                                    <label for="date-to" class="col-form-label">Đến:</label>
-                                    <input type="datetime-local" class="form-control" id="date-to">
+                                    <label for="end-date" class="col-form-label"><span class="text-danger">*</span> Đến:</label>
+                                    <input type="datetime-local" class="form-control" id="end-date">
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -198,77 +234,37 @@
                                 <div class="col-md-6">
                                     <label for="meeting-room" class="col-form-label">Phòng họp:</label>
                                     <select id="meeting-room" class="form-control">
-                                        <option value="">phòng họp 1</option>
-                                        <option value="">phòng họp 2</option>
+                                        <option value="" selected>--Chọn phòng họp--</option>
+                                        @foreach($meetings as $meeting)
+                                            <option value="{{$meeting->id}}">{{$meeting->name}}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <div class="col-md-6">
                                     <label for="attendees" class="col-form-label">Tham gia:</label>
-                                    <select id="attendees" class="form-control">
-                                        <option value="all" disabled selected>CHọn</option>
-                                        <option value="2">Nguyễn Thành lam</option>
-                                        <option value="3">Nguyễn Công Thành</option>
-                                    </select>
-                                    <div class="attendees d-flex flex-wrap mt-1">
-                                        <a class="attendee-box mr-1" data-attendee-id="1" data-attendee-name="Nguyễn Tuấn Anh">
-                                            <span>Nguyễn Tuấn Anh</span>
-                                            <button class="border border-0 bg-white" aria-hidden="true">&times;</button>
-                                        </a>
-                                        <a class="attendee-box mr-1" data-attendee-id="4" data-attendee-name="Nguyễn Trình Tình">
-                                            <span>Nguyễn Trình Tình</span>
-                                            <button class="border border-0 bg-white" aria-hidden="true">&times;</button>
-                                        </a>
-                                        <a class="attendee-box mr-1" data-attendee-id="5" data-attendee-name="Lê Văn A">
-                                            <span>Lê Văn A</span>
-                                            <button class="border border-0 bg-white" aria-hidden="true">&times;</button>
-                                        </a>
-                                    </div>
+                                    <select id="attendees" class="form-control"></select>
+                                    <div class="attendees d-flex flex-wrap mt-1"></div>
                                 </div>
                                 <div class="col-md-6">
                                     <label for="type" class="col-form-label">Phân loại:</label>
                                     <select id="type" class="form-control">
-                                        <option value="">Gặp khách hàng</option>
-                                        <option value="">Ăn tất niên</option>
+                                        <option value="" selected>--Chọn thẻ--</option>
+                                        @foreach($types as $type)
+                                            <option value="{{$type->id}}">{{$type->name}}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="message-text" class="col-form-label">Mô tả:</label>
-                                <textarea class="form-control" id="message-text"></textarea>
+                                <label for="description" class="col-form-label">Mô tả:</label>
+                                <textarea class="form-control" id="description"></textarea>
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal"></button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal fade" id="addAttendees" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Thêm người tham gia</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="user-name" placeholder="Tìm kiếm">
-                                <div class="attendees-box mt-1">
-                                    <div class="form-control bg-light px-1 py-1 mt-1">
-                                        <span class="text-dark">Nguyễn Tuấn Anh</span>
-                                    </div>
-                                    <div class="form-control bg-light px-1 py-1 mt-1">
-                                        <span class="text-dark">Nguyễn Công Thành</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Chấp nhận</button>
+                            {{-- <span class="text-danger warning-text">* Vui lòng điền đầy đủ thông tin</span> --}}
+                            <button type="button" class="btn btn-secondary final-button"></button>
                         </div>
                     </div>
                 </div>
@@ -287,8 +283,8 @@
     <script src="{{asset('assets/vendors/js/extensions/moment.min.js')}}"></script>
     <script src="{{asset('assets/vendors/js/calendar/chance.min.js')}}"></script>
     <script src="{{asset('assets/vendors/js/calendar/tui-calendar.min.js')}}"></script>
-    <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css"
-         rel = "stylesheet">
+    <script src="{{asset('assets/js/scripts/pages/sweetalert.min.js')}}"></script>
+    <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel = "stylesheet">
     {{-- <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script> --}}
     <script src="{{asset('assets/js/scripts/pages/custom-calendar.js')}}"></script>

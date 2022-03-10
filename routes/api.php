@@ -33,3 +33,14 @@ Route::post('kanban/update-card','Api\KanbanController@update_card')->name('api.
 Route::post('kanban/update-board','Api\KanbanController@update_board')->name('api.kanban.update_board');
 //Route::post('kanban/add-card','Api\KanbanController@add_card')->name('api.kanban.add_card');
 
+//project
+Route::get('project/index','Api\ProjectController@index')->name('api.project.index');
+// Route::get('project/create-project','Api\ProjectController@create')->name('api.project.create');
+// Route::get('project/update-project','Api\ProjectController@update')->name('api.project.update');
+
+//schedule
+Route::post('schedule/index','Api\ScheduleController@index')->name('api.schedule.index');
+Route::post('schedule/detail','Api\ScheduleController@detail')->name('api.schedule.detail');
+Route::post('schedule/defaultFormInsert','Api\ScheduleController@defaultFormInsert')->name('api.schedule.defaultFormInsert');
+Route::post('schedule/insert','Api\ScheduleController@insert')->name('api.schedule.insert');
+

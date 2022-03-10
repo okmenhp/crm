@@ -5,10 +5,10 @@
 </footer>
 
 <!-- BEGIN: Vendor JS-->
-<script src="{{asset('assets/vendors/js/vendors.min.js')}}"></script>
-<script src="{{asset('assets/fonts/LivIconsEvo/js/LivIconsEvo.tools.min.js')}}"></script>
+
+<!-- <script src="{{asset('assets/fonts/LivIconsEvo/js/LivIconsEvo.tools.min.js')}}"></script>
 <script src="{{asset('assets/fonts/LivIconsEvo/js/LivIconsEvo.defaults.min.js')}}"></script>
-<script src="{{asset('assets/fonts/LivIconsEvo/js/LivIconsEvo.min.js')}}"></script>
+<script src="{{asset('assets/fonts/LivIconsEvo/js/LivIconsEvo.min.js')}}"></script> -->
 <script src="{{asset('assets/vendors/js/forms/select/select2.full.min.js')}}"></script>
 <!-- BEGIN Vendor JS-->
 

@@ -5,3 +5,37 @@
 .calendar-view .calendar-action .active i{
     color: #5a8dee;
 } */
+
+.inactive{
+    display: none !important;
+}
+
+.disabledd{
+    user-select: none; /* supported by Chrome and Opera */
+   -webkit-user-select: none; /* Safari */
+   -khtml-user-select: none; /* Konqueror HTML */
+   -moz-user-select: none; /* Firefox */
+   -ms-user-select: none; /* Internet Explorer/Edge */
+}
+
+.disabled{
+    pointer-events: none;
+}
+
+.swal-text {
+    background-color: #FEFAE3;
+    padding: 17px;
+    border: 1px solid #F0E1A1;
+    display: block;
+    margin: 22px;
+    text-align: center;
+    color: #ff0000;
+}
+.swal-button {
+    /* padding: 7px 19px;
+    border-radius: 2px; */
+    background-color: #5A8DEE;
+    /* font-size: 12px;
+    border: 1px solid #3e549a;
+    text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.3); */
+}

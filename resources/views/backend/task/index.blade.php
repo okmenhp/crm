@@ -10,6 +10,16 @@
 <!-- BEGIN: Page CSS-->
 <link rel="stylesheet" type="text/css" href="{{asset('assets/css/pages/app-users.min.css')}}">
 <!-- END: Page CSS-->
+
+<!-- BEGIN: Todo CSS-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn3.devexpress.com/jslib/21.2.5/css/dx.common.css" />
+<link rel="stylesheet" type="text/css" href="https://cdn3.devexpress.com/jslib/21.2.5/css/dx.light.css" />
+<script src="https://cdn3.devexpress.com/jslib/21.2.5/js/dx.all.js"></script>
+<script src="{{asset('assets/js/data/tasks.js')}}"></script>
+<link rel="stylesheet" type="text/css" href="{{asset('assets/css/plugins/treelist/styles.css')}}">
+<!-- END: Todo CSS-->
+
 @stop
 @extends('layouts.master')
 @section('content')
@@ -95,7 +105,7 @@
                                                     <td>{{$record->name}}</td>
                                                     <td>Project</td>
                                                     <td>
-                                                        @foreach($employee_array as $key => $employee)
+                                                        @foreach($employee_data as $key => $employee)
                                                         @if($employee->id == $record->member_id)
                                                         {{$employee->name}}
                                                         @endif
@@ -144,12 +154,152 @@
                     </div>
                 </div>
 
+                <div id="basic-datatable">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body card-dashboard">
+                                    <div class="table-responsive">
+                                        <div id="tasks"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </section>
             <!-- users list ends -->
         </div>
     </div>
 </div>
 <!-- END: Content-->
+
+<script type="text/javascript">
+    var tasks = JSON.parse('<?= $records; ?>');
+    // console.log('t1',tasks);
+    // console.log('t2',tasks2);
+    console.log(employees);
+</script>
+
+<script>
+$(() => {
+  const treeListData = $.map(tasks, (task) => {
+    task.Task_Assigned_Employee = null;
+    $.each(employees, (_, employee) => {
+      if (employee.id === task.user_id) {
+        task.Task_Assigned_Employee = employee;
+      }
+    });
+    return task;
+  });
+
+  console.log(treeListData);
+
+  $('#tasks').dxTreeList({
+    dataSource: treeListData,
+    keyExpr: 'id',
+    parentIdExpr: 'parent_id',
+    columnAutoWidth: true,
+    wordWrapEnabled: true,
+    showBorders: true,
+    expandedRowKeys: [1, 2],
+    selectedRowKeys: [1, 29, 42],
+    searchPanel: {
+      visible: true,
+      width: 250,
+    },
+    headerFilter: {
+      visible: true,
+    },
+    selection: {
+      mode: 'multiple',
+    },
+    columnChooser: {
+      enabled: true,
+    },
+    columns: [{
+      dataField: 'name',
+      caption: 'Tên công việc',
+      width: 300,
+    }, {
+      dataField: 'user_id',
+      caption: 'Người thực hiện',
+      allowSorting: false,
+      minWidth: 200,
+      cellTemplate(container, options) {
+        const currentEmployee = options.data.Task_Assigned_Employee;
+        if (currentEmployee) {
+          container
+            .append($('<div>', { class: 'img', style: `background-image:url(${currentEmployee.avatar});` }))
+            .append('\n')
+            .append($('<span>', { class: 'name', text: currentEmployee.name }));
+        }
+      },
+      lookup: {
+        dataSource: employees,
+        valueExpr: 'id',
+        displayExpr: 'name',
+      },
+    },
+    {
+      dataField: 'name',
+      caption: 'Test',
+      customizeText: function() {
+        const userTaskData = $.map(usertask_array, (usertask) => {
+            usertask.Task_Assigned_Employee = null;
+            // $.each(employees, (_, employee) => {
+            // if (employee.id === task.user_id) {
+            //     usertask.Task_Assigned_Employee = employee;
+            // }
+            // });
+            console.log(usertask);
+            return task;
+        });
+      }
+    }, {
+      dataField: 'Task_Status',
+      caption: 'Status',
+      minWidth: 100,
+      lookup: {
+        dataSource: [
+          'Not Started',
+          'Need Assistance',
+          'In Progress',
+          'Deferred',
+          'Completed',
+        ],
+      },
+    }, {
+      dataField: 'Task_Priority',
+      caption: 'Priority',
+      lookup: {
+        dataSource: priorities,
+        valueExpr: 'id',
+        displayExpr: 'value',
+      },
+      visible: false,
+    }, {
+      dataField: 'Task_Completion',
+      caption: '% Completed',
+      customizeText(cellInfo) {
+        return `${cellInfo.valueText}%`;
+      },
+      visible: false,
+    }, {
+      dataField: 'Task_Start_Date',
+      caption: 'Start Date',
+      dataType: 'date',
+    }, {
+      dataField: 'Task_Due_Date',
+      caption: 'Due Date',
+      dataType: 'date',
+    }],
+  });
+});
+
+</script>
+
 @stop
 @section('script')
 <!-- BEGIN: Page Vendor JS-->
