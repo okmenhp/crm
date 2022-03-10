@@ -26,7 +26,7 @@
                                     role="tabpanel">
                                     <!-- users edit account form start -->
                                     <form class="form-validate" method="post"
-                                        action="{{ route('admin.project-type.store') }}">
+                                        action="{{ route('admin.project_type.store') }}">
                                         <div class="row">
                                             <div class="col-12 col-sm-12">
                                                 <div class="form-group">
