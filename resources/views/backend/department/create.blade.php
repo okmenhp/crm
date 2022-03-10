@@ -49,6 +49,16 @@
                                             </div>
                                         </div>
                                         <div class="col-12 col-sm-12">
+                                                <div class="form-group">
+                                                    <label>Trưởng phòng</label>
+                                                    <select class="select2 form-control" name="manager_id">
+                                                        @foreach($employee_array as $key => $employee)
+                                                        <option value="{{$employee->id}}">{{$employee->name}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        <div class="col-12 col-sm-12">
                                             <div class="form-group">
                                                 <div class="controls">
                                                     <label>Mô tả</label>

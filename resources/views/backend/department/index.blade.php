@@ -10,6 +10,16 @@
 <!-- BEGIN: Page CSS-->
 <link rel="stylesheet" type="text/css" href="{{asset('assets/css/pages/app-users.min.css')}}">
 <!-- END: Page CSS-->
+
+<!-- BEGIN: Todo CSS-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn3.devexpress.com/jslib/21.2.5/css/dx.common.css" />
+<link rel="stylesheet" type="text/css" href="https://cdn3.devexpress.com/jslib/21.2.5/css/dx.light.css" />
+<script src="https://cdn3.devexpress.com/jslib/21.2.5/js/dx.all.js"></script>
+<script src="{{asset('assets/js/data/department.js')}}"></script>
+<link rel="stylesheet" type="text/css" href="{{asset('assets/css/plugins/treelist/styles.css')}}">
+<!-- END: Todo CSS-->
+
 @stop
 @extends('layouts.master')
 @section('content')
@@ -103,9 +113,6 @@
                                         @endforeach
                                     </tbody>
                                 </table>
-                                <div style="vertical-align: middle;">
-                                    {!! $records->links() !!}
-                                </div>
                             </div>
                             @else
                             <b>Không tìm thấy kết quả</b>
@@ -115,12 +122,138 @@
                     </div>
 
                 </div>
+
+                <div id="basic-datatable">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body card-dashboard">
+                                    <div class="table-responsive">
+                                        <div id="department_table"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </section>
             <!-- users list ends -->
         </div>
     </div>
 </div>
 <!-- END: Content-->
+<script type="text/javascript">
+    var departments = JSON.parse('<?= $records; ?>');
+    var employees = JSON.parse('<?= $employee_array; ?>');
+    console.log(employees);
+    console.log(employees2);
+
+    var baseurl = window.location.origin;
+
+    $(() => {
+  const treeListData = $.map(departments, (task) => {
+    departments.Task_Assigned_Employee = null;
+    $.each(employees, (_, employee) => {
+      if (employee.id === task.manager_id) {
+        task.Task_Assigned_Employee = employee;
+      }
+    });
+    return task;
+  });
+
+  $('#department_table').dxTreeList({
+    dataSource: treeListData,
+    keyExpr: 'id',
+    parentIdExpr: 'parent_id',
+    columnAutoWidth: true,
+    wordWrapEnabled: true,
+    showBorders: true,
+    expandedRowKeys: [1, 2],
+    selectedRowKeys: [1, 29, 42],
+    searchPanel: {
+      visible: true,
+      width: 250,
+    },
+    headerFilter: {
+      visible: true,
+    },
+    selection: {
+      mode: 'multiple',
+    },
+    columnChooser: {
+      enabled: false,
+    },
+    columns: [{
+      dataField: 'name',
+      caption: 'Tên phòng ban',
+      width: 300,
+    }, {
+      dataField: 'manager_id',
+      caption: 'Trưởng phòng',
+      allowSorting: false,
+      minWidth: 200,
+      cellTemplate(container, options) {
+        const currentEmployee = options.data.Task_Assigned_Employee;
+        if (currentEmployee) {
+          container
+            .append($('<div>', { class: 'img', style: `background-image:url(${currentEmployee.avatar});` }))
+            .append('\n')
+            .append($('<span>', { class: 'name', text: currentEmployee.name }));
+        }
+      },
+      lookup: {
+        dataSource: employees,
+        valueExpr: 'ID',
+        displayExpr: 'name',
+      },
+    }, {
+      dataField: 'name',
+      caption: 'Trạng thái',
+      width: 300,
+    //   customizeText() {
+    //     return `<span class="badge badge-success">Hoạt động</span>`;
+    //   }
+      cellTemplate: function(element, info) {
+            element.append("<span class='badge badge-success'>" + "Hoạt động" + "</span>");
+        }
+    },{
+      dataField: 'name',
+      dataField: 'Thao tác',
+      width: 300,
+      cellTemplate: function(element, info) {
+            element.append(`<a href="`+baseurl+`/department/edit/`+info.data.id+`"><i
+                                                        class='far fa-edit'></i></a>
+                                                <form style='display: inline-block' method='POST'
+                                                    action="`+baseurl+`/department/delete/`+info.data.id+`">
+                                                @csrf
+                                                    <input name='_method' type='hidden' value='DELETE'>
+                                                    <a href='#' class='show_confirm' data-toggle='tooltip'
+                                                        title='Delete'> <i class='fa fa-trash-alt'> </i></a>
+                                                </form>`);
+        }
+    }, {
+      dataField: 'Task_Priority',
+      caption: 'Priority',
+      lookup: {
+        dataSource: priorities,
+        valueExpr: 'id',
+        displayExpr: 'value',
+      },
+      visible: false,
+    }, {
+      dataField: 'Task_Completion',
+      caption: '% Completed',
+      customizeText(cellInfo) {
+        return `${cellInfo.valueText}%`;
+      },
+      visible: false,
+    }],
+  });
+});
+
+</script>
+
 @stop
 @section('script')
 <script src="assets/js/scripts/pages/app-users.min.js"></script>
