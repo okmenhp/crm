@@ -5,15 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Customer extends Model
+class CustomerContactor extends Model
 {
     use HasFactory;
-    protected $table = 'customers';
+
+    protected $table = 'customer_contactors';
     protected $primaryKey = 'id';
     protected $fillable = [
         'name',
-        'customer_type_id',
-        'tax_number',
+        'gender',
+        'date_of_birth',
+        'id_card',
         'phone_number',
         'email',
         'skype',
@@ -22,7 +24,7 @@ class Customer extends Model
         'whatsapp',
         'address',
         'country_id',
-        'status',
+        'customer_id',
     ];
 
     public function created_at()
@@ -30,14 +32,8 @@ class Customer extends Model
         return date("d/m/Y", strtotime($this->created_at));
     }
 
-    public function customer_types()
+    public function type()
     {
-        return $this->belongsTo(CustomerType::class, 'customer_type_id', 'id');
-    }
-
-    public function countries()
-    {
-        // belongsTo(RelatedModel, foreignKey = _id, keyOnRelatedModel = id)
-        return $this->belongsTo(Country::class, 'country_id', 'id');
+        return $this->belongsTo(Customer::class, 'customer_id');
     }
 }

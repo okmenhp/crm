@@ -24,7 +24,7 @@
                     <div class="users-list-filter px-1">
                         <form>
                             <div class="row border rounded  mb-2">
-                                <form action="{{ route('admin.project-type.index') }}" method="get">
+                                <form action="{{ route('admin.project_type.index') }}" method="get">
                                     <div class="col-12 col-sm-6 col-lg-3">
                                         {{-- <label for="users-list-verified">Tên chức vụ</label> --}}
                                         <fieldset class="form-group pt-2">
@@ -39,7 +39,7 @@
                                     </div>
                                 </form>
                                 <div class="col-12 col-sm-6 col-lg-2 float-end">
-                                    <a href="{{ route('admin.project-type.create') }}" type="button"
+                                    <a href="{{ route('admin.project_type.create') }}" type="button"
                                         class="btn btn-primary btn-block my-2">
                                         <i class="bx bx-plus"></i>
                                         <span>Thêm mới</span>
@@ -87,10 +87,10 @@
                                                             @endif
                                                         </td>
                                                         <td><a
-                                                                href="{{ route('admin.project-type.edit', $record->id) }}"><i
+                                                                href="{{ route('admin.project_type.edit', $record->id) }}"><i
                                                                     class="far fa-edit"></i></a>
                                                             <form style="display: inline-block" method="POST"
-                                                                action="{{ route('admin.project-type.destroy', $record->id) }}">
+                                                                action="{{ route('admin.project_type.destroy', $record->id) }}">
                                                                 @csrf
                                                                 <input name="_method" type="hidden" value="DELETE">
                                                                 <a href="#" class="show_confirm" data-toggle="tooltip"
