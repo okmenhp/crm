@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Task extends Model
 {
+    const LEVEL_LOW = 1; 
+    const LEVEL_NORMAL = 2;
+    const LEVEL_HIGH = 3;
 
     protected $table = 'task';
     protected $primaryKey = 'id';
