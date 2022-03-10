@@ -12,7 +12,7 @@ class Schedule extends Model
     const PATTERN_REPEAT = 2;
 
     protected $table = 'schedule';
-    protected $fillable = ['uid','title','start_date','end_date','location','meeting_id','description', 'pattern','type_id','all_day'];
+    protected $fillable = ['uid','title','start_date','end_date','location','meeting_id','description','pattern','wday','mday','type_id','all_day'];
 
     public function users() {
         return $this->belongsToMany('App\Models\User', 'user_schedule', 'schedule_id', 'user_id');

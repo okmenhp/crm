@@ -35,22 +35,22 @@ class ScheduleRepository extends AbstractRepository {
         ];
     }
 
-    public function getDateByWeekDay($wdays, $periods){
+    public function getDateByWeekDay($wdays, $periods, $schedule_periods){
         $result = array();
         foreach($periods as $period){
             $day = $period->format('N');
-            if(in_array(++$day, $wdays)){
+            if(in_array(++$day, $wdays) && in_array($period, $schedule_periods)){
                 array_push($result, $period->format('Y-m-d h:m:s'));
             }
         }
         return $result;
     }
 
-    public function getDateByMonthDay($mdays, $periods){
+    public function getDateByMonthDay($mdays, $periods, $schedule_periods){
         $result = array();
         foreach($periods as $period){
             $day = $period->format('d');
-            if(in_array($day, $mdays)){
+            if(in_array($day, $mdays) && in_array($period, $schedule_periods)){
                 array_push($result, $period->format('Y-m-d h:m:s'));
             }
         }
@@ -96,5 +96,18 @@ class ScheduleRepository extends AbstractRepository {
         }
 
         return $data;
+    }
+
+    public function getDataRepeat($schedule, $start_date, $end_date){ 
+        $days = explode(",", $schedule->wday);
+        if($schedule->pattern == 3){
+            $days = explode(",", $schedule->mday);
+        }
+        $periods = CarbonPeriod::create(date('Y-m-d', strtotime($start_date)), date('Y-m-d', strtotime($end_date)))->toArray();
+        $schedule_periods = CarbonPeriod::create(date('Y-m-d', strtotime($schedule->start_date)), date('Y-m-d', strtotime($schedule->end_date)))->toArray();
+        $date_range = $this->getDateByWeekDay($days, $periods, $schedule_periods);
+        $sdata = $this->getScheduleRepeat($date_range, $schedule);
+
+        return $sdata;
     }
 }
