@@ -78,7 +78,7 @@
                                                     <div class="controls">
                                                         <label>Số giờ dự kiến</label>
                                                         <input type="text" class="form-control"
-                                                            placeholder="Nhập số giờ" value="" name="time" required>
+                                                            placeholder="Nhập số giờ" value="" name="time">
                                                     </div>
                                                 </div>
                                             </div>
@@ -132,7 +132,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div id="basic-datatable">
+                                    <!-- <div id="basic-datatable">
                                         <div class="row">
                                             <div class="col-12">
                                                 <div class="card">
@@ -175,7 +175,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> -->
                                     <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1">
                                         <button type="submit" class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1">Lưu
                                             thay
