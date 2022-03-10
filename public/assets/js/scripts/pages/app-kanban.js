@@ -21,6 +21,8 @@ function index(){
     });
 }
 
+
+
 $(function () {
   'use strict';
   var kanban_curr_el, kanban_curr_item_id, kanban_item_title, kanban_data, kanban_item, kanban_users;
@@ -160,6 +162,7 @@ $(function () {
   // ];
   // console.log('kanban', kanban_board_data);
 
+
   // Kanban Board
   var KanbanExample = new jKanban({
     element: "#kanban-wrapper", // selector of the kanban container
@@ -178,7 +181,12 @@ $(function () {
 
       //bật modal info card
       $('#exampleModal').modal();
-
+     
+      let list_id = $(el).attr("data-list_id");
+      $('#list_id').val(list_id);
+      let card_id = $(el).attr("data-eid");
+      $('#card_id').val(card_id);
+      card_detail(card_id);
       // Set el to var kanban_curr_el, use this variable when updating title
       kanban_curr_el = el;
 
@@ -235,6 +243,20 @@ $(function () {
         }
       }).done(function(resp) {
         // 
+        
+      });
+  }
+
+  function card_detail(card_id){
+      $.ajax({
+        type: "post",
+        url: '/api/kanban/card-detail',
+        data: {
+          card_id: card_id
+        }
+      }).done(function(resp) {
+         let data = resp.data;
+         $('input[name="intended_start_time"]').val("2013-03-18T13:00");
         
       });
   }

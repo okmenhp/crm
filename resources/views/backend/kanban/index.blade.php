@@ -158,23 +158,26 @@
                       <span aria-hidden="true">&times;</span>
                     </button>
                   </div>
+                  <form class="edit-kanban-item" action="{{route('admin.task_kanban.update')}}" method="post">
                   <div class="modal-body">
-                    <form class="edit-kanban-item" action="{{route('admin.task_kanban.store')}}" method="post">
+                            <input type="hidden" name="list_id" id="list_id">
+                            <input type="hidden" name="card_id" id="card_id">
+                            <input type="hidden" name="project_id" id="project_id" value="{{$project_id}}">
                             <div class="kanban-edit-content">
                                 <div class="card-body" style="padding-top: 0px !important;">
                                     <div class="form-group">
                                         <label>Tiêu đề</label>
-                                        <input type="text" name="name" class="form-control edit-kanban-item-title"
+                                        <input required="" type="text" name="name" class="form-control edit-kanban-item-title"
                                             placeholder="kanban Title">
                                     </div>
                                     <div class="row">
                                     <div class="form-group col-6">
                                         <label>Bắt đầu dự kiến</label>
-                                        <input name="intended_start_time" type="date" class="form-control edit-kanban-item-date" placeholder="">
+                                        <input name="intended_start_time" type="datetime-local" class="form-control edit-kanban-item-date" placeholder="">
                                     </div>
                                     <div class="form-group col-6">
                                         <label>Kết thúc dự kiến</label>
-                                        <input name="intended_end_time" type="date" class="form-control edit-kanban-item-date" placeholder="">
+                                        <input name="intended_end_time" type="datetime-local" class="form-control edit-kanban-item-date" placeholder="">
                                     </div>
                                     </div>      
                                     <div class="row">
@@ -269,13 +272,12 @@
                                     </div>
                                 </div>
                             </div>
-                    </form>
-    
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Huỷ</button>
-                    <button type="button" class="btn btn-primary">Lưu lại</button>
+                    <button type="submit" class="btn btn-primary">Lưu lại</button>
                   </div>
+                  </form>
                 </div>
               </div>
             </div>
@@ -317,6 +319,8 @@
     $(document).on('click', '#removeRow', function () {
         $(this).closest('#inputFormRow').remove();
     });
+
+    
 </script>
 
 
