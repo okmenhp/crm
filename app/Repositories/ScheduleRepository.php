@@ -60,7 +60,7 @@ class ScheduleRepository extends AbstractRepository {
     public function getScheduleNormal($schedule){
         $sdata = array();
         $sdata['id'] = "1";
-        $sdata['calendarId'] = "1";
+        $sdata['calendarId'] = $schedule->id;
         $sdata['category'] = "time";
         $sdata['title'] = $schedule->title;
         $sdata['start'] = $schedule->start_date;
@@ -80,7 +80,7 @@ class ScheduleRepository extends AbstractRepository {
         $sdata = array();
         foreach($date_range as $record){
             $sdata['id'] = "1";
-            $sdata['calendarId'] = "1";
+            $sdata['calendarId'] = $schedule->id;
             $sdata['category'] = "time";
             $sdata['title'] = $schedule->title;
             $sdata['start'] = $record;
@@ -105,9 +105,8 @@ class ScheduleRepository extends AbstractRepository {
         }
         $periods = CarbonPeriod::create(date('Y-m-d', strtotime($start_date)), date('Y-m-d', strtotime($end_date)))->toArray();
         $schedule_periods = CarbonPeriod::create(date('Y-m-d', strtotime($schedule->start_date)), date('Y-m-d', strtotime($schedule->end_date)))->toArray();
-        $date_range = $this->getDateByWeekDay($days, $periods, $schedule_periods);
+        $date_range = $schedule->pattern == 2 ? $this->getDateByWeekDay($days, $periods, $schedule_periods) : $this->getDateByMonthDay($days, $periods, $schedule_periods);
         $sdata = $this->getScheduleRepeat($date_range, $schedule);
-
         return $sdata;
     }
 }

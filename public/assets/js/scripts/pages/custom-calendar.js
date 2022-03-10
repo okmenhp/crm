@@ -6,7 +6,7 @@ $('.warning-text').toggle(false)
 
 var calendar = new tui.Calendar('#calendar', {
     defaultView: 'month',
-    taskView: true,
+    taskView: false,
     narrowWeekend: false,
     startDayOfWeek: 1,
     visibleWeeksCount: 3,
@@ -14,21 +14,20 @@ var calendar = new tui.Calendar('#calendar', {
     month: {isAlways6Week: false},
     useDetailPopup: false,
     useCreationPopup: false,
-    template: {
-        monthDayname: function(dayname) {
-            return '<span class="calendar-week-dayname-name">' + dayname.label + '</span>';
-        }
-    }
 });
+
+var global_data = []
 
 calendar.on({
     // open a detail popup
     'clickSchedule': function(e) {
         console.log('clickSchedule', e);
+        $('#schedule-id').val(e.schedule.raw.schedule_id)
         getDetailSchedule(e.schedule.raw.schedule_id)
         var modal = $('#calendarModal')
         modal.modal('toggle')
         modal.find('button.final-button').html('Lưu')
+        modal.find('button.delete-button').toggle(true)
     },
     // open a creation popup
     // 'beforeCreateSchedule': function(e) {
@@ -72,15 +71,18 @@ function getApi(type){
         enctype: 'multipart/form-data',
         success: function(data){
             calendar.createSchedules(data.data)
+            global_data.push(data.data)
+            console.log(global_data[0])
         }
     })
 }
 
 function showData(data){
     //pattern
-    $('#pattern-schedule option[value='+data.data.pattern+']').prop('selected', true)
+    
     $('.day-selection[value='+data.data.pattern+']').prop('checked', true)
     if(data.data.pattern != 1){
+        $('#pattern-schedule option[value=2]').prop('selected', true)
         $('.repeat-selection').toggle(true)
         $('.day-selection-option').find('option').remove()
         $('.day-selection-option').append('<option value="all" disabled selected>Chọn</option>')
@@ -124,7 +126,16 @@ function showData(data){
             }
         }
     }else{
+        $('#pattern-schedule option[value=1]').prop('selected', true)
+        $('#dayweek').prop('checked', true)
+        $('#wday').toggle(true)
+        $('#mday').toggle(false)
+        $('#wday').find('option').remove()
+        $('#mday').find('option').remove()
+        addWeekDay()
+        addMonthDay()
         $('.repeat-selection').toggle(false)
+        $('.repeat-day-selected').html("")
     }
     //title
     $('#title').val(data.data.title)
@@ -189,7 +200,7 @@ function getDetailSchedule(id){
     })
 }
 
-function insertNewSchedule(){
+function dataChangeSchedule(action){
     var data = new FormData();
     data.append('date_range', getDateRangeCalendar())
     var pattern = $('#pattern-schedule').val()
@@ -205,6 +216,8 @@ function insertNewSchedule(){
     }else{
         data.append('pattern', pattern)
     }
+    var id = $('#schedule-id').val()
+    data.append('id', id)
     var title = $('#title').val()
     data.append('title', title)
     var start_date = $('#start-date').val()
@@ -227,17 +240,38 @@ function insertNewSchedule(){
     data.append('description', description)
     
     $.ajax({
-        url: "api/schedule/insert",
+        url: action == 1 ? "api/schedule/insert" : "api/schedule/update",
         type: "POST",
         data: data,
         processData: false,
         contentType: false, 
         enctype: 'multipart/form-data',
         success: function(data){
-            calendar.createSchedules([data.data]);
+            if(action == 1){
+                calendar.createSchedules([data.data])
+                global_data.push(data.data)
+            }else{
+                calendar.updateSchedule("1", data.data.calendarId, data.data);
+            }
             swal({
                 icon: "success",
-                text: "Thêm mới thành công",
+                text: action == 1 ? "Thêm mới thành công" : "Chỉnh sửa thành công",
+            });
+            $('#calendarModal').modal('toggle')
+        }
+    })
+}
+
+function deleteSchedule(id){
+    $.ajax({
+        url: "api/schedule/delete",
+        type: "POST",
+        data: {id},
+        success: function(){
+            calendar.deleteSchedule("1", parseInt(id));
+            swal({
+                icon: "success",
+                text: "Xóa thành công",
             });
             $('#calendarModal').modal('toggle')
         }
@@ -274,28 +308,26 @@ function isFillForm(){
 }
 
 $('#btn-new-schedule').click(function(){
-    defaultFormInsert()
-    var modal = $('#calendarModal')
-    modal.modal('toggle')
-    modal.find('button.final-button').html('Tạo mới')
-    // calendar.createSchedules([
-    //     {
-    //         id: '1',
-    //         calendarId: '1',
-    //         title: 'my schedule',
-    //         category: 'time',
-    //         dueDateClass: '',
-    //         start: '2022-02-27T22:30:00+09:00',
-    //         end: '2022-02-27T02:30:00+09:00'
-    //     }
-    // ]);
+    // defaultFormInsert()
+    // $('#schedule-id').val("")
+    // var modal = $('#calendarModal')
+    // modal.modal('toggle')
+    // modal.find('button.final-button').html('Tạo mới')
+    // modal.find('button.delete-button').toggle(false)
+    // calendar.each(function(){
+    //     console.log(1)
+    // })
+    console.log(calendar)
 })
 
 $('#calendarModal .final-button').click(function(){
     if(isFillForm()){
-        insertNewSchedule()
+        $('#schedule-id').val() == "" ? dataChangeSchedule(1) : dataChangeSchedule(2) //action: 1-thêm mới | 2-sửa
     }
-    // insertNewSchedule()
+})
+
+$('#calendarModal .delete-button').click(function(){
+    deleteSchedule($('#schedule-id').val())
 })
 
 function defaultFormInsert(){
@@ -442,14 +474,15 @@ $('.calendar-view .calendar-action .dropdown-menu .dropdown-item').click(functio
     }else if($(this).data('action') == 'toggle-monthly'){ // monthly view
         $('#calendarTypeName').html('Tháng')
         calendar.changeView('month', true);
-    }else if($(this).data('action') == 'toggle-weeks2'){ // 2 week view
-        $('#calendarTypeName').html('2 Tuần')
-        calendar.setOptions({month: {visibleWeeksCount: 2}}, true);
-        calendar.changeView('month', true);
-    }else if($(this).data('action') == 'toggle-weeks3'){ // 3 week view
-        $('#calendarTypeName').html('3 Tuần')
-        calendar.setOptions({month: {visibleWeeksCount: 3}}, true);
-        calendar.changeView('month', true);
     }
+    // else if($(this).data('action') == 'toggle-weeks2'){ // 2 week view
+    //     $('#calendarTypeName').html('2 Tuần')
+    //     calendar.setOptions({month: {visibleWeeksCount: 2}}, true);
+    //     calendar.changeView('month', true);
+    // }else if($(this).data('action') == 'toggle-weeks3'){ // 3 week view
+    //     $('#calendarTypeName').html('3 Tuần')
+    //     calendar.setOptions({month: {visibleWeeksCount: 3}}, true);
+    //     calendar.changeView('month', true);
+    // }
     // getApi($(this).data('action'))
 })

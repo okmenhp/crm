@@ -116,7 +116,7 @@
                                             <span>Tháng</span>
                                         </a>
                                     </li>
-                                    <li role="presentation">
+                                    {{-- <li role="presentation">
                                         <a class="dropdown-menu-title dropdown-item" role="menuitem"
                                             data-action="toggle-weeks2">
                                             <i class='bx bx-calendar-check mr-50'></i>
@@ -129,7 +129,7 @@
                                             <i class='bx bx-calendar-check mr-50'></i>
                                             <span>3 tuần</span>
                                         </a>
-                                    </li>
+                                    </li> --}}
                                     {{-- <li role="presentation" class="dropdown-divider"></li>
                                     <li role="presentation">
                                         <div role="menuitem" data-action="toggle-workweek" class="dropdown-item">
@@ -183,11 +183,12 @@
                     <div class="modal-content">
                         <div class="modal-body">
                             <div class="form-group row">
+                                <input type="hidden" value="" name="id" id="schedule-id">
                                 <div class="col-md-6">
                                     <label for="pattern-schedule" class="col-form-label">Kiểu lịch trình:</label>
                                     <select id="pattern-schedule" class="form-control">
                                         <option value="1">Thông thường</option>
-                                        <option value="2">lặp lại</option>
+                                        <option value="2">Lặp lại</option>
                                     </select>
                                 </div>
                                 <div class="col-md-6 row repeat-selection">
@@ -213,7 +214,7 @@
                             </div>
                             <div class="form-group repeat-selection repeat-day-selected"></div>
                             <div class="form-group">
-                                <label for="title" class="col-form-label"><span class="text-danger">*</span> Lịch trình:</label>
+                                <label for="title" class="col-form-label"><span class="text-danger">*</span>Tên lịch trình:</label>
                                 <input type="text" class="form-control" id="title">
                             </div>
                             <div class="form-group row">
@@ -263,7 +264,7 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            {{-- <span class="text-danger warning-text">* Vui lòng điền đầy đủ thông tin</span> --}}
+                            <button type="button" class="btn btn-danger delete-button">Xóa</button>
                             <button type="button" class="btn btn-secondary final-button"></button>
                         </div>
                     </div>
