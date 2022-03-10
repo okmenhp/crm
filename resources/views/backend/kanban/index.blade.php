@@ -234,17 +234,16 @@
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <label>Danh sách công việc con</label>
-                                            <div id="inputFormRow" style="border:  1px solid red;"  >
+                                            <div id="inputFormRow">
                                                 <div class="input-group mb-1">
                                                     <input type="text" name="title[]" class="form-control m-input" placeholder="Enter title" autocomplete="off">
                                                     <div class="input-group-append">
                                                          <button class="btn btn-outline-danger" type="button">Xoá</button>
                                                     </div>
                                                 </div>
-                                            </div>
-                                         
-                                         
                                                 
+                                            </div>
+                                       
                                             <div id="newRow"></div>
                                             <button id="addRow" type="button" class="btn btn-outline-info mb-1">Thêm công việc con</button>
                                         </div>
