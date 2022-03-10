@@ -46,9 +46,10 @@ Route::group(['middleware' => 'admin'], function () {
     Route::get('/customer',  ['as' => 'admin.customer.index', 'uses' => 'Backend\CustomerController@index']);
     Route::get('/customer/create',  ['as' => 'admin.customer.create', 'uses' => 'Backend\CustomerController@create']);
     Route::post('/customer/store',  ['as' => 'admin.customer.store', 'uses' => 'Backend\CustomerController@store']);
-    Route::get('/customer/edit/{id}',  ['as' => 'admin.customer.edit', 'uses' => 'Backend\ProblemController@edit']);
-    Route::post('/customer/update/{id}',  ['as' => 'admin.customer.update', 'uses' => 'Backend\ProblemController@update']);
-    Route::delete('/customer/delete/{id}',  ['as' => 'admin.customer.destroy', 'uses' => 'Backend\ProblemController@destroy']);
+    Route::get('/customer/edit/{id}',  ['as' => 'admin.customer.edit', 'uses' => 'Backend\CustomerController@edit']);
+    Route::post('/customer/update/{id}',  ['as' => 'admin.customer.update', 'uses' => 'Backend\CustomerController@update']);
+    Route::delete('/customer/delete/{id}',  ['as' => 'admin.customer.destroy', 'uses' => 'Backend\CustomerController@destroy']);
+    Route::get('/customer/detail/{id}', ['as' => 'admin.customer.detail', 'uses' => 'Backend\CustomerController@show']);
 
     //khách hàng
     Route::get('/contract',  ['as' => 'admin.contract.index', 'uses' => 'Backend\ContractController@index']);
@@ -98,12 +99,12 @@ Route::group(['middleware' => 'admin'], function () {
     Route::get('/kanban/{project_id}',  ['as' => 'admin.kanban.index', 'uses' => 'Backend\KanbanController@index']);
 
     // Loai Du an
-    Route::get('/project-type',  ['as' => 'admin.project-type.index', 'uses' => 'Backend\ProjectTypeController@index']);
-    Route::get('/project-type/create',  ['as' => 'admin.project-type.create', 'uses' => 'Backend\ProjectTypeController@create']);
-    Route::post('/project-type/store',  ['as' => 'admin.project-type.store', 'uses' => 'Backend\ProjectTypeController@store']);
-    Route::get('/project-type/edit/{id}',  ['as' => 'admin.project-type.edit', 'uses' => 'Backend\ProjectTypeController@edit']);
-    Route::post('/project-type/update/{id}',  ['as' => 'admin.project-type.update', 'uses' => 'Backend\ProjectTypeController@update']);
-    Route::delete('/project-type/delete/{id}',  ['as' => 'admin.project-type.destroy', 'uses' => 'Backend\ProjectTypeController@destroy']);
+    Route::get('/project-type',  ['as' => 'admin.project_type.index', 'uses' => 'Backend\ProjectTypeController@index']);
+    Route::get('/project-type/create',  ['as' => 'admin.project_type.create', 'uses' => 'Backend\ProjectTypeController@create']);
+    Route::post('/project-type/store',  ['as' => 'admin.project_type.store', 'uses' => 'Backend\ProjectTypeController@store']);
+    Route::get('/project-type/edit/{id}',  ['as' => 'admin.project_type.edit', 'uses' => 'Backend\ProjectTypeController@edit']);
+    Route::post('/project-type/update/{id}',  ['as' => 'admin.project_type.update', 'uses' => 'Backend\ProjectTypeController@update']);
+    Route::delete('/project-type/delete/{id}',  ['as' => 'admin.project_type.destroy', 'uses' => 'Backend\ProjectTypeController@destroy']);
 
     // Loai Khach hang
     Route::get('/customer-type',  ['as' => 'admin.customer_type.index', 'uses' => 'Backend\CustomerTypeController@index']);

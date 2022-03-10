@@ -49,7 +49,7 @@ calendar.on({
     // }
 });
 
-function getApi(type){
+function getDateRangeCalendar(type){
     var data = new FormData();
     if(type == "toggle-monthly"){
         start_date = moment(calendar._renderRange.start._date).format('YYYY/MM/DD h:mm:ss')
@@ -58,11 +58,15 @@ function getApi(type){
         data.append('start_date', start_date)
         data.append('end_date', end_date)
     }
-    
+
+    return data;
+}
+
+function getApi(type){
     $.ajax({
         url: "api/schedule/index",
         type: "POST",
-        data: data,
+        data: getDateRangeCalendar(type),
         processData: false,
         contentType: false, 
         enctype: 'multipart/form-data',
@@ -135,14 +139,14 @@ function showData(data){
         $('#meeting-room option[value='+data.data.meeting_id+']').prop('selected', true)
     }
     else{
-        $('#meeting-room option[value=all]').prop('selected', true)
+        $('#meeting-room option[value=""]').prop('selected', true)
     }
     //type
     if(data.data.type_id != null){
         $('#type option[value='+data.data.type_id+']').prop('selected', true)
     }
     else{
-        $('#type option[value=all]').prop('selected', true)
+        $('#type option[value=""]').prop('selected', true)
     }
     //user
     $('.attendees').html("")
@@ -185,14 +189,59 @@ function getDetailSchedule(id){
     })
 }
 
-function checkFillForm(){
-    var title = $('#title').val();
-
-    if(title == ""){
-        return false
+function insertNewSchedule(){
+    var data = new FormData();
+    data.append('date_range', getDateRangeCalendar())
+    var pattern = $('#pattern-schedule').val()
+    if(pattern != 1){
+        pattern = $('input[name=pattern]:checked').val()
+        var day_repeat = []
+        $('.repeat-day-selected').children().each(function(){
+            var wday_val = $(this).data('day')
+            day_repeat.push(wday_val)
+        })
+        data.append('pattern', pattern)
+        data.append('day_repeat', day_repeat)
+    }else{
+        data.append('pattern', pattern)
     }
-
-    return true
+    var title = $('#title').val()
+    data.append('title', title)
+    var start_date = $('#start-date').val()
+    data.append('start_date', start_date)
+    var end_date = $('#end-date').val()
+    data.append('end_date', end_date)
+    var location = $('#location').val()
+    data.append('location', location)
+    var meeting = $('#meeting-room').val()
+    data.append('meeting', meeting)
+    var type = $('#type').val()
+    data.append('type', type)
+    var attendees = []
+    $('.attendees').children().each(function(){
+        var attendee = $(this).data('attendee-id')
+        attendees.push(attendee)
+    })
+    data.append('attendees', attendees)
+    var description = $('#description').val()
+    data.append('description', description)
+    
+    $.ajax({
+        url: "api/schedule/insert",
+        type: "POST",
+        data: data,
+        processData: false,
+        contentType: false, 
+        enctype: 'multipart/form-data',
+        success: function(data){
+            calendar.createSchedules([data.data]);
+            swal({
+                icon: "success",
+                text: "Thêm mới thành công",
+            });
+            $('#calendarModal').modal('toggle')
+        }
+    })
 }
 
 // calendar handling - end
@@ -201,11 +250,52 @@ function checkFillForm(){
 //     console.log($(this).val())
 // })
 
+function isFillForm(){
+    var title = $('#title').val();
+    var start_date = $('#start-date').val();
+    var end_date = $('#end-date').val();
+
+    if(title == "" || start_date == "" || end_date == ""){
+        swal({
+            text: "Vui lòng điền đủ thông tin !",
+        });
+        return false
+    }
+    if($('#pattern-schedule').val() != 1){
+        var isSelected = $('.repeat-day-selected').children().length
+        if(isSelected == 0){
+            var pattern = $('input[name=pattern]:checked').val()
+            pattern == 2 ? swal({text: "Vui lòng chọn 1 ngày trong tuần !",}) : swal({text: "Vui lòng chọn 1 ngày trong tháng !",});
+            return false
+        }
+    }
+
+    return true
+}
+
 $('#btn-new-schedule').click(function(){
     defaultFormInsert()
     var modal = $('#calendarModal')
     modal.modal('toggle')
     modal.find('button.final-button').html('Tạo mới')
+    // calendar.createSchedules([
+    //     {
+    //         id: '1',
+    //         calendarId: '1',
+    //         title: 'my schedule',
+    //         category: 'time',
+    //         dueDateClass: '',
+    //         start: '2022-02-27T22:30:00+09:00',
+    //         end: '2022-02-27T02:30:00+09:00'
+    //     }
+    // ]);
+})
+
+$('#calendarModal .final-button').click(function(){
+    if(isFillForm()){
+        insertNewSchedule()
+    }
+    // insertNewSchedule()
 })
 
 function defaultFormInsert(){
@@ -231,8 +321,8 @@ function defaultFormInsert(){
             $('#start-date').val('')
             $('#end-date').val('')
             $('#location').val('')
-            $('#meeting-room').find('option[value=all]').prop('selected',true)
-            $('#type').find('option[value=all]').prop('selected',true)
+            $('#meeting-room').find('option[value=""]').prop('selected',true)
+            $('#type').find('option[value=""]').prop('selected',true)
             $('#attendees').find('option').remove()
             $('#attendees').append('<option value="all" disabled selected>--Chọn người tham gia--</option>')
             for(var i=0;i<data.data.length;i++){

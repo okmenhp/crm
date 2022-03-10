@@ -9,6 +9,8 @@ class CustomerType extends Model
 {
     use HasFactory;
 
+    protected $table = 'customer_types';
+    protected $primaryKey = 'id';
     protected $fillable = [
         'name',
         'code',
@@ -18,6 +20,6 @@ class CustomerType extends Model
 
     public function customers()
     {
-        return $this->hasMany(Customer::class, 'type', 'id');
+        return $this->hasMany(Customer::class, 'customer_type_id', 'id');
     }
 }

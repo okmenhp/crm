@@ -14,7 +14,7 @@ class CreateProjectTypeTable extends Migration
     public function up()
     {
         Schema::create('project_type', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->string('name')->nullable();
             $table->text('description');
             $table->tinyInteger('status')->default(1)->comment('1: ACTIVE, 0 : INACTIVE');
