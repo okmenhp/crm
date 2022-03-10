@@ -116,7 +116,7 @@
                                             <span>Tháng</span>
                                         </a>
                                     </li>
-                                    <li role="presentation">
+                                    {{-- <li role="presentation">
                                         <a class="dropdown-menu-title dropdown-item" role="menuitem"
                                             data-action="toggle-weeks2">
                                             <i class='bx bx-calendar-check mr-50'></i>
@@ -129,7 +129,7 @@
                                             <i class='bx bx-calendar-check mr-50'></i>
                                             <span>3 tuần</span>
                                         </a>
-                                    </li>
+                                    </li> --}}
                                     {{-- <li role="presentation" class="dropdown-divider"></li>
                                     <li role="presentation">
                                         <div role="menuitem" data-action="toggle-workweek" class="dropdown-item">
@@ -183,11 +183,12 @@
                     <div class="modal-content">
                         <div class="modal-body">
                             <div class="form-group row">
+                                <input type="hidden" value="" name="id" id="schedule-id">
                                 <div class="col-md-6">
                                     <label for="pattern-schedule" class="col-form-label">Kiểu lịch trình:</label>
                                     <select id="pattern-schedule" class="form-control">
                                         <option value="1">Thông thường</option>
-                                        <option value="2">lặp lại</option>
+                                        <option value="2">Lặp lại</option>
                                     </select>
                                 </div>
                                 <div class="col-md-6 row repeat-selection">
@@ -213,16 +214,16 @@
                             </div>
                             <div class="form-group repeat-selection repeat-day-selected"></div>
                             <div class="form-group">
-                                <label for="title" class="col-form-label">Lịch trình:</label>
+                                <label for="title" class="col-form-label"><span class="text-danger">*</span>Tên lịch trình:</label>
                                 <input type="text" class="form-control" id="title">
                             </div>
                             <div class="form-group row">
                                 <div class="col-md-6">
-                                    <label for="start-date" class="col-form-label">Từ:</label>
+                                    <label for="start-date" class="col-form-label"><span class="text-danger">*</span> Từ:</label>
                                     <input type="datetime-local" class="form-control" id="start-date">
                                 </div>
                                 <div class="col-md-6">
-                                    <label for="end-date" class="col-form-label">Đến:</label>
+                                    <label for="end-date" class="col-form-label"><span class="text-danger">*</span> Đến:</label>
                                     <input type="datetime-local" class="form-control" id="end-date">
                                 </div>
                             </div>
@@ -234,7 +235,7 @@
                                 <div class="col-md-6">
                                     <label for="meeting-room" class="col-form-label">Phòng họp:</label>
                                     <select id="meeting-room" class="form-control">
-                                        <option value="all" selected>--Chọn phòng họp--</option>
+                                        <option value="" selected>--Chọn phòng họp--</option>
                                         @foreach($meetings as $meeting)
                                             <option value="{{$meeting->id}}">{{$meeting->name}}</option>
                                         @endforeach
@@ -250,7 +251,7 @@
                                 <div class="col-md-6">
                                     <label for="type" class="col-form-label">Phân loại:</label>
                                     <select id="type" class="form-control">
-                                        <option value="all" selected>--Chọn thẻ--</option>
+                                        <option value="" selected>--Chọn thẻ--</option>
                                         @foreach($types as $type)
                                             <option value="{{$type->id}}">{{$type->name}}</option>
                                         @endforeach
@@ -262,9 +263,9 @@
                                 <textarea class="form-control" id="description"></textarea>
                             </div>
                         </div>
-                        <div class="modal-footer flex-row justify-content-between">
-                            <span class="text-danger warning-text">*Vui lòng điền đầy đủ thông tin</span>
-                            <button type="button" class="btn btn-secondary final-button align-self-end" data-dismiss="modal"></button>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger delete-button">Xóa</button>
+                            <button type="button" class="btn btn-secondary final-button"></button>
                         </div>
                     </div>
                 </div>
@@ -283,6 +284,7 @@
     <script src="{{asset('assets/vendors/js/extensions/moment.min.js')}}"></script>
     <script src="{{asset('assets/vendors/js/calendar/chance.min.js')}}"></script>
     <script src="{{asset('assets/vendors/js/calendar/tui-calendar.min.js')}}"></script>
+    <script src="{{asset('assets/js/scripts/pages/sweetalert.min.js')}}"></script>
     <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel = "stylesheet">
     {{-- <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script> --}}

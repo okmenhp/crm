@@ -7,12 +7,14 @@ use App\Models\Meeting;
 use App\Models\Schedule;
 use App\Models\TypeSchedule;
 use App\Models\User;
+use App\Models\UserSchedule;
 use App\Repositories\ScheduleRepository;
 use App\Traits\ApiResponse;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ScheduleController extends Controller
 {
@@ -28,25 +30,20 @@ class ScheduleController extends Controller
         if($request->type == 'toggle-monthly'){
             $start_date = date('Y-m-d', strtotime($request->start_date));
             $end_date = date('Y-m-d', strtotime($request->end_date));
-            
             $schedules = Schedule::whereIn('id', User::find(Auth::id())->schedules()->pluck('schedule_id')->toArray())->where('start_date','>=',$start_date)->where('start_date','<=',$end_date)->get();
-           
             foreach($schedules as $key => $schedule){
                 if($schedule->pattern == 1){
                     $sdata = $this->scheduleRepo->getScheduleNormal($schedule);
                     array_push($data, $sdata);
                 }elseif($schedule->pattern == 2){
-                    $wdays = explode(",", $schedule->wday);
-                    $periods = CarbonPeriod::create(date('Y-m-d', strtotime($request->start_date)), date('Y-m-d', strtotime($request->end_date)))->toArray();
-                    $date_range = $this->scheduleRepo->getDateByWeekDay($wdays, $periods);
-                    $sdata = $this->scheduleRepo->getScheduleRepeat($date_range, $schedule);
-                    $data = array_merge($data, $sdata);
+                    $data = array_merge($data, $this->scheduleRepo->getDataRepeat($schedule, $request->start_date, $request->end_date));
                 }elseif($schedule->pattern == 3){
-                    $mdays = explode(",", $schedule->mday);
-                    $periods = CarbonPeriod::create(date('Y-m-d', strtotime($request->start_date)), date('Y-m-d', strtotime($request->end_date)))->toArray();
-                    $date_range = $this->scheduleRepo->getDateByMonthDay($mdays, $periods);
-                    $sdata = $this->scheduleRepo->getScheduleRepeat($date_range, $schedule);
-                    $data = array_merge($data, $sdata);
+                    // $mdays = explode(",", $schedule->mday);
+                    // $periods = CarbonPeriod::create(date('Y-m-d', strtotime($request->start_date)), date('Y-m-d', strtotime($request->end_date)))->toArray();
+                    // $schedule_periods = CarbonPeriod::create(date('Y-m-d', strtotime($schedule->start_date)), date('Y-m-d', strtotime($schedule->end_date)))->toArray();
+                    // $date_range = $this->scheduleRepo->getDateByMonthDay($mdays, $periods, $schedule_periods);
+                    // $sdata = $this->scheduleRepo->getScheduleRepeat($date_range, $schedule);
+                    $data = array_merge($data, $this->scheduleRepo->getDataRepeat($schedule, $request->start_date, $request->end_date));
                 }
             }
         }
@@ -84,5 +81,79 @@ class ScheduleController extends Controller
         $users = User::where('id','!=',Auth::id())->get();
 
         return response()->json(['data'=>$users]);
+    }
+
+    public function insert(Request $request){
+        $data = array();
+        $data['title'] = $request->title;
+        $data['start_date'] = $request->start_date;
+        $data['end_date'] = $request->end_date;
+        $data['location'] = $request->location;
+        $data['meeting_id'] = $request->meeting;
+        $data['type_id'] = $request->type;
+        $data['description'] = $request->description;
+        $data['pattern'] = $request->pattern;
+        if($data['pattern'] == 2){
+            $data['wday'] = $request->day_repeat;
+        }elseif($data['pattern'] == 3){
+            $data['mday'] = $request->day_repeat;
+        }
+        $schedule = Schedule::create($data);
+        $schedule->users()->attach(Auth::id());
+        if($request->attendees != null){
+            $attendees = explode(",", $request->attendees);
+            foreach($attendees as $attendee){
+                $schedule->users()->attach($attendee);
+            }
+        }
+        $sdata = $this->scheduleRepo->getScheduleNormal($schedule);
+        if($data['pattern'] != 1){
+            $sdata = $this->scheduleRepo->getDataRepeat($schedule, $request->start_date, $request->end_date);
+        }
+
+        return response()->json(['data'=>$sdata]);
+    }
+
+    public function update(Request $request){
+        $schedule = Schedule::find($request->id);
+        $schedule->title = $request->title;
+        $schedule->start_date = $request->start_date;
+        $schedule->end_date = $request->end_date;
+        $schedule->location = $request->location;
+        $schedule->meeting_id = $request->meeting;
+        $schedule->type_id = $request->type;
+        $schedule->description = $request->description;
+        $schedule->pattern = $request->pattern;
+        if($schedule->pattern == 2){
+            $schedule->wday = $request->day_repeat;
+        }elseif($schedule->pattern == 3){
+            $schedule->mday = $request->day_repeat;
+        }
+        $schedule->save();
+        
+        if($request->attendees != null){
+            $users = User::where('id','!=',Auth::id())->get();
+            $attendees = UserSchedule::where('schedule_id',$schedule->id)->where('user_id','!=',Auth::id())->pluck('user_id')->toArray();
+            foreach($users as $user){
+                if(in_array($user->id, explode(",", $request->attendees)) && !in_array($user->id, $attendees)){
+                    $schedule->users()->attach($user->id);
+                }else{
+                    $schedule->users()->detach($user->id);
+                }
+            }
+        }
+        $sdata = $this->scheduleRepo->getScheduleNormal($schedule);
+        if($schedule->pattern != 1){
+            $sdata = $this->scheduleRepo->getDataRepeat($schedule, $request->start_date, $request->end_date);
+        }
+
+        return response()->json(['data'=>$sdata]);
+    }
+
+    public function delete(Request $request){
+        Schedule::find($request->id)->delete();
+        UserSchedule::where('schedule_id',$request->id)->delete();
+
+        return response()->json(['data'=>'Xóa thành công']);
     }
 }

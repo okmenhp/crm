@@ -14,7 +14,7 @@ class CreateCustomerTypesTable extends Migration
     public function up()
     {
         Schema::create('customer_types', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->string('code')->nullable();
             $table->string('name')->nullable();
             $table->text('description');

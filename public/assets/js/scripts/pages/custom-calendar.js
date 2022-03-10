@@ -6,7 +6,7 @@ $('.warning-text').toggle(false)
 
 var calendar = new tui.Calendar('#calendar', {
     defaultView: 'month',
-    taskView: true,
+    taskView: false,
     narrowWeekend: false,
     startDayOfWeek: 1,
     visibleWeeksCount: 3,
@@ -14,21 +14,20 @@ var calendar = new tui.Calendar('#calendar', {
     month: {isAlways6Week: false},
     useDetailPopup: false,
     useCreationPopup: false,
-    template: {
-        monthDayname: function(dayname) {
-            return '<span class="calendar-week-dayname-name">' + dayname.label + '</span>';
-        }
-    }
 });
+
+var global_data = []
 
 calendar.on({
     // open a detail popup
     'clickSchedule': function(e) {
         console.log('clickSchedule', e);
+        $('#schedule-id').val(e.schedule.raw.schedule_id)
         getDetailSchedule(e.schedule.raw.schedule_id)
         var modal = $('#calendarModal')
         modal.modal('toggle')
         modal.find('button.final-button').html('Lưu')
+        modal.find('button.delete-button').toggle(true)
     },
     // open a creation popup
     // 'beforeCreateSchedule': function(e) {
@@ -49,7 +48,7 @@ calendar.on({
     // }
 });
 
-function getApi(type){
+function getDateRangeCalendar(type){
     var data = new FormData();
     if(type == "toggle-monthly"){
         start_date = moment(calendar._renderRange.start._date).format('YYYY/MM/DD h:mm:ss')
@@ -58,25 +57,32 @@ function getApi(type){
         data.append('start_date', start_date)
         data.append('end_date', end_date)
     }
-    
+
+    return data;
+}
+
+function getApi(type){
     $.ajax({
         url: "api/schedule/index",
         type: "POST",
-        data: data,
+        data: getDateRangeCalendar(type),
         processData: false,
         contentType: false, 
         enctype: 'multipart/form-data',
         success: function(data){
             calendar.createSchedules(data.data)
+            global_data.push(data.data)
+            console.log(global_data[0])
         }
     })
 }
 
 function showData(data){
     //pattern
-    $('#pattern-schedule option[value='+data.data.pattern+']').prop('selected', true)
+    
     $('.day-selection[value='+data.data.pattern+']').prop('checked', true)
     if(data.data.pattern != 1){
+        $('#pattern-schedule option[value=2]').prop('selected', true)
         $('.repeat-selection').toggle(true)
         $('.day-selection-option').find('option').remove()
         $('.day-selection-option').append('<option value="all" disabled selected>Chọn</option>')
@@ -120,7 +126,16 @@ function showData(data){
             }
         }
     }else{
+        $('#pattern-schedule option[value=1]').prop('selected', true)
+        $('#dayweek').prop('checked', true)
+        $('#wday').toggle(true)
+        $('#mday').toggle(false)
+        $('#wday').find('option').remove()
+        $('#mday').find('option').remove()
+        addWeekDay()
+        addMonthDay()
         $('.repeat-selection').toggle(false)
+        $('.repeat-day-selected').html("")
     }
     //title
     $('#title').val(data.data.title)
@@ -135,14 +150,14 @@ function showData(data){
         $('#meeting-room option[value='+data.data.meeting_id+']').prop('selected', true)
     }
     else{
-        $('#meeting-room option[value=all]').prop('selected', true)
+        $('#meeting-room option[value=""]').prop('selected', true)
     }
     //type
     if(data.data.type_id != null){
         $('#type option[value='+data.data.type_id+']').prop('selected', true)
     }
     else{
-        $('#type option[value=all]').prop('selected', true)
+        $('#type option[value=""]').prop('selected', true)
     }
     //user
     $('.attendees').html("")
@@ -185,14 +200,82 @@ function getDetailSchedule(id){
     })
 }
 
-function checkFillForm(){
-    var title = $('#title').val();
-
-    if(title == ""){
-        return false
+function dataChangeSchedule(action){
+    var data = new FormData();
+    data.append('date_range', getDateRangeCalendar())
+    var pattern = $('#pattern-schedule').val()
+    if(pattern != 1){
+        pattern = $('input[name=pattern]:checked').val()
+        var day_repeat = []
+        $('.repeat-day-selected').children().each(function(){
+            var wday_val = $(this).data('day')
+            day_repeat.push(wday_val)
+        })
+        data.append('pattern', pattern)
+        data.append('day_repeat', day_repeat)
+    }else{
+        data.append('pattern', pattern)
     }
+    var id = $('#schedule-id').val()
+    data.append('id', id)
+    var title = $('#title').val()
+    data.append('title', title)
+    var start_date = $('#start-date').val()
+    data.append('start_date', start_date)
+    var end_date = $('#end-date').val()
+    data.append('end_date', end_date)
+    var location = $('#location').val()
+    data.append('location', location)
+    var meeting = $('#meeting-room').val()
+    data.append('meeting', meeting)
+    var type = $('#type').val()
+    data.append('type', type)
+    var attendees = []
+    $('.attendees').children().each(function(){
+        var attendee = $(this).data('attendee-id')
+        attendees.push(attendee)
+    })
+    data.append('attendees', attendees)
+    var description = $('#description').val()
+    data.append('description', description)
+    
+    $.ajax({
+        url: action == 1 ? "api/schedule/insert" : "api/schedule/update",
+        type: "POST",
+        data: data,
+        processData: false,
+        contentType: false, 
+        enctype: 'multipart/form-data',
+        success: function(data){
+            if(action == 1){
+                calendar.createSchedules([data.data])
+                global_data.push(data.data)
+            }else{
+                calendar.updateSchedule("1", data.data.calendarId, data.data);
+            }
+            swal({
+                icon: "success",
+                text: action == 1 ? "Thêm mới thành công" : "Chỉnh sửa thành công",
+            });
+            $('#calendarModal').modal('toggle')
+        }
+    })
+}
 
-    return true
+function deleteSchedule(id){
+    $.ajax({
+        url: "api/schedule/delete",
+        type: "POST",
+        data: {id},
+        success: function(){
+            calendar.deleteSchedule("1", parseInt(id));
+            swal({
+                icon: "success",
+                text: "Xóa thành công",
+            });
+            $('#calendarModal').modal('toggle')
+        }
+    })
 }
 
 // calendar handling - end
@@ -201,11 +284,50 @@ function checkFillForm(){
 //     console.log($(this).val())
 // })
 
+function isFillForm(){
+    var title = $('#title').val();
+    var start_date = $('#start-date').val();
+    var end_date = $('#end-date').val();
+
+    if(title == "" || start_date == "" || end_date == ""){
+        swal({
+            text: "Vui lòng điền đủ thông tin !",
+        });
+        return false
+    }
+    if($('#pattern-schedule').val() != 1){
+        var isSelected = $('.repeat-day-selected').children().length
+        if(isSelected == 0){
+            var pattern = $('input[name=pattern]:checked').val()
+            pattern == 2 ? swal({text: "Vui lòng chọn 1 ngày trong tuần !",}) : swal({text: "Vui lòng chọn 1 ngày trong tháng !",});
+            return false
+        }
+    }
+
+    return true
+}
+
 $('#btn-new-schedule').click(function(){
-    defaultFormInsert()
-    var modal = $('#calendarModal')
-    modal.modal('toggle')
-    modal.find('button.final-button').html('Tạo mới')
+    // defaultFormInsert()
+    // $('#schedule-id').val("")
+    // var modal = $('#calendarModal')
+    // modal.modal('toggle')
+    // modal.find('button.final-button').html('Tạo mới')
+    // modal.find('button.delete-button').toggle(false)
+    // calendar.each(function(){
+    //     console.log(1)
+    // })
+    console.log(calendar)
+})
+
+$('#calendarModal .final-button').click(function(){
+    if(isFillForm()){
+        $('#schedule-id').val() == "" ? dataChangeSchedule(1) : dataChangeSchedule(2) //action: 1-thêm mới | 2-sửa
+    }
+})
+
+$('#calendarModal .delete-button').click(function(){
+    deleteSchedule($('#schedule-id').val())
 })
 
 function defaultFormInsert(){
@@ -231,8 +353,8 @@ function defaultFormInsert(){
             $('#start-date').val('')
             $('#end-date').val('')
             $('#location').val('')
-            $('#meeting-room').find('option[value=all]').prop('selected',true)
-            $('#type').find('option[value=all]').prop('selected',true)
+            $('#meeting-room').find('option[value=""]').prop('selected',true)
+            $('#type').find('option[value=""]').prop('selected',true)
             $('#attendees').find('option').remove()
             $('#attendees').append('<option value="all" disabled selected>--Chọn người tham gia--</option>')
             for(var i=0;i<data.data.length;i++){
@@ -352,14 +474,15 @@ $('.calendar-view .calendar-action .dropdown-menu .dropdown-item').click(functio
     }else if($(this).data('action') == 'toggle-monthly'){ // monthly view
         $('#calendarTypeName').html('Tháng')
         calendar.changeView('month', true);
-    }else if($(this).data('action') == 'toggle-weeks2'){ // 2 week view
-        $('#calendarTypeName').html('2 Tuần')
-        calendar.setOptions({month: {visibleWeeksCount: 2}}, true);
-        calendar.changeView('month', true);
-    }else if($(this).data('action') == 'toggle-weeks3'){ // 3 week view
-        $('#calendarTypeName').html('3 Tuần')
-        calendar.setOptions({month: {visibleWeeksCount: 3}}, true);
-        calendar.changeView('month', true);
     }
+    // else if($(this).data('action') == 'toggle-weeks2'){ // 2 week view
+    //     $('#calendarTypeName').html('2 Tuần')
+    //     calendar.setOptions({month: {visibleWeeksCount: 2}}, true);
+    //     calendar.changeView('month', true);
+    // }else if($(this).data('action') == 'toggle-weeks3'){ // 3 week view
+    //     $('#calendarTypeName').html('3 Tuần')
+    //     calendar.setOptions({month: {visibleWeeksCount: 3}}, true);
+    //     calendar.changeView('month', true);
+    // }
     // getApi($(this).data('action'))
 })

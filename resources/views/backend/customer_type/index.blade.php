@@ -28,17 +28,19 @@
                                     <div class="col-12 col-sm-6 col-lg-3">
                                         {{-- <label for="users-list-verified">Tên chức vụ</label> --}}
                                         <fieldset class="form-group pt-2">
-                                            <input type="text" name="searchText" value="{{ Request::get('searchText') }}"
-                                                class="form-control" id="" placeholder="Tìm kiếm">
+                                            @csrf
+                                            <input type="text" name="search_word"
+                                                value="{{ Request::get('search_word') }}" class="form-control" id=""
+                                                placeholder="Tìm kiếm">
                                         </fieldset>
                                     </div>
-                                    <!--
-                                        <div class="col-12 col-sm-6 col-lg-1 pt-2">
-                                            {{-- <label for="users-list-role">Tìm kiếm</label> --}}
-                                            <button type="submit" class="btn btn-icon btn-outline-primary btn-search "><i
-                                                    class="bx bx-search"></i></button>
-                                        </div>
-                                         -->
+
+                                    <div class="col-12 col-sm-6 col-lg-1 pt-2">
+                                        {{-- <label for="users-list-role">Tìm kiếm</label> --}}
+                                        <button type="submit" class="btn btn-icon btn-outline-primary btn-search "><i
+                                                class="bx bx-search"></i></button>
+                                    </div>
+
                                 </form>
                                 <div class="col-12 col-sm-6 col-lg-2 float-end">
                                     <a href="{{ route('admin.customer_type.create') }}" type="button"

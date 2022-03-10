@@ -11,6 +11,7 @@ use App\Repositories\DepartmentRepository;
 use App\Repositories\UserRepository;
 use App\Repositories\ListRepository;
 use App\Repositories\TaskRepository;
+use App\Models\Task;
 
 class KanbanController extends BaseController
 {
@@ -26,7 +27,7 @@ class KanbanController extends BaseController
 
     public function index(Request $request){
         $input = $request->all();
-        $res = \DB::table('list')->where('list.project_id', $input['project_id'])->join('task','list.id','=','task.list_id')->select('task.id as id','task.created_at as dueDate','task.name as title', 'list.id as list_id','list.name as list_name')->get()->groupBy('list_id');
+        $res = \DB::table('list')->where('list.project_id', $input['project_id'])->join('task','list.id','=','task.list_id')->select('task.id as id','task.created_at as dueDate','task.name as title', 'list.id as list_id','list.name as list_name')->where('task.parent_id', null)->get()->groupBy('list_id');
         $item = [];
         
         foreach($res as $key => $r){
@@ -54,6 +55,14 @@ class KanbanController extends BaseController
         $count = $this->taskRepo->countByForeignId($input['list_id'], "list_id");
         $input['ordering'] = $count + 1;
         $res = $this->taskRepo->create($input);
+        return $this->success($res);
+    }
+
+    public function card_detail(Request $request){
+        $input = $request->all();
+        $res = $this->taskRepo->find($input['card_id']);
+        $res->user_id = $res->User();
+        $res->subtask = Task::where('parent_id', $res->id)->get();
         return $this->success($res);
     }
 

@@ -50,7 +50,7 @@ class ProjectTypeController extends BaseController
         }
         $input['status'] = isset($input['status']) ? 1 : 0;
         $this->projectTypeRepo->create($input);
-        return redirect()->route('admin.project-type.index')->with('success', 'Thêm mới thành công');
+        return redirect()->route('admin.project_type.index')->with('success', 'Thêm mới thành công');
     }
 
     /**
@@ -93,7 +93,7 @@ class ProjectTypeController extends BaseController
         }
         $input['status'] = isset($input['status']) ? 1 : 0;
         $this->projectTypeRepo->update($input, $id);
-        return redirect()->route('admin.project-type.index')->with('success', 'Cập nhật thành công');;
+        return redirect()->route('admin.project_type.index')->with('success', 'Cập nhật thành công');;
     }
 
     /**

@@ -31,6 +31,7 @@ Route::post('kanban/create-card','Api\KanbanController@create_card')->name('api.
 Route::post('kanban/create-board','Api\KanbanController@create_board')->name('api.kanban.create_board');
 Route::post('kanban/update-card','Api\KanbanController@update_card')->name('api.kanban.update_card');
 Route::post('kanban/update-board','Api\KanbanController@update_board')->name('api.kanban.update_board');
+Route::post('kanban/card-detail','Api\KanbanController@card_detail')->name('api.kanban.card_detail');
 //Route::post('kanban/add-card','Api\KanbanController@add_card')->name('api.kanban.add_card');
 
 //project
@@ -42,4 +43,6 @@ Route::get('project/index','Api\ProjectController@index')->name('api.project.ind
 Route::post('schedule/index','Api\ScheduleController@index')->name('api.schedule.index');
 Route::post('schedule/detail','Api\ScheduleController@detail')->name('api.schedule.detail');
 Route::post('schedule/defaultFormInsert','Api\ScheduleController@defaultFormInsert')->name('api.schedule.defaultFormInsert');
-
+Route::post('schedule/insert','Api\ScheduleController@insert')->name('api.schedule.insert');
+Route::post('schedule/update','Api\ScheduleController@update')->name('api.schedule.update');
+Route::post('schedule/delete','Api\ScheduleController@delete')->name('api.schedule.delete');

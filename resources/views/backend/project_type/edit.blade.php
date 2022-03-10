@@ -29,7 +29,7 @@
                                     role="tabpanel">
                                     <!-- users edit account form start -->
                                     <form class="form-validate" method="post"
-                                        action="{{ route('admin.project-type.update', $record->id) }}">
+                                        action="{{ route('admin.project_type.update', $record->id) }}">
                                         <div class="row">
                                             <div class="col-12 col-sm-12">
                                                 <div class="form-group">
@@ -87,7 +87,7 @@
     <!-- END: Page Vendor JS-->
 
     <!--
-            BEGIN: Page JS-->
+                BEGIN: Page JS-->
     <script src="assets/js/scripts/pages/app-users.min.js"></script>
     <script src="assets/js/scripts/navs/navs.min.js"></script>
     <!-- END: Page JS-->

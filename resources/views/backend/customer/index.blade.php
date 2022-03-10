@@ -63,35 +63,52 @@
                         <div class="card">
                             <div class="card-body">
                                 <!-- datatable start -->
-                                <div class="table-responsive">
-                                    <table id="users-list-datatable" class="table">
-                                        <thead>
-                                            <tr>
-                                                <th>id</th>
-                                                <th>Tên khách hàng</th>
-                                                <th>Email</th>
-                                                <th>Điện thoại</th>
-                                                <th>Địa chỉ</th>
-                                                <th>Quốc gia</th>
-                                                <th>Thao tác</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>Dean Stanley</td>
-                                                <td>info@example.com</td>
-                                                <td>012354789</td>
-                                                <th>Toà nhà Thành Đạt 3</th>
-                                                <td>Việt Nam</td>
-                                                <td><a href=""><i class="far fa-edit"></i></a>
-                                                    <a href=""><i class="far fa-trash-alt ml-1"></i>
-                                                </td>
-                                            </tr>
-
-                                        </tbody>
-                                    </table>
-                                </div>
+                                @if (count($records) > 0)
+                                    <div class="table-responsive">
+                                        <table id="users-list-datatable" class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>STT</th>
+                                                    <th>Tên khách hàng</th>
+                                                    <th>Điện thoại</th>
+                                                    <th>Quốc gia</th>
+                                                    <th>Thao tác</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($records as $key => $record)
+                                                    <tr>
+                                                        <td>{{ ++$key }}</td>
+                                                        <td> {{ $record->name }}</td>
+                                                        {{-- <td> <a
+                                                                href="{{ route('admin.customer.detail', $record->id) }}">{{ $record->name }}</a>
+                                                        </td> --}}
+                                                        <td>{{ $record->phone_number }}</td>
+                                                        <td>{{ $record->countries->country_name }}</td>
+                                                        {{-- <td>{{ $record->customer_types->name }}</td> --}}
+                                                        <td>
+                                                            <a href="{{ route('admin.customer.edit', $record->id) }}"><i
+                                                                    class="far fa-edit"></i></a>
+                                                            <form style="display: inline-block" method="POST"
+                                                                action="{{ route('admin.customer.destroy', $record->id) }}">
+                                                                @csrf
+                                                                <input name="_method" type="hidden" value="DELETE">
+                                                                <a href="#" class="show_confirm" data-toggle="tooltip"
+                                                                    title='Delete'> <i class="fa fa-trash-alt ml-1">
+                                                                    </i></a>
+                                                            </form>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                        <div style="vertical-align: middle;">
+                                            {!! $records->links() !!}
+                                        </div>
+                                    </div>
+                                @else
+                                    <b>Không tìm thấy kết quả</b>
+                                @endif
                                 <!-- datatable ends -->
                             </div>
                         </div>

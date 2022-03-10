@@ -22,7 +22,7 @@ class CustomerTypeController extends Controller
     public function index(Request $request)
     {
         //
-        $records = $this->customerTypeRepo->paginate($request, 10);
+        $records = $this->customerTypeRepo->searchType($request);
         return view('backend.customer_type.index', compact('records'));
     }
 
@@ -114,11 +114,28 @@ class CustomerTypeController extends Controller
     public function destroy($id)
     {
         //
-        $in_customer = \DB::table('customer')->where('type', $id)->first();
+        $in_customer = \DB::table('customer')->where('customer_type_id', $id)->first();
         if ($in_customer == null) {
             $this->customerTypeRepo->delete($id);
             return redirect()->back()->with('success', 'Xóa thành công');
         }
         return redirect()->back()->with('error', 'Không thể xoá vì bản ghi đang được liên kết với khách hàng');
     }
+
+    //  /**
+    //  * Search.
+    //  *
+    //  * @param  \Illuminate\Http\Request  $request
+    //  * @return \Illuminate\Http\Response
+    //  */
+    // public function searchPage(Request $request)
+    // {
+    //     $search_word = $request->input('searchText');
+    //     $model = $this->customerTypeRepo->listSearchCustomerType($search_word);
+    //     $totalRecord = $model->count();
+    //     $searchResults = $model->paginate(10);
+    //     // dd($searchResults);
+
+    //     return view('backend.customer_type.index', compact('searchResults', 'totalRecord', 'search_word'));
+    // }
 }
