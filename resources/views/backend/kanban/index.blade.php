@@ -159,22 +159,22 @@
                     </button>
                   </div>
                   <div class="modal-body">
-                    <form class="edit-kanban-item">
+                    <form class="edit-kanban-item" action="{{route('admin.task_kanban.store')}}" method="post">
                             <div class="kanban-edit-content">
                                 <div class="card-body" style="padding-top: 0px !important;">
                                     <div class="form-group">
                                         <label>Tiêu đề</label>
-                                        <input type="text" class="form-control edit-kanban-item-title"
+                                        <input type="text" name="name" class="form-control edit-kanban-item-title"
                                             placeholder="kanban Title">
                                     </div>
                                     <div class="row">
                                     <div class="form-group col-6">
-                                        <label>Thời gian bắt đầu</label>
-                                        <input type="date" class="form-control edit-kanban-item-date" placeholder="">
+                                        <label>Bắt đầu dự kiến</label>
+                                        <input name="intended_start_time" type="date" class="form-control edit-kanban-item-date" placeholder="">
                                     </div>
                                     <div class="form-group col-6">
-                                        <label>Thời gian kết thúc</label>
-                                        <input type="date" class="form-control edit-kanban-item-date" placeholder="">
+                                        <label>Kết thúc dự kiến</label>
+                                        <input name="intended_end_time" type="date" class="form-control edit-kanban-item-date" placeholder="">
                                     </div>
                                     </div>      
                                     <div class="row">
@@ -182,7 +182,7 @@
                                             <div class="form-group">
                                                 <label>Người quản lý</label>
                                                 <div class="d-flex align-items-center">
-                                                    <select class="select2 form-control" multiple="">    
+                                                    <select class="select2 form-control" name="manager_id">    
                                                     {!! $user_html !!}
                                                     </select>
                                                 </div>
@@ -192,7 +192,7 @@
                                             <div class="form-group">
                                                 <label>Người tham gia</label>
                                                 <div class="d-flex align-items-center">
-                                                    <select class="select2 form-control" multiple="">    
+                                                    <select class="select2 form-control" name="user_id[]" multiple="">    
                                                     {!! $user_html !!}
                                                     </select>
                                                 </div>
@@ -203,22 +203,22 @@
                                     <div class="col-6">
                                             <div class="form-group">
                                                 <label>Trạng thái</label>
-                                                <select class="form-control">
-                                                    <option class="bg-primary text-white" selected>Đang xử lý</option>
-                                                    <option class="bg-danger text-white">Quá hạn</option>
-                                                    <option class="bg-success text-white">Hoàn thành</option>
-                                                    <option class="bg-warning text-white">Sắp quá hạn</option>
-                                                    <option class="bg-secondary text-white">Chưa xử lý</option>
+                                                <select name="status" class="form-control">
+                                                    <option value="1" class="bg-primary text-white" selected>Đang xử lý</option>
+                                                    <option value="2" class="bg-danger text-white">Quá hạn</option>
+                                                    <option value="3" class="bg-success text-white">Hoàn thành</option>
+                                                    <option value="4" class="bg-warning text-white">Sắp quá hạn</option>
+                                                    <option value="5" class="bg-secondary text-white">Chưa xử lý</option>
                                                 </select>
                                             </div>
                                     </div>
                                      <div class="col-6">
                                             <div class="form-group">
                                                 <label>Độ ưu tiên</label>
-                                                <select class="form-control">
-                                                    <option class="bg-primary text-white" >Thấp</option>
-                                                    <option class="bg-danger text-white" selected>Trung bình</option>
-                                                    <option class="bg-success text-white">Cao</option>
+                                                <select name="level" class="form-control">
+                                                    <option value="1" class="bg-primary text-white" >Thấp</option>
+                                                    <option value="2" class="bg-danger text-white" selected>Trung bình</option>
+                                                    <option value="3" class="bg-success text-white">Cao</option>
                                                 </select>
                                             </div>
                                     </div>
@@ -226,7 +226,7 @@
                                     <div class="form-group">
                                         <label>Tài liệu</label>
                                         <div class="custom-file">
-                                            <input type="file" class="custom-file-input" id="emailAttach">
+                                            <input name="attachment" type="file" class="custom-file-input" id="emailAttach">
                                             <label class="custom-file-label" for="emailAttach">Chọn tài
                                                 liệu</label>
                                         </div>
@@ -234,17 +234,16 @@
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <label>Danh sách công việc con</label>
-                                            <div id="inputFormRow" style="border:  1px solid red;"  >
+                                            <div id="inputFormRow">
                                                 <div class="input-group mb-1">
-                                                    <input type="text" name="title[]" class="form-control m-input" placeholder="Enter title" autocomplete="off">
+                                                    <input type="text" name="subtask[]" class="form-control m-input" placeholder="Enter title" autocomplete="off">
                                                     <div class="input-group-append">
                                                          <button class="btn btn-outline-danger" type="button">Xoá</button>
                                                     </div>
                                                 </div>
-                                            </div>
-                                         
-                                         
                                                 
+                                            </div>
+                                       
                                             <div id="newRow"></div>
                                             <button id="addRow" type="button" class="btn btn-outline-info mb-1">Thêm công việc con</button>
                                         </div>
@@ -274,8 +273,8 @@
     
                   </div>
                   <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Huỷ</button>
+                    <button type="button" class="btn btn-primary">Lưu lại</button>
                   </div>
                 </div>
               </div>
@@ -306,12 +305,11 @@
         var html = '';
         html += '<div id="inputFormRow">';
         html += '<div class="input-group mb-1">';
-        html += '<input type="text" name="title[]" class="form-control m-input" placeholder="Enter title" autocomplete="off">';
+        html += '<input type="text" name="subtask[]" class="form-control m-input" placeholder="Enter title" autocomplete="off">';
         html += '<div class="input-group-append">';
         html += '<button id="removeRow" type="button" class="btn btn-outline-danger">Xoá</button>';
         html += '</div>';
         html += '</div>';
-
         $('#newRow').append(html);
     });
 

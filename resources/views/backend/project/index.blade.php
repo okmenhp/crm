@@ -16,9 +16,8 @@
 <link rel="stylesheet" type="text/css" href="https://cdn3.devexpress.com/jslib/21.2.5/css/dx.common.css" />
 <link rel="stylesheet" type="text/css" href="https://cdn3.devexpress.com/jslib/21.2.5/css/dx.light.css" />
 <script src="https://cdn3.devexpress.com/jslib/21.2.5/js/dx.all.js"></script>
-<script src="{{asset('assets/treelist/data.js')}}"></script>
-<link rel="stylesheet" type="text/css" href="{{asset('assets/treelist/styles.css')}}">
-<script src="{{asset('assets/treelist/index.js')}}"></script>
+<script src="{{asset('assets/js/data/project.js')}}"></script>
+<link rel="stylesheet" type="text/css" href="{{asset('assets/css/plugins/treelist/styles.css')}}">
 <!-- END: Todo CSS-->
 
 @stop
@@ -93,7 +92,7 @@
                                                     <th>Dự án</th>
                                                     <th>Hợp đồng</th>
                                                     <th>Người phụ trách</th>
-                                                    <!-- <th>Tiến độ</th> -->
+                                                    <th>Tiến độ</th>
                                                     <th>Tình trạng</th>
                                                     <th>Thao tác</th>
                                                 </tr>
@@ -111,21 +110,21 @@
                                                         @endif
                                                         @endforeach
                                                     </td>
-                                                    <!-- <td>
-                                                <div class="progress-bar progress-bar-striped progress-bar-animated"
-                                                    role="progressbar" aria-valuenow="80" aria-valuemin="80"
-                                                    aria-valuemax="100" style="width:80%"></div>
-                                            </td> -->
+                                                    <td>
+                                                        <div class="progress-bar progress-bar-striped progress-bar-animated"
+                                                            role="progressbar" aria-valuenow="80" aria-valuemin="80"
+                                                            aria-valuemax="100" style="width:80%"></div>
+                                                    </td>
                                                     <td>
                                                         @if($record->status == 0)
                                                         <div class="badge badge-secondary mr-1 mb-1">Chưa bắt đầu</div>
                                                         @endif
-                                                        <!-- <div class="badge badge-primary mr-1 mb-1">Đang diễn ra</div>
-                                                <div class="badge badge-secondary mr-1 mb-1">Chưa bắt đầu</div>
-                                                <div class="badge badge-success mr-1 mb-1">Đã hoàn thành</div>
-                                                <div class="badge badge-info mr-1 mb-1">Đơi xét duyệt</div>
-                                                <div class="badge badge-warning mr-1 mb-1">Chậm tiến độ</div>
-                                                <div class="badge badge-danger mb-1">Đã Huỷ</div> -->
+                                                        <div class="badge badge-primary mr-1 mb-1">Đang diễn ra</div>
+                                                        <div class="badge badge-secondary mr-1 mb-1">Chưa bắt đầu</div>
+                                                        <div class="badge badge-success mr-1 mb-1">Đã hoàn thành</div>
+                                                        <div class="badge badge-info mr-1 mb-1">Đơi xét duyệt</div>
+                                                        <div class="badge badge-warning mr-1 mb-1">Chậm tiến độ</div>
+                                                        <div class="badge badge-danger mb-1">Đã Huỷ</div>
                                                     </td>
                                                     <td>
                                                         <a href="{{route('admin.kanban.index', $record->id)}}"
@@ -141,17 +140,17 @@
                                                 </tr>
                                                 @endforeach
                                             </tbody>
-                                            {{--  <tfoot>
+                                            <tfoot>
                                                 <tr>
                                                     <th>id</th>
                                                     <th>Dự án</th>
                                                     <th>Hợp đồng</th>
                                                     <th>Người phụ trách</th>
-                                                    <!-- <th>Tiến độ</th> -->
+                                                    <th>Tiến độ</th>
                                                     <th>Tình trạng</th>
                                                     <th>Thao tác</th>
                                                 </tr>
-                                            </tfoot> --}}
+                                            </tfoot>
                                         </table>
                                     </div>
                                 </div>
@@ -161,11 +160,19 @@
                 </div>
                 <!--/ Zero configuration table -->
 
-                <body class="dx-viewport">
-                    <div class="demo-container">
-                        <div id="tasks"></div>
+                <div id="basic-datatable">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body card-dashboard">
+                                    <div class="table-responsive">
+                                        <div id="tasks"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </body>
+                </div>
 
             </section>
             <!-- users list ends -->
@@ -173,6 +180,118 @@
     </div>
 </div>
 <!-- END: Content-->
+
+<script type="text/javascript">
+    $( document ).ready(function() {
+    var obj = JSON.parse('<?= $records; ?>');
+    console.log(obj);
+
+    console.log( "ready!" );
+
+
+    $(() => {
+        const treeListData = $.map(tasks, (task) => {
+            task.Task_Assigned_Employee = null;
+            $.each(employees, (_, employee) => {
+                if (employee.ID === task.user_id) {
+                    task.Task_Assigned_Employee = employee;
+                }
+            });
+            return task;
+        });
+
+        $('#tasks').dxTreeList({
+            dataSource: treeListData,
+            keyExpr: 'Task_ID',
+            parentIdExpr: 'Task_Parent_ID',
+            columnAutoWidth: true,
+            wordWrapEnabled: true,
+            showBorders: true,
+            expandedRowKeys: [1, 2],
+            selectedRowKeys: [1, 29, 42],
+            searchPanel: {
+                visible: true,
+                width: 250,
+            },
+            headerFilter: {
+                visible: true,
+            },
+            selection: {
+                mode: 'multiple',
+            },
+            columnChooser: {
+                enabled: false,
+            },
+            columns: [{
+                dataField: 'Task_Subject',
+                width: 300,
+            }, {
+                dataField: 'user_id',
+                caption: 'Assigned',
+                allowSorting: false,
+                minWidth: 200,
+                cellTemplate(container, options) {
+                    const currentEmployee = options.data.Task_Assigned_Employee;
+                    if (currentEmployee) {
+                        container
+                            .append($('<div>', {
+                                class: 'img',
+                                style: `background-image:url(${currentEmployee.Picture});`
+                            }))
+                            .append('\n')
+                            .append($('<span>', {
+                                class: 'name',
+                                text: currentEmployee.Name
+                            }));
+                    }
+                },
+                lookup: {
+                    dataSource: employees,
+                    valueExpr: 'ID',
+                    displayExpr: 'Name',
+                },
+            }, {
+                dataField: 'Task_Status',
+                caption: 'Status',
+                minWidth: 100,
+                lookup: {
+                    dataSource: [
+                        'Not Started',
+                        'Need Assistance',
+                        'In Progress',
+                        'Deferred',
+                        'Completed',
+                    ],
+                },
+            }, {
+                dataField: 'Task_Priority',
+                caption: 'Priority',
+                lookup: {
+                    dataSource: priorities,
+                    valueExpr: 'id',
+                    displayExpr: 'value',
+                },
+                visible: false,
+            }, {
+                dataField: 'Task_Completion',
+                caption: '% Completed',
+                customizeText(cellInfo) {
+                    return `${cellInfo.valueText}%`;
+                },
+                visible: false,
+            }, {
+                dataField: 'Task_Start_Date',
+                caption: 'Start Date',
+                dataType: 'date',
+            }, {
+                dataField: 'Task_Due_Date',
+                caption: 'Due Date',
+                dataType: 'date',
+            }],
+        });
+    });
+});
+</script>
 @stop
 @section('script')
 <!-- BEGIN: Page Vendor JS-->

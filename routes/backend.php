@@ -112,4 +112,12 @@ Route::group(['middleware' => 'admin'], function () {
     Route::get('/customer-type/edit/{id}',  ['as' => 'admin.customer_type.edit', 'uses' => 'Backend\CustomerTypeController@edit']);
     Route::post('/customer-type/update/{id}',  ['as' => 'admin.customer_type.update', 'uses' => 'Backend\CustomerTypeController@update']);
     Route::delete('/customer-type/delete/{id}',  ['as' => 'admin.customer_type.destroy', 'uses' => 'Backend\CustomerTypeController@destroy']);
+
+    // Loai Khach hang
+    Route::get('/task-kanban',  ['as' => 'admin.task_kanban.index', 'uses' => 'Backend\TaskKanbanController@index']);
+    Route::get('/task-kanban/create',  ['as' => 'admin.task_kanban.create', 'uses' => 'Backend\TaskKanbanController@create']);
+    Route::post('/task-kanban/store',  ['as' => 'admin.task_kanban.store', 'uses' => 'Backend\TaskKanbanController@store']);
+    Route::get('/task-kanban/edit/{id}',  ['as' => 'admin.task_kanban.edit', 'uses' => 'Backend\TaskKanbanController@edit']);
+    Route::post('/task-kanban/update/{id}',  ['as' => 'admin.task_kanban.update', 'uses' => 'Backend\TaskKanbanController@update']);
+    Route::delete('/task-kanban/delete/{id}',  ['as' => 'admin.task_kanban.destroy', 'uses' => 'Backend\TaskKanbanController@destroy']);
 });

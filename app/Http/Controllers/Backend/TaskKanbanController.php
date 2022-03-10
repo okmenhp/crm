@@ -28,34 +28,25 @@ class TaskController extends BaseController
         $this->usertaskRepo = $usertaskRepo;
     }
 
-    public function index(Request $request)
-    {
-        $records = $this->taskRepo->readFE($request);
-        $employee_data = $this->employeeRepo->readFE($request);
-        dd($records);
-        $department_array = $this->departmentRepo->all();
-        return view('backend/task/index', compact('records','employee_data','department_array'));
-    }
-
     /**
-     * Show the form for creating a new resource.
+     * Show the form for editing the specified resource.
      *
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function edit()
     {
-        $employee_array = $this->employeeRepo->all();
-        $project_array = $this->projectRepo->all();
-        return view('backend/task/create', compact('employee_array','project_array'));
+        return view('backend/department/edit');
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function update(Request $request, $id)
     {
         $input = $request->all();
         $input['date'] = date('Y-m-d H:i:s', strtotime($input['date']));
@@ -78,40 +69,6 @@ class TaskController extends BaseController
         else{
             return redirect()->route('admin.task.index')->with('error', 'Thêm mới thất bại');
         }
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit()
-    {
-        return view('backend/department/edit');
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
     }
 
     /**
