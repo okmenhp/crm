@@ -486,6 +486,27 @@ $("body").delegate('.attendee-box button', 'click', function(){
 })
 
 //Thay đổi kiểu hiển thị của lịch
+$('#move-today').click(function(){
+    calendar.today();
+    calendar.changeView('day', true);
+    $('#calendarTypeName').html('Ngày')
+    $('.calendar-view .calendar-action .dropdown-menu .dropdown-item.active').toggleClass('active')
+    $('#toggle-daily').toggleClass('active')
+})
+$('#move-prev').click(function(){
+    calendar.prev();
+    calendar.changeView('day', true);
+    $('#calendarTypeName').html('Ngày')
+    $('.calendar-view .calendar-action .dropdown-menu .dropdown-item.active').toggleClass('active')
+    $('#toggle-daily').toggleClass('active')
+})
+$('#move-next').click(function(){
+    calendar.next();
+    calendar.changeView('day', true);
+    $('#calendarTypeName').html('Ngày')
+    $('.calendar-view .calendar-action .dropdown-menu .dropdown-item.active').toggleClass('active')
+    $('#toggle-daily').toggleClass('active')
+})
 $('.calendar-view .calendar-action .dropdown-menu .dropdown-item').click(function(){
     $('.calendar-view .calendar-action .dropdown-menu .dropdown-item.active').toggleClass('active')
     $(this).toggleClass('active')
