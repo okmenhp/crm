@@ -72,14 +72,12 @@ function getApi(type){
         success: function(data){
             calendar.createSchedules(data.data)
             global_data.push(data.data)
-            console.log(global_data[0])
         }
     })
 }
 
 function showData(data){
     //pattern
-    
     $('.day-selection[value='+data.data.pattern+']').prop('checked', true)
     if(data.data.pattern != 1){
         $('#pattern-schedule option[value=2]').prop('selected', true)
@@ -251,7 +249,37 @@ function dataChangeSchedule(action){
                 calendar.createSchedules([data.data])
                 global_data.push(data.data)
             }else{
-                calendar.updateSchedule("1", data.data.calendarId, data.data);
+                if(data.pattern == 1 && data.old_pattern == 1){ // thông thường -> thông thường
+                    calendar.updateSchedule("1", data.data.calendarId, data.data);
+                }else if(data.pattern != 1  && data.old_pattern == 1){ // thông thường -> lặp lại
+                    calendar.deleteSchedule("1", parseInt(id));
+                    for(var i=0; i<global_data[0].length; i++){
+                        if(global_data[0][i].calendarId == id){
+                            global_data[0].splice(i, 1)
+                        }
+                    }
+                    calendar.createSchedules(data.data)
+                }else if(data.pattern == 1  && data.old_pattern != 1){ // lặp lại -> thông thường
+                    for(var i=0; i<global_data[0].length; i++){
+                        if(global_data[0][i].calendarId == id){
+                            calendar.deleteSchedule("1", parseInt(id));
+                            global_data[0].splice(i, 1)
+                            i--
+                        }
+                    }
+                    global_data[0].push(data.data)
+                    calendar.createSchedules([data.data])
+                }else{ // lặp lại -> lặp lại
+                    for(var i=0; i<global_data[0].length; i++){
+                        if(global_data[0][i].calendarId == id){
+                            calendar.deleteSchedule("1", parseInt(id));
+                            global_data[0].splice(i, 1)
+                            i--
+                        }
+                    }
+                    global_data[0] = global_data[0].concat(data.data)
+                    calendar.createSchedules(data.data)
+                }
             }
             swal({
                 icon: "success",
@@ -308,16 +336,12 @@ function isFillForm(){
 }
 
 $('#btn-new-schedule').click(function(){
-    // defaultFormInsert()
-    // $('#schedule-id').val("")
-    // var modal = $('#calendarModal')
-    // modal.modal('toggle')
-    // modal.find('button.final-button').html('Tạo mới')
-    // modal.find('button.delete-button').toggle(false)
-    // calendar.each(function(){
-    //     console.log(1)
-    // })
-    console.log(calendar)
+    defaultFormInsert()
+    $('#schedule-id').val("")
+    var modal = $('#calendarModal')
+    modal.modal('toggle')
+    modal.find('button.final-button').html('Tạo mới')
+    modal.find('button.delete-button').toggle(false)
 })
 
 $('#calendarModal .final-button').click(function(){

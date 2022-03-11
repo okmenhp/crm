@@ -114,8 +114,10 @@ class ScheduleController extends Controller
         return response()->json(['data'=>$sdata]);
     }
 
-    public function update(Request $request){
+    public function update(Request $request){        
         $schedule = Schedule::find($request->id);
+        $old_pattern = $schedule->pattern;
+
         $schedule->title = $request->title;
         $schedule->start_date = $request->start_date;
         $schedule->end_date = $request->end_date;
@@ -147,7 +149,7 @@ class ScheduleController extends Controller
             $sdata = $this->scheduleRepo->getDataRepeat($schedule, $request->start_date, $request->end_date);
         }
 
-        return response()->json(['data'=>$sdata]);
+        return response()->json(['data'=>$sdata, 'pattern'=>$schedule->pattern ,'old_pattern'=>$old_pattern]);
     }
 
     public function delete(Request $request){

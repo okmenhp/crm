@@ -183,8 +183,10 @@
                                             <div class="form-group">
                                                 <label>Người quản lý</label>
                                                 <div class="d-flex align-items-center">
-                                                    <select class="select2 form-control" name="manager_id">    
-                                                    {!! $user_html !!}
+                                                    <select class="form-control" id="manager_id" name="manager_id">    
+                                                     @foreach($user_option as $u_o)
+                                                         <option value="{{$u_o->id}}">{{$u_o->full_name}}</option>
+                                                     @endforeach
                                                     </select>
                                                 </div>
                                             </div>
@@ -193,8 +195,10 @@
                                             <div class="form-group">
                                                 <label>Người tham gia</label>
                                                 <div class="d-flex align-items-center">
-                                                    <select class="select2 form-control" name="user_id[]" multiple="">    
-                                                    {!! $user_html !!}
+                                                    <select required="" class="select2 form-control" name="user_id[]" multiple="">    
+                                                    @foreach($user_option as $u_o)
+                                                         <option selected="" value="{{$u_o->id}}">{{$u_o->full_name}}</option>
+                                                     @endforeach
                                                     </select>
                                                 </div>
                                             </div>
@@ -204,7 +208,7 @@
                                     <div class="col-6">
                                             <div class="form-group">
                                                 <label>Trạng thái</label>
-                                                <select name="status" class="form-control">
+                                                <select name="status" id="status" class="form-control">
                                                     <option value="1" class="bg-primary text-white" selected>Đang xử lý</option>
                                                     <option value="2" class="bg-danger text-white">Quá hạn</option>
                                                     <option value="3" class="bg-success text-white">Hoàn thành</option>
@@ -216,10 +220,10 @@
                                      <div class="col-6">
                                             <div class="form-group">
                                                 <label>Độ ưu tiên</label>
-                                                <select name="level" class="form-control">
-                                                    <option value="1" class="bg-primary text-white" >Thấp</option>
-                                                    <option value="2" class="bg-danger text-white" selected>Trung bình</option>
-                                                    <option value="3" class="bg-success text-white">Cao</option>
+                                                <select id="level" name="level" class="form-control">
+                                                    <option value="1" class="" >Thấp</option>
+                                                    <option value="2" class="" selected>Trung bình</option>
+                                                    <option value="3" class="">Cao</option>
                                                 </select>
                                             </div>
                                     </div>
@@ -235,22 +239,18 @@
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <label>Danh sách công việc con</label>
-                                            <div id="inputFormRow">
-                                                <!-- <div class="input-group mb-1">
-                                                    <input type="text" name="subtask[]" class="form-control m-input" placeholder="Enter title" autocomplete="off">
-                                                    <div class="input-group-append">
-                                                         <button class="btn btn-outline-danger" type="button">Xoá</button>
-                                                    </div>
-                                                </div> -->  
+                                            <div id="inputFormRow"> 
                                             </div>
-                                       
+    
                                             <div id="newRow"></div>
                                             <button id="addRow" type="button" class="btn btn-outline-info mb-1">Thêm công việc con</button>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label>Bình luận</label>
+
                                         <textarea class="form-control" rows="3" placeholder="Nhập bình luận"></textarea>
+
                                     </div>
                                 </div>
                             </div>

@@ -30,7 +30,7 @@ class TaskKanbanController extends BaseController
         $this->usertaskRepo = $usertaskRepo;
     }
 
-     public function store($subtask, $list_id, $task_id)
+    public function store($subtask, $list_id, $task_id)
     {  
         foreach($subtask as $st){
             $input['name'] = $st;
@@ -38,7 +38,6 @@ class TaskKanbanController extends BaseController
             $input['parent_id'] = $task_id;
             $this->taskRepo->create($input);
         }
-        
     }
 
     
@@ -64,7 +63,9 @@ class TaskKanbanController extends BaseController
         $res = $this->taskRepo->update($input, $input['card_id']);
         $res = $this->taskRepo->find($input['card_id']);
         $id = $input['card_id'];
-        $this->store($input['subtask'], $input['list_id'], $res->id);
+        if(isset($input['subtask'])){
+        $this->store($input['subtask'], $input['list_id'], $input['card_id']);
+        }
         //Them quan he
         $res->User()->sync($input['user_id']);
         if($res){
