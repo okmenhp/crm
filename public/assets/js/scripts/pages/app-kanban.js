@@ -181,12 +181,18 @@ $(function () {
 
       //bật modal info card
       $('#exampleModal').modal();
-     
       let list_id = $(el).attr("data-list_id");
       $('#list_id').val(list_id);
-      let card_id = $(el).attr("data-eid");
-      $('#card_id').val(card_id);
-      card_detail(card_id);
+      let card_eid = $(el).data("eid");
+      let card_id = $(el).data("id");
+      if(card_eid !== "undefined"){
+        $('#card_id').val(card_eid);
+        card_detail(card_eid);
+      }else{
+        $('#card_id').val(card_id);
+        card_detail(card_id);
+      }
+      
       // Set el to var kanban_curr_el, use this variable when updating title
       kanban_curr_el = el;
 
@@ -256,8 +262,24 @@ $(function () {
         }
       }).done(function(resp) {
          let data = resp.data;
-         $('input[name="intended_start_time"]').val("2013-03-18T13:00");
-        
+         $("#manager_id").val(data.manager_id).change();
+         $("#status").val(data.status).change();
+         $("#level").val(data.level).change();
+         $("#intended_start_time").val(data.intended_start_time);
+         $("#intended_end_time").val(data.intended_end_time);
+         $.each( data.subtask, function( index , value ) {
+             let subtask_html = "";
+             subtask_html += '<div id="inputFormRow">';
+             subtask_html += '<div class="input-group mb-1">';
+             subtask_html += '<input type="text" name="subtask[]" data-is_db="1" required class="form-control m-input" placeholder="Enter title" autocomplete="off" value="'+value.name+'">';
+             subtask_html += '<div class="input-group-append">';
+             subtask_html += '<button id="removeRow" type="button" class="btn btn-outline-danger">Xoá</button>';
+             subtask_html += '</div>';
+             subtask_html += '</div>';
+             $('#newRow').append(subtask_html);
+         });
+         
+         
       });
   }
 

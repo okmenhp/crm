@@ -80,7 +80,7 @@
                 </div>
                 @endif
 
-                <div id="basic-datatable">
+                <!-- <div id="basic-datatable">
                     <div class="row">
                         <div class="col-12">
                             <div class="card">
@@ -152,7 +152,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
                 <div id="basic-datatable">
                     <div class="row">
@@ -174,25 +174,22 @@
     </div>
 </div>
 <!-- END: Content-->
-
 <script type="text/javascript">
-    var tasks = JSON.parse('<?= $records; ?>');
-    console.log(employees);
-</script>
 
-<script>
 $(() => {
+    var tasks = JSON.parse('<?= $records; ?>');
+    var employees = JSON.parse('<?= $employee_array; ?>');
+    var baseurl = window.location.origin;
+    console.log(employees);
   const treeListData = $.map(tasks, (task) => {
     task.Task_Assigned_Employee = null;
     $.each(employees, (_, employee) => {
-      if (employee.id === task.user_id) {
+      if (employee.ID === task.Task_Assigned_Employee_ID) {
         task.Task_Assigned_Employee = employee;
       }
     });
     return task;
   });
-
-  console.log(treeListData);
 
   $('#tasks').dxTreeList({
     dataSource: treeListData,
@@ -214,15 +211,15 @@ $(() => {
       mode: 'multiple',
     },
     columnChooser: {
-      enabled: true,
+      enabled: false,
     },
     columns: [{
       dataField: 'name',
       caption: 'Tên công việc',
-      width: 300,
+      width: 200,
     }, {
-      dataField: 'user_id',
-      caption: 'Người thực hiện',
+      dataField: 'master_id',
+      caption: 'Người phụ trách',
       allowSorting: false,
       minWidth: 200,
       cellTemplate(container, options) {
@@ -236,38 +233,44 @@ $(() => {
       },
       lookup: {
         dataSource: employees,
-        valueExpr: 'id',
+        valueExpr: 'ID',
         displayExpr: 'name',
       },
-    },
-    {
-      dataField: 'name',
-      caption: 'Test',
-      customizeText: function() {
-        const userTaskData = $.map(usertask_array, (usertask) => {
-            usertask.Task_Assigned_Employee = null;
-            // $.each(employees, (_, employee) => {
-            // if (employee.id === task.user_id) {
-            //     usertask.Task_Assigned_Employee = employee;
-            // }
-            // });
-            console.log(usertask);
-            return task;
-        });
-      }
     }, {
-      dataField: 'Task_Status',
-      caption: 'Status',
-      minWidth: 100,
-      lookup: {
-        dataSource: [
-          'Not Started',
-          'Need Assistance',
-          'In Progress',
-          'Deferred',
-          'Completed',
-        ],
+      dataField: 'Task_Assigned_Employee_ID',
+      caption: 'Người tham gia',
+      allowSorting: false,
+      minWidth: 200,
+      cellTemplate(container, options) {
+        const currentEmployee = options.data.Task_Assigned_Employee;
+        if (currentEmployee) {
+          container
+            .append($('<div>', { class: 'img', style: `background-image:url(${currentEmployee.Picture});` }))
+            .append('\n')
+            .append($('<span>', { class: 'name', text: currentEmployee.Name }));
+        }
       },
+      lookup: {
+        dataSource: employees,
+        valueExpr: 'ID',
+        displayExpr: 'Name',
+      },
+    }, {
+      caption: 'Tiến độ',
+      minWidth: 200,
+      cellTemplate: function(element, info) {
+            element.append(`<div class="progress progress-bar-primary mb-2">
+                                                            <div class="progress-bar progress-bar-striped progress-bar-animated"
+                                                                role="progressbar" aria-valuenow="20" aria-valuemin="20"
+                                                                aria-valuemax="100" style="width:20%"></div>
+                                                        </div>`);
+        }
+    }, {
+      caption: 'Trạng thái',
+      minWidth: 200,
+      cellTemplate: function(element, info) {
+            element.append(`<div class="badge badge-secondary mr-1 mb-1">Chưa bắt đầu</div>`);
+        }
     }, {
       dataField: 'Task_Priority',
       caption: 'Priority',
@@ -285,13 +288,27 @@ $(() => {
       },
       visible: false,
     }, {
-      dataField: 'Task_Start_Date',
-      caption: 'Start Date',
+      dataField: 'intended_start_time',
+      caption: 'Ngày bắt đầu',
       dataType: 'date',
     }, {
-      dataField: 'Task_Due_Date',
-      caption: 'Due Date',
+      dataField: 'intended_end_time',
+      caption: 'Ngày kết thúc',
       dataType: 'date',
+    }, {
+      dataField: 'name',
+      dataField: 'Thao tác',
+      cellTemplate: function(element, info) {
+            element.append(`<a href="`+baseurl+`/department/edit/`+info.data.id+`"><i
+                                                        class='far fa-edit'></i></a>
+                                                <form style='display: inline-block' method='POST'
+                                                    action="`+baseurl+`/department/delete/`+info.data.id+`">
+                                                @csrf
+                                                    <input name='_method' type='hidden' value='DELETE'>
+                                                    <a href='#' class='show_confirm' data-toggle='tooltip'
+                                                        title='Delete'> <i class='fa fa-trash-alt'> </i></a>
+                                                </form>`);
+        }
     }],
   });
 });

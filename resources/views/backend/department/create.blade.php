@@ -61,6 +61,15 @@
                                         <div class="col-12 col-sm-12">
                                             <div class="form-group">
                                                 <div class="controls">
+                                                    <label>Số lượng nhân viên</label>
+                                                    <input type="text" class="form-control"
+                                                        placeholder="Nhập số lượng" value="" name="amount">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-sm-12">
+                                            <div class="form-group">
+                                                <div class="controls">
                                                     <label>Mô tả</label>
                                                     <textarea name="description" rows="3" placeholder="Nhập mô tả"
                                                         class=" form-control"></textarea>

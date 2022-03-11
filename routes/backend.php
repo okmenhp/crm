@@ -61,7 +61,6 @@ Route::group(['middleware' => 'admin'], function () {
 
     Route::get('/',  'Backend\AuthController@login');
     //Route::get('/forgot-password',  'Backend\AuthController@forgot_password');
-    Route::get('/calendar',  ['as' => 'admin.calendar.index', 'uses' => 'Backend\CalendarController@index']);
 
     //Người dùng hệ thống user
     Route::get('/user',  ['as' => 'admin.user.index', 'uses' => 'Backend\UserController@index']);
@@ -95,6 +94,14 @@ Route::group(['middleware' => 'admin'], function () {
     Route::post('/department/update/{id}',  ['as' => 'admin.department.update', 'uses' => 'Backend\DepartmentController@update']);
     Route::delete('/department/delete/{id}',  ['as' => 'admin.department.destroy', 'uses' => 'Backend\DepartmentController@destroy']);
 
+    // Lịch trình
+    Route::get('/calendar',  ['as' => 'admin.calendar.index', 'uses' => 'Backend\CalendarController@index']);
+    Route::get('/calendar/type',  ['as' => 'admin.calendar.type', 'uses' => 'Backend\CalendarController@type']);
+    Route::post('/calendar/type/create',  ['as' => 'admin.calendar.type.create', 'uses' => 'Backend\CalendarController@createType']);
+    Route::post('/calendar/type/update',  ['as' => 'admin.calendar.type.update', 'uses' => 'Backend\CalendarController@updateType']);
+    Route::post('/calendar/type/delete',  ['as' => 'admin.calendar.type.delete', 'uses' => 'Backend\CalendarController@deleteType']);
+    Route::get('/calendar/meeting',  ['as' => 'admin.calendar.meeting', 'uses' => 'Backend\CalendarController@meeting']);
+    
     //Kanban
     Route::get('/kanban/{project_id}',  ['as' => 'admin.kanban.index', 'uses' => 'Backend\KanbanController@index']);
 
