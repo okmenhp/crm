@@ -98,7 +98,7 @@
                                     {{-- {{ dd($record->customer_types->name) }} --}}
                                     <!-- users edit account form start -->
                                     <form class="form-validate" method="post"
-                                        action="{{ route('admin.customer.store') }}">
+                                        action="{{ route('admin.customer.store', $record->id) }}">
                                         <div class="row">
                                             <div class="col-12 col-sm-6">
                                                 <div class="col-12">

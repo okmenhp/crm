@@ -70,8 +70,7 @@
             <li class=" nav-item">
                 <a href="{{ route('admin.customer.index') }}">
                     <i class="fal fa-angel"></i>
-                    <span class="menu-title text-truncate" data-i18n="Todo">Quản lý khách
-                        hàng</span>
+                    <span class="menu-title text-truncate" data-i18n="Todo">CRM</span>
                 </a>
                 <ul class="menu-content">
                     <li>
