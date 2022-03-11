@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Department extends Model
 {
     protected $table = 'department';
-    protected $fillable = ['name','parent_id','status','ordering','description'];
+    protected $fillable = ['name','parent_id','status','ordering','description','manager_id'];
 
     public function created_at() {
         return date("d/m/Y", strtotime($this->created_at));

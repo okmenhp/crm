@@ -16,14 +16,15 @@
 //           });
 //       });
 
-$('.show_confirm').on('click', function(){
-                if(confirm('Bạn có chắc muốn xoá bản ghi này?')){
-                    this.parentNode.submit();
-                }else{
-                    return false;
-                }   
-            });
+$(document).on('click', '.show_confirm', function () {
+    if (confirm('Bạn có chắc muốn xoá bản ghi này?')) {
+        this.parentNode.submit();
+    } else {
+        return false;
+    }
+});
 
 setTimeout(() => {
-       $('.alert').alert('close');
+    $('.alert').alert('close');
 }, 3000);
+

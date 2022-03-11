@@ -7,25 +7,29 @@ use App\Http\Controllers\Controller;
 use App\Models\Department;
 use Validator;
 use App\Repositories\DepartmentRepository;
+use App\Repositories\EmployeeRepository;
 
 class DepartmentController extends Controller
 {
-    public function __construct(DepartmentRepository $departmentRepo)
+    public function __construct(DepartmentRepository $departmentRepo, EmployeeRepository $employeeRepo)
     {
         $this->departmentRepo = $departmentRepo;
+        $this->employeeRepo = $employeeRepo;
     }
 
     public function index(Request $request)
     {
-        $records = $this->departmentRepo->paginate($request, 10);
+        $records = $this->departmentRepo->readFE($request);
         $department_array = $this->departmentRepo->all();
-        return view('backend/department/index', compact('records', 'department_array'));
+        $employee_array = $this->employeeRepo->all();
+        return view('backend/department/index', compact('records', 'department_array','employee_array'));
     }
 
     public function create()
     {
         $department_array = $this->departmentRepo->all();
-        return view('backend/department/create', compact('department_array'));
+        $employee_array = $this->employeeRepo->all();
+        return view('backend/department/create', compact('department_array','employee_array'));
     }
 
     //Use Reposiotry

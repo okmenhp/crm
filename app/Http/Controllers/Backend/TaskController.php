@@ -31,10 +31,9 @@ class TaskController extends BaseController
     public function index(Request $request)
     {
         $records = $this->taskRepo->readFE($request);
-        $employee_data = $this->employeeRepo->readFE($request);
-        dd($records);
+        $employee_array = $this->employeeRepo->all();
         $department_array = $this->departmentRepo->all();
-        return view('backend/task/index', compact('records','employee_data','department_array'));
+        return view('backend/task/index', compact('records','employee_array','department_array'));
     }
 
     /**

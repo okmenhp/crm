@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddColunmToUserTable4 extends Migration
+class CreateTaskUserTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class AddColunmToUserTable4 extends Migration
      */
     public function up()
     {
-        Schema::table('user', function (Blueprint $table) {
-            $table->date('birthday')->nullable();
-            $table->string('otp')->nullable();
-            $table->datetime('otp_term')->nullable();
+        Schema::create('task_user', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('task_id')->unsigned();
+            $table->integer('user_id')->unsigned();
         });
     }
 
@@ -27,8 +27,6 @@ class AddColunmToUserTable4 extends Migration
      */
     public function down()
     {
-        Schema::table('user', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('task_user');
     }
 }

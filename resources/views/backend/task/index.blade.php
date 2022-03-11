@@ -105,7 +105,7 @@
                                                     <td>{{$record->name}}</td>
                                                     <td>Project</td>
                                                     <td>
-                                                        @foreach($employee_data as $key => $employee)
+                                                        @foreach($employee_array as $key => $employee)
                                                         @if($employee->id == $record->member_id)
                                                         {{$employee->name}}
                                                         @endif
@@ -177,8 +177,6 @@
 
 <script type="text/javascript">
     var tasks = JSON.parse('<?= $records; ?>');
-    // console.log('t1',tasks);
-    // console.log('t2',tasks2);
     console.log(employees);
 </script>
 
