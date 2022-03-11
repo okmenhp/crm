@@ -164,4 +164,10 @@ class ScheduleController extends Controller
         
         return response()->json(['data'=>$record]);
     }
+
+    public function meetingEdit(Request $request){
+        $record = Meeting::find($request->id);
+        
+        return response()->json(['data'=>$record]);
+    }
 }

@@ -46,4 +46,6 @@ Route::post('schedule/defaultFormInsert','Api\ScheduleController@defaultFormInse
 Route::post('schedule/insert','Api\ScheduleController@insert')->name('api.schedule.insert');
 Route::post('schedule/update','Api\ScheduleController@update')->name('api.schedule.update');
 Route::post('schedule/delete','Api\ScheduleController@delete')->name('api.schedule.delete');
+Route::post('schedule/filter','Api\ScheduleController@filter')->name('api.schedule.filter');
 Route::get('calendar/type/edit','Api\ScheduleController@typeEdit')->name('api.calendar.type.edit');
+Route::get('calendar/meeting/edit','Api\ScheduleController@meetingEdit')->name('api.calendar.meeting.edit');

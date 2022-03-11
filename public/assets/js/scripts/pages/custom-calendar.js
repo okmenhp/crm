@@ -21,7 +21,7 @@ var global_data = []
 calendar.on({
     // open a detail popup
     'clickSchedule': function(e) {
-        console.log('clickSchedule', e);
+        console.log(e)
         $('#schedule-id').val(e.schedule.raw.schedule_id)
         getDetailSchedule(e.schedule.raw.schedule_id)
         var modal = $('#calendarModal')
@@ -180,6 +180,8 @@ function showData(data){
     
     //description
     $('#description').val(data.data.description)
+    $('#end-date').attr("min", $('#start-date').val())
+    $('#start-date').attr("max", $('#end-date').val())
 }
 
 function getDetailSchedule(id){
@@ -305,6 +307,36 @@ function deleteSchedule(id){
         }
     })
 }
+
+function filterSchedule(type){
+    console.log(type)
+    $.ajax({
+        url: "api/schedule/filter",
+        type: "POST",
+        data: {type},
+        processData: false,
+        contentType: false, 
+        enctype: 'multipart/form-data',
+        success: function(data){
+
+        }
+}
+
+// lọc lịch theo type
+$('input[name="type-schedule"][value=all]').on('change', function(){
+    if($(this).prop('checked')){
+        $('input[name="type-schedule"]').prop('checked', true)
+    }else{
+        $('input[name="type-schedule"]').prop('checked', false)
+    }
+})
+$('input[name="type-schedule"]').on('change', function(){
+    var type_changed = []
+    $('input[name="type-schedule"]:checked').each(function(){
+        $(this).val() != "all" ? type_changed.push($(this).val()) : false
+    })
+    filterSchedule(type_changed)
+})
 
 // calendar handling - end
 
@@ -484,6 +516,17 @@ $("body").delegate('.attendee-box button', 'click', function(){
     }));
     father.remove()
 })
+
+// đặt thời gian bắt đầu - kết thúc
+$( document ).ready(function() {
+    $('#start-date').on('change', function(){
+        $('#end-date').attr("min", $(this).val())
+    })
+    $('#end-date').on('change', function(){
+        $('#start-date').attr("max", $(this).val())
+    })
+})
+
 
 //Thay đổi kiểu hiển thị của lịch
 $('#move-today').click(function(){

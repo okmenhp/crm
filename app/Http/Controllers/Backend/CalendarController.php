@@ -53,6 +53,27 @@ class CalendarController extends BaseController
     public function meeting()
     {
         $records = Meeting::all();
-        return view('backend/calendar/type', compact('records'));
+        return view('backend/calendar/meeting', compact('records'));
+    }
+
+    public function createMeeting(Request $request){
+        if($request->name == null){
+            return Redirect::back()->withErrors("error");
+        }
+        Meeting::create(['name'=>$request->name]);
+        return redirect()->route('admin.calendar.meeting');
+    }
+
+    public function deleteMeeting(Request $request){
+        Meeting::find($request->id)->delete();
+        return redirect()->route('admin.calendar.meeting');
+    }
+
+    public function updateMeeting(Request $request){
+        $type_schedule = Meeting::find($request->id);
+        $type_schedule->name = $request->name;
+        $type_schedule->save();
+
+        return redirect()->route('admin.calendar.meeting');
     }
 }

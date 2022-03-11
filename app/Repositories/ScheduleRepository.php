@@ -109,4 +109,30 @@ class ScheduleRepository extends AbstractRepository {
         $sdata = $this->getScheduleRepeat($date_range, $schedule);
         return $sdata;
     }
+
+    public function getFilterSchedule($date_range, $schedule, $filter){
+        $data = array();
+        $sdata = array();
+        dd($filter);
+        foreach($date_range as $record){
+            $sdata['id'] = "1";
+            $sdata['calendarId'] = $schedule->id;
+            $sdata['category'] = "time";
+            $sdata['title'] = $schedule->title;
+            $sdata['start'] = $record;
+            $sdata['end'] = $record;
+            $sdata['isAllDay'] = $schedule->all_day;
+            // if($schedule->type_id)
+            $sdata['isVisible'] = false;
+            $sdata['raw']['schedule_id'] = $schedule->id;
+            $sdata['raw']['location'] = $schedule->location;
+            $sdata['raw']['meeting_id'] = $schedule->meeting_id;
+            $sdata['raw']['description'] = $schedule->description;
+            $sdata['raw']['pattern'] = $schedule->pattern;
+            $sdata['raw']['type_id'] = $schedule->type_id;
+            array_push($data, $sdata);
+        }
+
+        return $data;
+    }
 }

@@ -66,7 +66,7 @@
                                         <label for="checkbox0">Xem tất cả</label>
                                     </div>
                                     @foreach($types as $key => $type)
-                                        <div class="checkbox mt-1">
+                                        <div class="checkbox mt-1 type-schedule-check">
                                             <input type="checkbox" name="type-schedule" class="checkbox-input tui-full-calendar-checkbox-square"
                                                 id="checkbox{{$type->id}}" value="{{$type->id}}" checked>
                                             <label for="checkbox{{$type->id}}">{{$type->name}}</label>
