@@ -249,6 +249,11 @@
                                             <button id="addRow" type="button" class="btn btn-outline-info mb-1">Thêm công việc con</button>
                                         </div>
                                     </div>
+                                    <div class="progress progress-bar-primary mb-2">
+                                                            <div class="progress-bar progress-bar-striped progress-bar-animated"
+                                                                role="progressbar" aria-valuenow="20" aria-valuemin="0"
+                                                                aria-valuemax="100" style=""></div>
+                                                        </div>
                                     <div class="form-group">
                                         <label>Bình luận</label>
                                         <textarea class="form-control" rows="3" placeholder="Nhập bình luận"></textarea>
@@ -302,6 +307,37 @@
     $(document).on('click', '#removeRow', function () {
         $(this).closest('#inputFormRow').remove();
     });
+
+    $(document).on('click','.check_task', function(){
+        let task_id = $(this).data('task_id');
+        let id = $(this).data('id');
+        if($(this).is(":checked")){
+            $('#input_' + id).prop('disabled', true);
+            var checked = 1;
+        }else{
+            $('#input_' + id).prop('disabled', false);
+            var checked = null;
+        }
+        checked_task(task_id, checked);
+    });
+
+    function checked_task(task_id, checked){
+        $.ajax({
+        type: "get",
+        url: '/api/task/checked',
+        dataType: 'JSON',
+        async: false,
+        data: {
+          task_id : task_id,
+          checked : checked
+        }
+      }).done(function(resp) {
+        let bar_html =  `<div class="progress-bar progress-bar-striped progress-bar-animated"
+                                                                role="progressbar" aria-valuenow="20" aria-valuemin="0"
+                                                                aria-valuemax="100" style="width:`+resp.data+`%;"></div>`;
+        $('.progress').html(bar_html);
+      });
+    }
 
     
 </script>
