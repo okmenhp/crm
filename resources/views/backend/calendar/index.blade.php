@@ -96,21 +96,21 @@
                                 <ul class="dropdown-menu dropdown-menu-right" role="menu"
                                     aria-labelledby="dropdownMenu-calendarType">
                                     <li role="presentation">
-                                        <a class="dropdown-menu-title dropdown-item" role="menuitem"
+                                        <a class="dropdown-menu-title dropdown-item" id="toggle-daily" role="menuitem"
                                             data-action="toggle-daily">
                                             <i class="bx bx-calendar-alt mr-50"></i>
                                             <span>Ngày</span>
                                         </a>
                                     </li>
                                     <li role="presentation">
-                                        <a class="dropdown-menu-title dropdown-item" role="menuitem"
+                                        <a class="dropdown-menu-title dropdown-item" id="toggle-weekly" role="menuitem"
                                             data-action="toggle-weekly">
                                             <i class='bx bx-calendar-event mr-50'></i>
                                             <span>Tuần</span>
                                         </a>
                                     </li>
                                     <li role="presentation">
-                                        <a class="active dropdown-menu-title dropdown-item" role="menuitem"
+                                        <a class="active dropdown-menu-title dropdown-item" id="toggle-month" role="menuitem"
                                             data-action="toggle-monthly">
                                             <i class="bx bx-calendar mr-50"></i>
                                             <span>Tháng</span>
@@ -159,13 +159,13 @@
                             </div>
                             <!-- calenadar next and previous navigate button -->
                             <span id="menu-navi" class="menu-navigation">
-                                <button type="button" class="btn btn-action move-today mr-50 px-75"
+                                <button type="button" id="move-today" class="btn btn-action move-today mr-50 px-75"
                                     data-action="move-today">Hôm nay</button>
-                                <button type="button" class="btn btn-icon btn-action  move-day mr-50 px-50"
+                                <button type="button" id="move-prev" class="btn btn-icon btn-action move-day mr-50 px-50"
                                     data-action="move-prev">
                                     <i class="bx bx-chevron-left" data-action="move-prev"></i>
                                 </button>
-                                <button type="button" class="btn btn-icon btn-action move-day mr-50 px-50"
+                                <button type="button" id="move-next" class="btn btn-icon btn-action move-day mr-50 px-50"
                                     data-action="move-next">
                                     <i class="bx bx-chevron-right" data-action="move-next"></i>
                                 </button>

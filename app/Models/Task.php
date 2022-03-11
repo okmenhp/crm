@@ -12,7 +12,8 @@ class Task extends Model
 
     protected $table = 'task';
     protected $primaryKey = 'id';
-    protected $fillable = ['name', 'list_id', 'master_id', 'project_id', 'date', 'intended_start_time', 'intended_end_time', 'level', 'finish', 'attachment', 'description', 'admin_id','parent_id'];
+
+    protected $fillable = ['name', 'list_id', 'manager_id','user_id', 'project_id', 'date', 'time', 'level', 'finish', 'attachment', 'description', 'admin_id','parent_id','created_by', 'updated_by', 'ordering','intended_start_time','intended_end_time','real_start_time', 'real_end_time', 'status'];
 
     public function format_date($time){
         date('d-m-Y', strtotime($time));
