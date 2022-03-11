@@ -46,9 +46,8 @@ Route::post('schedule/defaultFormInsert','Api\ScheduleController@defaultFormInse
 Route::post('schedule/insert','Api\ScheduleController@insert')->name('api.schedule.insert');
 Route::post('schedule/update','Api\ScheduleController@update')->name('api.schedule.update');
 Route::post('schedule/delete','Api\ScheduleController@delete')->name('api.schedule.delete');
-<<<<<<< HEAD
 
 Route::get('task/checked','Api\KanbanController@checked')->name('api.task.checked');
-=======
+
 Route::get('calendar/type/edit','Api\ScheduleController@typeEdit')->name('api.calendar.type.edit');
->>>>>>> 806a8f3c7a00e1a8c2b25c63f2a5c10ebed1c476
+
