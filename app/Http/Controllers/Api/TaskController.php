@@ -7,6 +7,7 @@ use App\Http\Controllers\BaseController;
 use App\Traits\ApiResponse;
 use Storage;
 use App\Repositories\TaskRepository;
+use App\Models\Task;
 
 class TaskController extends BaseController
 {
@@ -41,5 +42,14 @@ class TaskController extends BaseController
         $res = $this->taskRepo->create($input);
         return $this->success($res);
     }
+
+    public function checked(Request $request)
+    {
+        $input = $request->all();
+        Task::where('id', $input['task_id'])->update(['checked' => $input['checked']]);
+        return $this->success($res);
+    }
+
+
 
 }

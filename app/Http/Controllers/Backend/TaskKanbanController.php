@@ -32,6 +32,7 @@ class TaskKanbanController extends BaseController
 
     public function store($subtask, $list_id, $task_id)
     {  
+        Task::where('parent_id', $task_id)->delete();
         foreach($subtask as $st){
             $input['name'] = $st;
             $input['list_id'] = $list_id;

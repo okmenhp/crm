@@ -271,7 +271,8 @@ $(function () {
              let subtask_html = "";
              subtask_html += '<div id="inputFormRow">';
              subtask_html += '<div class="input-group mb-1">';
-             subtask_html += '<input type="text" name="subtask[]" data-is_db="1" required class="form-control m-input" placeholder="Enter title" autocomplete="off" value="'+value.name+'">';
+             subtask_html += '<input type="checkbox" class="check_task" style="height: 35px; width:20px;" data-task_id="'+value.id+'" data-id="'+index+'">';
+             subtask_html += '<input type="text" name="subtask[]" data-is_db="1" id="input_'+index+'" required class="form-control m-input" placeholder="Enter title" autocomplete="off" value="'+value.name+'">';
              subtask_html += '<div class="input-group-append">';
              subtask_html += '<button id="removeRow" type="button" class="btn btn-outline-danger">Xoá</button>';
              subtask_html += '</div>';

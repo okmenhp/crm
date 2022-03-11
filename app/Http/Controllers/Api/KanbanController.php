@@ -69,4 +69,14 @@ class KanbanController extends BaseController
         return $this->success($res);
     }
 
+    public function checked(Request $request)
+    {
+        $input = $request->all();
+        $res= Task::where('id', $input['task_id'])->update(['is_checked' => $input['checked']]);
+        $parent_id = Task::where('id', $input['task_id'])->first()->parent_id;
+        $tyle =  Task::where('parent_id', $parent_id)->where('is_checked' ,1)->count() / Task::where('parent_id', $parent_id)->count();
+        $tyle = $tyle * 100;
+        return $this->success($tyle);
+    }
+
 }
