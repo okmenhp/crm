@@ -44,8 +44,34 @@
             </li>
             <li class=" navigation-header text-truncate"><span data-i18n="Apps">Lịch trình</span>
             </li>
-            <li class=" nav-item"><a href="/calendar"><i class="fal fa-calendar"></i><span
+            {{-- <li class=" nav-item"><a href="{{ route('admin.calendar.index', 0) }}"><i class="fal fa-calendar"></i><span
                         class="menu-title text-truncate" data-i18n="Todo">Quản lý lịch trình</span></a>
+            </li> --}}
+            <li class=" nav-item">
+                <a href="javascript:void(0)">
+                    <i class="fal fa-calendar"></i>
+                    <span class="menu-title text-truncate" data-i18n="Todo">Quản lý lịch trình</span>
+                </a>
+                <ul class="menu-content">
+                    <li>
+                        <a class="d-flex align-items-center" href="{{ route('admin.calendar.index') }}">
+                            <i class="bx bx-right-arrow-alt"></i>
+                            <span class="menu-item text-truncate" data-i18n="Invoice List">Lịch trình</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="d-flex align-items-center" href="{{ route('admin.calendar.type') }}">
+                            <i class="bx bx-right-arrow-alt"></i>
+                            <span class="menu-item text-truncate" data-i18n="Invoice List">Loại lịch trình</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="d-flex align-items-center" href="{{ route('admin.calendar.meeting') }}">
+                            <i class="bx bx-right-arrow-alt"></i>
+                            <span class="menu-item text-truncate" data-i18n="Invoice List">Phòng họp</span>
+                        </a>
+                    </li>
+                </ul>
             </li>
             <li class=" navigation-header text-truncate"><span data-i18n="Apps">Công việc</span>
             </li>
@@ -70,8 +96,7 @@
             <li class=" nav-item">
                 <a href="{{ route('admin.customer.index') }}">
                     <i class="fal fa-angel"></i>
-                    <span class="menu-title text-truncate" data-i18n="Todo">Quản lý khách
-                        hàng</span>
+                    <span class="menu-title text-truncate" data-i18n="Todo">CRM</span>
                 </a>
                 <ul class="menu-content">
                     <li>

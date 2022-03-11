@@ -8,6 +8,7 @@ use App\Http\Controllers\BaseController;
 use App\Models\Country;
 use App\Models\Customer;
 use App\Models\CustomerContactor;
+use App\Repositories\CustomerContactorRepository;
 use App\Repositories\CustomerTypeRepository;
 use App\Repositories\CustomerRepository;
 
@@ -16,9 +17,11 @@ class CustomerController extends BaseController
     public function __construct(
         CustomerTypeRepository $customerTypeRepo,
         CustomerRepository $customerRepo,
+        CustomerContactorRepository $customerContactorRepo,
     ) {
         $this->customerTypeRepo = $customerTypeRepo;
         $this->customerRepo = $customerRepo;
+        $this->customerContactorRepo = $customerContactorRepo;
     }
     /**
      * Display a listing of the resource.
@@ -118,7 +121,8 @@ class CustomerController extends BaseController
         }
         // $input['status'] = isset($input['status']) ? 1 : 0;
         $this->customerRepo->update($input, $id);
-        return redirect()->route('admin.customer.edit')->with('success', 'Cập nhật thành công');;
+        // return redirect()->route('admin.customer.edit')->with('success', 'Cập nhật thành công');
+        return redirect()->back()->with('success', 'Cập nhật thành công');
     }
 
     /**
@@ -131,14 +135,23 @@ class CustomerController extends BaseController
     {
         //
         // $customer_contactors = CustomerContactor::where('customer_id', $id)->delete();
-
-        // $customer = Customer::findOrFail($id);
-        // $customer->delete();
-        // $in_customer = \DB::table('customer')->where('customer_type_id', $id)->first();
-        // if ($in_customer == null) {
-        //     $this->customerTypeRepo->delete($id);
-        //     return redirect()->back()->with('success', 'Xóa thành công');
-        // }
-        // return redirect()->back()->with('error', 'Không thể xoá vì bản ghi đang được liên kết với khách hàng');
+        $customer = Customer::find($id);
+        if ($customer) {
+            try {
+                \DB::beginTransaction();
+                $this->customerContactorRepo->deleteWhere([
+                    'customer_id' => $id
+                ]);
+                $this->customerRepo->delete($id);
+                \DB::commit();
+                // return redirect()->back()->with('success', 'Xóa thành công');
+                return redirect()->route('admin.customer.index')->with('success', 'Xóa thành công');;
+            } catch (\Exception $ex) {
+                \DB::rollback();
+                return redirect()->back()->with('error', 'Có lỗi xảy ra. Vui lòng thử lại');
+            }
+        } else {
+            return redirect()->back()->with('error', 'Không tồn tại bản ghi');
+        }
     }
 }

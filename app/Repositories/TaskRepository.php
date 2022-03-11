@@ -49,7 +49,7 @@ class TaskRepository extends AbstractRepository {
             }
 
         }
-        return $query->orderBy('task.id', 'DESC')->select('task.id','task.name','task.parent_id','task.user_id')->get();
+        return $query->orderBy('task.id', 'DESC')->get();
 
 
     }

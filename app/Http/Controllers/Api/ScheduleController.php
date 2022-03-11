@@ -158,4 +158,10 @@ class ScheduleController extends Controller
 
         return response()->json(['data'=>'Xóa thành công']);
     }
+
+    public function typeEdit(Request $request){
+        $record = TypeSchedule::find($request->id);
+        
+        return response()->json(['data'=>$record]);
+    }
 }
