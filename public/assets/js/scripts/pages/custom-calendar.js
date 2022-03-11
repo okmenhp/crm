@@ -245,7 +245,6 @@ function dataChangeSchedule(action){
         contentType: false, 
         enctype: 'multipart/form-data',
         success: function(data){
-            console.log(data.pattern + ", " + data.old_pattern)
             if(action == 1){
                 calendar.createSchedules([data.data])
                 global_data.push(data.data)
@@ -265,21 +264,21 @@ function dataChangeSchedule(action){
                         if(global_data[0][i].calendarId == id){
                             calendar.deleteSchedule("1", parseInt(id));
                             global_data[0].splice(i, 1)
+                            i--
                         }
                     }
-                    console.log("333333333333333333")
                     global_data[0].push(data.data)
                     calendar.createSchedules([data.data])
                 }else{ // lặp lại -> lặp lại
-                    // for(var i=0; i<global_data[0].length; i++){
-                    //     if(global_data[0][i].calendarId == id){
-                    //         calendar.deleteSchedule("1", parseInt(id));
-                    //         global_data[0].splice(i, 1)
-                    //         calendar.updateSchedule("1", data.data.calendarId, data.data);
-                    //     }
-                    // }
+                    for(var i=0; i<global_data[0].length; i++){
+                        if(global_data[0][i].calendarId == id){
+                            calendar.deleteSchedule("1", parseInt(id));
+                            global_data[0].splice(i, 1)
+                            i--
+                        }
+                    }
                     global_data[0] = global_data[0].concat(data.data)
-                    console.log("4444444444444444")
+                    calendar.createSchedules(data.data)
                 }
             }
             swal({
@@ -337,33 +336,12 @@ function isFillForm(){
 }
 
 $('#btn-new-schedule').click(function(){
-    // defaultFormInsert()
-    // $('#schedule-id').val("")
-    // var modal = $('#calendarModal')
-    // modal.modal('toggle')
-    // modal.find('button.final-button').html('Tạo mới')
-    // modal.find('button.delete-button').toggle(false)
-    console.log(global_data)
-    // global_data[0].splice(7, 1)
-    // global_data[0].push({
-    //     id: '1',
-    //     calendarId: '1',
-    //     title: 'my schedule',
-    //     category: 'time',
-    //     dueDateClass: '',
-    //     start: '2018-01-18T22:30:00+09:00',
-    //     end: '2018-01-19T02:30:00+09:00'
-    // })
-    global_data[0][0] = {
-        id: '1',
-        calendarId: '1',
-        title: 'my schedule',
-        category: 'time',
-        dueDateClass: '',
-        start: '2018-01-18T22:30:00+09:00',
-        end: '2018-01-19T02:30:00+09:00'
-    }
-    console.log(global_data)
+    defaultFormInsert()
+    $('#schedule-id').val("")
+    var modal = $('#calendarModal')
+    modal.modal('toggle')
+    modal.find('button.final-button').html('Tạo mới')
+    modal.find('button.delete-button').toggle(false)
 })
 
 $('#calendarModal .final-button').click(function(){
