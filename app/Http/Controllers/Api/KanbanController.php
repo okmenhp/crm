@@ -64,6 +64,8 @@ class KanbanController extends BaseController
         $res = $this->taskRepo->find($input['card_id']);
         $res->user_id = UserTask::where('task_id', $input['card_id'])->pluck('user_id');
         $res->subtask = Task::where('parent_id', $res->id)->get();
+        $res->intended_start_time = str_replace(' ', 'T', $res->intended_start_time);
+        $res->intended_end_time = str_replace(' ', 'T', $res->intended_end_time);
         return $this->success($res);
     }
 

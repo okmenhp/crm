@@ -171,11 +171,11 @@
                                     <div class="row">
                                     <div class="form-group col-6">
                                         <label>Bắt đầu dự kiến</label>
-                                        <input name="intended_start_time" type="datetime-local" class="form-control edit-kanban-item-date" placeholder="">
+                                        <input name="intended_start_time" id="intended_start_time" type="datetime-local" class="form-control edit-kanban-item-date" placeholder="">
                                     </div>
                                     <div class="form-group col-6">
                                         <label>Kết thúc dự kiến</label>
-                                        <input name="intended_end_time" type="datetime-local" class="form-control edit-kanban-item-date" placeholder="">
+                                        <input name="intended_end_time" id="intended_end_time" type="datetime-local" class="form-control edit-kanban-item-date" placeholder="">
                                     </div>
                                     </div>      
                                     <div class="row">
@@ -228,29 +228,30 @@
                                             </div>
                                     </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label>Tài liệu</label>
-                                        <div class="custom-file">
-                                            <input name="attachment" type="file" class="custom-file-input" id="emailAttach">
-                                            <label class="custom-file-label" for="emailAttach">Chọn tài
-                                                liệu</label>
-                                        </div>
+                                   <div class="input-group mt-1 mb-1">
+                                      <div class="custom-file">
+                                        <input type="file" class="custom-file-input" id="inputGroupFile02">
+                                        <label class="custom-file-label" for="inputGroupFile02">Chọn tài liệu</label>
+                                      </div>
+                                      <div class="input-group-append">
+                                        <span class="input-group-text" id="">Pacific Drive</span>
+                                      </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <label>Danh sách công việc con</label>
-                                            <div id="inputFormRow"> 
+
+                                            <div id="inputFormRow">
+
                                             </div>
-    
+                                      
                                             <div id="newRow"></div>
                                             <button id="addRow" type="button" class="btn btn-outline-info mb-1">Thêm công việc con</button>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label>Bình luận</label>
-
                                         <textarea class="form-control" rows="3" placeholder="Nhập bình luận"></textarea>
-
                                     </div>
                                 </div>
                             </div>

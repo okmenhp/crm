@@ -262,13 +262,13 @@ $(function () {
         }
       }).done(function(resp) {
          let data = resp.data;
-         $('input[name="intended_start_time"]').val("2013-03-18T13:00");
-         var subtask_html = "";
          $("#manager_id").val(data.manager_id).change();
          $("#status").val(data.status).change();
          $("#level").val(data.level).change();
-         $("input[name=intended_start_time]").val(data.intended_start_time);
+         $("#intended_start_time").val(data.intended_start_time);
+         $("#intended_end_time").val(data.intended_end_time);
          $.each( data.subtask, function( index , value ) {
+             let subtask_html = "";
              subtask_html += '<div id="inputFormRow">';
              subtask_html += '<div class="input-group mb-1">';
              subtask_html += '<input type="text" name="subtask[]" data-is_db="1" required class="form-control m-input" placeholder="Enter title" autocomplete="off" value="'+value.name+'">';
@@ -276,9 +276,10 @@ $(function () {
              subtask_html += '<button id="removeRow" type="button" class="btn btn-outline-danger">Xoá</button>';
              subtask_html += '</div>';
              subtask_html += '</div>';
+             $('#newRow').append(subtask_html);
          });
          
-         $('#newRow').html(subtask_html);
+         
       });
   }
 
