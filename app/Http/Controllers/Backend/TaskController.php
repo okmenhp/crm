@@ -45,7 +45,8 @@ class TaskController extends BaseController
     {
         $employee_array = $this->employeeRepo->all();
         $project_array = $this->projectRepo->all();
-        return view('backend/task/create', compact('employee_array','project_array'));
+        $task_array = $this->taskRepo->all();
+        return view('backend/task/create', compact('employee_array','project_array','task_array'));
     }
 
     /**
@@ -57,7 +58,8 @@ class TaskController extends BaseController
     public function store(Request $request)
     {
         $input = $request->all();
-        $input['date'] = date('Y-m-d H:i:s', strtotime($input['date']));
+        $input['intended_start_time'] = date('Y-m-d H:i:s', strtotime($input['intended_start_time']));
+        $input['intended_end_time'] = date('Y-m-d H:i:s', strtotime($input['intended_end_time']));
         // $input['user_id'] = implode(',', $input['user_id']);
         $validator = \Validator::make($input, $this->taskRepo->validateCreate());
         if ($validator->fails()) {

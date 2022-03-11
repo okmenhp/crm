@@ -144,14 +144,13 @@
 </div>
 <!-- END: Content-->
 <script type="text/javascript">
-    var departments = JSON.parse('<?= $records; ?>');
-    var employees = JSON.parse('<?= $employee_array; ?>');
-    console.log(employees);
-    console.log(employees2);
-
-    var baseurl = window.location.origin;
 
     $(() => {
+
+    var departments = JSON.parse('<?= $records; ?>');
+    var employees = JSON.parse('<?= $employee_array; ?>');
+    var baseurl = window.location.origin;
+
   const treeListData = $.map(departments, (task) => {
     departments.Task_Assigned_Employee = null;
     $.each(employees, (_, employee) => {
@@ -207,10 +206,12 @@
         valueExpr: 'ID',
         displayExpr: 'name',
       },
-    }, {
+    },{
+      dataField: 'amount',
+      caption: 'Số lượng nhân viên',
+    },{
       dataField: 'name',
       caption: 'Trạng thái',
-      width: 300,
     //   customizeText() {
     //     return `<span class="badge badge-success">Hoạt động</span>`;
     //   }
@@ -220,7 +221,6 @@
     },{
       dataField: 'name',
       dataField: 'Thao tác',
-      width: 300,
       cellTemplate: function(element, info) {
             element.append(`<a href="`+baseurl+`/department/edit/`+info.data.id+`"><i
                                                         class='far fa-edit'></i></a>

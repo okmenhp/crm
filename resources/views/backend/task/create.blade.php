@@ -39,6 +39,18 @@
                                             </div>
                                             <div class="col-12 col-sm-12">
                                                 <div class="form-group">
+                                                    <div class="controls">
+                                                        <label>Công việc cha</label>
+                                                        <select class="select2 form-control" name="parent_id">
+                                                            @foreach($task_array as $key => $task)
+                                                            <option value="{{$task->id}}">{{$task->name}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-sm-12">
+                                                <div class="form-group">
                                                     <label>Người phụ trách</label>
                                                     <select class="select2 form-control" name="master_id">
                                                         @foreach($employee_array as $key => $employee)
@@ -51,7 +63,7 @@
                                                 <div class="form-group">
                                                     <label>Người thực hiện</label>
                                                     <select class="select2 form-control" multiple="multiple"
-                                                        name="user_id[]" style="width:100%;">
+                                                        name="user_id[]" style="width:100%;" required>
                                                         @foreach($employee_array as $key => $employee)
                                                         <option value="{{$employee->id}}">{{$employee->name}}</option>
                                                         @endforeach
@@ -61,11 +73,26 @@
                                             <div class="col-12 col-sm-12">
                                                 <div class="form-group">
                                                     <div class="mb-1">
-                                                        <h6>Thời hạn</h6>
+                                                        <h6>Ngày bắt đầu</h6>
                                                         <fieldset class="form-group position-relative has-icon-left">
                                                             <input type="text" class="form-control pickadate"
-                                                                placeholder="Chọn thời hạn
-                                                                " name="date">
+                                                                placeholder="Chọn ngày bắt đầu
+                                                                " name="intended_start_time">
+                                                            <div class="form-control-position">
+                                                                <i class='bx bx-calendar'></i>
+                                                            </div>
+                                                        </fieldset>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-sm-12">
+                                                <div class="form-group">
+                                                    <div class="mb-1">
+                                                        <h6>Ngày kết thúc</h6>
+                                                        <fieldset class="form-group position-relative has-icon-left">
+                                                            <input type="text" class="form-control pickadate"
+                                                                placeholder="Chọn ngày kết thúc
+                                                                " name="intended_end_time">
                                                             <div class="form-control-position">
                                                                 <i class='bx bx-calendar'></i>
                                                             </div>
