@@ -41,7 +41,7 @@
 
 
                 <!-- User new mail right area -->
-                <div class="kanban-sidebar">
+              <!--   <div class="kanban-sidebar">
                     <div class="card shadow-none quill-wrapper">
                         <div class="card-header d-flex justify-content-between align-items-center border-bottom px-2 py-1">
                             <h3 class="card-title">Thông tin công việc</h3>
@@ -49,7 +49,6 @@
                                 <i class="bx bx-x"></i>
                             </button>
                         </div>
-                        <!-- form start -->
                        {{--  <form class="edit-kanban-item">
                             <div class="kanban-edit-content" style="overflow-y: scroll;">
                                 <div class="card-body">
@@ -136,10 +135,9 @@
                                     <span>Xác nhận</span>
                                 </button>
                             </div>
-                        </form> --}}
-                        <!-- form start end-->
+                        </form>
                     </div>
-                </div>
+                </div> -->
                 <!--/ User Chat profile right area -->
             </section>
             <!--/ Sample Project kanban -->
@@ -238,13 +236,12 @@
                                         <div class="col-lg-12">
                                             <label>Danh sách công việc con</label>
                                             <div id="inputFormRow">
-                                                <div class="input-group mb-1">
+                                                <!-- <div class="input-group mb-1">
                                                     <input type="text" name="subtask[]" class="form-control m-input" placeholder="Enter title" autocomplete="off">
                                                     <div class="input-group-append">
                                                          <button class="btn btn-outline-danger" type="button">Xoá</button>
                                                     </div>
-                                                </div>
-                                                
+                                                </div> -->  
                                             </div>
                                        
                                             <div id="newRow"></div>
@@ -253,22 +250,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label>Bình luận</label>
-                                        <div class="snow-container border rounded p-1">
-                                            <div class="compose-editor"></div>
-                                            <div class="d-flex justify-content-end">
-                                                <div class="compose-quill-toolbar">
-                                                    <span class="ql-formats mr-0">
-                                                        <button class="ql-bold"></button>
-                                                        <button class="ql-italic"></button>
-                                                        <button class="ql-underline"></button>
-                                                        <button class="ql-link"></button>
-                                                        <button class="ql-image"></button>
-                                                        <button class="btn btn-sm btn-primary btn-comment ml-25">Bình
-                                                            luận</button>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <textarea class="form-control" rows="3" placeholder="Nhập bình luận"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -307,7 +289,7 @@
         var html = '';
         html += '<div id="inputFormRow">';
         html += '<div class="input-group mb-1">';
-        html += '<input type="text" name="subtask[]" class="form-control m-input" placeholder="Enter title" autocomplete="off">';
+        html += '<input type="text" name="subtask[]" required class="form-control m-input" placeholder="Enter title" autocomplete="off">';
         html += '<div class="input-group-append">';
         html += '<button id="removeRow" type="button" class="btn btn-outline-danger">Xoá</button>';
         html += '</div>';
