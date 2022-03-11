@@ -41,7 +41,7 @@
 
 
                 <!-- User new mail right area -->
-                <div class="kanban-sidebar">
+              <!--   <div class="kanban-sidebar">
                     <div class="card shadow-none quill-wrapper">
                         <div class="card-header d-flex justify-content-between align-items-center border-bottom px-2 py-1">
                             <h3 class="card-title">Thông tin công việc</h3>
@@ -49,7 +49,6 @@
                                 <i class="bx bx-x"></i>
                             </button>
                         </div>
-                        <!-- form start -->
                        {{--  <form class="edit-kanban-item">
                             <div class="kanban-edit-content" style="overflow-y: scroll;">
                                 <div class="card-body">
@@ -136,10 +135,9 @@
                                     <span>Xác nhận</span>
                                 </button>
                             </div>
-                        </form> --}}
-                        <!-- form start end-->
+                        </form>
                     </div>
-                </div>
+                </div> -->
                 <!--/ User Chat profile right area -->
             </section>
             <!--/ Sample Project kanban -->
@@ -173,11 +171,11 @@
                                     <div class="row">
                                     <div class="form-group col-6">
                                         <label>Bắt đầu dự kiến</label>
-                                        <input name="intended_start_time" type="datetime-local" class="form-control edit-kanban-item-date" placeholder="">
+                                        <input name="intended_start_time" id="intended_start_time" type="datetime-local" class="form-control edit-kanban-item-date" placeholder="">
                                     </div>
                                     <div class="form-group col-6">
                                         <label>Kết thúc dự kiến</label>
-                                        <input name="intended_end_time" type="datetime-local" class="form-control edit-kanban-item-date" placeholder="">
+                                        <input name="intended_end_time" id="intended_end_time" type="datetime-local" class="form-control edit-kanban-item-date" placeholder="">
                                     </div>
                                     </div>      
                                     <div class="row">
@@ -185,8 +183,10 @@
                                             <div class="form-group">
                                                 <label>Người quản lý</label>
                                                 <div class="d-flex align-items-center">
-                                                    <select class="select2 form-control" name="manager_id">    
-                                                    {!! $user_html !!}
+                                                    <select class="form-control" id="manager_id" name="manager_id">    
+                                                     @foreach($user_option as $u_o)
+                                                         <option value="{{$u_o->id}}">{{$u_o->full_name}}</option>
+                                                     @endforeach
                                                     </select>
                                                 </div>
                                             </div>
@@ -195,8 +195,10 @@
                                             <div class="form-group">
                                                 <label>Người tham gia</label>
                                                 <div class="d-flex align-items-center">
-                                                    <select class="select2 form-control" name="user_id[]" multiple="">    
-                                                    {!! $user_html !!}
+                                                    <select required="" class="select2 form-control" name="user_id[]" multiple="">    
+                                                    @foreach($user_option as $u_o)
+                                                         <option selected="" value="{{$u_o->id}}">{{$u_o->full_name}}</option>
+                                                     @endforeach
                                                     </select>
                                                 </div>
                                             </div>
@@ -206,7 +208,7 @@
                                     <div class="col-6">
                                             <div class="form-group">
                                                 <label>Trạng thái</label>
-                                                <select name="status" class="form-control">
+                                                <select name="status" id="status" class="form-control">
                                                     <option value="1" class="bg-primary text-white" selected>Đang xử lý</option>
                                                     <option value="2" class="bg-danger text-white">Quá hạn</option>
                                                     <option value="3" class="bg-success text-white">Hoàn thành</option>
@@ -218,57 +220,38 @@
                                      <div class="col-6">
                                             <div class="form-group">
                                                 <label>Độ ưu tiên</label>
-                                                <select name="level" class="form-control">
-                                                    <option value="1" class="bg-primary text-white" >Thấp</option>
-                                                    <option value="2" class="bg-danger text-white" selected>Trung bình</option>
-                                                    <option value="3" class="bg-success text-white">Cao</option>
+                                                <select id="level" name="level" class="form-control">
+                                                    <option value="1" class="" >Thấp</option>
+                                                    <option value="2" class="" selected>Trung bình</option>
+                                                    <option value="3" class="">Cao</option>
                                                 </select>
                                             </div>
                                     </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label>Tài liệu</label>
-                                        <div class="custom-file">
-                                            <input name="attachment" type="file" class="custom-file-input" id="emailAttach">
-                                            <label class="custom-file-label" for="emailAttach">Chọn tài
-                                                liệu</label>
-                                        </div>
+                                   <div class="input-group mt-1 mb-1">
+                                      <div class="custom-file">
+                                        <input type="file" class="custom-file-input" id="inputGroupFile02">
+                                        <label class="custom-file-label" for="inputGroupFile02">Chọn tài liệu</label>
+                                      </div>
+                                      <div class="input-group-append">
+                                        <span class="input-group-text" id="">Pacific Drive</span>
+                                      </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <label>Danh sách công việc con</label>
+
                                             <div id="inputFormRow">
-                                                <div class="input-group mb-1">
-                                                    <input type="text" name="subtask[]" class="form-control m-input" placeholder="Enter title" autocomplete="off">
-                                                    <div class="input-group-append">
-                                                         <button class="btn btn-outline-danger" type="button">Xoá</button>
-                                                    </div>
-                                                </div>
-                                                
+
                                             </div>
-                                       
+                                      
                                             <div id="newRow"></div>
                                             <button id="addRow" type="button" class="btn btn-outline-info mb-1">Thêm công việc con</button>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label>Bình luận</label>
-                                        <div class="snow-container border rounded p-1">
-                                            <div class="compose-editor"></div>
-                                            <div class="d-flex justify-content-end">
-                                                <div class="compose-quill-toolbar">
-                                                    <span class="ql-formats mr-0">
-                                                        <button class="ql-bold"></button>
-                                                        <button class="ql-italic"></button>
-                                                        <button class="ql-underline"></button>
-                                                        <button class="ql-link"></button>
-                                                        <button class="ql-image"></button>
-                                                        <button class="btn btn-sm btn-primary btn-comment ml-25">Bình
-                                                            luận</button>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <textarea class="form-control" rows="3" placeholder="Nhập bình luận"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -307,7 +290,7 @@
         var html = '';
         html += '<div id="inputFormRow">';
         html += '<div class="input-group mb-1">';
-        html += '<input type="text" name="subtask[]" class="form-control m-input" placeholder="Enter title" autocomplete="off">';
+        html += '<input type="text" name="subtask[]" required class="form-control m-input" placeholder="Enter title" autocomplete="off">';
         html += '<div class="input-group-append">';
         html += '<button id="removeRow" type="button" class="btn btn-outline-danger">Xoá</button>';
         html += '</div>';

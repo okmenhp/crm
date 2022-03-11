@@ -21,7 +21,7 @@ trait UploadFile
     {
         
         $request->validate([
-            'file'=> ['required','max:200'] 
+            'file'=> ['required','max:2000'] 
         ]);
 
         $user = User::findOrFail(auth()->user()->id);
