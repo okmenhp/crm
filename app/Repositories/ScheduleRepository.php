@@ -110,11 +110,39 @@ class ScheduleRepository extends AbstractRepository {
         return $sdata;
     }
 
-    public function getFilterSchedule($date_range, $schedule, $filter){
+    // Filter
+
+    public function getFilterScheduleNormal($schedule, $filter){
+        $sdata = array();
+        $sdata['isVisible'] = true;
+        if(!in_array($schedule->type_id, $filter) && $schedule->type_id != null){
+            $sdata['isVisible'] = false;
+        }
+        $sdata['id'] = "1";
+        $sdata['calendarId'] = $schedule->id;
+        $sdata['category'] = "time";
+        $sdata['title'] = $schedule->title;
+        $sdata['start'] = $schedule->start_date;
+        $sdata['end'] = $schedule->end_date;
+        $sdata['isAllDay'] = $schedule->all_day;
+        $sdata['raw']['schedule_id'] = $schedule->id;
+        $sdata['raw']['location'] = $schedule->location;
+        $sdata['raw']['meeting_id'] = $schedule->meeting_id;
+        $sdata['raw']['description'] = $schedule->description;
+        $sdata['raw']['pattern'] = $schedule->pattern;
+        $sdata['raw']['type_id'] = $schedule->type_id;
+        return $sdata;
+    }
+
+    public function getFilterScheduleRepeat($date_range, $schedule, $filter){
         $data = array();
         $sdata = array();
-        dd($filter);
         foreach($date_range as $record){
+            $sdata['isVisible'] = true;
+            if(!in_array($schedule->type_id, $filter) && $schedule->type_id != null){
+                
+                $sdata['isVisible'] = false;
+            }
             $sdata['id'] = "1";
             $sdata['calendarId'] = $schedule->id;
             $sdata['category'] = "time";
@@ -122,8 +150,6 @@ class ScheduleRepository extends AbstractRepository {
             $sdata['start'] = $record;
             $sdata['end'] = $record;
             $sdata['isAllDay'] = $schedule->all_day;
-            // if($schedule->type_id)
-            $sdata['isVisible'] = false;
             $sdata['raw']['schedule_id'] = $schedule->id;
             $sdata['raw']['location'] = $schedule->location;
             $sdata['raw']['meeting_id'] = $schedule->meeting_id;
@@ -134,5 +160,38 @@ class ScheduleRepository extends AbstractRepository {
         }
 
         return $data;
+    }
+
+    public function getFilterDateByWeekDay($wdays, $schedule_periods){
+        $result = array();
+        foreach($schedule_periods as $period){
+            $day = $period->format('N');
+            if(in_array(++$day, $wdays)){
+                array_push($result, $period->format('Y-m-d h:m:s'));
+            }
+        }
+        return $result;
+    }
+
+    public function getFilterDateByMonthDay($mdays, $schedule_periods){
+        $result = array();
+        foreach($schedule_periods as $period){
+            $day = $period->format('d');
+            if(in_array($day, $mdays)){
+                array_push($result, $period->format('Y-m-d h:m:s'));
+            }
+        }
+        return $result;
+    }
+
+    public function getFilterDataRepeat($schedule, $filter){
+        $days = explode(",", $schedule->wday);
+        if($schedule->pattern == 3){
+            $days = explode(",", $schedule->mday);
+        }
+        $schedule_periods = CarbonPeriod::create(date('Y-m-d', strtotime($schedule->start_date)), date('Y-m-d', strtotime($schedule->end_date)))->toArray();
+        $date_range = $schedule->pattern == 2 ? $this->getFilterDateByWeekDay($days, $schedule_periods) : $this->getFilterDateByMonthDay($days, $schedule_periods);
+        $sdata = $this->getFilterScheduleRepeat($date_range, $schedule, $filter);
+        return $sdata;
     }
 }

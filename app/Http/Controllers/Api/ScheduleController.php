@@ -159,6 +159,23 @@ class ScheduleController extends Controller
         return response()->json(['data'=>'Xóa thành công']);
     }
 
+    public function filter(Request $request){
+        $data = array();
+        
+        // dd($request->all());
+        $schedules = Schedule::whereIn('id', User::find(Auth::id())->schedules()->pluck('schedule_id')->toArray())->get();
+        foreach($schedules as $key => $schedule){
+            if($schedule->pattern == 1){
+                $sdata = $this->scheduleRepo->getFilterScheduleNormal($schedule, $request->type);
+                array_push($data, $sdata);
+            }else{
+                $data = array_merge($data, $this->scheduleRepo->getFilterDataRepeat($schedule, $request->type));
+            }
+        }
+
+        return response()->json(['data'=>$data]);
+    }
+
     public function typeEdit(Request $request){
         $record = TypeSchedule::find($request->id);
         

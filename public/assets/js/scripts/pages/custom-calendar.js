@@ -309,17 +309,18 @@ function deleteSchedule(id){
 }
 
 function filterSchedule(type){
-    console.log(type)
     $.ajax({
         url: "api/schedule/filter",
         type: "POST",
         data: {type},
-        processData: false,
-        contentType: false, 
-        enctype: 'multipart/form-data',
         success: function(data){
-
+            console.log(data.data)
+            calendar.clear()
+            global_data = []
+            calendar.createSchedules(data.data)
+            global_data.push(data.data)
         }
+    })
 }
 
 // lọc lịch theo type
