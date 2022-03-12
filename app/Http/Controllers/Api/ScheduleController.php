@@ -24,30 +24,43 @@ class ScheduleController extends Controller
         $this->scheduleRepo = $scheduleRepo;
     }
 
-    public function index(Request $request){
-        $data = array();
+    // public function index(Request $request){
+    //     $data = array();
         
-        if($request->type == 'toggle-monthly'){
-            $start_date = date('Y-m-d', strtotime($request->start_date));
-            $end_date = date('Y-m-d', strtotime($request->end_date));
-            $schedules = Schedule::whereIn('id', User::find(Auth::id())->schedules()->pluck('schedule_id')->toArray())->where('start_date','>=',$start_date)->where('start_date','<=',$end_date)->get();
-            foreach($schedules as $key => $schedule){
-                if($schedule->pattern == 1){
-                    $sdata = $this->scheduleRepo->getScheduleNormal($schedule);
-                    array_push($data, $sdata);
-                }elseif($schedule->pattern == 2){
-                    $data = array_merge($data, $this->scheduleRepo->getDataRepeat($schedule, $request->start_date, $request->end_date));
-                }elseif($schedule->pattern == 3){
-                    // $mdays = explode(",", $schedule->mday);
-                    // $periods = CarbonPeriod::create(date('Y-m-d', strtotime($request->start_date)), date('Y-m-d', strtotime($request->end_date)))->toArray();
-                    // $schedule_periods = CarbonPeriod::create(date('Y-m-d', strtotime($schedule->start_date)), date('Y-m-d', strtotime($schedule->end_date)))->toArray();
-                    // $date_range = $this->scheduleRepo->getDateByMonthDay($mdays, $periods, $schedule_periods);
-                    // $sdata = $this->scheduleRepo->getScheduleRepeat($date_range, $schedule);
-                    $data = array_merge($data, $this->scheduleRepo->getDataRepeat($schedule, $request->start_date, $request->end_date));
-                }
+    //     if($request->type == 'toggle-monthly'){
+    //         $start_date = date('Y-m-d', strtotime($request->start_date));
+    //         $end_date = date('Y-m-d', strtotime($request->end_date));
+    //         $schedules = Schedule::whereIn('id', User::find(Auth::id())->schedules()->pluck('schedule_id')->toArray())->where('start_date','>=',$start_date)->where('start_date','<=',$end_date)->get();
+    //         foreach($schedules as $key => $schedule){
+    //             if($schedule->pattern == 1){
+    //                 $sdata = $this->scheduleRepo->getScheduleNormal($schedule);
+    //                 array_push($data, $sdata);
+    //             }elseif($schedule->pattern == 2){
+    //                 $data = array_merge($data, $this->scheduleRepo->getDataRepeat($schedule, $request->start_date, $request->end_date));
+    //             }elseif($schedule->pattern == 3){
+    //                 // $mdays = explode(",", $schedule->mday);
+    //                 // $periods = CarbonPeriod::create(date('Y-m-d', strtotime($request->start_date)), date('Y-m-d', strtotime($request->end_date)))->toArray();
+    //                 // $schedule_periods = CarbonPeriod::create(date('Y-m-d', strtotime($schedule->start_date)), date('Y-m-d', strtotime($schedule->end_date)))->toArray();
+    //                 // $date_range = $this->scheduleRepo->getDateByMonthDay($mdays, $periods, $schedule_periods);
+    //                 // $sdata = $this->scheduleRepo->getScheduleRepeat($date_range, $schedule);
+    //                 $data = array_merge($data, $this->scheduleRepo->getDataRepeat($schedule, $request->start_date, $request->end_date));
+    //             }
+    //         }
+    //     }
+
+    //     return response()->json(['data'=>$data]);
+    // }
+    public function index(){
+        $data = array();
+        $schedules = Schedule::whereIn('id', User::find(Auth::id())->schedules()->pluck('schedule_id')->toArray())->get();
+        foreach($schedules as $key => $schedule){
+            if($schedule->pattern == 1){
+                $sdata = $this->scheduleRepo->getScheduleNormal($schedule);
+                array_push($data, $sdata);
+            }else{
+                $data = array_merge($data, $this->scheduleRepo->getDataRepeat($schedule));
             }
         }
-
         return response()->json(['data'=>$data]);
     }
 
@@ -114,7 +127,8 @@ class ScheduleController extends Controller
         return response()->json(['data'=>$sdata]);
     }
 
-    public function update(Request $request){        
+    public function update(Request $request){      
+        // dd($request->all());
         $schedule = Schedule::find($request->id);
         $old_pattern = $schedule->pattern;
 
@@ -144,12 +158,14 @@ class ScheduleController extends Controller
                 }
             }
         }
-        $sdata = $this->scheduleRepo->getScheduleNormal($schedule);
-        if($schedule->pattern != 1){
-            $sdata = $this->scheduleRepo->getDataRepeat($schedule, $request->start_date, $request->end_date);
-        }
+        // $sdata = $this->scheduleRepo->getScheduleNormal($schedule);
+        // if($schedule->pattern != 1){
+        //     $sdata = $this->scheduleRepo->getDataRepeat($schedule, $request->start_date, $request->end_date);
+        // }
 
-        return response()->json(['data'=>$sdata, 'pattern'=>$schedule->pattern ,'old_pattern'=>$old_pattern]);
+        // return response()->json(['data'=>$sdata, 'pattern'=>$schedule->pattern ,'old_pattern'=>$old_pattern]);
+        // dd($this->index());
+        return $this->index();
     }
 
     public function delete(Request $request){
@@ -161,8 +177,6 @@ class ScheduleController extends Controller
 
     public function filter(Request $request){
         $data = array();
-        
-        // dd($request->all());
         $schedules = Schedule::whereIn('id', User::find(Auth::id())->schedules()->pluck('schedule_id')->toArray())->get();
         foreach($schedules as $key => $schedule){
             if($schedule->pattern == 1){
@@ -172,7 +186,6 @@ class ScheduleController extends Controller
                 $data = array_merge($data, $this->scheduleRepo->getFilterDataRepeat($schedule, $request->type));
             }
         }
-
         return response()->json(['data'=>$data]);
     }
 

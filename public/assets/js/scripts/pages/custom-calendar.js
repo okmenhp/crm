@@ -251,37 +251,39 @@ function dataChangeSchedule(action){
                 calendar.createSchedules([data.data])
                 global_data.push(data.data)
             }else{
-                if(data.pattern == 1 && data.old_pattern == 1){ // thông thường -> thông thường
-                    calendar.updateSchedule("1", data.data.calendarId, data.data);
-                }else if(data.pattern != 1  && data.old_pattern == 1){ // thông thường -> lặp lại
-                    calendar.deleteSchedule("1", parseInt(id));
-                    for(var i=0; i<global_data[0].length; i++){
-                        if(global_data[0][i].calendarId == id){
-                            global_data[0].splice(i, 1)
-                        }
-                    }
-                    calendar.createSchedules(data.data)
-                }else if(data.pattern == 1  && data.old_pattern != 1){ // lặp lại -> thông thường
-                    for(var i=0; i<global_data[0].length; i++){
-                        if(global_data[0][i].calendarId == id){
-                            calendar.deleteSchedule("1", parseInt(id));
-                            global_data[0].splice(i, 1)
-                            i--
-                        }
-                    }
-                    global_data[0].push(data.data)
-                    calendar.createSchedules([data.data])
-                }else{ // lặp lại -> lặp lại
-                    for(var i=0; i<global_data[0].length; i++){
-                        if(global_data[0][i].calendarId == id){
-                            calendar.deleteSchedule("1", parseInt(id));
-                            global_data[0].splice(i, 1)
-                            i--
-                        }
-                    }
-                    global_data[0] = global_data[0].concat(data.data)
-                    calendar.createSchedules(data.data)
-                }
+                // if(data.pattern == 1 && data.old_pattern == 1){ // thông thường -> thông thường
+                //     calendar.updateSchedule("1", data.data.calendarId, data.data);
+                // }else if(data.pattern != 1  && data.old_pattern == 1){ // thông thường -> lặp lại
+                //     calendar.deleteSchedule("1", parseInt(id));
+                //     for(var i=0; i<global_data[0].length; i++){
+                //         if(global_data[0][i].calendarId == id){
+                //             global_data[0].splice(i, 1)
+                //         }
+                //     }
+                //     calendar.createSchedules(data.data)
+                // }else if(data.pattern == 1  && data.old_pattern != 1){ // lặp lại -> thông thường
+                //     for(var i=0; i<global_data[0].length; i++){
+                //         if(global_data[0][i].calendarId == id){
+                //             calendar.deleteSchedule("1", parseInt(id));
+                //             global_data[0].splice(i, 1)
+                //             i--
+                //         }
+                //     }
+                //     global_data[0].push(data.data)
+                //     calendar.createSchedules([data.data])
+                // }else{ // lặp lại -> lặp lại
+                //     for(var i=0; i<global_data[0].length; i++){
+                //         if(global_data[0][i].calendarId == id){
+                //             calendar.deleteSchedule("1", parseInt(id));
+                //             global_data[0].splice(i, 1)
+                //             i--
+                //         }
+                //     }
+                //     global_data[0] = global_data[0].concat(data.data)
+                //     calendar.createSchedules(data.data)
+                // }
+                calendar.clear()
+                calendar.createSchedules(data.data)
             }
             swal({
                 icon: "success",
@@ -291,6 +293,27 @@ function dataChangeSchedule(action){
         }
     })
 }
+
+// function updateSchedule(){
+//     var data = new FormData();
+//     var id = $('#schedule-id').val()
+//     data.append('id', id)
+//     $.ajax({
+//         url: "api/schedule/update",
+//         type: "POST",
+//         data: data,
+//         processData: false,
+//         contentType: false, 
+//         enctype: 'multipart/form-data',
+//         success: function(data){
+//             $('#calendarModal').modal('toggle')
+            // calendar.clear()
+            // console.log(data.data)
+            // calendar.createSchedules(data.data)
+//             // global_data.push(data.data)
+//         }
+//     })
+// }
 
 function deleteSchedule(id){
     $.ajax({
@@ -342,10 +365,6 @@ $('input[name="type-schedule"]').on('change', function(){
 })
 
 // calendar handling - end
-
-// $('#start-date').on('change',function(){
-//     console.log($(this).val())
-// })
 
 function isFillForm(){
     var title = $('#title').val();
