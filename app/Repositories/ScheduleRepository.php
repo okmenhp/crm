@@ -115,7 +115,11 @@ class ScheduleRepository extends AbstractRepository {
     public function getFilterScheduleNormal($schedule, $filter){
         $sdata = array();
         $sdata['isVisible'] = true;
-        if(!in_array($schedule->type_id, $filter) && $schedule->type_id != null){
+        if($filter != null){
+            if(!in_array($schedule->type_id, $filter)){
+                $sdata['isVisible'] = false;
+            }
+        }else{
             $sdata['isVisible'] = false;
         }
         $sdata['id'] = "1";
@@ -137,10 +141,14 @@ class ScheduleRepository extends AbstractRepository {
     public function getFilterScheduleRepeat($date_range, $schedule, $filter){
         $data = array();
         $sdata = array();
+        // dd($filter);
         foreach($date_range as $record){
             $sdata['isVisible'] = true;
-            if(!in_array($schedule->type_id, $filter) && $schedule->type_id != null){
-                
+            if($filter != null){
+                if(!in_array($schedule->type_id, $filter)){
+                    $sdata['isVisible'] = false;
+                }
+            }else{
                 $sdata['isVisible'] = false;
             }
             $sdata['id'] = "1";

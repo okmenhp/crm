@@ -314,7 +314,6 @@ function filterSchedule(type){
         type: "POST",
         data: {type},
         success: function(data){
-            console.log(data.data)
             calendar.clear()
             global_data = []
             calendar.createSchedules(data.data)
@@ -333,6 +332,9 @@ $('input[name="type-schedule"][value=all]').on('change', function(){
 })
 $('input[name="type-schedule"]').on('change', function(){
     var type_changed = []
+    if($(this).prop('checked')){
+        $('input[name="type-schedule"][value=all]').prop('checked', true)
+    }
     $('input[name="type-schedule"]:checked').each(function(){
         $(this).val() != "all" ? type_changed.push($(this).val()) : false
     })
@@ -391,7 +393,6 @@ function defaultFormInsert(){
     $.ajax({
         url: "api/schedule/defaultFormInsert",
         type: "POST",
-        // data: data,
         processData: false,
         contentType: false, 
         enctype: 'multipart/form-data',

@@ -62,8 +62,13 @@
                                     <!-- view All checkbox -->
                                     <div class="checkbox">
                                         <input type="checkbox" name="type-schedule" class="checkbox-input tui-full-calendar-checkbox-square"
-                                            id="checkbox0" value="all" checked>
-                                        <label for="checkbox0">Xem tất cả</label>
+                                            id="checkboxall" value="all" checked>
+                                        <label for="checkboxall">Xem tất cả</label>
+                                    </div>
+                                    <div class="checkbox mt-1 type-schedule-check">
+                                        <input type="checkbox" name="type-schedule" class="checkbox-input tui-full-calendar-checkbox-square"
+                                            id="checkbox0" value="0" checked>
+                                        <label for="checkbox0">Mặc định</label>
                                     </div>
                                     @foreach($types as $key => $type)
                                         <div class="checkbox mt-1 type-schedule-check">
@@ -251,7 +256,7 @@
                                 <div class="col-md-6">
                                     <label for="type" class="col-form-label">Phân loại:</label>
                                     <select id="type" class="form-control">
-                                        <option value="" selected>--Chọn thẻ--</option>
+                                        <option value="" selected>Mặc định</option>
                                         @foreach($types as $type)
                                             <option value="{{$type->id}}">{{$type->name}}</option>
                                         @endforeach
