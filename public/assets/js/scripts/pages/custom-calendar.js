@@ -282,7 +282,7 @@ function dataChangeSchedule(action){
                 //     global_data[0] = global_data[0].concat(data.data)
                 //     calendar.createSchedules(data.data)
                 // }
-                calendar.clear()
+                calendar.clear()                
                 calendar.createSchedules(data.data)
             }
             swal({
