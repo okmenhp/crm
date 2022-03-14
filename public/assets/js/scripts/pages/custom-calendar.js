@@ -14,12 +14,33 @@ var calendar = new tui.Calendar('#calendar', {
     month: {isAlways6Week: false},
     useDetailPopup: false,
     useCreationPopup: false,
+    disableClick: true,
+    week: {
+        daynames: ['Chủ nhật','Thứ 2','Thứ 3','Thứ 4','Thứ 5','Thứ 6','Thứ 7']
+    },
+    template: {
+        alldayTitle: function(){
+            return '<span class="tui-full-calendar-left-content">CẢ NGÀY</span>';
+        }
+    }
 });
+
+// calendar.createSchedules([
+//     {
+//         id: '1',
+//         calendarId: '1',
+//         title: 'my schedule',
+//         category: 'time',
+//         dueDateClass: '',
+//         start: '2022-03-14T02:30:00',
+//         end: '2022-03-14T03:30:00',
+//         isAllDay: false
+//     }
+// ])
 
 calendar.on({
     // open a detail popup
     'clickSchedule': function(e) {
-        console.log(e)
         $('#schedule-id').val(e.schedule.raw.schedule_id)
         getDetailSchedule(e.schedule.raw.schedule_id)
         
@@ -28,23 +49,12 @@ calendar.on({
         modal.find('button.final-button').html('Lưu')
         modal.find('button.delete-button').toggle(true)
     },
-    // open a creation popup
-    // 'beforeCreateSchedule': function(e) {
-    //     console.log('beforeCreateSchedule', e);
-    //     var modal = $('#calendarModal')
-    //     modal.modal('toggle')
-    //     modal.find('button.final-button').html('Tạo mới')
-    // },
     // 'beforeUpdateSchedule': function(e) {
     //     console.log('beforeUpdateSchedule', e);
     //     e.schedule.start = e.start;
     //     e.schedule.end = e.end;
-    //     cal.updateSchedule(e.schedule.id, e.schedule.calendarId, e.schedule);
+    //     calendar.updateSchedule(e.schedule.id, e.schedule.calendarId, e.schedule);
     // },
-    // 'beforeDeleteSchedule': function(e) {
-    //     console.log('beforeDeleteSchedule', e);
-    //     cal.deleteSchedule(e.schedule.id, e.schedule.calendarId);
-    // }
 });
 
 function getDateRangeCalendar(type){
@@ -348,9 +358,9 @@ $('#calendarModal .final-button').click(function(){
     }
 })
 
-$('#calendarModal .delete-button').click(function(){
-    deleteSchedule($('#schedule-id').val())
-})
+// $('#calendarModal .delete-button').click(function(){
+//     deleteSchedule($('#schedule-id').val())
+// })
 
 function defaultFormInsert(){
     $.ajax({

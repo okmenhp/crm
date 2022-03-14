@@ -296,8 +296,38 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-danger delete-button">Xóa</button>
+                            <button type="button" class="btn btn-danger delete-button" data-toggle="modal" data-target="#update-option">Xóa</button>
                             <button type="button" class="btn btn-secondary final-button"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="update-option" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        {{-- <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div> --}}
+                        <div class="modal-body">
+                            <div class="">
+                                <input type="radio" name="" id="" class="form-control">
+                                <label for="">Lịch trình hiện tại</label>
+                            </div>
+                            <div class="">
+                                <input type="radio" name="" id="" class="form-control">
+                                <label for="">Lịch trình hiện tại và sau này</label>
+                            </div>
+                            <div class="">
+                                <input type="radio" name="" id="" class="form-control">
+                                <label for="">Tất cả lịch trình</label>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Save changes</button>
                         </div>
                     </div>
                 </div>

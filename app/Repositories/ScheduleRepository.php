@@ -64,8 +64,11 @@ class ScheduleRepository extends AbstractRepository {
         $sdata['calendarId'] = $schedule->id;
         $sdata['category'] = "time";
         $sdata['title'] = $schedule->title;
+        // $schedule->all_day == 1 ? $sdata['isAllDay'] = true : $sdata['isAllDay'] = false;
         $sdata['bgColor'] = $schedule->color_id != null ? ColorSchedule::find($schedule->color_id)->value : null;
+        $sdata['borderColor'] = $schedule->color_id != null ? ColorSchedule::find($schedule->color_id)->value : null;
         $sdata['start'] = $schedule->start_date;
+        $sdata['isReadOnly'] = true;
         $sdata['end'] = $schedule->end_date;
         $sdata['raw']['schedule_id'] = $schedule->id;
         $sdata['raw']['location'] = $schedule->location;
@@ -73,6 +76,7 @@ class ScheduleRepository extends AbstractRepository {
         $sdata['raw']['description'] = $schedule->description;
         $sdata['raw']['pattern'] = $schedule->pattern;
         $sdata['raw']['type_id'] = $schedule->type_id;
+        
         return $sdata;
     }
 
@@ -85,9 +89,11 @@ class ScheduleRepository extends AbstractRepository {
             $sdata['category'] = "time";
             $sdata['title'] = $schedule->title;
             $sdata['bgColor'] = $schedule->color_id != null ? ColorSchedule::find($schedule->color_id)->value : null;
+            $sdata['borderColor'] = $schedule->color_id != null ? ColorSchedule::find($schedule->color_id)->value : null;
             $sdata['start'] = $record;
             $sdata['end'] = $record;
             // $sdata['isAllDay'] = $schedule->all_day;
+            $sdata['isReadOnly'] = true;
             $sdata['raw']['schedule_id'] = $schedule->id;
             $sdata['raw']['location'] = $schedule->location;
             $sdata['raw']['meeting_id'] = $schedule->meeting_id;
