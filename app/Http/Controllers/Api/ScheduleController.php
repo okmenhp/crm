@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\ColorSchedule;
 use App\Models\Meeting;
 use App\Models\Schedule;
 use App\Models\TypeSchedule;
@@ -24,36 +25,10 @@ class ScheduleController extends Controller
         $this->scheduleRepo = $scheduleRepo;
     }
 
-    // public function index(Request $request){
-    //     $data = array();
-        
-    //     if($request->type == 'toggle-monthly'){
-    //         $start_date = date('Y-m-d', strtotime($request->start_date));
-    //         $end_date = date('Y-m-d', strtotime($request->end_date));
-    //         $schedules = Schedule::whereIn('id', User::find(Auth::id())->schedules()->pluck('schedule_id')->toArray())->where('start_date','>=',$start_date)->where('start_date','<=',$end_date)->get();
-    //         foreach($schedules as $key => $schedule){
-    //             if($schedule->pattern == 1){
-    //                 $sdata = $this->scheduleRepo->getScheduleNormal($schedule);
-    //                 array_push($data, $sdata);
-    //             }elseif($schedule->pattern == 2){
-    //                 $data = array_merge($data, $this->scheduleRepo->getDataRepeat($schedule, $request->start_date, $request->end_date));
-    //             }elseif($schedule->pattern == 3){
-    //                 // $mdays = explode(",", $schedule->mday);
-    //                 // $periods = CarbonPeriod::create(date('Y-m-d', strtotime($request->start_date)), date('Y-m-d', strtotime($request->end_date)))->toArray();
-    //                 // $schedule_periods = CarbonPeriod::create(date('Y-m-d', strtotime($schedule->start_date)), date('Y-m-d', strtotime($schedule->end_date)))->toArray();
-    //                 // $date_range = $this->scheduleRepo->getDateByMonthDay($mdays, $periods, $schedule_periods);
-    //                 // $sdata = $this->scheduleRepo->getScheduleRepeat($date_range, $schedule);
-    //                 $data = array_merge($data, $this->scheduleRepo->getDataRepeat($schedule, $request->start_date, $request->end_date));
-    //             }
-    //         }
-    //     }
-
-    //     return response()->json(['data'=>$data]);
-    // }
     public function index(){
         $data = array();
         $schedules = Schedule::whereIn('id', User::find(Auth::id())->schedules()->pluck('schedule_id')->toArray())->get();
-        foreach($schedules as $key => $schedule){
+        foreach($schedules as $schedule){
             if($schedule->pattern == 1){
                 $sdata = $this->scheduleRepo->getScheduleNormal($schedule);
                 array_push($data, $sdata);
@@ -73,6 +48,10 @@ class ScheduleController extends Controller
         $result['wday'] = explode(',', $schedule->wday);
         $result['mday'] = explode(',', $schedule->mday);
         $result['title'] = $schedule->title;
+        // $result['all_day'] = $schedule->all_day;
+        $result['color']['id'] = ColorSchedule::find($schedule->color_id)->id;
+        $result['color']['name'] = ColorSchedule::find($schedule->color_id)->name;
+        $result['color']['value'] = ColorSchedule::find($schedule->color_id)->value;
         $result['start_date'] = date('Y-m-d', strtotime($schedule->start_date))."T".date('h:m', strtotime($schedule->start_date));
         $result['end_date'] = date('Y-m-d', strtotime($schedule->end_date))."T".date('h:m', strtotime($schedule->end_date));
         $result['location'] = $schedule->location;
@@ -98,7 +77,10 @@ class ScheduleController extends Controller
 
     public function insert(Request $request){
         $data = array();
+        
+        $data['color_id'] = $request->color_id;
         $data['title'] = $request->title;
+        // $data['all_day'] = $request->all_day;
         $data['start_date'] = $request->start_date;
         $data['end_date'] = $request->end_date;
         $data['location'] = $request->location;
@@ -119,20 +101,15 @@ class ScheduleController extends Controller
                 $schedule->users()->attach($attendee);
             }
         }
-        $sdata = $this->scheduleRepo->getScheduleNormal($schedule);
-        if($data['pattern'] != 1){
-            $sdata = $this->scheduleRepo->getDataRepeat($schedule, $request->start_date, $request->end_date);
-        }
-
-        return response()->json(['data'=>$sdata]);
+        return $this->index();
     }
 
     public function update(Request $request){      
-        // dd($request->all());
         $schedule = Schedule::find($request->id);
-        $old_pattern = $schedule->pattern;
 
+        $schedule->color_id = $request->color_id;
         $schedule->title = $request->title;
+        // $schedule->all_day = $request->all_day;
         $schedule->start_date = $request->start_date;
         $schedule->end_date = $request->end_date;
         $schedule->location = $request->location;
@@ -158,13 +135,6 @@ class ScheduleController extends Controller
                 }
             }
         }
-        // $sdata = $this->scheduleRepo->getScheduleNormal($schedule);
-        // if($schedule->pattern != 1){
-        //     $sdata = $this->scheduleRepo->getDataRepeat($schedule, $request->start_date, $request->end_date);
-        // }
-
-        // return response()->json(['data'=>$sdata, 'pattern'=>$schedule->pattern ,'old_pattern'=>$old_pattern]);
-        // dd($this->index());
         return $this->index();
     }
 
@@ -178,7 +148,7 @@ class ScheduleController extends Controller
     public function filter(Request $request){
         $data = array();
         $schedules = Schedule::whereIn('id', User::find(Auth::id())->schedules()->pluck('schedule_id')->toArray())->get();
-        foreach($schedules as $key => $schedule){
+        foreach($schedules as $schedule){
             if($schedule->pattern == 1){
                 $sdata = $this->scheduleRepo->getFilterScheduleNormal($schedule, $request->type);
                 array_push($data, $sdata);

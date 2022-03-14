@@ -223,13 +223,40 @@
                                 <input type="text" class="form-control" id="title">
                             </div>
                             <div class="form-group row">
+                                {{-- <div class="col-md-6">
+                                    <label for="is-all-day" class="col-form-label">Loại thời gian:</label>
+                                    <select id="is-all-day" class="form-control">
+                                        <option value="0" selected>Mặc định</option>
+                                        <option value="1">Cả ngày</option>
+                                    </select>
+                                </div> --}}
+                                <div class="col-md-6">
+                                    <label class="col-form-label">Chọn màu:</label>
+                                    <button id="color" data-color="" class="btn-select-color form-control d-flex align-items-center justify-content-between">
+                                        <div class="d-flex align-items-center">
+                                            <div class="color" style="background: "></div>
+                                            <span class="text ml-1"></span>
+                                        </div>
+                                        <i class="arrow down"></i>
+                                    </button>
+                                    <div class="select-color-area border border-dark bg-white w-75">
+                                        @foreach($colors as $color)
+                                            <a href="javascript:void(0)" data-color="{{$color->id}}" class="color-select d-flex align-items-center justify-content-start">
+                                                <div class="color" style="background: {{$color->value}}"></div>
+                                                <span class="ml-1 text-dark">{{$color->name}}</span>
+                                            </a>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
                                 <div class="col-md-6">
                                     <label for="start-date" class="col-form-label"><span class="text-danger">*</span> Từ:</label>
-                                    <input type="datetime-local" class="form-control" id="start-date">
+                                    <input type="datetime-local" class="date-select form-control" id="start-date">
                                 </div>
                                 <div class="col-md-6">
                                     <label for="end-date" class="col-form-label"><span class="text-danger">*</span> Đến:</label>
-                                    <input type="datetime-local" class="form-control" id="end-date">
+                                    <input type="datetime-local" class="date-select form-control" id="end-date">
                                 </div>
                             </div>
                             <div class="form-group row">

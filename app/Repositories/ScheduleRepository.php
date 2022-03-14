@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Models\ColorSchedule;
 use App\Repositories\Support\AbstractRepository;
 use Carbon\CarbonPeriod;
 
@@ -63,9 +64,9 @@ class ScheduleRepository extends AbstractRepository {
         $sdata['calendarId'] = $schedule->id;
         $sdata['category'] = "time";
         $sdata['title'] = $schedule->title;
+        $sdata['bgColor'] = $schedule->color_id != null ? ColorSchedule::find($schedule->color_id)->value : null;
         $sdata['start'] = $schedule->start_date;
         $sdata['end'] = $schedule->end_date;
-        $sdata['isAllDay'] = $schedule->all_day;
         $sdata['raw']['schedule_id'] = $schedule->id;
         $sdata['raw']['location'] = $schedule->location;
         $sdata['raw']['meeting_id'] = $schedule->meeting_id;
@@ -83,9 +84,10 @@ class ScheduleRepository extends AbstractRepository {
             $sdata['calendarId'] = $schedule->id;
             $sdata['category'] = "time";
             $sdata['title'] = $schedule->title;
+            $sdata['bgColor'] = $schedule->color_id != null ? ColorSchedule::find($schedule->color_id)->value : null;
             $sdata['start'] = $record;
             $sdata['end'] = $record;
-            $sdata['isAllDay'] = $schedule->all_day;
+            // $sdata['isAllDay'] = $schedule->all_day;
             $sdata['raw']['schedule_id'] = $schedule->id;
             $sdata['raw']['location'] = $schedule->location;
             $sdata['raw']['meeting_id'] = $schedule->meeting_id;
@@ -125,9 +127,9 @@ class ScheduleRepository extends AbstractRepository {
         $sdata['calendarId'] = $schedule->id;
         $sdata['category'] = "time";
         $sdata['title'] = $schedule->title;
+        $sdata['bgColor'] = ColorSchedule::find($schedule->color_id)->value;
         $sdata['start'] = $schedule->start_date;
         $sdata['end'] = $schedule->end_date;
-        $sdata['isAllDay'] = $schedule->all_day;
         $sdata['raw']['schedule_id'] = $schedule->id;
         $sdata['raw']['location'] = $schedule->location;
         $sdata['raw']['meeting_id'] = $schedule->meeting_id;
@@ -153,9 +155,10 @@ class ScheduleRepository extends AbstractRepository {
             $sdata['calendarId'] = $schedule->id;
             $sdata['category'] = "time";
             $sdata['title'] = $schedule->title;
+            $sdata['bgColor'] = ColorSchedule::find($schedule->color_id)->value;
             $sdata['start'] = $record;
             $sdata['end'] = $record;
-            $sdata['isAllDay'] = $schedule->all_day;
+            // $sdata['isAllDay'] = $schedule->all_day;
             $sdata['raw']['schedule_id'] = $schedule->id;
             $sdata['raw']['location'] = $schedule->location;
             $sdata['raw']['meeting_id'] = $schedule->meeting_id;

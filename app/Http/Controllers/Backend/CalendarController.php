@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\BaseController;
+use App\Models\ColorSchedule;
 use App\Models\Meeting;
 use App\Models\Schedule;
 use App\Models\TypeSchedule;
@@ -20,7 +21,8 @@ class CalendarController extends BaseController
         
         $types = TypeSchedule::all();
         $meetings = Meeting::all();
-        return view('backend/calendar/index', compact('types','meetings'));
+        $colors = ColorSchedule::all();
+        return view('backend/calendar/index', compact('types','meetings', 'colors'));
     }
 
     public function type()
