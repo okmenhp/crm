@@ -26,3 +26,30 @@
 .txt-status-customer-defaul {
     color: #475f7b;
 }
+/* .dataTable {
+    margin-bottom: 0 !important;
+}
+.tc-table {
+    background: #fff !important;
+    margin-bottom: 15px !important;
+}
+table.dataTable {
+    border-collapse: collapse !important;
+    margin-bottom: 15px !important;
+}
+.tc-table.table > thead > tr > th,
+.tc-table.table > thead > tr > td {
+    border-bottom: 3px double #e5e5e5 !important;
+    border-color: #e5e5e5 !important;
+}
+
+.table tr:first-child th {
+    border-top: none !important;
+}
+.table thead th {
+    vertical-align: middle !important;
+}
+.s-table-list th,
+.s-table-list td {
+    position: relative !important;
+} */

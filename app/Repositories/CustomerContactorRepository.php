@@ -22,6 +22,12 @@ class CustomerContactorRepository extends AbstractRepository
         return $rules = [
             'name' => 'required',
             'customer_type_id' => 'required',
+            'gender' => 'in:1,2',
+            'phone_number' =>  [
+                'regex:/^((03|05|07|08|09)[0-9]{8})$/',
+            ],
+            'email' => 'email',
+            'date_of_birth' => 'before:today',
         ];
     }
     public function validateUpdate($id)
@@ -29,6 +35,12 @@ class CustomerContactorRepository extends AbstractRepository
         return $rules = [
             'name' => 'required',
             'customer_type_id' => 'required',
+            'gender' => 'in:1,2',
+            'phone_number' =>  [
+                'regex:/^((03|05|07|08|09)[0-9]{8})$/',
+            ],
+            'email' => 'email',
+            'date_of_birth' => 'before:today',
         ];
     }
 
@@ -44,5 +56,42 @@ class CustomerContactorRepository extends AbstractRepository
         $model = $this->model->where($where);
         $deleted = $model->delete();
         return $deleted;
+    }
+
+    public function getContactorByCustomerID($id)
+    {
+        $query = $this->model->where([
+            'customer_id' => $id
+        ]);
+        $count = $query->count();
+        $rows = $query->get();
+        return [
+            'rows' => $rows,
+            'records_total' => $count
+        ];
+    }
+
+    public function findAllContactor()
+    {
+        $query = $this->model->orderBy('id', 'DESC');
+        $count = $query->count();
+        $model = $query->get();
+        dd($model);
+        return [
+            'data' => $model,
+            'recordsTotal' => $count
+        ];
+    }
+
+    public function countWhere(array $where, $columns = ['*'])
+    {
+        $model = $this->model->where($where)->count();
+        return $model;
+    }
+
+    public function firstWhere(array $where, $columns = ['*'])
+    {
+        $result = $this->model->where($where)->get($columns)->first();
+        return $result;
     }
 }
