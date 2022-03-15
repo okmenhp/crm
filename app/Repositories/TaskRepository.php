@@ -49,7 +49,10 @@ class TaskRepository extends AbstractRepository {
             }
 
         }
-        return $query->orderBy('task.id', 'DESC')->get();
+
+        // $value = \DB::table('user_task')->join('task', 'task.id', '=', 'user_task.task_id')->join('user', 'user_task.user_id', '=', 'user.id')->get();
+        $value = $query->orderBy('task.id', 'DESC')->get();
+        return $value;
 
 
     }

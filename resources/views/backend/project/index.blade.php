@@ -119,12 +119,12 @@
                                                         @if($record->status == 0)
                                                         <div class="badge badge-secondary mr-1 mb-1">Chưa bắt đầu</div>
                                                         @endif
-                                                        <div class="badge badge-primary mr-1 mb-1">Đang diễn ra</div>
+                                                        <!-- <div class="badge badge-primary mr-1 mb-1">Đang diễn ra</div>
                                                         <div class="badge badge-secondary mr-1 mb-1">Chưa bắt đầu</div>
                                                         <div class="badge badge-success mr-1 mb-1">Đã hoàn thành</div>
                                                         <div class="badge badge-info mr-1 mb-1">Đơi xét duyệt</div>
                                                         <div class="badge badge-warning mr-1 mb-1">Chậm tiến độ</div>
-                                                        <div class="badge badge-danger mb-1">Đã Huỷ</div>
+                                                        <div class="badge badge-danger mb-1">Đã Huỷ</div> -->
                                                     </td>
                                                     <td>
                                                         <a href="{{route('admin.kanban.index', $record->id)}}"
@@ -159,20 +159,6 @@
                     </div>
                 </div>
                 <!--/ Zero configuration table -->
-
-                <div id="basic-datatable">
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="card">
-                                <div class="card-body card-dashboard">
-                                    <div class="table-responsive">
-                                        <div id="tasks"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
             </section>
             <!-- users list ends -->

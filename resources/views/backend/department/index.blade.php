@@ -68,60 +68,6 @@
                     {{Session::get('error')}}
                 </div>
                 @endif
-                <div class="users-list-table">
-                    <div class="card">
-                        <div class="card-body">
-                            <!-- datatable start -->
-                            @if(count($records) > 0)
-                            <div class="table-responsive">
-                                <table id="" class="table table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th>id</th>
-                                            <th>Tên phòng ban</th>
-                                            <th>Phòng ban cha</th>
-                                            <th>Trạng thái</th>
-                                            <th>Thao tác</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach($records as $key => $record)
-                                        <tr>
-                                            <td>{{++$key}}</td>
-                                            <td>{{$record->name}}</td>
-                                            <td>
-                                                {{$record->parent_id}}
-                                            </td>
-                                            <td>
-                                                @if($record->status == 1)
-                                                <span class="badge badge-success">Hoạt động</span>
-                                                @else
-                                                <span class="badge badge-secondary">Khoá</span>
-                                                @endif
-                                            </td>
-                                            <td><a href="{{route('admin.department.edit', $record->id)}}"><i
-                                                        class="far fa-edit"></i></a>
-                                                <form style="display: inline-block" method="POST"
-                                                    action="{{ route('admin.department.destroy', $record->id) }}">
-                                                    @csrf
-                                                    <input name="_method" type="hidden" value="DELETE">
-                                                    <a href="#" class="show_confirm" data-toggle="tooltip"
-                                                        title='Delete'> <i class="fa fa-trash-alt"> </i></a>
-                                                </form>
-                                            </td>
-                                        </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                            @else
-                            <b>Không tìm thấy kết quả</b>
-                            @endif
-                            <!-- datatable ends -->
-                        </div>
-                    </div>
-
-                </div>
 
                 <div id="basic-datatable">
                     <div class="row">
@@ -148,18 +94,26 @@
     $(() => {
 
     var departments = JSON.parse('<?= $records; ?>');
-    var employees = JSON.parse('<?= $employee_array; ?>');
+    var users = JSON.parse('<?= $employee_array; ?>');
     var baseurl = window.location.origin;
 
   const treeListData = $.map(departments, (task) => {
     departments.Task_Assigned_Employee = null;
-    $.each(employees, (_, employee) => {
-      if (employee.id === task.manager_id) {
-        task.Task_Assigned_Employee = employee;
+    $.each(users, (_, user) => {
+      if (user.id === task.manager_id) {
+        task.Task_Assigned_Employee = user;
       }
     });
+
+    $.each(users, (_, user) => {
+      if (user.id === task.manager_id) {
+        task.Task_Assigned_Employee = user;
+      }
+    });
+
     return task;
   });
+
 
   $('#department_table').dxTreeList({
     dataSource: treeListData,
@@ -202,7 +156,7 @@
         }
       },
       lookup: {
-        dataSource: employees,
+        dataSource: users,
         valueExpr: 'ID',
         displayExpr: 'name',
       },

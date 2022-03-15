@@ -53,8 +53,8 @@
                                                 <div class="form-group">
                                                     <label>Người phụ trách</label>
                                                     <select class="select2 form-control" name="master_id">
-                                                        @foreach($employee_array as $key => $employee)
-                                                        <option value="{{$employee->id}}">{{$employee->name}}</option>
+                                                        @foreach($user_array as $key => $user)
+                                                        <option value="{{$user->id}}">{{$user->full_name}}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -64,8 +64,8 @@
                                                     <label>Người thực hiện</label>
                                                     <select class="select2 form-control" multiple="multiple"
                                                         name="user_id[]" style="width:100%;" required>
-                                                        @foreach($employee_array as $key => $employee)
-                                                        <option value="{{$employee->id}}">{{$employee->name}}</option>
+                                                        @foreach($user_array as $key => $user)
+                                                        <option value="{{$user->id}}">{{$user->full_name}}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
