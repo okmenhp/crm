@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\BaseController;
+use App\Models\ColorSchedule;
 use App\Models\Meeting;
 use App\Models\Schedule;
 use App\Models\TypeSchedule;
@@ -20,7 +21,8 @@ class CalendarController extends BaseController
         
         $types = TypeSchedule::all();
         $meetings = Meeting::all();
-        return view('backend/calendar/index', compact('types','meetings'));
+        $colors = ColorSchedule::all();
+        return view('backend/calendar/index', compact('types','meetings', 'colors'));
     }
 
     public function type()
@@ -53,6 +55,27 @@ class CalendarController extends BaseController
     public function meeting()
     {
         $records = Meeting::all();
-        return view('backend/calendar/type', compact('records'));
+        return view('backend/calendar/meeting', compact('records'));
+    }
+
+    public function createMeeting(Request $request){
+        if($request->name == null){
+            return Redirect::back()->withErrors("error");
+        }
+        Meeting::create(['name'=>$request->name]);
+        return redirect()->route('admin.calendar.meeting');
+    }
+
+    public function deleteMeeting(Request $request){
+        Meeting::find($request->id)->delete();
+        return redirect()->route('admin.calendar.meeting');
+    }
+
+    public function updateMeeting(Request $request){
+        $type_schedule = Meeting::find($request->id);
+        $type_schedule->name = $request->name;
+        $type_schedule->save();
+
+        return redirect()->route('admin.calendar.meeting');
     }
 }

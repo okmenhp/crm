@@ -7,7 +7,19 @@ $('.type-edit').click(function(){
         success: function(data){
             $('#type-id').val(data.data.id)
             $('#type-name').val(data.data.name)
-            console.log($('#type-name').val())
+        }
+    })
+})
+
+$('.meeting-edit').click(function(){
+    var id = $(this).data('id')
+    $.ajax({
+        url: "/api/calendar/meeting/edit",
+        type: "GET",
+        data: {id},
+        success: function(data){
+            $('#meeting-id').val(data.data.id)
+            $('#meeting-name').val(data.data.name)
         }
     })
 })

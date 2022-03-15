@@ -80,79 +80,7 @@
                 </div>
                 @endif
 
-                <!-- <div id="basic-datatable">
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="card">
-                                <div class="card-body card-dashboard">
-                                    <div class="table-responsive">
-                                        <table class="table zero-configuration">
-                                            <thead>
-                                                <tr>
-                                                    <th>Id</th>
-                                                    <th>Công việc</th>
-                                                    <th>Dự án</th>
-                                                    <th>Người phụ trách</th>
-                                                    <th>Tiến độ</th>
-                                                    <th>Thời hạn</th>
-                                                    <th>Thao tác</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach($records as $key => $record)
-                                                <tr>
-                                                    <td>{{$key+1}}</td>
-                                                    <td>{{$record->name}}</td>
-                                                    <td>Project</td>
-                                                    <td>
-                                                        @foreach($employee_array as $key => $employee)
-                                                        @if($employee->id == $record->member_id)
-                                                        {{$employee->name}}
-                                                        @endif
-                                                        @endforeach
-                                                    </td>
-                                                    <td>
-                                                        <div class="progress progress-bar-primary mb-2">
-                                                            <div class="progress-bar progress-bar-striped progress-bar-animated"
-                                                                role="progressbar" aria-valuenow="20" aria-valuemin="20"
-                                                                aria-valuemax="100" style="width:20%"></div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        {{$record->date}}
-                                                    </td>
-                                                    <td>
-                                                        <a href="{{route('admin.project.edit', $record->id)}}"
-                                                            title='Sửa'><i class="far fa-edit"></i></a>
-                                                        <form style="display: inline-block" method="POST"
-                                                            action="{{ route('admin.project.destroy', $record->id) }}">
-                                                            @csrf
-                                                            <input name="_method" type="hidden" value="DELETE">
-                                                            <a href="#" class="show_confirm" data-toggle="tooltip"
-                                                                title='Xoá'> <i class="far fa-trash-alt"> </i></a>
-                                                        </form>
-                                                    </td>
-                                                </tr>
-                                                @endforeach
-                                            </tbody>
-                                            <tfoot>
-                                                <tr>
-                                                    <th>Id</th>
-                                                    <th>Dự án</th>
-                                                    <th>Hợp đồng</th>
-                                                    <th>Người phụ trách</th>
-                                                    <th>Tiến độ</th>
-                                                    <th>Thời hạn</th>
-                                                    <th>Thao tác</th>
-                                                </tr>
-                                            </tfoot>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
+
 
                 <div id="basic-datatable">
                     <div class="row">
@@ -178,16 +106,18 @@
 
 $(() => {
     var tasks = JSON.parse('<?= $records; ?>');
-    var employees = JSON.parse('<?= $employee_array; ?>');
+    var user_task = JSON.parse('<?= $usertask_array; ?>');
+    var users = JSON.parse('<?= $employee_array; ?>');
     var baseurl = window.location.origin;
-    console.log(employees);
+
   const treeListData = $.map(tasks, (task) => {
-    task.Task_Assigned_Employee = null;
-    $.each(employees, (_, employee) => {
-      if (employee.ID === task.Task_Assigned_Employee_ID) {
-        task.Task_Assigned_Employee = employee;
+    task.manager = null;
+    $.each(users, (_, user) => {
+      if (user.id === task.master_id) {
+        task.manager = user;
       }
     });
+
     return task;
   });
 
@@ -223,7 +153,7 @@ $(() => {
       allowSorting: false,
       minWidth: 200,
       cellTemplate(container, options) {
-        const currentEmployee = options.data.Task_Assigned_Employee;
+        const currentEmployee = options.data.manager;
         if (currentEmployee) {
           container
             .append($('<div>', { class: 'img', style: `background-image:url(${currentEmployee.avatar});` }))
@@ -232,29 +162,20 @@ $(() => {
         }
       },
       lookup: {
-        dataSource: employees,
+        dataSource: users,
         valueExpr: 'ID',
         displayExpr: 'name',
       },
     }, {
-      dataField: 'Task_Assigned_Employee_ID',
       caption: 'Người tham gia',
-      allowSorting: false,
       minWidth: 200,
-      cellTemplate(container, options) {
-        const currentEmployee = options.data.Task_Assigned_Employee;
-        if (currentEmployee) {
-          container
-            .append($('<div>', { class: 'img', style: `background-image:url(${currentEmployee.Picture});` }))
+      cellTemplate: function(element, info) {
+            element
+            .append($('<div>', { class: 'img', style: `background-image:url();` }))
             .append('\n')
-            .append($('<span>', { class: 'name', text: currentEmployee.Name }));
+            .append($('<div>', { class: 'img', style: `background-image:url();` }))
+            .append('\n');
         }
-      },
-      lookup: {
-        dataSource: employees,
-        valueExpr: 'ID',
-        displayExpr: 'Name',
-      },
     }, {
       caption: 'Tiến độ',
       minWidth: 200,
@@ -299,10 +220,10 @@ $(() => {
       dataField: 'name',
       dataField: 'Thao tác',
       cellTemplate: function(element, info) {
-            element.append(`<a href="`+baseurl+`/department/edit/`+info.data.id+`"><i
+            element.append(`<a href="`+baseurl+`/task/edit/`+info.data.id+`"><i
                                                         class='far fa-edit'></i></a>
                                                 <form style='display: inline-block' method='POST'
-                                                    action="`+baseurl+`/department/delete/`+info.data.id+`">
+                                                    action="`+baseurl+`/task/delete/`+info.data.id+`">
                                                 @csrf
                                                     <input name='_method' type='hidden' value='DELETE'>
                                                     <a href='#' class='show_confirm' data-toggle='tooltip'
