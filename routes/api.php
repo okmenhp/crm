@@ -50,5 +50,5 @@ Route::post('schedule/filter','Api\ScheduleController@filter')->name('api.schedu
 Route::get('calendar/type/edit','Api\ScheduleController@typeEdit')->name('api.calendar.type.edit');
 Route::get('calendar/meeting/edit','Api\ScheduleController@meetingEdit')->name('api.calendar.meeting.edit');
 
-Route::get('task/checked','Api\KanbanController@checked')->name('api.task.checked');
+Route::post('task/checked','Api\KanbanController@checked')->name('api.task.checked');
 
