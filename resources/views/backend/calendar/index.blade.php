@@ -50,8 +50,7 @@
                     <div id="sidebar" class="sidebar">
                         <div class="sidebar-new-schedule">
                             <!-- create new schedule button -->
-                            <button id="btn-new-schedule" type="button"
-                                class="btn btn-primary btn-block sidebar-new-schedule-btn">
+                            <button id="btn-new-schedule" type="button" class="btn btn-primary btn-block sidebar-new-schedule-btn">
                                 Lịch trình mới
                             </button>
                         </div>
@@ -345,8 +344,6 @@
     <script src="{{asset('assets/vendors/js/calendar/tui-calendar.min.js')}}"></script>
     <script src="{{asset('assets/js/scripts/pages/sweetalert.min.js')}}"></script>
     <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel = "stylesheet">
-    {{-- <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script> --}}
     <script src="{{asset('assets/js/scripts/pages/custom-calendar.js')}}"></script>
     <!-- END: Page Vendor JS-->
 
