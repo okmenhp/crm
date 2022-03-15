@@ -6,6 +6,7 @@
 <link rel="stylesheet" type="text/css" href="{{asset('assets/vendors/css/editors/quill/quill.snow.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('assets/vendors/css/pickers/pickadate/pickadate.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('assets/vendors/css/calendars/tui-calendar.min.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('assets/css/main/context-menu.css')}}">
 <!-- END: Vendor CSS-->
 
 <!-- BEGIN: Page CSS-->
@@ -17,7 +18,17 @@
 <!-- BEGIN: Content-->
 <!-- BEGIN: Content-->
 
-
+<div class="context-menu pr-1 pl-1">
+  <div class="form-group">
+      <label class="mt-1">Chọn user</label>
+      <select class="form-control select2-icons " data-icon="" multiple="" style="z-index: 1000000 !important;">
+          <option style="z-index: 1000000 !important;">123</option>
+          <option>456</option>
+      </select>
+    <button class="btn btn-primary mt-1">Lưu</button>
+    </div>  
+     
+</div>
 <input type="hidden" name="" id="project_id" value="{{$project_id}}">
 <div class="app-content content">
     <div class="content-overlay"></div>
@@ -34,7 +45,6 @@
                             <i class='bx bx-add-to-queue mr-50'></i> Thêm danh sách mới
                         </button>
                         <div id="kanban-app"></div>
-
                     </div>
                 </div>
                 
@@ -183,7 +193,7 @@
                                             <div class="form-group">
                                                 <label>Người quản lý</label>
                                                 <div class="d-flex align-items-center">
-                                                    <select class="form-control" id="manager_id" name="manager_id">    
+                                                    <select class="form-control select2" id="manager_id" name="manager_id">    
                                                      @foreach($user_option as $u_o)
                                                          <option value="{{$u_o->id}}">{{$u_o->full_name}}</option>
                                                      @endforeach
@@ -195,7 +205,7 @@
                                             <div class="form-group">
                                                 <label>Người tham gia</label>
                                                 <div class="d-flex align-items-center">
-                                                    <select required="" class="select2 form-control" name="user_id[]" multiple="">    
+                                                    <select data-icon="/asset" required="" class="select2-icons form-control" name="user_id[]" multiple="">    
                                                     @foreach($user_option as $u_o)
                                                          <option selected="" value="{{$u_o->id}}">{{$u_o->full_name}}</option>
                                                      @endforeach
@@ -230,36 +240,112 @@
                                     </div>
                                    <div class="input-group mt-1 mb-1">
                                       <div class="custom-file">
-                                        <input type="file" class="custom-file-input" id="inputGroupFile02">
+                                        <input type="file" class="custom-file-input" name="file[]" id="inputGroupFile02">
                                         <label class="custom-file-label" for="inputGroupFile02">Chọn tài liệu</label>
                                       </div>
                                       <div class="input-group-append">
                                         <span class="input-group-text" id="">Pacific Drive</span>
                                       </div>
                                     </div>
+
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <label>Danh sách công việc con</label>
-
-                                            <div id="inputFormRow">
-
-                                            </div>
-                                      
-                                            <div id="newRow"></div>
-                                            <button id="addRow" type="button" class="btn btn-outline-info mb-1">Thêm công việc con</button>
-                                        </div>
-                                    </div>
-                                    <div class="progress progress-bar-primary mb-2">
-                                                            <div class="progress-bar progress-bar-striped progress-bar-animated"
-                                                                role="progressbar" aria-valuenow="20" aria-valuemin="0"
-                                                                aria-valuemax="100" style=""></div>
+                                        <div class="todo-app-area">
+                                          <div class="todo-app-list-wrapper">
+                                            <div class="todo-app-list">
+                                              <div class="todo-fixed-search d-flex justify-content-between align-items-center">
+                                                <div class="sidebar-toggle d-block d-lg-none">
+                                                  <i class="bx bx-menu"></i>
+                                                </div>
+                                                <fieldset class="form-group position-relative has-icon-left m-0 flex-grow-1">
+                                                  <input type="text" class="form-control todo-search" id="todo-search" placeholder="Search Task">
+                                                  <div class="form-control-position">
+                                                    <i class="bx bx-search"></i>
+                                                  </div>
+                                                </fieldset>
+                                                <div class="todo-sort dropdown mr-1">
+                                                  <button class="btn dropdown-toggle sorting" type="button" id="sortDropdown" data-toggle="dropdown"
+                                                    aria-haspopup="true" aria-expanded="false">
+                                                    <i class="bx bx-filter"></i>
+                                                    <span>Sort</span>
+                                                  </button>
+                                                  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="sortDropdown">
+                                                    <a class="dropdown-item ascending" href="javascript:void(0);">Ascending</a>
+                                                    <a class="dropdown-item descending" href="javascript:void(0);">Descending</a>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                              <div class="todo-task-list list-group">
+                                                <!-- task list start -->
+                                                <ul class="todo-task-list-wrapper list-unstyled" id="todo-task-list-drag newRow">
+                                                  <li class="todo-item todo-li" data-name="David Smith">
+                                                    <div class="todo-title-wrapper d-flex justify-content-sm-between justify-content-end align-items-center">
+                                                      <div class="todo-title-area d-flex">
+                                                        <i class='bx bx-grid-vertical handle'></i>
+                                                        <div class="checkbox">
+                                                          <input type="checkbox" class="checkbox-input" id="checkbox1">
+                                                          <label for="checkbox1"></label>
                                                         </div>
-                                    <div class="form-group">
-                                        <label>Bình luận</label>
-                                        <textarea class="form-control" rows="3" placeholder="Nhập bình luận"></textarea>
+                                                        <div class="edit-subtask">
+                                                        <p class="todo-title mx-50 m-0 truncate todo-p">Effective Hypnosis Quit Smoking Methods</p>
+                                                        </div>
+                                                      </div>
+                                                      <div class="todo-item-action d-flex align-items-center">
+                                                        <div class="todo-badge-wrapper d-flex">
+                                                          <span class="badge badge-light-primary badge-pill">Frontend</span>
+                                                        </div>
+                                                        <div class="avatar">
+                                                          <img src="../../../assets/images/portrait/small/avatar-s-1.jpg" alt="avatar" height="30"
+                                                            width="30">
+                                                        </div>
+                                                        <div class="avatar">
+                                                          <img src="../../../assets/images/portrait/small/avatar-s-1.jpg" alt="avatar" height="30"
+                                                            width="30">
+                                                        </div>
+                                                        <a class='todo-item-user ml-75'><i class="bx bx-user"></i></a>
+                                                        <a class='todo-item-delete ml-75'><i class="bx bx-trash"></i></a>
+                                                      </div>
+                                                    </div>
+                                                  </li>
+                                                
+                                                </ul>
+                                                 <div id="inputFormRow">
+                                                    <div class="input-group mb-1">
+                                                    <textarea class="form-control" rows="2"></textarea>
+                                                    <div class="input-group-append">
+                                                    <button id="removeRow" type="button" class="btn btn-outline-primary">Thêm</button>
+                                                    </div>
+                                                </div>
+                                                <!-- task list end -->
+                                                {{-- <div class="no-results">
+                                                  <h5>No Items Found</h5>
+                                                </div> --}}
+                                              </div>
+                                            </div>
+                                          </div>
+
+                                        </div>
+                                        <div id="inputFormRow">
+                                              
+                                        </div>
+                                  
+                                        {{-- <div id="newRow"></div> --}}
+                                        <button id="addRow" type="button" class="btn btn-outline-info mb-1">Thêm công việc con</button>
                                     </div>
                                 </div>
+                                
+                                <div class="progress progress-bar-primary mb-2">
+                                    <div class="progress-bar progress-bar-striped progress-bar-animated"
+                                        role="progressbar" aria-valuenow="20" aria-valuemin="0"
+                                        aria-valuemax="100" style=""></div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Bình luận</label>
+                                    <textarea class="form-control" rows="3" placeholder="Nhập bình luận"></textarea>
+                                </div>
                             </div>
+                        </div>
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Huỷ</button>
@@ -271,6 +357,8 @@
             </div>
     </div>
 </div>
+
+
 <!-- END: Content-->
 @stop
 @section('script')
@@ -287,9 +375,13 @@
 <!-- BEGIN: Page JS-->
 <script src="{{asset('assets/js/scripts/pages/app-kanban.js')}}"></script>
 <script src="{{asset('assets/js/scripts/pages/kanban-scroll.js')}}"></script>
+<script src="{{asset('assets/js/main/context-menu.js')}}"></script>
 <!-- END: Page JS-->
 
 <script type="text/javascript">
+    
+    //context menu
+    
     // add row
     $("#addRow").click(function () {
         var html = '';
@@ -323,7 +415,7 @@
 
     function checked_task(task_id, checked){
         $.ajax({
-        type: "get",
+        type: "post",
         url: '/api/task/checked',
         dataType: 'JSON',
         async: false,
@@ -333,13 +425,16 @@
         }
       }).done(function(resp) {
         let bar_html =  `<div class="progress-bar progress-bar-striped progress-bar-animated"
-                                                                role="progressbar" aria-valuenow="20" aria-valuemin="0"
-                                                                aria-valuemax="100" style="width:`+resp.data+`%;"></div>`;
+                            role="progressbar" aria-valuenow="20" aria-valuemin="0"
+                            aria-valuemax="100" style="width:`+resp.data+`%;"></div>`;
         $('.progress').html(bar_html);
       });
     }
 
-    
+    $('.todo-p').on('click',function(){
+       
+    });
+ 
 </script>
 
 

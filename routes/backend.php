@@ -101,6 +101,9 @@ Route::group(['middleware' => 'admin'], function () {
     Route::post('/calendar/type/update',  ['as' => 'admin.calendar.type.update', 'uses' => 'Backend\CalendarController@updateType']);
     Route::post('/calendar/type/delete',  ['as' => 'admin.calendar.type.delete', 'uses' => 'Backend\CalendarController@deleteType']);
     Route::get('/calendar/meeting',  ['as' => 'admin.calendar.meeting', 'uses' => 'Backend\CalendarController@meeting']);
+    Route::post('/calendar/meeting/create',  ['as' => 'admin.calendar.meeting.create', 'uses' => 'Backend\CalendarController@createMeeting']);
+    Route::post('/calendar/meeting/update',  ['as' => 'admin.calendar.meeting.update', 'uses' => 'Backend\CalendarController@updateMeeting']);
+    Route::post('/calendar/meeting/delete',  ['as' => 'admin.calendar.meeting.delete', 'uses' => 'Backend\CalendarController@deleteMeeting']);
     
     //Kanban
     Route::get('/kanban/{project_id}',  ['as' => 'admin.kanban.index', 'uses' => 'Backend\KanbanController@index']);

@@ -39,3 +39,41 @@
     border: 1px solid #3e549a;
     text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.3); */
 }
+.arrow {
+    border: solid #919191;
+    border-width: 0 2px 2px 0;
+    display: inline-block;
+    padding: 2px;
+}
+.down {
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+}
+.select-color-area{
+    box-shadow: 0px 2px 6px 1px rgba(0,0,0,0.3);
+    -webkit-box-shadow: 0px 2px 6px 1px rgba(0,0,0,0.3);
+    -moz-box-shadow: 0px 2px 6px 1px rgba(0,0,0,0.3);
+    position: absolute;
+    z-index: 100;
+    display: none;
+}
+.select-color-area .active{
+    display: block !important;
+}
+.select-color-area .color-select{
+    padding: 0.2rem 1rem 0.2rem 1rem;
+}
+.select-color-area .color-select:hover{
+    background: #007FFF !important;
+}
+.select-color-area .color-select:hover span{
+    color: #ffffff !important;
+}
+/* .select-color-area .text{
+    color: black;
+} */
+.color{
+    width: 1rem;
+    height: 1rem;
+    border-radius: 30px;
+}
