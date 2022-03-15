@@ -64,7 +64,12 @@ class ScheduleRepository extends AbstractRepository {
         $sdata['id'] = "1";
         $sdata['calendarId'] = $schedule->id;
         $sdata['category'] = "time";
-        $sdata['title'] = $schedule->title;
+        $range = Carbon::parse($schedule->start_date)->diffInDays(Carbon::parse($schedule->end_date));
+        if($range > 0){
+            $sdata['title'] = $schedule->title;
+        }else{
+            $sdata['title'] = date('H:i', strtotime($schedule->start_date))." ".$schedule->title;
+        }
         // $schedule->all_day == 1 ? $sdata['isAllDay'] = true : $sdata['isAllDay'] = false;
         $sdata['bgColor'] = $schedule->color_id != null ? ColorSchedule::find($schedule->color_id)->value : null;
         $sdata['borderColor'] = $schedule->color_id != null ? ColorSchedule::find($schedule->color_id)->value : null;
@@ -87,7 +92,7 @@ class ScheduleRepository extends AbstractRepository {
             $sdata['id'] = "1";
             $sdata['calendarId'] = $schedule->id;
             $sdata['category'] = "time";
-            $sdata['title'] = $schedule->title;
+            $sdata['title'] = date('H:i', strtotime($schedule->start_date))." ".$schedule->title;
             $sdata['bgColor'] = $schedule->color_id != null ? ColorSchedule::find($schedule->color_id)->value : null;
             $sdata['borderColor'] = $schedule->color_id != null ? ColorSchedule::find($schedule->color_id)->value : null;
             $sdata['start'] = date('Y-m-d', strtotime($record))."T".$start_time;
@@ -133,7 +138,7 @@ class ScheduleRepository extends AbstractRepository {
         $sdata['id'] = "1";
         $sdata['calendarId'] = $schedule->id;
         $sdata['category'] = "time";
-        $sdata['title'] = $schedule->title;
+        $sdata['title'] = date('H:i', strtotime($schedule->start_date))." ".$schedule->title;
         $sdata['bgColor'] = ColorSchedule::find($schedule->color_id)->value;
         $sdata['start'] = $schedule->start_date;
         $sdata['end'] = $schedule->end_date;
@@ -161,7 +166,7 @@ class ScheduleRepository extends AbstractRepository {
             $sdata['id'] = "1";
             $sdata['calendarId'] = $schedule->id;
             $sdata['category'] = "time";
-            $sdata['title'] = $schedule->title;
+            $sdata['title'] = date('H:i', strtotime($schedule->start_date))." ".$schedule->title;
             $sdata['bgColor'] = ColorSchedule::find($schedule->color_id)->value;
             $sdata['start'] = $record;
             $sdata['end'] = $record;

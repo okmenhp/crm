@@ -19,25 +19,21 @@ var calendar = new tui.Calendar('#calendar', {
     week: {
         daynames: ['Chủ nhật','Thứ 2','Thứ 3','Thứ 4','Thứ 5','Thứ 6','Thứ 7']
     },
+    month: {
+        daynames: ['Chủ nhật','Thứ 2','Thứ 3','Thứ 4','Thứ 5','Thứ 6','Thứ 7']
+    },
     template: {
         alldayTitle: function(){
             return '<span class="tui-full-calendar-left-content">CẢ NGÀY</span>';
         },
+        popupEdit: function() {
+            return 'Sửa';
+        },
+        popupDelete: function() {
+            return 'Xóa';
+        }
     }
 });
-
-// calendar.createSchedules([
-//     {
-//         id: '1',
-//         calendarId: '1',
-//         title: 'my schedule',
-//         category: 'time',
-//         dueDateClass: '',
-//         start: '2022-03-14T02:30:00',
-//         end: '2022-03-14T03:30:00',
-//         isAllDay: false
-//     }
-// ])
 
 calendar.on({
     'beforeUpdateSchedule': function(e) {
@@ -48,7 +44,6 @@ calendar.on({
         modal.find('button.final-button').html('Lưu')
     },
     'beforeDeleteSchedule': function(e) {
-        // console.log(e.schedule.start._date)
         $('#schedule-id').val(e.schedule.calendarId)
         $('#date-selected').val(e.schedule.start._date)
         if(e.schedule.raw.pattern == 2){
@@ -368,7 +363,6 @@ $('#calendarModal .final-button').click(function(){
 })
 
 $('.delete-button').click(function(){
-    // console.log($('.delete-type:checked').val())
     deleteSchedule($('#schedule-id').val(), $('.delete-type:checked').val())
 })
 
