@@ -153,7 +153,6 @@ class ScheduleController extends Controller
             UserSchedule::where('schedule_id',$request->id)->delete();
         }
 
-        // return response()->json(['data'=>'Xóa thành công']);
         return $this->index();
     }
 

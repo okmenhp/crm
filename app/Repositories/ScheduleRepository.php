@@ -90,8 +90,6 @@ class ScheduleRepository extends AbstractRepository {
             $sdata['title'] = $schedule->title;
             $sdata['bgColor'] = $schedule->color_id != null ? ColorSchedule::find($schedule->color_id)->value : null;
             $sdata['borderColor'] = $schedule->color_id != null ? ColorSchedule::find($schedule->color_id)->value : null;
-            // $sdata['start'] = $record + "T" + $start_time;
-            // $sdata['end'] = $record + "T" + $end_time;
             $sdata['start'] = date('Y-m-d', strtotime($record))."T".$start_time;
             $sdata['end'] = date('Y-m-d', strtotime($record))."T".$end_time;
             // $sdata['isAllDay'] = $schedule->all_day;
