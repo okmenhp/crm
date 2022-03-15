@@ -240,10 +240,10 @@
                                         </div>
                                         <i class="arrow down"></i>
                                     </button>
-                                    <div class="select-color-area border border-dark bg-white w-75">
+                                    <div class="select-color-area border border-dark bg-white" style="width: 92% !important;">
                                         @foreach($colors as $color)
-                                            <a href="javascript:void(0)" data-color="{{$color->id}}" class="color-select d-flex align-items-center justify-content-start">
-                                                <div class="color" style="background: {{$color->value}}"></div>
+                                            <a href="javascript:void(0)" data-color="{{$color->id}}" class="color-select d-flex align-items-center justify-content-start" style=" ">
+                                                <div  class="color" style="background: {{$color->value}}; "></div>
                                                 <span class="ml-1 text-dark">{{$color->name}}</span>
                                             </a>
                                         @endforeach
