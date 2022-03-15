@@ -101,7 +101,8 @@ class CustomerController extends BaseController
         $record = $this->customerRepo->find($id);
         $customer_type_array = $this->customerTypeRepo->all();
         $country_array = Country::orderBy('country_name', 'ASC')->get();
-        return view('backend/customer/edit', compact('record', 'customer_type_array', 'country_array'));
+        $customer_contactor_array = $this->customerContactorRepo->getContactorByCustomerID($id);
+        return view('backend/customer/edit', compact('record', 'customer_type_array', 'country_array', 'customer_contactor_array'));
     }
 
     /**
