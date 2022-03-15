@@ -52,8 +52,8 @@ class ScheduleController extends Controller
         $result['color']['id'] = ColorSchedule::find($schedule->color_id)->id;
         $result['color']['name'] = ColorSchedule::find($schedule->color_id)->name;
         $result['color']['value'] = ColorSchedule::find($schedule->color_id)->value;
-        $result['start_date'] = date('Y-m-d', strtotime($schedule->start_date))."T".date('h:m', strtotime($schedule->start_date));
-        $result['end_date'] = date('Y-m-d', strtotime($schedule->end_date))."T".date('h:m', strtotime($schedule->end_date));
+        $result['start_date'] = date('Y-m-d', strtotime($schedule->start_date))."T".date('h:i', strtotime($schedule->start_date));
+        $result['end_date'] = date('Y-m-d', strtotime($schedule->end_date))."T".date('h:i', strtotime($schedule->end_date));
         $result['location'] = $schedule->location;
         $result['meeting_id'] = $schedule->meeting_id;
         $result['type_id'] = $schedule->type_id;
@@ -139,10 +139,22 @@ class ScheduleController extends Controller
     }
 
     public function delete(Request $request){
-        Schedule::find($request->id)->delete();
-        UserSchedule::where('schedule_id',$request->id)->delete();
+        $schedule = Schedule::find($request->id);
+        $day_selected = Carbon::parse($request->date_selected)->format('Y-m-d h:i:s');
+        // 0: hiện tại và trước đó | 1: hiện tại và sau đó | 2/else: tất cả
+        if($request->type == 0){
+            $schedule['start_date'] = Carbon::parse($day_selected)->addDays(1)->format('Y-m-d h:i:s');
+            $schedule->save();
+        }elseif($request->type == 1){
+            $schedule['end_date'] = Carbon::parse($day_selected)->subDays(1)->format('Y-m-d h:i:s');
+            $schedule->save();
+        }else{
+            Schedule::find($request->id)->delete();
+            UserSchedule::where('schedule_id',$request->id)->delete();
+        }
 
-        return response()->json(['data'=>'Xóa thành công']);
+        // return response()->json(['data'=>'Xóa thành công']);
+        return $this->index();
     }
 
     public function filter(Request $request){

@@ -189,6 +189,7 @@
                         <div class="modal-body">
                             <div class="form-group row">
                                 <input type="hidden" value="" name="id" id="schedule-id">
+                                <input type="hidden" value="" name="date-selected" id="date-selected">
                                 <div class="col-md-6">
                                     <label for="pattern-schedule" class="col-form-label">Kiểu lịch trình:</label>
                                     <select id="pattern-schedule" class="form-control">
@@ -283,7 +284,7 @@
                                 <div class="col-md-6">
                                     <label for="type" class="col-form-label">Phân loại:</label>
                                     <select id="type" class="form-control">
-                                        <option value="" selected>Mặc định</option>
+                                        <option value="0" selected>Mặc định</option>
                                         @foreach($types as $type)
                                             <option value="{{$type->id}}">{{$type->name}}</option>
                                         @endforeach
@@ -296,7 +297,6 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-danger delete-button" data-toggle="modal" data-target="#update-option">Xóa</button>
                             <button type="button" class="btn btn-secondary final-button"></button>
                         </div>
                     </div>
@@ -305,29 +305,26 @@
             <div class="modal fade" id="update-option" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
-                        {{-- <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div> --}}
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Xóa lịch trình lặp lại</h5>
+                        </div>
                         <div class="modal-body">
-                            <div class="">
-                                <input type="radio" name="" id="" class="form-control">
-                                <label for="">Lịch trình hiện tại</label>
+                            <div class="d-flex align-items-center mb-1">
+                                <input type="radio" name="delete-type" value="0" id="present" class="delete-type" checked>
+                                <label for="present" class="mb-0 ml-1">Lịch trình này và trước đó</label>
                             </div>
-                            <div class="">
-                                <input type="radio" name="" id="" class="form-control">
-                                <label for="">Lịch trình hiện tại và sau này</label>
+                            <div class="d-flex align-items-center mb-1">
+                                <input type="radio" name="delete-type" value="1" id="following" class="delete-type">
+                                <label for="following" class="mb-0 ml-1">Lịch trình này và sau đó</label>
                             </div>
-                            <div class="">
-                                <input type="radio" name="" id="" class="form-control">
-                                <label for="">Tất cả lịch trình</label>
+                            <div class="d-flex align-items-center">
+                                <input type="radio" name="delete-type" value="2" id="all" class="delete-type">
+                                <label for="all" class="mb-0 ml-1">Tất cả lịch trình</label>
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Save changes</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal" data-target="#update-option">Hủy</button>
+                            <button type="button" class="btn btn-danger delete-button" data-dismiss="modal" data-target="#update-option">Xóa</button>
                         </div>
                     </div>
                 </div>

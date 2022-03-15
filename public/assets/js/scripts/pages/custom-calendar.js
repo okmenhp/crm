@@ -12,16 +12,17 @@ var calendar = new tui.Calendar('#calendar', {
     visibleWeeksCount: 3,
     visibleScheduleCount: 4,
     month: {isAlways6Week: false},
-    useDetailPopup: false,
+    useDetailPopup: true,
     useCreationPopup: false,
     disableClick: true,
+    disableDblClick: true,
     week: {
         daynames: ['Chủ nhật','Thứ 2','Thứ 3','Thứ 4','Thứ 5','Thứ 6','Thứ 7']
     },
     template: {
         alldayTitle: function(){
             return '<span class="tui-full-calendar-left-content">CẢ NGÀY</span>';
-        }
+        },
     }
 });
 
@@ -39,22 +40,23 @@ var calendar = new tui.Calendar('#calendar', {
 // ])
 
 calendar.on({
-    // open a detail popup
-    'clickSchedule': function(e) {
+    'beforeUpdateSchedule': function(e) {
         $('#schedule-id').val(e.schedule.raw.schedule_id)
         getDetailSchedule(e.schedule.raw.schedule_id)
-        
         var modal = $('#calendarModal')
         modal.modal('toggle')
         modal.find('button.final-button').html('Lưu')
-        modal.find('button.delete-button').toggle(true)
     },
-    // 'beforeUpdateSchedule': function(e) {
-    //     console.log('beforeUpdateSchedule', e);
-    //     e.schedule.start = e.start;
-    //     e.schedule.end = e.end;
-    //     calendar.updateSchedule(e.schedule.id, e.schedule.calendarId, e.schedule);
-    // },
+    'beforeDeleteSchedule': function(e) {
+        // console.log(e.schedule.start._date)
+        $('#schedule-id').val(e.schedule.calendarId)
+        $('#date-selected').val(e.schedule.start._date)
+        if(e.schedule.raw.pattern == 2){
+            $('#update-option').modal('show')
+        }else{
+            deleteSchedule($('#schedule-id').val(), 2)
+        }
+    }
 });
 
 function getDateRangeCalendar(type){
@@ -167,7 +169,7 @@ function showData(data){
         $('#type option[value='+data.data.type_id+']').prop('selected', true)
     }
     else{
-        $('#type option[value=""]').prop('selected', true)
+        $('#type option[value=0]').prop('selected', true)
     }
     //user
     $('.attendees').html("")
@@ -272,18 +274,26 @@ function dataChangeSchedule(action){
     })
 }
 
-function deleteSchedule(id){
+function deleteSchedule(id, type){
+    var data = new FormData();
+    var date_selected = moment($('#date-selected').val()).format('MM/DD/YYYY h:mm:ss');
+    data.append('id', id)
+    data.append('type', type)
+    data.append('date_selected', date_selected)
     $.ajax({
         url: "api/schedule/delete",
         type: "POST",
-        data: {id},
-        success: function(){
-            calendar.deleteSchedule("1", parseInt(id));
+        data: data,
+        processData: false,
+        contentType: false, 
+        enctype: 'multipart/form-data',
+        success: function(data){
+            calendar.clear()                
+            calendar.createSchedules(data.data)
             swal({
                 icon: "success",
                 text: "Xóa thành công",
             });
-            $('#calendarModal').modal('toggle')
         }
     })
 }
@@ -349,7 +359,6 @@ $('#btn-new-schedule').click(function(){
     var modal = $('#calendarModal')
     modal.modal('toggle')
     modal.find('button.final-button').html('Tạo mới')
-    modal.find('button.delete-button').toggle(false)
 })
 
 $('#calendarModal .final-button').click(function(){
@@ -358,9 +367,10 @@ $('#calendarModal .final-button').click(function(){
     }
 })
 
-// $('#calendarModal .delete-button').click(function(){
-//     deleteSchedule($('#schedule-id').val())
-// })
+$('.delete-button').click(function(){
+    // console.log($('.delete-type:checked').val())
+    deleteSchedule($('#schedule-id').val(), $('.delete-type:checked').val())
+})
 
 function defaultFormInsert(){
     $.ajax({
@@ -393,7 +403,7 @@ function defaultFormInsert(){
             $('#start-date').attr("max", $('#end-date').val())
             $('#location').val('')
             $('#meeting-room').find('option[value=""]').prop('selected',true)
-            $('#type').find('option[value=""]').prop('selected',true)
+            $('#type').find('option[value=0]').prop('selected',true)
             $('#attendees').find('option').remove()
             $('#attendees').append('<option value="all" disabled selected>--Chọn người tham gia--</option>')
             for(var i=0;i<data.data.length;i++){

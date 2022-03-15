@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\ColorSchedule;
 use App\Repositories\Support\AbstractRepository;
+use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 
 class ScheduleRepository extends AbstractRepository {
@@ -41,7 +42,7 @@ class ScheduleRepository extends AbstractRepository {
         foreach($schedule_periods as $period){
             $day = $period->format('N');
             if(in_array(++$day, $wdays)){
-                array_push($result, $period->format('Y-m-d h:m:s'));
+                array_push($result, $period->format('Y-m-d H:i:s'));
             }
         }
         return $result;
@@ -52,7 +53,7 @@ class ScheduleRepository extends AbstractRepository {
         foreach($schedule_periods as $period){
             $day = $period->format('d');
             if(in_array($day, $mdays)){
-                array_push($result, $period->format('Y-m-d h:m:s'));
+                array_push($result, $period->format('Y-m-d h:i:s'));
             }
         }
         return $result;
@@ -68,7 +69,6 @@ class ScheduleRepository extends AbstractRepository {
         $sdata['bgColor'] = $schedule->color_id != null ? ColorSchedule::find($schedule->color_id)->value : null;
         $sdata['borderColor'] = $schedule->color_id != null ? ColorSchedule::find($schedule->color_id)->value : null;
         $sdata['start'] = $schedule->start_date;
-        $sdata['isReadOnly'] = true;
         $sdata['end'] = $schedule->end_date;
         $sdata['raw']['schedule_id'] = $schedule->id;
         $sdata['raw']['location'] = $schedule->location;
@@ -80,7 +80,7 @@ class ScheduleRepository extends AbstractRepository {
         return $sdata;
     }
 
-    public function getScheduleRepeat($date_range, $schedule){
+    public function getScheduleRepeat($date_range, $start_time, $end_time, $schedule){
         $data = array();
         $sdata = array();
         foreach($date_range as $record){
@@ -90,10 +90,11 @@ class ScheduleRepository extends AbstractRepository {
             $sdata['title'] = $schedule->title;
             $sdata['bgColor'] = $schedule->color_id != null ? ColorSchedule::find($schedule->color_id)->value : null;
             $sdata['borderColor'] = $schedule->color_id != null ? ColorSchedule::find($schedule->color_id)->value : null;
-            $sdata['start'] = $record;
-            $sdata['end'] = $record;
+            // $sdata['start'] = $record + "T" + $start_time;
+            // $sdata['end'] = $record + "T" + $end_time;
+            $sdata['start'] = date('Y-m-d', strtotime($record))."T".$start_time;
+            $sdata['end'] = date('Y-m-d', strtotime($record))."T".$end_time;
             // $sdata['isAllDay'] = $schedule->all_day;
-            $sdata['isReadOnly'] = true;
             $sdata['raw']['schedule_id'] = $schedule->id;
             $sdata['raw']['location'] = $schedule->location;
             $sdata['raw']['meeting_id'] = $schedule->meeting_id;
@@ -111,9 +112,11 @@ class ScheduleRepository extends AbstractRepository {
         if($schedule->pattern == 3){
             $days = explode(",", $schedule->mday);
         }
+        $start_time = Carbon::parse($schedule->start_date)->format('H:i:s');
+        $end_time = Carbon::parse($schedule->end_date)->format('H:i:s');
         $schedule_periods = CarbonPeriod::create(date('Y-m-d', strtotime($schedule->start_date)), date('Y-m-d', strtotime($schedule->end_date)))->toArray();
         $date_range = $schedule->pattern == 2 ? $this->getDateByWeekDay($days, $schedule_periods) : $this->getDateByMonthDay($days, $schedule_periods);
-        $sdata = $this->getScheduleRepeat($date_range, $schedule);
+        $sdata = $this->getScheduleRepeat($date_range, $start_time, $end_time, $schedule);
         return $sdata;
     }
 
