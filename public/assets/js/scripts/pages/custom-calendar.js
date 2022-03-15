@@ -12,40 +12,51 @@ var calendar = new tui.Calendar('#calendar', {
     visibleWeeksCount: 3,
     visibleScheduleCount: 4,
     month: {isAlways6Week: false},
-    useDetailPopup: false,
+    useDetailPopup: true,
     useCreationPopup: false,
+    disableClick: true,
+    disableDblClick: true,
+    week: {
+        daynames: ['Chủ nhật','Thứ 2','Thứ 3','Thứ 4','Thứ 5','Thứ 6','Thứ 7']
+    },
+    template: {
+        alldayTitle: function(){
+            return '<span class="tui-full-calendar-left-content">CẢ NGÀY</span>';
+        },
+    }
 });
 
-var global_data = []
+// calendar.createSchedules([
+//     {
+//         id: '1',
+//         calendarId: '1',
+//         title: 'my schedule',
+//         category: 'time',
+//         dueDateClass: '',
+//         start: '2022-03-14T02:30:00',
+//         end: '2022-03-14T03:30:00',
+//         isAllDay: false
+//     }
+// ])
 
 calendar.on({
-    // open a detail popup
-    'clickSchedule': function(e) {
-        console.log('clickSchedule', e);
+    'beforeUpdateSchedule': function(e) {
         $('#schedule-id').val(e.schedule.raw.schedule_id)
         getDetailSchedule(e.schedule.raw.schedule_id)
         var modal = $('#calendarModal')
         modal.modal('toggle')
         modal.find('button.final-button').html('Lưu')
-        modal.find('button.delete-button').toggle(true)
     },
-    // open a creation popup
-    // 'beforeCreateSchedule': function(e) {
-    //     console.log('beforeCreateSchedule', e);
-    //     var modal = $('#calendarModal')
-    //     modal.modal('toggle')
-    //     modal.find('button.final-button').html('Tạo mới')
-    // },
-    // 'beforeUpdateSchedule': function(e) {
-    //     console.log('beforeUpdateSchedule', e);
-    //     e.schedule.start = e.start;
-    //     e.schedule.end = e.end;
-    //     cal.updateSchedule(e.schedule.id, e.schedule.calendarId, e.schedule);
-    // },
-    // 'beforeDeleteSchedule': function(e) {
-    //     console.log('beforeDeleteSchedule', e);
-    //     cal.deleteSchedule(e.schedule.id, e.schedule.calendarId);
-    // }
+    'beforeDeleteSchedule': function(e) {
+        // console.log(e.schedule.start._date)
+        $('#schedule-id').val(e.schedule.calendarId)
+        $('#date-selected').val(e.schedule.start._date)
+        if(e.schedule.raw.pattern == 2){
+            $('#update-option').modal('show')
+        }else{
+            deleteSchedule($('#schedule-id').val(), 2)
+        }
+    }
 });
 
 function getDateRangeCalendar(type){
@@ -71,7 +82,6 @@ function getApi(type){
         enctype: 'multipart/form-data',
         success: function(data){
             calendar.createSchedules(data.data)
-            global_data.push(data.data)
         }
     })
 }
@@ -137,6 +147,10 @@ function showData(data){
     }
     //title
     $('#title').val(data.data.title)
+    //color
+    $('#color').data('color', data.data.color.id)
+    $('.btn-select-color .color').css('background',data.data.color.value)
+    $('.btn-select-color .text').html(data.data.color.name)
     //start date
     $('#start-date').val(data.data.start_date)
     //end date
@@ -155,7 +169,7 @@ function showData(data){
         $('#type option[value='+data.data.type_id+']').prop('selected', true)
     }
     else{
-        $('#type option[value=""]').prop('selected', true)
+        $('#type option[value=0]').prop('selected', true)
     }
     //user
     $('.attendees').html("")
@@ -180,6 +194,8 @@ function showData(data){
     
     //description
     $('#description').val(data.data.description)
+    $('#end-date').attr("min", $('#start-date').val())
+    $('#start-date').attr("max", $('#end-date').val())
 }
 
 function getDetailSchedule(id){
@@ -218,6 +234,8 @@ function dataChangeSchedule(action){
     data.append('id', id)
     var title = $('#title').val()
     data.append('title', title)
+    var color_id = $('#color').data('color')
+    data.append('color_id', color_id)
     var start_date = $('#start-date').val()
     data.append('start_date', start_date)
     var end_date = $('#end-date').val()
@@ -245,42 +263,8 @@ function dataChangeSchedule(action){
         contentType: false, 
         enctype: 'multipart/form-data',
         success: function(data){
-            if(action == 1){
-                calendar.createSchedules([data.data])
-                global_data.push(data.data)
-            }else{
-                if(data.pattern == 1 && data.old_pattern == 1){ // thông thường -> thông thường
-                    calendar.updateSchedule("1", data.data.calendarId, data.data);
-                }else if(data.pattern != 1  && data.old_pattern == 1){ // thông thường -> lặp lại
-                    calendar.deleteSchedule("1", parseInt(id));
-                    for(var i=0; i<global_data[0].length; i++){
-                        if(global_data[0][i].calendarId == id){
-                            global_data[0].splice(i, 1)
-                        }
-                    }
-                    calendar.createSchedules(data.data)
-                }else if(data.pattern == 1  && data.old_pattern != 1){ // lặp lại -> thông thường
-                    for(var i=0; i<global_data[0].length; i++){
-                        if(global_data[0][i].calendarId == id){
-                            calendar.deleteSchedule("1", parseInt(id));
-                            global_data[0].splice(i, 1)
-                            i--
-                        }
-                    }
-                    global_data[0].push(data.data)
-                    calendar.createSchedules([data.data])
-                }else{ // lặp lại -> lặp lại
-                    for(var i=0; i<global_data[0].length; i++){
-                        if(global_data[0][i].calendarId == id){
-                            calendar.deleteSchedule("1", parseInt(id));
-                            global_data[0].splice(i, 1)
-                            i--
-                        }
-                    }
-                    global_data[0] = global_data[0].concat(data.data)
-                    calendar.createSchedules(data.data)
-                }
-            }
+            calendar.clear()                
+            calendar.createSchedules(data.data)
             swal({
                 icon: "success",
                 text: action == 1 ? "Thêm mới thành công" : "Chỉnh sửa thành công",
@@ -290,27 +274,61 @@ function dataChangeSchedule(action){
     })
 }
 
-function deleteSchedule(id){
+function deleteSchedule(id, type){
+    var data = new FormData();
+    var date_selected = moment($('#date-selected').val()).format('MM/DD/YYYY h:mm:ss');
+    data.append('id', id)
+    data.append('type', type)
+    data.append('date_selected', date_selected)
     $.ajax({
         url: "api/schedule/delete",
         type: "POST",
-        data: {id},
-        success: function(){
-            calendar.deleteSchedule("1", parseInt(id));
+        data: data,
+        processData: false,
+        contentType: false, 
+        enctype: 'multipart/form-data',
+        success: function(data){
+            calendar.clear()                
+            calendar.createSchedules(data.data)
             swal({
                 icon: "success",
                 text: "Xóa thành công",
             });
-            $('#calendarModal').modal('toggle')
         }
     })
 }
 
-// calendar handling - end
+function filterSchedule(type){
+    $.ajax({
+        url: "api/schedule/filter",
+        type: "POST",
+        data: {type},
+        success: function(data){
+            calendar.clear()
+            calendar.createSchedules(data.data)
+        }
+    })
+}
 
-// $('#start-date').on('change',function(){
-//     console.log($(this).val())
-// })
+// lọc lịch theo type
+$('input[name="type-schedule"][value=all]').on('change', function(){
+    if($(this).prop('checked')){
+        $('input[name="type-schedule"]').prop('checked', true)
+    }else{
+        $('input[name="type-schedule"]').prop('checked', false)
+    }
+})
+$('input[name="type-schedule"]').on('change', function(){
+    var type_changed = []
+    if($(this).prop('checked')){
+        $('input[name="type-schedule"][value=all]').prop('checked', true)
+    }
+    $('input[name="type-schedule"]:checked').each(function(){
+        $(this).val() != "all" ? type_changed.push($(this).val()) : false
+    })
+    filterSchedule(type_changed)
+})
+// calendar handling - end
 
 function isFillForm(){
     var title = $('#title').val();
@@ -337,11 +355,10 @@ function isFillForm(){
 
 $('#btn-new-schedule').click(function(){
     defaultFormInsert()
-    $('#schedule-id').val("")
+
     var modal = $('#calendarModal')
     modal.modal('toggle')
     modal.find('button.final-button').html('Tạo mới')
-    modal.find('button.delete-button').toggle(false)
 })
 
 $('#calendarModal .final-button').click(function(){
@@ -350,19 +367,20 @@ $('#calendarModal .final-button').click(function(){
     }
 })
 
-$('#calendarModal .delete-button').click(function(){
-    deleteSchedule($('#schedule-id').val())
+$('.delete-button').click(function(){
+    // console.log($('.delete-type:checked').val())
+    deleteSchedule($('#schedule-id').val(), $('.delete-type:checked').val())
 })
 
 function defaultFormInsert(){
     $.ajax({
         url: "api/schedule/defaultFormInsert",
         type: "POST",
-        // data: data,
         processData: false,
         contentType: false, 
         enctype: 'multipart/form-data',
         success: function(data){
+            $('#schedule-id').val("")
             $('#pattern-schedule').find('option[value=1]').prop('selected', true)
             $('#dayweek').prop('checked', true)
             $('#wday').toggle(true)
@@ -374,11 +392,18 @@ function defaultFormInsert(){
             $('.repeat-selection').toggle(false)
             $('.repeat-day-selected').html("")
             $('#title').val('')
+            //color
+            var color = $('.color-select').first()
+            $('#color').data('color', color.data('color'))
+            $('.btn-select-color .color').css('background', color.find('.color').css('background-color'))
+            $('.btn-select-color .text').html(color.find('span').html())
             $('#start-date').val('')
             $('#end-date').val('')
+            $('#end-date').attr("min", $('#start-date').val())
+            $('#start-date').attr("max", $('#end-date').val())
             $('#location').val('')
             $('#meeting-room').find('option[value=""]').prop('selected',true)
-            $('#type').find('option[value=""]').prop('selected',true)
+            $('#type').find('option[value=0]').prop('selected',true)
             $('#attendees').find('option').remove()
             $('#attendees').append('<option value="all" disabled selected>--Chọn người tham gia--</option>')
             for(var i=0;i<data.data.length;i++){
@@ -463,6 +488,34 @@ $("body").delegate('.day-added button', 'click', function(){
     father.remove()
 })
 
+// Toggle chọn màu
+$('.btn-select-color').click(function(){
+    $('.select-color-area').toggle()
+    event.stopPropagation();
+})
+$(document).on("click", function () {
+    $(".select-color-area").hide();
+});
+
+$('.color-select').click(function(){
+    var color = $(this).data('color')
+    var name = $(this).find('span').html()
+
+    $('#color').data('color', color)
+    $('.btn-select-color .color').css('background-color', $(this).find('.color').css('background-color'))
+    $('.btn-select-color .text').html(name)
+    $('.select-color-area').toggle()
+})
+
+// Toggle loại thời gian
+// $('#is-all-day').on('change', function(){
+//     if($(this).val() == '1'){
+//         $('.date-select').attr('type', 'date')
+//     }else{
+//         $('.date-select').attr('type', 'datetime-local')
+//     }
+// })
+
 // Thêm|Xóa người tham gia
 $('#attendees').on('change', function() {
     var text = $('#attendees option:selected').text()
@@ -484,6 +537,17 @@ $("body").delegate('.attendee-box button', 'click', function(){
     }));
     father.remove()
 })
+
+// đặt thời gian bắt đầu - kết thúc
+$( document ).ready(function() {
+    $('#start-date').on('change', function(){
+        $('#end-date').attr("min", $(this).val())
+    })
+    $('#end-date').on('change', function(){
+        $('#start-date').attr("max", $(this).val())
+    })
+})
+
 
 //Thay đổi kiểu hiển thị của lịch
 $('#move-today').click(function(){
