@@ -158,7 +158,7 @@
 
             <!-- Modal -->
             <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-              <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+              <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
                 <div class="modal-content">
                   <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Thông tin</h5>
@@ -308,25 +308,48 @@
                                                       </div>
                                                     </div>
                                                   </li>
-                                                
+                                                   
                                                 </ul>
-                                                 <div id="inputFormRow">
+                                                {{-- <div id="inputFormRow">
                                                     <div class="input-group mb-1">
                                                     <textarea class="form-control" rows="2"></textarea>
                                                     <div class="input-group-append">
                                                     <button id="removeRow" type="button" class="btn btn-outline-primary">Thêm</button>
                                                     </div>
-                                                </div>
-                                                <!-- task list end -->
-                                                {{-- <div class="no-results">
-                                                  <h5>No Items Found</h5>
                                                 </div> --}}
-                                              </div>
+                                                {{-- <div class="row form-group" id="inputFormRow">
+                                                    <div class="col-3">
+                                                    <label>Tiêu đề</label>
+                                                    <input type="" class=" form-control" name="">
+                                                    </div>
+                                                    <div class="col-3">
+                                                    <label>Người thực hiện</label>
+                                                    <select class="form-control select2-icons " data-icon="" multiple="">
+                                                      <option>123</option>
+                                                      <option>456</option>
+                                                    </select>
+                                                    </div>
+                                                     <div class="col-2">
+                                                    <label>Dự kiến bắt đầu</label>
+                                                    <input type="date" class=" form-control" name="">
+                                                    </div>
+                                                    <div class="col-2">
+                                                    <label>Dự kiến kết thúc</label>
+                                                    <input type="date" class=" form-control" name="">
+                                                    </div>
+                                                    <div class="col-1">
+                                                    <button type="button" class="btn btn-outline-primary" style="position: absolute; bottom: 0;">Thêm</button>
+                                                    </div>
+                                                    <div class="col-1">
+                                                    <button id="removeRow" type="button" class="btn btn-outline-danger" style="position: absolute; bottom: 0;">Huỷ</button>
+                                                    </div>
+                                                </div> --}}
                                             </div>
+
                                           </div>
 
                                         </div>
-                                        <div id="inputFormRow">
+                                        <div id="newRow">
                                               
                                         </div>
                                   
@@ -340,11 +363,12 @@
                                         role="progressbar" aria-valuenow="20" aria-valuemin="0"
                                         aria-valuemax="100" style=""></div>
                                 </div>
-                                <div class="form-group">
+                               
+                            </div>
+                             <div class="form-group">
                                     <label>Bình luận</label>
                                     <textarea class="form-control" rows="3" placeholder="Nhập bình luận"></textarea>
                                 </div>
-                            </div>
                         </div>
                   </div>
                   <div class="modal-footer">
@@ -379,19 +403,42 @@
 <!-- END: Page JS-->
 
 <script type="text/javascript">
-    
-    //context menu
-    
+      
     // add row
+    var i = 0;
     $("#addRow").click(function () {
+        if(i == 1){
+            alert('Vui lòng thêm công việc mới trước đó');
+            return;
+        }
+        i++;
         var html = '';
-        html += '<div id="inputFormRow">';
-        html += '<div class="input-group mb-1">';
-        html += '<input type="text" name="subtask[]" required class="form-control m-input" placeholder="Enter title" autocomplete="off">';
-        html += '<div class="input-group-append">';
-        html += '<button id="removeRow" type="button" class="btn btn-outline-danger">Xoá</button>';
-        html += '</div>';
-        html += '</div>';
+        html += `<div class="row form-group" id="inputFormRow" data-id="2">
+                    <div class="col-3">
+                    <label>Tên công việc</label>
+                    <input id="subTaskName" type="" class="form-control" name="">
+                    </div>
+                    <div class="col-3">
+                    <label>Người thực hiện</label>
+                     <select class="form-control select2" id="subTaskUser" name="user_id">    
+                       {!!$user_html!!}
+                    </select>
+                    </div>
+                     <div class="col-2">
+                    <label>Dự kiến bắt đầu</label>
+                    <input type="date" class=" form-control" id="subTaskStart" name="">
+                    </div>
+                    <div class="col-2">
+                    <label>Dự kiến kết thúc</label>
+                    <input type="date" class=" form-control" id="subTaskEnd" name="">
+                    </div>
+                    <div class="col-1">
+                    <button type="button" id="addSubTask" data-task_id="" class="btn btn-outline-primary" style="position: absolute; bottom: 0;">Thêm</button>
+                    </div>
+                    <div class="col-1">
+                    <button type="buttom" id="removeRow" class="btn btn-outline-danger" style="position: absolute; bottom: 0;">Huỷ</button>
+                    </div>
+                </div>`;
         $('#newRow').append(html);
     });
 
@@ -399,6 +446,34 @@
     $(document).on('click', '#removeRow', function () {
         $(this).closest('#inputFormRow').remove();
     });
+
+    $(document).on('click', '#addSubTask', function () {
+        let task_id = $('#card_id').val();
+        let parent = $(this).parents('#inputFormRow');
+        let name = parent.find('#subTaskName').val();
+        let user = parent.find('#subTaskUser').val();
+        let start = parent.find('#subTaskStart').val();
+        let end = parent.find('#subTaskEnd').val();
+        add_sub_task(name, user, start, end, task_id);
+    });
+
+    function add_sub_task(name, user, start, end, task_id){
+        $.ajax({
+        type: "post",
+        url: '/api/task/add-subtask',
+        dataType: 'JSON',
+        async: false,
+        data: {
+          task_id : task_id,
+          name : name,
+          user : user,
+          start : start,
+          end : end
+        }
+      }).done(function(resp) {
+          console.log('resp', resp);
+      });
+    }
 
     $(document).on('click','.check_task', function(){
         let task_id = $(this).data('task_id');
