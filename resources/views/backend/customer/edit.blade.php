@@ -10,8 +10,10 @@
     <!-- END: Page CSS-->
     <!-- Adding datatable style cdn -->
     {{-- <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css"> --}}
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css"
-        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"> --}}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 @stop
 @extends('layouts.master')
 @section('content')
@@ -265,13 +267,12 @@
 
                                         <hr />
                                         {{-- Contactor lable --}}
-                                        <div class="portlet">
+                                        {{-- <div class="portlet">
                                             <div class="portlet-heading inverse">
                                                 <div class="portlet-title">
                                                     <h5>Người liên lạc</h5>
                                                 </div>
                                                 <div class="portlet-widgets">
-                                                    {{-- <a href="#"><i class="fa fa-plus"></i> Thêm người liên lạc</a> --}}
                                                     <a href="#" class="tooltip-primary" data-placement="left"
                                                         data-rel="tooltip" title=""
                                                         data-original-title="Thêm người liên lạc" data-toggle="modal"
@@ -281,100 +282,136 @@
                                                 </div>
                                                 <div class="clearfix"></div>
                                             </div>
-                                        </div>
-                                        {{-- Contactor table --}}
-                                        <div id="basic-datatable">
-                                            <div class="row">
-                                                <div class="col-12">
-                                                    <div class="card">
-                                                        <div class="card-body card-dashboard">
-                                                            <!-- datatable start -->
-                                                            @if ($customer_contactor_array['records_total'] > 0)
-                                                                {{-- <div class="table-responsive">
-                                                                <table id="tableContactor"
-                                                                    class="datatable table table-hover table-striped table-bordered tc-table">
-                                                                    <thead>
-                                                                        <tr>
-                                                                            <th data-hide="expand">STT</th>
-                                                                            <th data-class="expand">Người liên lạc
-                                                                            </th>
-                                                                            <th data-hide="expand">Số điện thoại</th>
-                                                                            <th data-hide="expand">Giới tính</th>
-                                                                            <th data-hide="expand">Chức vụ</th>
-                                                                            <th data-hide="expand">Thao tác</th>
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody>
-
-
-                                                                    </tbody>
-                                                                </table> --}}
-                                                                <table class="table zero-configuration">
-                                                                    <thead>
-                                                                        <tr>
-                                                                            <th>Id</th>
-                                                                            <th>Người liên lạc</th>
-                                                                            <th>SĐT</th>
-                                                                            <th>Giới tính</th>
-                                                                            <th>Chức vụ</th>
-                                                                            <th>Thao tác</th>
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody>
-                                                                        @foreach ($customer_contactor_array['rows'] as $key => $contactor)
-                                                                            <tr>
-                                                                                <td>{{ ++$key }}</td>
-                                                                                <td>{{ $contactor->name }}</td>
-                                                                                <td>{{ $contactor->phone_number }}</td>
-                                                                                <td>
-                                                                                    @if ($contactor->gender == 1)
-                                                                                        {{ 'Nam' }}
-                                                                                    @elseif($contactor->gender == 2)
-                                                                                        {{ 'Nữ' }}
-                                                                                    @endif
-                                                                                </td>
-                                                                                <td>{{ $contactor->postion }}</td>
-                                                                                <td>
-                                                                                    <a
-                                                                                        href="{{ route('admin.customer_contactor.edit', $contactor->id) }}"><i
-                                                                                            class="far fa-edit"></i></a>
-                                                                                    <form style="display: inline-block"
-                                                                                        method="POST"
-                                                                                        action="{{ route('admin.customer_contactor.destroy', $contactor->id) }}">
-                                                                                        @csrf
-                                                                                        <input name="_method" type="hidden"
-                                                                                            value="DELETE">
-                                                                                        <a href="#" class="show_confirm"
-                                                                                            data-toggle="tooltip"
-                                                                                            title='Delete'> <i
-                                                                                                class="fa fa-trash-alt ml-1">
-                                                                                            </i></a>
-                                                                                    </form>
-                                                                                </td>
-                                                                            </tr>
-                                                                        @endforeach
-                                                                    </tbody>
-                                                                </table>
+                                        </div> --}}
+                                        <div class="col-lg-6 col-md-6">
+                                            <div class="tc-tabs">
+                                                <!-- Nav tabs style 1 -->
+                                                <ul class="nav nav-tabs nav-bordered mb-2 tab-lg-button tab-color-dark background-dark white"
+                                                    id="myTab" role="tablist">
+                                                    <li class="nav-item ">
+                                                        <a class="nav-link active" id="contactor-tab" href="#p1"
+                                                            data-toggle="tab" role="tab" aria-controls="p1"
+                                                            aria-selected="true">Người liên lạc
+                                                        </a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" id="info-more-tab" href="#p2"
+                                                            data-toggle="tab" role="tab" aria-controls="p2"
+                                                            aria-selected="false">Thông tin
+                                                            thêm
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                                <!-- Tab panes -->
+                                                <div class="tab-content tab-content-page" id="myTabContent">
+                                                    <div class="tab-pane fade show active" id="p1" role="tabpanel"
+                                                        aria-labelledby="contactor-tab">
+                                                        <div class="portlet-widgets">
+                                                            <a href="#" class="tooltip-primary" data-placement="left"
+                                                                data-rel="tooltip" title=""
+                                                                data-original-title="Thêm người liên lạc"
+                                                                data-toggle="modal" data-target="#addContactor"
+                                                                id="btnShowFormCreate">
+                                                                <i class="fa fa-plus"> </i> Thêm người liên lạc
+                                                            </a>
                                                         </div>
-                                                        @endif
-                                                        <!-- datatable ends -->
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                </div>
+                                                        {{-- Contactor table --}}
+                                                        <div id="basic-datatable">
+                                                            <div class="row">
+                                                                <div class="col-12">
+                                                                    <div class="">
+                                                                        <div class="">
+                                                                            <!-- datatable start -->
+                                                                            @if ($customer_contactor_array['records_total'] > 0)
+                                                                                @foreach ($customer_contactor_array['rows'] as $key => $contactor)
+                                                                                    <div class="row space-2x mt-4 col-12">
+                                                                                        <div class="col-lg-4">
+                                                                                            <div class="divTable box-show2 bg-white"
+                                                                                                style="border:1px solid #ccc">
+                                                                                                <div
+                                                                                                    class="headRow borderb-n">
+                                                                                                    <div
+                                                                                                        class="divCell title2">
+                                                                                                        <b>{{ $contactor->name }}</b>
+                                                                                                    </div>
+                                                                                                    <div
+                                                                                                        class="divCell float-right link-line-b">
+                                                                                                        <form
+                                                                                                            style="display: inline-block"
+                                                                                                            method="POST"
+                                                                                                            action="{{ route('admin.customer_contactor.destroy', $contactor->id) }}">
+                                                                                                            @csrf
+                                                                                                            <input
+                                                                                                                name="_method"
+                                                                                                                type="hidden"
+                                                                                                                value="DELETE">
+                                                                                                            <a href="#"
+                                                                                                                class="show_confirm"
+                                                                                                                data-toggle="tooltip"
+                                                                                                                title='Delete'>
+                                                                                                                <i
+                                                                                                                    class="fal fa-times-circle"></i></a>
+                                                                                                        </form>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                                <div
+                                                                                                    class="divRow borderb-n">
+                                                                                                    <div
+                                                                                                        class="divCell">
+                                                                                                        @if (!empty($contactor->phone_number))
+                                                                                                            {{ $contactor->phone_number }}
+                                                                                                        @endif
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                @endforeach
 
-                                </form>
-                                <!-- users edit account form ends -->
+                                                                        </div>
+                                                                        @endif
+                                                                        <!-- datatable ends -->
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="tab-pane fade" id="p2" role="tabpanel"
+                                                        aria-labelledby="profile-tab">
+                                                        <form class="form-validate" method="post"
+                                                            action="{{ route('admin.employee.addNote', $record->id) }}">
+                                                            <div class="form-group">
+                                                                <label>Thông tin bổ sung </label>
+                                                                <textarea class="form-control customernote" id="addNoteContactor" name="note_customer"></textarea>
+                                                            </div>
+                                                            <div class="form-actions no-padding-bottom">
+                                                                <div class="btn-group">
+                                                                    <button type="button" class="btn btn-primary"
+                                                                        id="btnAddContactor">Lưu</button>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+
+                                                    </div>
+                                                    <!--nav-tabs style 1-->
+                                                </div>
+
+                                            </div>
+
+                                    </form>
+                                    <!-- users edit account form ends -->
+                                </div>
                             </div>
                         </div>
                     </div>
-            </div>
-            </section>
-            <!-- users edit ends -->
+                </section>
+                <!-- users edit ends -->
 
+            </div>
         </div>
-    </div>
     </div>
     <!-- END: Content-->
     <!-- Add Contactor Modal -->
@@ -389,7 +426,8 @@
                 </div>
                 <div class="modal-body padding-2x">
                     <div id="addContactorError"></div>
-                    <form method="POST" id="addContactorForm" action="javascript:void(0)" enctype="multipart/form-data"
+                    <form method="POST" id="addContactorForm"
+                        action="{{ route('admin.customer_contactor.store', $record->id) }}" enctype="multipart/form-data"
                         autocomplete="off">
                         <div class="form-group">
                             <div class="controls">
@@ -406,6 +444,7 @@
                                 @endforeach
                             </select>
                         </div>
+
                         <div class="form-group">
                             <div class="controls">
                                 <label>Chức vụ</label>
@@ -430,6 +469,19 @@
                                 <label>Số CMND</label>
                                 <input type="text" class="form-control" placeholder="" value="" name="id_card"
                                     id="contactorIdCard">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="controls">
+                                <label>Quốc gia</label>
+                                <select class="select2 form-control" name="country_id" id="contactorCountryId">
+                                    <option value="">
+                                        Chọn quốc gia</option>
+                                    @foreach ($country_array as $key => $country)
+                                        <option value="{{ $country->id }}">
+                                            {{ $country->country_name }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                         <div class="form-group">
@@ -480,19 +532,7 @@
                                     id="contactorAddress">
                             </div>
                         </div>
-                        <div class="form-group">
-                            <div class="controls">
-                                <label>Quốc gia</label>
-                                <select class="select2 form-control" name="country_id" id="contactorCountryId">
-                                    {{-- <option value="{{ $record->country_id }}">
-                                            {{ $record->countries->country_name }}</option> --}}
-                                    @foreach ($country_array as $key => $country)
-                                        <option value="{{ $country->id }}">
-                                            {{ $country->country_name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
+
                         <div class="form-group">
                             <label>Ghi chú</label>
                             <textarea name="note" class="form-control" rows="5" id="contactorNote"></textarea>
@@ -647,7 +687,7 @@
     <script src="assets/js/scripts/navs/navs.min.js"></script>
     <script src="assets/js/scripts/forms/select/form-select2.min.js"></script>
     <!-- -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    {{-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
     </script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js"
@@ -655,354 +695,26 @@
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"
         integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous">
-    </script>
-
-    {{-- <!-- Adding jQuery cdn-->
-    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-    <!-- Adding datatable cdn -->
-    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-    <!-- --> --}}
-
-    {{-- <script>
-        $('#btnEditCustomer').on('click', function(e) {
-            e.preventDefault();
-            $("#customerName").attr("readonly", false);
-            $("#customerTaxNumber").attr("readonly", false);
-            $("#customerPhone").attr("readonly", false);
-            $("#customerEmail").attr("readonly", false);
-            $("#customerSkype").attr("readonly", false);
-            $("#customerZalo").attr("readonly", false);
-            $("#customerWechat").attr("readonly", false);
-            $("#customerWhatsapp").attr("readonly", false);
-            $("#customerAddress").attr("readonly", false);
-            $("#btnEditCustomer").show();
-        });
-        $('#btnCancelEditCustomer').on('click', function(e) {
-            e.preventDefault();
-            $("#customerName").attr("readonly", true);
-            $("#customerTaxNumber").attr("readonly", true);
-            $("#customerPhone").attr("readonly", true);
-            $("#customerEmail").attr("readonly", true);
-            $("#customerSkype").attr("readonly", true);
-            $("#customerZalo").attr("readonly", true);
-            $("#customerWechat").attr("readonly", true);
-            $("#customerWhatsapp").attr("readonly", true);
-            $("#customerAddress").attr("readonly", true);
-            $("#btnEditCustomer").hide();
-        });
     </script> --}}
-    {{-- <script>
-        $('input[name="date_of_birth"]').daterangepicker({
-            singleDatePicker: true,
-            showDropdowns: true,
-            autoUpdateInput: false,
-            maxDate: new Date(),
-            locale: {
-                cancelLabel: 'Clear'
-            },
-            format: 'dd/mm/yyyy'
-        }).on;
-        $('input[name="date_of_birth"]').on('apply.daterangepicker', function(ev, picker) {
-            $(this).val(picker.startDate.format('DD/MM/YYYY'));
-        });
-        var responsiveHelper = undefined;
-        var breakpointDefinition = {
-            tablet: 1024,
-            phone: 480
-        };
-        var tElement = $('#tableContactor');
-        var table = tElement.DataTable({
-            "processing": true,
-            "language": {
-                "processing": "Đang xử lý",
-                "search": "Tìm kiếm ",
-                "emptyTable": "Không tìm thấy bản ghi",
-                "sLengthMenu": "Hiển thị _MENU_ bản ghi trên 1 trang",
-            },
 
-            "serverSide": true,
-            "ajax": {
-                "url": "{{ route('contactorDatatable') }}",
-                "dataType": "json",
-                "type": "post",
-                "data": function(data) {
-                    data._token = "{{ csrf_token() }}",
-                }
-            },
-            "order": [
-                [1, "asc"]
-            ],
-            "columns": [{
-                    "data": "index"
-                },
-                {
-                    "data": "name"
-                },
-                {
-                    "data": "phone_number"
-                },
-                {
-                    "data": "gender"
-                },
-                {
-                    "data": "position"
-                },
-                {
-                    "data": "options"
-                }
-            ],
-            "autoWidth": false,
-            preDrawCallback: function() {
-                // Initialize the responsive datatables helper once.
-                if (!responsiveHelper) {
-                    responsiveHelper = new ResponsiveDatatablesHelper(tElement, breakpointDefinition);
-                }
-            },
-            rowCallback: function(nRow) {
-                responsiveHelper.createExpandIcon(nRow);
-            },
-            drawCallback: function(oSettings) {
-                responsiveHelper.respond();
-            }
-        });
-        $('[name="process_status"]').change(function() {
-            table.draw();
-        });
-    </script> --}}
-    {{-- <script>
-        $('#btnAddContactor').on('click', function(e) {
-            e.preventDefault();
-            var form = $(this).closest('form');
-            var btnSubmit = $(this);
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            btnSubmit.attr("disabled", true);
-            btnSubmit.html('<i class="fa fa-spinner fa-spin"></i> Đang xử lý');
-            $.ajax({
-                url: "{{ route('contactor.add') }}",
-                type: "POST",
-                data: form.serialize(),
-                success: function(response) {
-                    dd(response);
-                    if (response.status !== 1) {
-                        btnSubmit.html('<i class="fa fa-floppy-o"></i> Lưu');
-                        $('#addContactorError').html(
-                            '<div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>' +
-                            response.message + '</div>');
-                        $("#addContactor").animate({
-                            scrollTop: 0
-                        }, "slow");
-                        btnSubmit.attr("disabled", false);
-                    } else {
-                        form.trigger("reset");
-                        form.find('input').val('');
-                        form.find('textarea').attr('src', '');
-                        btnSubmit.html('<i class="fa fa-floppy-o"></i> Lưu');
-                        $('#addContactorError').html('');
-                        $('#addContactor').modal('hide');
-                        $.gritter.add({
-                            title: response.message,
-                            class_name: "bg-success",
-                            sticky: false
-                        });
-                        if (typeof table !== 'undefined' && table !== null) {
-                            table.draw();
-                        }
-                        btnSubmit.attr("disabled", false);
-                    }
-                }
-            });
-        });
-    </script> --}}
+    <script src="https://cdn.ckeditor.com/4.13.0/standard/ckeditor.js"></script>
+
+
     <script>
-        $('#addContactorForm').submit(function(e) {
-            e.preventDefault();
-            let name = $("#contactorName").val();
-            let customer_type_id = $("#contactorCustomerType").val();
-            let position = $("#contactorPosition").val();
-            let gender = $("#contactorGender").val();
-            let date_of_birth = $("#contactorBirthday").val();
-            let id_card = $("#contactorIdCard").val();
-            let phone_number = $("#contactorPhone").val();
-            let email = $("#contactorEmail").val();
-            let skype = $("#contactorSkype").val();
-            let zalo = $("#contactorZalo").val();
-            let wechat = $("#contactorWechat").val();
-            let whatsapp = $("#contactorWhatsapp").val();
-            let address = $("#contactorAddress").val();
-            let country_id = $("#contactorCountryId").val();
-            let note = $("#contactorNote").val();
-            let customer_id = $record - > id;
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            var btnSubmit = $("#btnAddContactor");
-            btnSubmit.attr("disabled", true);
-            btnSubmit.html('<i class="fa fa-spinner fa-spin"></i> Đang xử lý');
-            $.ajax({
-                url: "{{ route('contactor.add') }}",
-                type: "POST",
-                data: {
-                    name: name,
-                    customer_type_id: customer_type_id,
-                    position: position,
-                    gender: gender,
-                    date_of_birth: date_of_birth,
-                    id_card: id_card,
-                    phone_number: phone_number,
-                    email: email,
-                    skype: skype,
-                    zalo: zalo,
-                    wechat: wechat,
-                    whatsapp: whatsapp,
-                    address: address,
-                    country_id: country_id,
-                    note: note,
-                    customer_id: $con
-                },
-                success: function(response) {
-                    dd(response);
-                    if (response.status !== 1) {
-                        btnSubmit.html('<i class="fa fa-floppy-o"></i> Lưu');
-                        $('#addContactorError').html(
-                            '<div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>' +
-                            response.message + '</div>');
-                        $("#addContactor").animate({
-                            scrollTop: 0
-                        }, "slow");
-                        btnSubmit.attr("disabled", false);
-                    } else {
-                        form.trigger("reset");
-                        form.find('input').val('');
-                        form.find('textarea').attr('src', '');
-                        btnSubmit.html('<i class="fa fa-floppy-o"></i> Lưu');
-                        $('#addContactorError').html('');
-                        $('#addContactor').modal('hide');
-                        $.gritter.add({
-                            title: response.message,
-                            class_name: "bg-success",
-                            sticky: false
-                        });
-                        if (typeof table !== 'undefined' && table !== null) {
-                            table.draw();
-                        }
-                        btnSubmit.attr("disabled", false);
-                    }
-                }
-            });
+        $('#myTab a').on('click', function(e) {
+            e.preventDefault()
+            $(this).tab('show')
         })
     </script>
+    {{-- <script>
+        ClassicEditor
+            .create(document.querySelector('#addNoteContactor'))
+            .catch(error => {
+                console.error(error);
+            });
+    </script> --}}
     <script>
-        $('#edit-Record').on('hidden.bs.modal', function() {
-            $(this).find('.overLayLoading').css('display', 'block');
-        });
-        $('body').on('click', '.editRecord', function(e) {
-            e.preventDefault();
-            var tr = $(this).closest('tr'); //Find DataTables table row
-            var rowIndex = table.row(tr).index();
-            $('#btnEditContactor').attr('data-index', rowIndex);
-            var editForm = $('#editContactorForm');
-            var editUrl = $(this).data('url');
-            var editId = $(this).data('id');
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $.ajax({
-                url: editUrl + '/' + editId,
-                type: "GET",
-                success: function(response) {
-                    if (response.status !== 1) {
-                        $.gritter.add({
-                            title: response.message,
-                            class_name: "bg-danger",
-                            sticky: false
-                        });
-                    } else {
-                        response.data.hidden == 1 ? editForm.find('[name="hidden"]').prop("checked",
-                            true) : editForm.find('[name="hidden"]').prop("checked", false);
-                        editForm.find('[name="name"]').val(response.data.name);
-                        editForm.find('[name="customer_type_id"] > option[value="' + response.data
-                            .customer_type_id + '"]').prop("selected", true);
-                        editForm.find('[name="postion"]').val(response.data.position);
-                        editForm.find('[name="gender"] > option[value="' + response.data.gender + '"]')
-                            .prop("selected", true);
-                        editForm.find('[name="date_of_birth"]').val(response.data.date_of_birth !=
-                            null ? moment(response.data.date_of_birth).format('DD/MM/YYYY') : '');
-                        editForm.find('[name="id_card"]').val(response.data.id_card);
-                        editForm.find('[name="phone_number"]').val(response.data.phone_number);
-                        editForm.find('[name="email"]').val(response.data.email);
-                        editForm.find('[name="skype"]').val(response.data.skype);
-                        editForm.find('[name="zalo"]').val(response.data.zalo);
-                        editForm.find('[name="wechat"]').val(response.data.wechat);
-                        editForm.find('[name="whatsapp"]').val(response.data.whatsapp);
-                        editForm.find('[name="address"]').val(response.data.address);
-                        editForm.find('[name="content"]').val(response.data.content);
-                        editForm.find('[name="country_id"] > option[value="' + response.data
-                            .country_id + '"]').prop("selected", true);
-                        editForm.find('[name="note"]').val(response.data.note);
-                        editForm.find('[name="id"]').val(response.data.id);
-                        editForm.find('[name="customer_id"]').val(response.data.customer_id);
-                        $('#edit-Record .overLayLoading').fadeOut();
-                        response.data.status ? editForm.find('[name="status"]').prop("checked", true) :
-                            editForm.find('[name="status"]').prop("checked", false);
-                    }
-                }
-            });
-        });
-        $('body').on('click', '#btnEditContactor', function(e) {
-            e.preventDefault();
-            var rowIndex = $(this).data('index');
-            var formEdit = $(this).closest('form');
-            var btnUpdateSubmit = $(this);
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            btnUpdateSubmit.attr("disabled", true);
-            btnUpdateSubmit.html('<i class="fa fa-spinner fa-spin"></i> Đang xử lý');
-            $.ajax({
-                url: 'admin.customer_contactor.update',
-                type: "POST",
-                data: formEdit.serialize(),
-                success: function(response) {
-                    if (response.status !== 1) {
-                        btnUpdateSubmit.html('<i class="fa fa-floppy-o"></i> Lưu');
-                        $('#editContactorError').html(
-                            '<div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>' +
-                            response.message + '</div>');
-                        $("#edit-Record").animate({
-                            scrollTop: 0
-                        }, "slow");
-                        btnUpdateSubmit.attr("disabled", false);
-                    } else {
-                        formEdit.trigger("reset");
-                        formEdit.find('input').val('');
-                        formEdit.find('[name="id"]').val('');
-                        btnUpdateSubmit.html('<i class="fa fa-floppy-o"></i> Lưu');
-                        $('#editContactorError').html('');
-                        $('#edit-Record').modal('hide');
-                        $.gritter.add({
-                            title: response.message,
-                            class_name: "bg-success",
-                            sticky: false
-                        });
-                        if (typeof table !== 'undefined' && table !== null) {
-                            table.row(rowIndex).draw(false);
-                        }
-                        btnUpdateSubmit.attr("disabled", false);
-                    }
-
-                }
-            });
-        });
+        CKEDITOR.replace('addNoteContactor');
     </script>
     END:
     Page JS-->
