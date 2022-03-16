@@ -244,7 +244,27 @@
                                         <label class="custom-file-label" for="inputGroupFile02">Chọn tài liệu</label>
                                       </div>
                                       <div class="input-group-append">
-                                        <span class="input-group-text" id="">Pacific Drive</span>
+                                        <span class="input-group-text" id="open-file">Pacific Drive</span>
+                                      </div>
+                                    </div>
+                                    <div class="modal file-view fade" id="file-view" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="z-index: 999999">
+                                      <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
+                                        <div class="modal-content border border-secondary">
+                                          <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLongTitle">Pacific Drive</h5>
+                                            <button type="button" class="close close-view-file">
+                                              <span aria-hidden="true">&times;</span>
+                                            </button>
+                                          </div>
+                                          <div class="modal-body">
+                                            <div class="row file-view-area">
+                                            </div>
+                                          </div>
+                                          {{-- <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            <button type="button" class="btn btn-primary">Save changes</button>
+                                          </div> --}}
+                                        </div>
                                       </div>
                                     </div>
 
@@ -371,6 +391,62 @@
 <!-- END: Page JS-->
 
 <script type="text/javascript">
+
+    // xem file
+    $('#open-file').click(function(){
+      $.ajax({
+        type: "post",
+        url: '/api/file/viewFile',
+        dataType: 'JSON',
+        async: false,
+        data: {},
+        success: function(data){
+          $('.file-view-area').html('')
+          for(let i=0; i<data.data.length; i++){
+            var image = '';
+            if(['jpg','png','jpeg'].includes(data.data[i].format)){
+              image = '<img class="d-block mx-auto icon-image" src="" alt="Card image cap">'
+            }else if(['doc','docx'].includes(data.data[i].format)){
+              image = '<img class="d-block mx-auto" src="{{asset('assets/images/file/word.png')}}" width="55" alt="Card image cap">'
+            }else if(['xls','xlsx'].includes(data.data[i].format)){
+              image = '<img class="d-block mx-auto" src="{{asset('assets/images/file/excel.png')}}" width="55" alt="Card image cap">'
+            }else if(['pdf'].includes(data.data[i].format)){
+              image = '<img class="d-block mx-auto" src="{{asset('assets/images/file/pdf.png')}}" width="55" alt="Card image cap">'
+            }else{
+              image = '<img class="d-block mx-auto" src="{{asset('assets/images/file/no-format.png')}}" width="55" alt="Card image cap">'
+            }
+            $('.file-view-area').append('<div class="col-md-3">'+
+                                          '<div class="card border shadow-none mb-1 app-file-info">'+
+                                            '<div class="app-file-content-logo card-img-top d-flex align-items-center" style="background-color: #f2f4f4; height: 7rem">'+
+                                                image +
+                                            '</div>'+
+                                            '<div class="card-body p-50">'+
+                                                '<input type="hidden" class="link" value="'+data.data[i].link+'" />'+
+                                                '<div class="app-file-details">'+
+                                                    '<div class="app-file-name font-size-small font-weight-bold">'+
+                                                        data.data[i].name + '</div>'+
+                                                    '<div class="app-file-size font-size-small text-muted mb-25">'+
+                                                        data.data[i].size/1000 + 'kb'+
+                                                    '</div>'+
+                                                '</div>'+
+                                            '</div>'+
+                                          '</div>'+
+                                        '</div>')
+          }
+          $('#file-view').modal('show')
+        }
+      })
+    })
+
+    // $(document).on('dblclick', '.app-file-info', function(){
+    //   console.log($(this).find('.link').val())
+    //   $('#inputGroupFile02').val($(this).find('.link').val())
+    //   $('#file-view').modal('hide')
+    // })
+
+    $('.close-view-file').click(function(){
+      $('#file-view').modal('hide')
+    })
       
     // add row
     var i = 0;
