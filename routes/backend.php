@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Backend\CustomerContactorController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -101,10 +102,14 @@ Route::group(['middleware' => 'admin'], function () {
     Route::post('/calendar/type/update',  ['as' => 'admin.calendar.type.update', 'uses' => 'Backend\CalendarController@updateType']);
     Route::post('/calendar/type/delete',  ['as' => 'admin.calendar.type.delete', 'uses' => 'Backend\CalendarController@deleteType']);
     Route::get('/calendar/meeting',  ['as' => 'admin.calendar.meeting', 'uses' => 'Backend\CalendarController@meeting']);
+<<<<<<< HEAD
+
+=======
     Route::post('/calendar/meeting/create',  ['as' => 'admin.calendar.meeting.create', 'uses' => 'Backend\CalendarController@createMeeting']);
     Route::post('/calendar/meeting/update',  ['as' => 'admin.calendar.meeting.update', 'uses' => 'Backend\CalendarController@updateMeeting']);
     Route::post('/calendar/meeting/delete',  ['as' => 'admin.calendar.meeting.delete', 'uses' => 'Backend\CalendarController@deleteMeeting']);
     
+>>>>>>> 69e1c75f9c388f46220da42fb530f157b5f972a3
     //Kanban
     Route::get('/kanban/{project_id}',  ['as' => 'admin.kanban.index', 'uses' => 'Backend\KanbanController@index']);
 
@@ -131,4 +136,17 @@ Route::group(['middleware' => 'admin'], function () {
     Route::get('/task-kanban/edit/{id}',  ['as' => 'admin.task_kanban.edit', 'uses' => 'Backend\TaskKanbanController@edit']);
     Route::post('/task-kanban/update',  ['as' => 'admin.task_kanban.update', 'uses' => 'Backend\TaskKanbanController@update']);
     Route::delete('/task-kanban/delete/{id}',  ['as' => 'admin.task_kanban.destroy', 'uses' => 'Backend\TaskKanbanController@destroy']);
+
+    // Nguoi lien lac cua khach hang
+    // Route::get('/customer-contactor',  ['as' => 'admin.customer_contactor.index', 'uses' => 'Backend\CustomerContactorController@index']);
+    // Route::get('/customer-contactor/create',  ['as' => 'admin.customer_contactor.create', 'uses' => 'Backend\CustomerContactorController@create']);
+    // Route::post('/customer-contactor/store',  ['as' => 'admin.customer_contactor.store', 'uses' => 'Backend\CustomerContactorController@store']);
+    Route::get('/customer-contactor/edit/{id}',  ['as' => 'admin.customer_contactor.edit', 'uses' => 'Backend\CustomerContactorController@edit']);
+    Route::post('/customer-contactor/update/{id}',  ['as' => 'admin.customer_contactor.update', 'uses' => 'Backend\CustomerContactorController@update']);
+    Route::delete('/customer-contactor/delete/{id}',  ['as' => 'admin.customer_contactor.destroy', 'uses' => 'Backend\CustomerContactorController@destroy']);
+    // Route::post('contactorDatatable', [
+    //     'uses' => 'Backend\CustomerContactorController@contactorDatatable'
+    // ]);
+    Route::post('contactorDatatable', [CustomerContactorController::class, 'contactorDatatable'])->name('contactorDatatable');
+    Route::post('/add-contactor', [CustomerContactorController::class, 'store'])->name('contactor.add');
 });

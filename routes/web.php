@@ -22,4 +22,6 @@ Route::post('/send-otp', ['as' => 'send_otp', 'uses' => 'Auth\AuthController@sen
 Route::get('/forgot-password', ['as' => 'forgot_password', 'uses' => 'Auth\AuthController@forgot_password']);
 Route::post('/change-password', ['as' => 'change_password', 'uses' => 'Auth\AuthController@change_password']);
 
-
+Route::get('/tabledemo', function () {
+    return view('backend/customer/tableDemo');
+});

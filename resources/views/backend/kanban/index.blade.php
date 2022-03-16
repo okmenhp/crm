@@ -18,11 +18,16 @@
 <!-- BEGIN: Content-->
 <!-- BEGIN: Content-->
 
-<div class="context-menu">
-  <select class="form-control select2-icons" data-icon="" multiple="" style="min-height: 100px;">
-      <option>123</option>
-      <option>456</option>
-  </select>
+<div class="context-menu pr-1 pl-1">
+  <div class="form-group">
+      <label class="mt-1">Chọn user</label>
+      <select class="form-control select2-icons " data-icon="" multiple="" style="z-index: 1000000 !important;">
+          <option style="z-index: 1000000 !important;">123</option>
+          <option>456</option>
+      </select>
+    <button class="btn btn-primary mt-1">Lưu</button>
+    </div>  
+     
 </div>
 <input type="hidden" name="" id="project_id" value="{{$project_id}}">
 <div class="app-content content">
@@ -40,7 +45,6 @@
                             <i class='bx bx-add-to-queue mr-50'></i> Thêm danh sách mới
                         </button>
                         <div id="kanban-app"></div>
-
                     </div>
                 </div>
                 
@@ -189,7 +193,7 @@
                                             <div class="form-group">
                                                 <label>Người quản lý</label>
                                                 <div class="d-flex align-items-center">
-                                                    <select class="form-control" id="manager_id" name="manager_id">    
+                                                    <select class="form-control select2" id="manager_id" name="manager_id">    
                                                      @foreach($user_option as $u_o)
                                                          <option value="{{$u_o->id}}">{{$u_o->full_name}}</option>
                                                      @endforeach
@@ -275,7 +279,7 @@
                                               <div class="todo-task-list list-group">
                                                 <!-- task list start -->
                                                 <ul class="todo-task-list-wrapper list-unstyled" id="todo-task-list-drag newRow">
-                                                  <li class="todo-item" data-name="David Smith">
+                                                  <li class="todo-item todo-li" data-name="David Smith">
                                                     <div class="todo-title-wrapper d-flex justify-content-sm-between justify-content-end align-items-center">
                                                       <div class="todo-title-area d-flex">
                                                         <i class='bx bx-grid-vertical handle'></i>
@@ -283,92 +287,40 @@
                                                           <input type="checkbox" class="checkbox-input" id="checkbox1">
                                                           <label for="checkbox1"></label>
                                                         </div>
-                                                        <p class="todo-title mx-50 m-0 truncate">Effective Hypnosis Quit Smoking Methods</p>
+                                                        <div class="edit-subtask">
+                                                        <p class="todo-title mx-50 m-0 truncate todo-p">Effective Hypnosis Quit Smoking Methods</p>
+                                                        </div>
                                                       </div>
                                                       <div class="todo-item-action d-flex align-items-center">
                                                         <div class="todo-badge-wrapper d-flex">
                                                           <span class="badge badge-light-primary badge-pill">Frontend</span>
                                                         </div>
-                                                        <div class="avatar ml-1">
-                                                          <img src="../../../app-assets/images/portrait/small/avatar-s-1.jpg" alt="avatar" height="30"
+                                                        <div class="avatar">
+                                                          <img src="../../../assets/images/portrait/small/avatar-s-1.jpg" alt="avatar" height="30"
                                                             width="30">
                                                         </div>
-                                                        <a class='todo-item-user ml-75'><i class="bx bx-star"></i></a>
+                                                        <div class="avatar">
+                                                          <img src="../../../assets/images/portrait/small/avatar-s-1.jpg" alt="avatar" height="30"
+                                                            width="30">
+                                                        </div>
+                                                        <a class='todo-item-user ml-75'><i class="bx bx-user"></i></a>
                                                         <a class='todo-item-delete ml-75'><i class="bx bx-trash"></i></a>
                                                       </div>
                                                     </div>
                                                   </li>
-                                                  <li class="todo-item" data-name="John Doe">
-                                                    <div class="todo-title-wrapper d-flex justify-content-sm-between justify-content-end align-items-center">
-                                                      <div class="todo-title-area d-flex">
-                                                        <i class='bx bx-grid-vertical handle'></i>
-                                                        <div class="checkbox">
-                                                          <input type="checkbox" class="checkbox-input" id="checkbox2">
-                                                          <label for="checkbox2"></label>
-                                                        </div>
-                                                        <p class="todo-title mx-50 m-0 truncate">How To Protect Your Computer Very Useful Tips</p>
-                                                      </div>
-                                                      <div class="todo-item-action d-flex align-items-center">
-                                                        <div class="todo-badge-wrapper d-flex"></div>
-                                                        <div class="avatar ml-1">
-                                                          <img src="../../../app-assets/images/portrait/small/avatar-s-2.jpg" alt="avatar" height="30"
-                                                            width="30">
-                                                        </div>
-                                                        <a class='todo-item-favorite ml-75 warning'><i class="bx bx-star bxs-star"></i></a>
-                                                        <a class='todo-item-delete ml-75'><i class="bx bx-trash"></i></a>
-                                                      </div>
-                                                    </div>
-                                                  </li>
-                                                  <li class="todo-item" data-name="James Smith">
-                                                    <div class="todo-title-wrapper d-flex justify-content-sm-between justify-content-end align-items-center">
-                                                      <div class="todo-title-area d-flex">
-                                                        <i class='bx bx-grid-vertical handle'></i>
-                                                        <div class="checkbox">
-                                                          <input type="checkbox" class="checkbox-input" id="checkbox14">
-                                                          <label for="checkbox14"></label>
-                                                        </div>
-                                                        <p class="todo-title mx-50 m-0 truncate">It is a good idea to think of your PC as an office.</p>
-                                                      </div>
-                                                      <div class="todo-item-action d-flex align-items-center">
-                                                        <div class="avatar ml-1">
-                                                          <img src="../../../app-assets/images/portrait/small/avatar-s-3.jpg" alt="avatar" height="30"
-                                                            width="30">
-                                                        </div>
-
-                                                        <a class='todo-item-user ml-75'><i class="bx bx-time"></i></a>
-                                                        <a class='todo-item-delete ml-75'><i class="bx bx-trash"></i></a>
-                                                      </div>
-                                                    </div>
-                                                  </li>
-                                                  <li class="todo-item" data-name="Maria Garcia">
-                                                    <div class="todo-title-wrapper d-flex justify-content-sm-between justify-content-end align-items-center">
-                                                      <div class="todo-title-area d-flex">
-                                                        <i class='bx bx-grid-vertical handle'></i>
-                                                        <div class="checkbox">
-                                                          <input type="checkbox" class="checkbox-input" id="checkbox4">
-                                                          <label for="checkbox4"></label>
-                                                        </div>
-                                                        <p class="todo-title mx-50 m-0 truncate">Don't Let The Outtakes Take You Out</p>
-                                                      </div>
-                                                      <div class="todo-item-action d-flex align-items-center">
-                                                        <div class="todo-badge-wrapper d-flex">
-                                                          <span class="badge badge-light-danger badge-pill ml-50">Issue</span>
-                                                          <span class="badge badge-light-success badge-pill ml-50">Backend</span>
-                                                        </div>
-                                                        <div class="avatar ml-1">
-                                                          <img src="../../../app-assets/images/portrait/small/avatar-s-4.jpg" alt="avatar" height="30"
-                                                            width="30">
-                                                        </div>
-                                                        <a class='todo-item-favorite ml-75 warning'><i class="bx bx-star bxs-star"></i></a>
-                                                        <a class='todo-item-delete ml-75'><i class="bx bx-trash"></i></a>
-                                                      </div>
-                                                    </div>
-                                                  </li>
+                                                
                                                 </ul>
-                                                <!-- task list end -->
-                                                <div class="no-results">
-                                                  <h5>No Items Found</h5>
+                                                 <div id="inputFormRow">
+                                                    <div class="input-group mb-1">
+                                                    <textarea class="form-control" rows="2"></textarea>
+                                                    <div class="input-group-append">
+                                                    <button id="removeRow" type="button" class="btn btn-outline-primary">Thêm</button>
+                                                    </div>
                                                 </div>
+                                                <!-- task list end -->
+                                                {{-- <div class="no-results">
+                                                  <h5>No Items Found</h5>
+                                                </div> --}}
                                               </div>
                                             </div>
                                           </div>
@@ -429,7 +381,7 @@
 <script type="text/javascript">
     
     //context menu
-  
+    
     // add row
     $("#addRow").click(function () {
         var html = '';
@@ -478,6 +430,10 @@
         $('.progress').html(bar_html);
       });
     }
+
+    $('.todo-p').on('click',function(){
+       
+    });
  
 </script>
 

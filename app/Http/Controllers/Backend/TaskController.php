@@ -9,6 +9,7 @@ use App\Repositories\EmployeeRepository;
 use App\Repositories\DepartmentRepository;
 use App\Repositories\ProjectRepository;
 use App\Repositories\UserTaskRepository;
+use App\Repositories\UserRepository;
 use App\Models\Task;
 use App\Models\User;
 
@@ -20,20 +21,22 @@ class TaskController extends BaseController
      * @return \Illuminate\Http\Response
      */
 
-    public function __construct(TaskRepository $taskRepo, EmployeeRepository $employeeRepo, DepartmentRepository $departmentRepo, ProjectRepository $projectRepo, UserTaskRepository $usertaskRepo) {
+    public function __construct(TaskRepository $taskRepo, EmployeeRepository $employeeRepo, DepartmentRepository $departmentRepo, ProjectRepository $projectRepo, UserTaskRepository $usertaskRepo, UserRepository $userRepo) {
         $this->taskRepo = $taskRepo;
         $this->employeeRepo = $employeeRepo;
         $this->departmentRepo = $departmentRepo;
         $this->projectRepo = $projectRepo;
         $this->usertaskRepo = $usertaskRepo;
+        $this->userRepo = $userRepo;
     }
 
     public function index(Request $request)
     {
         $records = $this->taskRepo->readFE($request);
+        $usertask_array = $this->usertaskRepo->all();
         $employee_array = $this->employeeRepo->all();
         $department_array = $this->departmentRepo->all();
-        return view('backend/task/index', compact('records','employee_array','department_array'));
+        return view('backend/task/index', compact('records','employee_array','department_array','usertask_array'));
     }
 
     /**
@@ -43,10 +46,10 @@ class TaskController extends BaseController
      */
     public function create()
     {
-        $employee_array = $this->employeeRepo->all();
+        $user_array = $this->userRepo->all();
         $project_array = $this->projectRepo->all();
         $task_array = $this->taskRepo->all();
-        return view('backend/task/create', compact('employee_array','project_array','task_array'));
+        return view('backend/task/create', compact('user_array','project_array','task_array'));
     }
 
     /**
@@ -67,11 +70,10 @@ class TaskController extends BaseController
         }
 
         //Them vao bang task
-        $res = $this->taskRepo->create($input);
 
+        $res = $this->taskRepo->create($input);
         //Them quan he
         $res->User()->attach($input['user_id']);
-
 
         if($res){
             return redirect()->route('admin.task.index')->with('success', 'Thêm mới thành công');
@@ -123,6 +125,7 @@ class TaskController extends BaseController
      */
     public function destroy($id)
     {
-        //
+        $this->taskRepo->delete($id);
+        return redirect()->route('admin.task.index')->with('success', 'Xoá thành công');
     }
 }
