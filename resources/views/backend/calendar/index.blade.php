@@ -174,6 +174,7 @@
                                     <i class="bx bx-chevron-right" data-action="move-next"></i>
                                 </button>
                             </span>
+                            <h4 class="ml-1 mb-0">Tháng <span class="current-day">2022-01</span></h4>
                             <span id="renderRange" class="render-range"></span>
                         </div>
                         <!-- calendar view  -->
@@ -189,15 +190,15 @@
                             <div class="form-group row">
                                 <input type="hidden" value="" name="id" id="schedule-id">
                                 <input type="hidden" value="" name="date-selected" id="date-selected">
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <label for="pattern-schedule" class="col-form-label">Kiểu lịch trình:</label>
                                     <select id="pattern-schedule" class="form-control">
                                         <option value="1">Thông thường</option>
                                         <option value="2">Lặp lại</option>
                                     </select>
                                 </div>
-                                <div class="col-md-6 row repeat-selection">
-                                    <div class="col-md-6">
+                                <div class="col-md-8 row repeat-selection">
+                                    <div class="col-md-4">
                                         <div class="w-100 d-flex align-items-center">
                                             <input type="radio" id="dayweek" name="pattern" class="day-selection" value="2">
                                             <label for="dayweek" class="col-form-label ml-1 mb-0" style="white-space:nowrap">Ngày trong tuần</label>
@@ -206,13 +207,19 @@
                                             <select name="wday" id="wday" class="form-control day-selection-option"></select>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <div class="w-100 d-flex align-items-center">
                                             <input type="radio" id="daymonth" name="pattern" class="day-selection" value="3">
                                             <label for="daymonth" class="col-form-label ml-1 mb-0" style="white-space:nowrap">Ngày trong tháng</label>
                                         </div>
                                         <div class="w-100 d-flex align-items-center">
                                             <select name="mday" id="mday" class="form-control day-selection-option"></select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="w-100 d-flex align-items-center">
+                                            <input type="radio" id="everyday" name="pattern" class="day-selection" value="4">
+                                            <label for="everyday" class="col-form-label ml-1 mb-0" style="white-space:nowrap">Hàng ngày</label>
                                         </div>
                                     </div>
                                 </div>

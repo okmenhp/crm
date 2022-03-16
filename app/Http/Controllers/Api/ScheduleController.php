@@ -77,7 +77,7 @@ class ScheduleController extends Controller
 
     public function insert(Request $request){
         $data = array();
-        
+        // dd($request->pattern);
         $data['color_id'] = $request->color_id;
         $data['title'] = $request->title;
         // $data['all_day'] = $request->all_day;
