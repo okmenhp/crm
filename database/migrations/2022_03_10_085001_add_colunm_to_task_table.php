@@ -13,7 +13,7 @@ class AddColunmToTaskTable extends Migration
      */
     public function up()
     {
-        Schema::table('task', function (Blueprint $table) {a
+        Schema::table('task', function (Blueprint $table) {
             $table->datetime('intended_start_time')->nullable();
             $table->datetime('intended_end_time')->nullable();
             $table->datetime('real_start_time')->nullable();
