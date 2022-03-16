@@ -24,6 +24,7 @@ Route::get('file/dowload','Api\FileController@dowload')->name('api.file.dowload'
 Route::get('file/load-share-for/{id}','Api\FileController@load_share_for')->name('api.file.load_share_for');
 Route::get('file/info/{id}','Api\FileController@info')->name('api.file.info');
 Route::get('file/view/{id}','Api\FileController@view')->name('api.file.view');
+Route::post('file/viewFile','Backend\FileController@viewFile')->name('admin.file.viewFile');
 
 //kanban
 Route::post('kanban/index','Api\KanbanController@index')->name('api.kanban.index');
@@ -51,4 +52,5 @@ Route::get('calendar/type/edit','Api\ScheduleController@typeEdit')->name('api.ca
 Route::get('calendar/meeting/edit','Api\ScheduleController@meetingEdit')->name('api.calendar.meeting.edit');
 
 Route::post('task/checked','Api\KanbanController@checked')->name('api.task.checked');
+Route::post('task/add-subtask','Api\TaskController@add_sub_task')->name('api.task.add_sub_task');
 

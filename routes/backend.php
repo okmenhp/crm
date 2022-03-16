@@ -107,7 +107,6 @@ Route::group(['middleware' => 'admin'], function () {
     Route::post('/calendar/meeting/update',  ['as' => 'admin.calendar.meeting.update', 'uses' => 'Backend\CalendarController@updateMeeting']);
     Route::post('/calendar/meeting/delete',  ['as' => 'admin.calendar.meeting.delete', 'uses' => 'Backend\CalendarController@deleteMeeting']);
 
-
     //Kanban
     Route::get('/kanban/{project_id}',  ['as' => 'admin.kanban.index', 'uses' => 'Backend\KanbanController@index']);
 
