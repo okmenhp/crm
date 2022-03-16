@@ -158,7 +158,7 @@
 
             <!-- Modal -->
             <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-              <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+              <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
                 <div class="modal-content">
                   <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Thông tin</h5>
@@ -244,14 +244,34 @@
                                         <label class="custom-file-label" for="inputGroupFile02">Chọn tài liệu</label>
                                       </div>
                                       <div class="input-group-append">
-                                        <span class="input-group-text" id="">Pacific Drive</span>
+                                        <span class="input-group-text" id="open-file">Pacific Drive</span>
+                                      </div>
+                                    </div>
+                                    <div class="modal file-view fade" id="file-view" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="z-index: 999999">
+                                      <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
+                                        <div class="modal-content border border-secondary">
+                                          <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLongTitle">Pacific Drive</h5>
+                                            <button type="button" class="close close-view-file">
+                                              <span aria-hidden="true">&times;</span>
+                                            </button>
+                                          </div>
+                                          <div class="modal-body">
+                                            <div class="row file-view-area">
+                                            </div>
+                                          </div>
+                                          {{-- <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            <button type="button" class="btn btn-primary">Save changes</button>
+                                          </div> --}}
+                                        </div>
                                       </div>
                                     </div>
 
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <label>Danh sách công việc con</label>
-                                        <div class="todo-app-area">
+                                        {{-- <div class="todo-app-area">
                                           <div class="todo-app-list-wrapper">
                                             <div class="todo-app-list">
                                               <div class="todo-fixed-search d-flex justify-content-between align-items-center">
@@ -308,25 +328,16 @@
                                                       </div>
                                                     </div>
                                                   </li>
-                                                
+                                                   
                                                 </ul>
-                                                 <div id="inputFormRow">
-                                                    <div class="input-group mb-1">
-                                                    <textarea class="form-control" rows="2"></textarea>
-                                                    <div class="input-group-append">
-                                                    <button id="removeRow" type="button" class="btn btn-outline-primary">Thêm</button>
-                                                    </div>
-                                                </div>
-                                                <!-- task list end -->
-                                                {{-- <div class="no-results">
-                                                  <h5>No Items Found</h5>
-                                                </div> --}}
-                                              </div>
                                             </div>
+
                                           </div>
 
                                         </div>
-                                        <div id="inputFormRow">
+                                        </div> --}}
+
+                                        <div id="newRow">
                                               
                                         </div>
                                   
@@ -340,11 +351,12 @@
                                         role="progressbar" aria-valuenow="20" aria-valuemin="0"
                                         aria-valuemax="100" style=""></div>
                                 </div>
-                                <div class="form-group">
+                               
+                            </div>
+                             <div class="form-group">
                                     <label>Bình luận</label>
                                     <textarea class="form-control" rows="3" placeholder="Nhập bình luận"></textarea>
                                 </div>
-                            </div>
                         </div>
                   </div>
                   <div class="modal-footer">
@@ -379,26 +391,135 @@
 <!-- END: Page JS-->
 
 <script type="text/javascript">
-    
-    //context menu
-    
+
+    // xem file
+    $('#open-file').click(function(){
+      $.ajax({
+        type: "post",
+        url: '/api/file/viewFile',
+        dataType: 'JSON',
+        async: false,
+        data: {},
+        success: function(data){
+          $('.file-view-area').html('')
+          for(let i=0; i<data.data.length; i++){
+            var image = '';
+            if(['jpg','png','jpeg'].includes(data.data[i].format)){
+              image = '<img class="d-block mx-auto icon-image" src="" alt="Card image cap">'
+            }else if(['doc','docx'].includes(data.data[i].format)){
+              image = '<img class="d-block mx-auto" src="{{asset('assets/images/file/word.png')}}" width="55" alt="Card image cap">'
+            }else if(['xls','xlsx'].includes(data.data[i].format)){
+              image = '<img class="d-block mx-auto" src="{{asset('assets/images/file/excel.png')}}" width="55" alt="Card image cap">'
+            }else if(['pdf'].includes(data.data[i].format)){
+              image = '<img class="d-block mx-auto" src="{{asset('assets/images/file/pdf.png')}}" width="55" alt="Card image cap">'
+            }else{
+              image = '<img class="d-block mx-auto" src="{{asset('assets/images/file/no-format.png')}}" width="55" alt="Card image cap">'
+            }
+            $('.file-view-area').append('<div class="col-md-3">'+
+                                          '<div class="card border shadow-none mb-1 app-file-info">'+
+                                            '<div class="app-file-content-logo card-img-top d-flex align-items-center" style="background-color: #f2f4f4; height: 7rem">'+
+                                                image +
+                                            '</div>'+
+                                            '<div class="card-body p-50">'+
+                                                '<input type="hidden" class="link" value="'+data.data[i].link+'" />'+
+                                                '<div class="app-file-details">'+
+                                                    '<div class="app-file-name font-size-small font-weight-bold">'+
+                                                        data.data[i].name + '</div>'+
+                                                    '<div class="app-file-size font-size-small text-muted mb-25">'+
+                                                        data.data[i].size/1000 + 'kb'+
+                                                    '</div>'+
+                                                '</div>'+
+                                            '</div>'+
+                                          '</div>'+
+                                        '</div>')
+          }
+          $('#file-view').modal('show')
+        }
+      })
+    })
+
+    // $(document).on('dblclick', '.app-file-info', function(){
+    //   console.log($(this).find('.link').val())
+    //   $('#inputGroupFile02').val($(this).find('.link').val())
+    //   $('#file-view').modal('hide')
+    // })
+
+    $('.close-view-file').click(function(){
+      $('#file-view').modal('hide')
+    })
+      
     // add row
+    var i = 0;
     $("#addRow").click(function () {
+        if(i == 1){
+            alert('Vui lòng thêm công việc mới trước đó');
+            return;
+        }
+        i++;
         var html = '';
-        html += '<div id="inputFormRow">';
-        html += '<div class="input-group mb-1">';
-        html += '<input type="text" name="subtask[]" required class="form-control m-input" placeholder="Enter title" autocomplete="off">';
-        html += '<div class="input-group-append">';
-        html += '<button id="removeRow" type="button" class="btn btn-outline-danger">Xoá</button>';
-        html += '</div>';
-        html += '</div>';
+        html += `<div class="row form-group" id="inputFormRow" data-id="2">
+                    <div class="col-3">
+                    <label>Tên công việc</label>
+                    <input id="subTaskName" type="" class="form-control" name="">
+                    </div>
+                    <div class="col-3">
+                    <label>Người thực hiện</label>
+                     <select class="form-control select2" id="subTaskUser" name="user_id">    
+                       {!!$user_html!!}
+                    </select>
+                    </div>
+                     <div class="col-2">
+                    <label>Dự kiến bắt đầu</label>
+                    <input type="datetime-local" class=" form-control" id="subTaskStart" name="">
+                    </div>
+                    <div class="col-2">
+                    <label>Dự kiến kết thúc</label>
+                    <input type="datetime-local" class=" form-control" id="subTaskEnd" name="">
+                    </div>
+                    <div class="col-1">
+                    <button type="button" id="addSubTask" data-task_id="" class="btn btn-outline-primary" style="position: absolute; bottom: 0;">Thêm</button>
+                    </div>
+                    <div class="col-1">
+                    <button type="buttom" id="removeRow" class="btn btn-outline-danger" style="position: absolute; bottom: 0;">Huỷ</button>
+                    </div>
+                </div>`;
         $('#newRow').append(html);
     });
 
     // remove row
     $(document).on('click', '#removeRow', function () {
+        i--;
         $(this).closest('#inputFormRow').remove();
     });
+
+    $(document).on('click', '#addSubTask', function () {
+        let task_id = $('#card_id').val();
+        let parent = $(this).parents('#inputFormRow');
+        let name = parent.find('#subTaskName').val();
+        let user_id = parent.find('#subTaskUser').val();
+        let intended_start_time = parent.find('#subTaskStart').val();
+        let intended_end_time = parent.find('#subTaskEnd').val();
+        add_sub_task(name, user_id, intended_start_time, intended_end_time, task_id);
+    });
+
+    function add_sub_task(name, user_id, intended_start_time, intended_end_time, parent_id){
+        $.ajax({
+        type: "post",
+        url: '/api/task/add-subtask',
+        dataType: 'JSON',
+        async: false,
+        data: {
+          parent_id : parent_id,
+          name : name,
+          user_id : user_id,
+          intended_start_time : intended_start_time,
+          intended_end_time : intended_end_time
+        }
+      }).done(function(resp) {
+          console.log('resp', resp);
+          window.location.reload();
+      });
+    }
 
     $(document).on('click','.check_task', function(){
         let task_id = $(this).data('task_id');

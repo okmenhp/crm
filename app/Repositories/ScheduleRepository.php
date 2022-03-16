@@ -59,6 +59,14 @@ class ScheduleRepository extends AbstractRepository {
         return $result;
     }
 
+    public function getEveryDay($schedule_periods){
+        $result = array();
+        foreach($schedule_periods as $period){
+            array_push($result, $period->format('Y-m-d H:i:s'));
+        }
+        return $result;
+    }
+
     public function getScheduleNormal($schedule){
         $sdata = array();
         $sdata['id'] = "1";
@@ -118,7 +126,12 @@ class ScheduleRepository extends AbstractRepository {
         $start_time = Carbon::parse($schedule->start_date)->format('H:i:s');
         $end_time = Carbon::parse($schedule->end_date)->format('H:i:s');
         $schedule_periods = CarbonPeriod::create(date('Y-m-d', strtotime($schedule->start_date)), date('Y-m-d', strtotime($schedule->end_date)))->toArray();
-        $date_range = $schedule->pattern == 2 ? $this->getDateByWeekDay($days, $schedule_periods) : $this->getDateByMonthDay($days, $schedule_periods);
+        if($schedule->pattern == 4){
+            $date_range = $this->getEveryDay($schedule_periods);
+        }else{
+            $date_range = $schedule->pattern == 2 ? $this->getDateByWeekDay($days, $schedule_periods) : $this->getDateByMonthDay($days, $schedule_periods);
+        }
+        
         $sdata = $this->getScheduleRepeat($date_range, $start_time, $end_time, $schedule);
         return $sdata;
     }
@@ -189,7 +202,11 @@ class ScheduleRepository extends AbstractRepository {
             $days = explode(",", $schedule->mday);
         }
         $schedule_periods = CarbonPeriod::create(date('Y-m-d', strtotime($schedule->start_date)), date('Y-m-d', strtotime($schedule->end_date)))->toArray();
-        $date_range = $schedule->pattern == 2 ? $this->getDateByWeekDay($days, $schedule_periods) : $this->getDateByMonthDay($days, $schedule_periods);
+        if($schedule->pattern == 3){
+            $date_range = $this->getEveryDay($schedule_periods);
+        }else{
+            $date_range = $schedule->pattern == 2 ? $this->getDateByWeekDay($days, $schedule_periods) : $this->getDateByMonthDay($days, $schedule_periods);
+        }
         $sdata = $this->getFilterScheduleRepeat($date_range, $schedule, $filter);
         return $sdata;
     }

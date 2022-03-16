@@ -267,16 +267,41 @@ $(function () {
          $("#level").val(data.level).change();
          $("#intended_start_time").val(data.intended_start_time);
          $("#intended_end_time").val(data.intended_end_time);
+         console.log('sub', data.subtask)
          $.each( data.subtask, function( index , value ) {
              let subtask_html = "";
-             subtask_html += '<div id="inputFormRow">';
-             subtask_html += '<div class="input-group mb-1">';
-             subtask_html += '<input type="checkbox" class="check_task" style="height: 35px; width:20px;" data-task_id="'+value.id+'" data-id="'+index+'">';
-             subtask_html += '<input type="text" name="subtask[]" data-is_db="1" id="input_'+index+'" required class="form-control m-input" placeholder="Enter title" autocomplete="off" value="'+value.name+'">';
-             subtask_html += '<div class="input-group-append">';
-             subtask_html += '<button id="removeRow" type="button" class="btn btn-outline-danger">Xoá</button>';
-             subtask_html += '</div>';
-             subtask_html += '</div>';
+             subtask_html = `<div class="row form-group" id="inputFormRow">
+                                <input data-task_id="`+value.id+`" data-id="`+index+`" type="checkbox" class="checkbox-input check_task" style="margin-top: 4px; width: 25px; height: 25px;" id="checkbox1">
+                                <div class="col-3">
+                                <input id="subTaskName" type="" class="form-control" name="" value="`+value.name+`">
+                                </div>
+                                <div class="col-2">
+                                 <select class="form-control select2" id="subTaskUser" name="user_id">    
+                                  <option selected>Tien Dat</option>
+                                   <option>Admin</option> 
+                                </select>
+                                </div>
+                                 <div class="col-2">
+                                <input type="datetime-local" class=" form-control" id="subTaskStart" name="" value="`+value.intended_start_time+`">
+                                </div>
+                                <div class="col-2">
+                                <input type="datetime-local" class=" form-control" id="subTaskEnd" name="" value="`+value.intended_end_time+`">
+                                </div>
+                                <div class="col-1">
+                                <button type="button" id="updateSubTask" data-task_id="" class="btn btn-outline-primary" style="position: absolute; bottom: 0;">Sửa</button>
+                                </div>
+                                <div class="col-1">
+                                <button type="buttom" id="removeRow" class="btn btn-outline-danger" style="position: absolute; bottom: 0;">Huỷ</button>
+                                </div>
+                            </div>`;
+             // subtask_html += '<div id="inputFormRow">';
+             // subtask_html += '<div class="input-group mb-1">';
+             // subtask_html += '<input type="checkbox" class="check_task" style="height: 35px; width:20px;" data-task_id="'+value.id+'" data-id="'+index+'">';
+             // subtask_html += '<input type="text" name="subtask[]" data-is_db="1" id="input_'+index+'" required class="form-control m-input" placeholder="Enter title" autocomplete="off" value="'+value.name+'">';
+             // subtask_html += '<div class="input-group-append">';
+             // subtask_html += '<button id="removeRow" type="button" class="btn btn-outline-danger">Xoá</button>';
+             // subtask_html += '</div>';
+             // subtask_html += '</div>';
              $('#newRow').append(subtask_html);
          });
          

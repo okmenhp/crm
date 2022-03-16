@@ -46,7 +46,7 @@ calendar.on({
     'beforeDeleteSchedule': function(e) {
         $('#schedule-id').val(e.schedule.calendarId)
         $('#date-selected').val(e.schedule.start._date)
-        if(e.schedule.raw.pattern == 2){
+        if(e.schedule.raw.pattern != 1){
             $('#update-option').modal('show')
         }else{
             deleteSchedule($('#schedule-id').val(), 2)
@@ -114,7 +114,7 @@ function showData(data){
                     }
                 }
             }
-        }else{
+        }else if(data.data.pattern == 2){
             $('#wday').toggle(false)
             $('#mday').toggle(true)
             for(var i=1; i<=31; i++){
@@ -127,6 +127,9 @@ function showData(data){
                                                     '</a>')
                 }
             }
+        }else{
+            $('#wday').toggle(false)
+            $('#mday').toggle(false)
         }
     }else{
         $('#pattern-schedule option[value=1]').prop('selected', true)
@@ -336,7 +339,7 @@ function isFillForm(){
         });
         return false
     }
-    if($('#pattern-schedule').val() != 1){
+    if($('#pattern-schedule').val() != 1 && $('input[name=pattern]:checked').val() != 4){
         var isSelected = $('.repeat-day-selected').children().length
         if(isSelected == 0){
             var pattern = $('input[name=pattern]:checked').val()
@@ -452,10 +455,13 @@ $('.day-selection').on('change', function(){
         $('#wday').toggle(true)
         $('#mday').toggle(false)
         addWeekDay()
-    }else{
+    }else if($('#daymonth').prop("checked") == true){
         $('#wday').toggle(false)
         $('#mday').toggle(true)
         addMonthDay()
+    }else{
+        $('#wday').toggle(false)
+        $('#mday').toggle(false)
     }
     $('.repeat-day-selected').html("")
 })
@@ -544,26 +550,24 @@ $( document ).ready(function() {
 
 
 //Thay đổi kiểu hiển thị của lịch
+$(document).ready(function(){
+    $('.current-day').html(moment(calendar._renderDate._date).format('M - YYYY'))
+})
 $('#move-today').click(function(){
     calendar.today();
     calendar.changeView('day', true);
     $('#calendarTypeName').html('Ngày')
     $('.calendar-view .calendar-action .dropdown-menu .dropdown-item.active').toggleClass('active')
     $('#toggle-daily').toggleClass('active')
+
 })
 $('#move-prev').click(function(){
     calendar.prev();
-    calendar.changeView('day', true);
-    $('#calendarTypeName').html('Ngày')
-    $('.calendar-view .calendar-action .dropdown-menu .dropdown-item.active').toggleClass('active')
-    $('#toggle-daily').toggleClass('active')
+    $('.current-day').html(moment(calendar._renderDate._date).format('M - YYYY'))
 })
 $('#move-next').click(function(){
     calendar.next();
-    calendar.changeView('day', true);
-    $('#calendarTypeName').html('Ngày')
-    $('.calendar-view .calendar-action .dropdown-menu .dropdown-item.active').toggleClass('active')
-    $('#toggle-daily').toggleClass('active')
+    $('.current-day').html(moment(calendar._renderDate._date).format('M - YYYY'))
 })
 $('.calendar-view .calendar-action .dropdown-menu .dropdown-item').click(function(){
     $('.calendar-view .calendar-action .dropdown-menu .dropdown-item.active').toggleClass('active')

@@ -210,6 +210,11 @@
     padding: 0;
 }
 
+/* .app-file-info{
+    border: 1px solid #475F7B;
+    border-radius: 5px;
+} */
+
 @media (max-width: 420px) {
     .kanban-sidebar {
         width: 19rem;

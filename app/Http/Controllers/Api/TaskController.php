@@ -7,14 +7,16 @@ use App\Http\Controllers\BaseController;
 use App\Traits\ApiResponse;
 use Storage;
 use App\Repositories\TaskRepository;
+use App\Repositories\ProjectRepository;
 use App\Models\Task;
 
 class TaskController extends BaseController
 {
 	use ApiResponse;
 
-    public function __construct(ProjectRepository $projectRepo) {
+    public function __construct(ProjectRepository $projectRepo , TaskRepository $taskRepo) {
         $this->projectRepo = $projectRepo;
+        $this->taskRepo = $taskRepo;
     }
 
     public function index(Request $request){
@@ -43,12 +45,15 @@ class TaskController extends BaseController
         return $this->success($res);
     }
 
-    public function checked(Request $request)
+    public function add_sub_task(Request $request)
     {
         $input = $request->all();
-        Task::where('id', $input['task_id'])->update(['checked' => $input['checked']]);
+        $input['ordering'] = 1;
+        $res = $this->taskRepo->create($input);
         return $this->success($res);
     }
+
+    
 
 
 
