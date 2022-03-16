@@ -251,7 +251,7 @@
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <label>Danh sách công việc con</label>
-                                        <div class="todo-app-area">
+                                        {{-- <div class="todo-app-area">
                                           <div class="todo-app-list-wrapper">
                                             <div class="todo-app-list">
                                               <div class="todo-fixed-search d-flex justify-content-between align-items-center">
@@ -310,45 +310,13 @@
                                                   </li>
                                                    
                                                 </ul>
-                                                {{-- <div id="inputFormRow">
-                                                    <div class="input-group mb-1">
-                                                    <textarea class="form-control" rows="2"></textarea>
-                                                    <div class="input-group-append">
-                                                    <button id="removeRow" type="button" class="btn btn-outline-primary">Thêm</button>
-                                                    </div>
-                                                </div> --}}
-                                                {{-- <div class="row form-group" id="inputFormRow">
-                                                    <div class="col-3">
-                                                    <label>Tiêu đề</label>
-                                                    <input type="" class=" form-control" name="">
-                                                    </div>
-                                                    <div class="col-3">
-                                                    <label>Người thực hiện</label>
-                                                    <select class="form-control select2-icons " data-icon="" multiple="">
-                                                      <option>123</option>
-                                                      <option>456</option>
-                                                    </select>
-                                                    </div>
-                                                     <div class="col-2">
-                                                    <label>Dự kiến bắt đầu</label>
-                                                    <input type="date" class=" form-control" name="">
-                                                    </div>
-                                                    <div class="col-2">
-                                                    <label>Dự kiến kết thúc</label>
-                                                    <input type="date" class=" form-control" name="">
-                                                    </div>
-                                                    <div class="col-1">
-                                                    <button type="button" class="btn btn-outline-primary" style="position: absolute; bottom: 0;">Thêm</button>
-                                                    </div>
-                                                    <div class="col-1">
-                                                    <button id="removeRow" type="button" class="btn btn-outline-danger" style="position: absolute; bottom: 0;">Huỷ</button>
-                                                    </div>
-                                                </div> --}}
                                             </div>
 
                                           </div>
 
                                         </div>
+                                        </div> --}}
+
                                         <div id="newRow">
                                               
                                         </div>
@@ -426,11 +394,11 @@
                     </div>
                      <div class="col-2">
                     <label>Dự kiến bắt đầu</label>
-                    <input type="date" class=" form-control" id="subTaskStart" name="">
+                    <input type="datetime-local" class=" form-control" id="subTaskStart" name="">
                     </div>
                     <div class="col-2">
                     <label>Dự kiến kết thúc</label>
-                    <input type="date" class=" form-control" id="subTaskEnd" name="">
+                    <input type="datetime-local" class=" form-control" id="subTaskEnd" name="">
                     </div>
                     <div class="col-1">
                     <button type="button" id="addSubTask" data-task_id="" class="btn btn-outline-primary" style="position: absolute; bottom: 0;">Thêm</button>
@@ -444,6 +412,7 @@
 
     // remove row
     $(document).on('click', '#removeRow', function () {
+        i--;
         $(this).closest('#inputFormRow').remove();
     });
 
@@ -451,27 +420,28 @@
         let task_id = $('#card_id').val();
         let parent = $(this).parents('#inputFormRow');
         let name = parent.find('#subTaskName').val();
-        let user = parent.find('#subTaskUser').val();
-        let start = parent.find('#subTaskStart').val();
-        let end = parent.find('#subTaskEnd').val();
-        add_sub_task(name, user, start, end, task_id);
+        let user_id = parent.find('#subTaskUser').val();
+        let intended_start_time = parent.find('#subTaskStart').val();
+        let intended_end_time = parent.find('#subTaskEnd').val();
+        add_sub_task(name, user_id, intended_start_time, intended_end_time, task_id);
     });
 
-    function add_sub_task(name, user, start, end, task_id){
+    function add_sub_task(name, user_id, intended_start_time, intended_end_time, parent_id){
         $.ajax({
         type: "post",
         url: '/api/task/add-subtask',
         dataType: 'JSON',
         async: false,
         data: {
-          task_id : task_id,
+          parent_id : parent_id,
           name : name,
-          user : user,
-          start : start,
-          end : end
+          user_id : user_id,
+          intended_start_time : intended_start_time,
+          intended_end_time : intended_end_time
         }
       }).done(function(resp) {
           console.log('resp', resp);
+          window.location.reload();
       });
     }
 
