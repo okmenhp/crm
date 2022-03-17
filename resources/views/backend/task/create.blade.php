@@ -14,8 +14,9 @@
 <div class="app-content content">
     <div class="content-overlay"></div>
     <div class="content-wrapper">
-        <div class="content-header row">
-        </div>
+        <!-- BEGIN: Navbar -->
+        @include('layouts/__navbar')
+        <!-- END: Navbar -->
         <div class="content-body">
 
             <section class="users-edit">
