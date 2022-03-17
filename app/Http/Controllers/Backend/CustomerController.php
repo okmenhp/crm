@@ -159,7 +159,7 @@ class CustomerController extends BaseController
     /**
      * update  customer note
      */
-    public function updateCustomerNote(Request $request, $id)
+    public function addNote(Request $request, $id)
     {
         // $note = $request->input('note');
         // $validator = \Validator::make($input, $this->customerRepo->validateUpdate($id));

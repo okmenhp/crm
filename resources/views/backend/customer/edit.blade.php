@@ -381,8 +381,7 @@
                                                     </div>
                                                     <div class="tab-pane fade" id="p2" role="tabpanel"
                                                         aria-labelledby="profile-tab">
-                                                        <form class="form-validate" method="post"
-                                                            action="{{ route('admin.employee.addNote', $record->id) }}">
+                                                        <form class="form-validate" method="post" action="">
                                                             <div class="form-group">
                                                                 <label>Thông tin bổ sung </label>
                                                                 <textarea class="form-control customernote" id="addNoteContactor" name="note_customer"></textarea>

@@ -142,6 +142,7 @@ Route::group(['middleware' => 'admin'], function () {
     Route::get('/customer-contactor/edit/{id}',  ['as' => 'admin.customer_contactor.edit', 'uses' => 'Backend\CustomerContactorController@edit']);
     Route::post('/customer-contactor/update/{id}',  ['as' => 'admin.customer_contactor.update', 'uses' => 'Backend\CustomerContactorController@update']);
     Route::delete('/customer-contactor/delete/{id}',  ['as' => 'admin.customer_contactor.destroy', 'uses' => 'Backend\CustomerContactorController@destroy']);
+    Route::delete('/customer-contactor/updatenote/{id}',  ['as' => 'admin.customer_contactor.addNote', 'uses' => 'Backend\CustomerContactorController@addNote']);
     // Route::post('contactorDatatable', [
     //     'uses' => 'Backend\CustomerContactorController@contactorDatatable'
     // ]);
