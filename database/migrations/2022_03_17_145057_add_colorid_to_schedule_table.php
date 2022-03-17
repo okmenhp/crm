@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class UpdateScheduleIsmanyTable extends Migration
+class AddColoridToScheduleTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,9 @@ class UpdateScheduleIsmanyTable extends Migration
      */
     public function up()
     {
-        //
+        Schema::table('schedule', function (Blueprint $table) {
+            //
+        });
     }
 
     /**
@@ -24,8 +26,7 @@ class UpdateScheduleIsmanyTable extends Migration
     public function down()
     {
         Schema::table('schedule', function (Blueprint $table) {
-            $table->tinyInteger('is_many')->default(0);
+            $table->integer('color_id');
         });
     }
 }
-
