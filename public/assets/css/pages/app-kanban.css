@@ -5,6 +5,9 @@
 
 .kanban-container {
     width: 100% !important;
+    overflow-x: auto;
+    display: flex;
+    align-items: flex-start
 }
 
 .kanban-container .kanban-board {
@@ -12,7 +15,12 @@
     padding: 1rem 0rem;
     margin: 0 1.8rem 1rem 0 !important;
     width: 18.67rem !important;
+    min-width: 250px;
     background-color: #e7edf3;
+    max-height: 500px !important;
+    overflow-y: auto;
+
+
 }
 
 .kanban-container .kanban-board .kanban-board-header {

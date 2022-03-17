@@ -171,6 +171,7 @@
                     <div class="modal-content">
                         <div class="modal-body">
                             <div class="form-group row">
+                                <input type="hidden" value="" name="uid" id="schedule-uid">
                                 <input type="hidden" value="" name="id" id="schedule-id">
                                 <input type="hidden" value="" name="date-selected" id="date-selected">
                                 <div class="col-md-4">

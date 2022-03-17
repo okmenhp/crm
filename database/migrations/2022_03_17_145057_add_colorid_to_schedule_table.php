@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class UpdateScheduleTable extends Migration
+class AddColoridToScheduleTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,9 @@ class UpdateScheduleTable extends Migration
      */
     public function up()
     {
-        //
+        Schema::table('schedule', function (Blueprint $table) {
+            //
+        });
     }
 
     /**

@@ -31,31 +31,7 @@ class ScheduleController extends Controller
     }
 
     public function detail(Request $request){
-        $result = array();
-        $schedule = Schedule::find($request->id);
-        $user_schedule = array_diff($schedule->users()->pluck('user_id')->toArray(), [Auth::id()]);
-
-        $result['pattern'] = $schedule->pattern;
-        $result['wday'] = explode(',', $schedule->wday);
-        $result['mday'] = explode(',', $schedule->mday);
-        $result['title'] = $schedule->title;
-        // $result['all_day'] = $schedule->all_day;
-        $result['color']['id'] = ColorSchedule::find($schedule->color_id)->id;
-        $result['color']['name'] = ColorSchedule::find($schedule->color_id)->name;
-        $result['color']['value'] = ColorSchedule::find($schedule->color_id)->value;
-        $result['start_date'] = date('Y-m-d', strtotime($schedule->start_date))."T".date('h:i', strtotime($schedule->start_date));
-        $result['end_date'] = date('Y-m-d', strtotime($schedule->end_date))."T".date('h:i', strtotime($schedule->end_date));
-        $result['location'] = $schedule->location;
-        $result['meeting_id'] = $schedule->meeting_id;
-        $result['type_id'] = $schedule->type_id;
-        $result['users'] = User::where('id','!=',Auth::id())->get();
-        $result['user_id'] = $result['user_name'] = array();
-        foreach($user_schedule as $key => $record){
-            $name = User::find($record)->full_name;
-            $result['user_id'][$key] = $record;
-            $result['user_name'][$key] = $name;
-        }
-        $result['description'] = $schedule->description;
+        $result = $this->scheduleRepo->getDetailSchedule($request);
         
         return response()->json(['data'=>$result]);
     }
@@ -67,60 +43,26 @@ class ScheduleController extends Controller
         return response()->json(['data'=>$users, 'current_datetime'=>$current_datetime]);
     }
 
-    public function insert(Request $request){
-        $this->scheduleRepo->store($request);
-        return $this->index();
-    }
-
-    public function update(Request $request){      
-        // $schedule = Schedule::find($request->id);
-        // $schedule->color_id = $request->color_id;
-        // $schedule->title = $request->title;
-        // // $schedule->all_day = $request->all_day;
-        // $schedule->start_date = $request->start_date;
-        // $schedule->end_date = $request->end_date;
-        // $schedule->location = $request->location;
-        // $schedule->meeting_id = $request->meeting;
-        // $schedule->type_id = $request->type;
-        // $schedule->description = $request->description;
-        // $schedule->pattern = $request->pattern;
-        // if($schedule->pattern == 2){
-        //     $schedule->wday = $request->day_repeat;
-        // }elseif($schedule->pattern == 3){
-        //     $schedule->mday = $request->day_repeat;
-        // }
-        // $schedule->save();
-        
-        // if($request->attendees != null){
-        //     $users = User::where('id','!=',Auth::id())->get();
-        //     $attendees = UserSchedule::where('schedule_id',$schedule->id)->where('user_id','!=',Auth::id())->pluck('user_id')->toArray();
-        //     foreach($users as $user){
-        //         if(in_array($user->id, explode(",", $request->attendees)) && !in_array($user->id, $attendees)){
-        //             $schedule->users()->attach($user->id);
-        //         }else{
-        //             $schedule->users()->detach($user->id);
-        //         }
-        //     }
-        // }
-        $this->scheduleRepo->updateSchedule($request);
+    public function dataScheduleChange(Request $request){
+        $this->scheduleRepo->dataScheduleChange($request);
         return $this->index();
     }
 
     public function delete(Request $request){
-        $schedule = Schedule::find($request->id);
-        $day_selected = Carbon::parse($request->date_selected)->format('Y-m-d h:i:s');
-        // 0: hiện tại và trước đó | 1: hiện tại và sau đó | 2/else: tất cả
-        if($request->type == 0){
-            $schedule['start_date'] = Carbon::parse($day_selected)->addDays(1)->format('Y-m-d h:i:s');
-            $schedule->save();
-        }elseif($request->type == 1){
-            $schedule['end_date'] = Carbon::parse($day_selected)->subDays(1)->format('Y-m-d h:i:s');
-            $schedule->save();
-        }else{
-            Schedule::find($request->id)->delete();
-            UserSchedule::where('schedule_id',$request->id)->delete();
-        }
-
+        // $schedule = Schedule::find($request->id);
+        // $day_selected = Carbon::parse($request->date_selected)->format('Y-m-d h:i:s');
+        // // 0: hiện tại và trước đó | 1: hiện tại và sau đó | 2/else: tất cả
+        // if($request->type == 0){
+        //     $schedule['start_date'] = Carbon::parse($day_selected)->addDays(1)->format('Y-m-d h:i:s');
+        //     $schedule->save();
+        // }elseif($request->type == 1){
+        //     $schedule['end_date'] = Carbon::parse($day_selected)->subDays(1)->format('Y-m-d h:i:s');
+        //     $schedule->save();
+        // }else{
+        //     Schedule::find($request->id)->delete();
+        //     UserSchedule::where('schedule_id',$request->id)->delete();
+        // }
+        $this->scheduleRepo->deleteSchedule($request);
         return $this->index();
     }
 

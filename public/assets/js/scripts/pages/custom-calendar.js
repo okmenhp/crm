@@ -38,6 +38,7 @@ var calendar = new tui.Calendar('#calendar', {
 calendar.on({
     'beforeUpdateSchedule': function(e) {
         $('#schedule-id').val(e.schedule.raw.schedule_id)
+        $('#schedule-uid').val(e.schedule.raw.uid)
         getDetailSchedule(e.schedule.raw.schedule_id)
         var modal = $('#calendarModal')
         modal.modal('toggle')
@@ -45,6 +46,7 @@ calendar.on({
     },
     'beforeDeleteSchedule': function(e) {
         $('#schedule-id').val(e.schedule.calendarId)
+        $('#schedule-uid').val(e.schedule.raw.uid)
         $('#date-selected').val(e.schedule.start._date)
         if(e.schedule.raw.pattern != 1){
             $('#update-option').modal('show')
@@ -54,27 +56,10 @@ calendar.on({
     }
 });
 
-function getDateRangeCalendar(type){
-    var data = new FormData();
-    if(type == "toggle-monthly"){
-        start_date = moment(calendar._renderRange.start._date).format('YYYY/MM/DD h:mm:ss')
-        end_date = moment(calendar._renderRange.end._date).format('YYYY/MM/DD h:mm:ss')
-        data.append('type', type)
-        data.append('start_date', start_date)
-        data.append('end_date', end_date)
-    }
-
-    return data;
-}
-
-function getApi(type){
+function getApi(){
     $.ajax({
         url: "api/schedule/index",
         type: "POST",
-        data: getDateRangeCalendar(type),
-        processData: false,
-        contentType: false, 
-        enctype: 'multipart/form-data',
         success: function(data){
             calendar.createSchedules(data.data)
         }
@@ -214,7 +199,6 @@ function getDetailSchedule(id){
 
 function dataChangeSchedule(action){
     var data = new FormData();
-    data.append('date_range', getDateRangeCalendar())
     var pattern = $('#pattern-schedule').val()
     if(pattern != 1){
         pattern = $('input[name=pattern]:checked').val()
@@ -230,6 +214,8 @@ function dataChangeSchedule(action){
     }
     var id = $('#schedule-id').val()
     data.append('id', id)
+    var uid = $('#schedule-uid').val()
+    data.append('uid', uid)
     var title = $('#title').val()
     data.append('title', title)
     var color_id = $('#color').data('color')
@@ -254,7 +240,8 @@ function dataChangeSchedule(action){
     data.append('description', description)
     
     $.ajax({
-        url: action == 1 ? "api/schedule/insert" : "api/schedule/update",
+        // url: action == 1 ? "api/schedule/insert" : "api/schedule/update",
+        url: "api/schedule/dataScheduleChange",
         type: "POST",
         data: data,
         processData: false,
@@ -353,13 +340,14 @@ function isFillForm(){
 
 $('#btn-new-schedule').click(function(){
     defaultFormInsert()
-
+    
     var modal = $('#calendarModal')
     modal.modal('toggle')
     modal.find('button.final-button').html('Tạo mới')
 })
 
 $('#calendarModal .final-button').click(function(){
+    
     if(isFillForm()){
         $('#schedule-id').val() == "" ? dataChangeSchedule(1) : dataChangeSchedule(2) //action: 1-thêm mới | 2-sửa
     }
@@ -378,6 +366,7 @@ function defaultFormInsert(){
         enctype: 'multipart/form-data',
         success: function(data){
             $('#schedule-id').val("")
+            $('#schedule-uid').val("")
             $('#pattern-schedule').find('option[value=1]').prop('selected', true)
             $('#dayweek').prop('checked', true)
             $('#wday').toggle(true)
@@ -432,9 +421,7 @@ function addMonthDay(){
 }
 
 $(document).ready(function(){
-    addWeekDay()
-    addMonthDay()
-    getApi($('.calendar-view .calendar-action .dropdown-menu .dropdown-item.active').data('action'))
+    getApi()
 })
 
 //Thay đổi pattern
@@ -470,7 +457,8 @@ $('.day-selection').on('change', function(){
 $('.day-selection-option').on('change', function() {
     var text = $(this).find('option:selected').text();
     var id = this.value
-    $('.repeat-day-selected').append('<a class="border rounded bg-primary pr-0 day-added" data-day="'+id+'" style="padding: 0.5rem">'+
+    var pattern = $('.day-selection:checked').val();
+    $('.repeat-day-selected').append('<a class="border rounded bg-primary pr-0 day-added" data-day="'+id+'" data-pattern="'+pattern+'" style="padding: 0.5rem">'+
                                         '<span class="text-white">'+text+'</span>'+
                                        '<button class="border border-0 bg-transparent" aria-hidden="true"><span class="text-danger">&times;</span></button>'+
                                     '</a>')
@@ -479,12 +467,21 @@ $('.day-selection-option').on('change', function() {
 });
 $("body").delegate('.day-added button', 'click', function(){
     var father = $(this).parent()
-    var value = father.data('attendee-id')
-    var name = father.data('attendee-name')
-    $('#attendees').append($('<option>', {
-        value: value,
-        text: name
-    }));
+    var value = father.data('day')
+    var name = father.find('span').html()
+    console.log(father.data('pattern'))
+    if(father.data('pattern') == 2){
+        $('#wday').append($('<option>', {
+            value: value,
+            text: name
+        }));
+    }else{
+        $('#mday').append($('<option>', {
+            value: value,
+            text: name
+        }));
+    }
+    
     father.remove()
 })
 
