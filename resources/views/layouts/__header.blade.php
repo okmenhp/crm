@@ -34,7 +34,7 @@
                             </div>
                         </li>
                     </ul>
-                   
+
                 </div>
                 <ul class="nav navbar-nav float-right">
                     <li class="nav-item d-none d-lg-block"><a class="nav-link nav-link-expand"><i
@@ -64,8 +64,8 @@
                                     <div class="media d-flex align-items-center">
                                         <div class="media-left pr-0">
                                             <div class="avatar mr-1 m-0"><img
-                                                    src="{{asset('assets/images/portrait/small/avatar-s-11.jpg')}}" alt="avatar"
-                                                    height="39" width="39"></div>
+                                                    src="{{asset('assets/images/portrait/small/avatar-s-11.jpg')}}"
+                                                    alt="avatar" height="39" width="39"></div>
                                         </div>
                                         <div class="media-body">
                                             <h6 class="media-heading"><span class="text-bold-500">Congratulate Socrates
@@ -78,8 +78,8 @@
                                     <div class="media d-flex align-items-center">
                                         <div class="media-left pr-0">
                                             <div class="avatar mr-1 m-0"><img
-                                                    src="{{asset('assets/images/portrait/small/avatar-s-16.jpg')}}" alt="avatar"
-                                                    height="39" width="39"></div>
+                                                    src="{{asset('assets/images/portrait/small/avatar-s-16.jpg')}}"
+                                                    alt="avatar" height="39" width="39"></div>
                                         </div>
                                         <div class="media-body">
                                             <h6 class="media-heading"><span class="text-bold-500">New Message</span>
@@ -195,17 +195,18 @@
                             href="javascript:void(0);" data-toggle="dropdown">
                             <div class="user-nav d-sm-flex d-none"><span class="user-name">Pacific</span><span
                                     class="user-status text-muted">Trực tuyến</span></div><span><img class="round"
-                                    src="{{asset('assets/images/portrait/small/logo-account.jpg')}}" alt="avatar" height="40"
-                                    width="40"></span>
+                                    src="{{asset('assets/images/portrait/small/logo-account.jpg')}}" alt="avatar"
+                                    height="40" width="40"></span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right pb-0"><a class="dropdown-item"
-                                href="{{route('admin.user.index_profile', Auth::user()->id)}}"><i class="bx bx-user mr-50"></i> Edit Profile</a>{{-- <a
+                                href="{{route('admin.user.index_profile', Auth::user()->id)}}"><i
+                                    class="bx bx-user mr-50"></i> Edit Profile</a>{{-- <a
                                 class="dropdown-item" href="app-email.html"><i class="bx bx-envelope mr-50"></i> My
                                 Inbox</a><a class="dropdown-item" href="app-todo.html"><i
                                     class="bx bx-check-square mr-50"></i> Task</a><a class="dropdown-item"
                                 href="app-chat.html"><i class="bx bx-message mr-50"></i> Chats</a> --}}
-                            <div class="dropdown-divider mb-0"></div><a class="dropdown-item" href="{{route('logout')}}"><i
-                                    class="bx bx-power-off mr-50"></i> Đăng xuất</a>
+                            <div class="dropdown-divider mb-0"></div><a class="dropdown-item"
+                                href="{{route('logout')}}"><i class="bx bx-power-off mr-50"></i> Đăng xuất</a>
                         </div>
                     </li>
                 </ul>

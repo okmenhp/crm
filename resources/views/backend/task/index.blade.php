@@ -26,8 +26,9 @@
 <div class="app-content content">
     <div class="content-overlay"></div>
     <div class="content-wrapper">
-        <div class="content-header row">
-        </div>
+        <!-- BEGIN: Navbar -->
+        @include('layouts/__navbar')
+        <!-- END: Navbar -->
         <div class="content-body">
             <!-- users list start -->
             <section class="users-list-wrapper">
@@ -103,137 +104,148 @@
 </div>
 <!-- END: Content-->
 <script type="text/javascript">
-
 $(() => {
     var tasks = JSON.parse('<?= $records; ?>');
     var user_task = JSON.parse('<?= $usertask_array; ?>');
     var users = JSON.parse('<?= $employee_array; ?>');
     var baseurl = window.location.origin;
 
-  const treeListData = $.map(tasks, (task) => {
-    task.manager = null;
-    $.each(users, (_, user) => {
-      if (user.id === task.master_id) {
-        task.manager = user;
-      }
+    const treeListData = $.map(tasks, (task) => {
+        task.manager = null;
+        $.each(users, (_, user) => {
+            if (user.id === task.master_id) {
+                task.manager = user;
+            }
+        });
+
+        return task;
     });
 
-    return task;
-  });
-
-  $('#tasks').dxTreeList({
-    dataSource: treeListData,
-    keyExpr: 'id',
-    parentIdExpr: 'parent_id',
-    columnAutoWidth: true,
-    wordWrapEnabled: true,
-    showBorders: true,
-    expandedRowKeys: [1, 2],
-    selectedRowKeys: [1, 29, 42],
-    searchPanel: {
-      visible: true,
-      width: 250,
-    },
-    headerFilter: {
-      visible: true,
-    },
-    selection: {
-      mode: 'multiple',
-    },
-    columnChooser: {
-      enabled: false,
-    },
-    columns: [{
-      dataField: 'name',
-      caption: 'Tên công việc',
-      width: 200,
-    }, {
-      dataField: 'master_id',
-      caption: 'Người phụ trách',
-      allowSorting: false,
-      minWidth: 200,
-      cellTemplate(container, options) {
-        const currentEmployee = options.data.manager;
-        if (currentEmployee) {
-          container
-            .append($('<div>', { class: 'img', style: `background-image:url(${currentEmployee.avatar});` }))
-            .append('\n')
-            .append($('<span>', { class: 'name', text: currentEmployee.name }));
-        }
-      },
-      lookup: {
-        dataSource: users,
-        valueExpr: 'ID',
-        displayExpr: 'name',
-      },
-    }, {
-      caption: 'Người tham gia',
-      minWidth: 200,
-      cellTemplate: function(element, info) {
-            element
-            .append($('<div>', { class: 'img', style: `background-image:url();` }))
-            .append('\n')
-            .append($('<div>', { class: 'img', style: `background-image:url();` }))
-            .append('\n');
-        }
-    }, {
-      caption: 'Tiến độ',
-      minWidth: 200,
-      cellTemplate: function(element, info) {
-            element.append(`<div class="progress progress-bar-primary mb-2">
+    $('#tasks').dxTreeList({
+        dataSource: treeListData,
+        keyExpr: 'id',
+        parentIdExpr: 'parent_id',
+        columnAutoWidth: true,
+        wordWrapEnabled: true,
+        showBorders: true,
+        expandedRowKeys: [1, 2],
+        selectedRowKeys: [1, 29, 42],
+        searchPanel: {
+            visible: true,
+            width: 250,
+        },
+        headerFilter: {
+            visible: true,
+        },
+        selection: {
+            mode: 'multiple',
+        },
+        columnChooser: {
+            enabled: false,
+        },
+        columns: [{
+            dataField: 'name',
+            caption: 'Tên công việc',
+            width: 200,
+        }, {
+            dataField: 'master_id',
+            caption: 'Người phụ trách',
+            allowSorting: false,
+            minWidth: 200,
+            cellTemplate(container, options) {
+                const currentEmployee = options.data.manager;
+                if (currentEmployee) {
+                    container
+                        .append($('<div>', {
+                            class: 'img',
+                            style: `background-image:url(${currentEmployee.avatar});`
+                        }))
+                        .append('\n')
+                        .append($('<span>', {
+                            class: 'name',
+                            text: currentEmployee.name
+                        }));
+                }
+            },
+            lookup: {
+                dataSource: users,
+                valueExpr: 'ID',
+                displayExpr: 'name',
+            },
+        }, {
+            caption: 'Người tham gia',
+            minWidth: 200,
+            cellTemplate: function(element, info) {
+                element
+                    .append($('<div>', {
+                        class: 'img',
+                        style: `background-image:url();`
+                    }))
+                    .append('\n')
+                    .append($('<div>', {
+                        class: 'img',
+                        style: `background-image:url();`
+                    }))
+                    .append('\n');
+            }
+        }, {
+            caption: 'Tiến độ',
+            minWidth: 200,
+            cellTemplate: function(element, info) {
+                element.append(`<div class="progress progress-bar-primary mb-2">
                                                             <div class="progress-bar progress-bar-striped progress-bar-animated"
                                                                 role="progressbar" aria-valuenow="20" aria-valuemin="20"
                                                                 aria-valuemax="100" style="width:20%"></div>
                                                         </div>`);
-        }
-    }, {
-      caption: 'Trạng thái',
-      minWidth: 200,
-      cellTemplate: function(element, info) {
-            element.append(`<div class="badge badge-secondary mr-1 mb-1">Chưa bắt đầu</div>`);
-        }
-    }, {
-      dataField: 'Task_Priority',
-      caption: 'Priority',
-      lookup: {
-        dataSource: priorities,
-        valueExpr: 'id',
-        displayExpr: 'value',
-      },
-      visible: false,
-    }, {
-      dataField: 'Task_Completion',
-      caption: '% Completed',
-      customizeText(cellInfo) {
-        return `${cellInfo.valueText}%`;
-      },
-      visible: false,
-    }, {
-      dataField: 'intended_start_time',
-      caption: 'Ngày bắt đầu',
-      dataType: 'date',
-    }, {
-      dataField: 'intended_end_time',
-      caption: 'Ngày kết thúc',
-      dataType: 'date',
-    }, {
-      dataField: 'name',
-      dataField: 'Thao tác',
-      cellTemplate: function(element, info) {
-            element.append(`<a href="`+baseurl+`/task/edit/`+info.data.id+`"><i
+            }
+        }, {
+            caption: 'Trạng thái',
+            minWidth: 200,
+            cellTemplate: function(element, info) {
+                element.append(
+                    `<div class="badge badge-secondary mr-1 mb-1">Chưa bắt đầu</div>`);
+            }
+        }, {
+            dataField: 'Task_Priority',
+            caption: 'Priority',
+            lookup: {
+                dataSource: priorities,
+                valueExpr: 'id',
+                displayExpr: 'value',
+            },
+            visible: false,
+        }, {
+            dataField: 'Task_Completion',
+            caption: '% Completed',
+            customizeText(cellInfo) {
+                return `${cellInfo.valueText}%`;
+            },
+            visible: false,
+        }, {
+            dataField: 'intended_start_time',
+            caption: 'Ngày bắt đầu',
+            dataType: 'date',
+        }, {
+            dataField: 'intended_end_time',
+            caption: 'Ngày kết thúc',
+            dataType: 'date',
+        }, {
+            dataField: 'name',
+            dataField: 'Thao tác',
+            cellTemplate: function(element, info) {
+                element.append(`<a href="` + baseurl + `/task/edit/` + info.data.id + `"><i
                                                         class='far fa-edit'></i></a>
                                                 <form style='display: inline-block' method='POST'
-                                                    action="`+baseurl+`/task/delete/`+info.data.id+`">
+                                                    action="` + baseurl + `/task/delete/` + info.data.id + `">
                                                 @csrf
                                                     <input name='_method' type='hidden' value='DELETE'>
                                                     <a href='#' class='show_confirm' data-toggle='tooltip'
                                                         title='Delete'> <i class='fa fa-trash-alt'> </i></a>
                                                 </form>`);
-        }
-    }],
-  });
+            }
+        }],
+    });
 });
-
 </script>
 
 @stop
