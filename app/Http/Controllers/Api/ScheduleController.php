@@ -26,16 +26,7 @@ class ScheduleController extends Controller
     }
 
     public function index(){
-        $data = array();
-        $schedules = Schedule::whereIn('id', User::find(Auth::id())->schedules()->pluck('schedule_id')->toArray())->get();
-        foreach($schedules as $schedule){
-            if($schedule->pattern == 1){
-                $sdata = $this->scheduleRepo->getScheduleNormal($schedule);
-                array_push($data, $sdata);
-            }else{
-                $data = array_merge($data, $this->scheduleRepo->getDataRepeat($schedule));
-            }
-        }
+        $data = $this->scheduleRepo->getSchedule();
         return response()->json(['data'=>$data]);
     }
 
@@ -71,70 +62,47 @@ class ScheduleController extends Controller
 
     public function defaultFormInsert(){
         $users = User::where('id','!=',Auth::id())->get();
+        $current_datetime = Carbon::now()->format('Y-m-d').'T00:00';
 
-        return response()->json(['data'=>$users]);
+        return response()->json(['data'=>$users, 'current_datetime'=>$current_datetime]);
     }
 
     public function insert(Request $request){
-        $data = array();
-        // dd($request->pattern);
-        $data['color_id'] = $request->color_id;
-        $data['title'] = $request->title;
-        // $data['all_day'] = $request->all_day;
-        $data['start_date'] = $request->start_date;
-        $data['end_date'] = $request->end_date;
-        $data['location'] = $request->location;
-        $data['meeting_id'] = $request->meeting;
-        $data['type_id'] = $request->type;
-        $data['description'] = $request->description;
-        $data['pattern'] = $request->pattern;
-        if($data['pattern'] == 2){
-            $data['wday'] = $request->day_repeat;
-        }elseif($data['pattern'] == 3){
-            $data['mday'] = $request->day_repeat;
-        }
-        $schedule = Schedule::create($data);
-        $schedule->users()->attach(Auth::id());
-        if($request->attendees != null){
-            $attendees = explode(",", $request->attendees);
-            foreach($attendees as $attendee){
-                $schedule->users()->attach($attendee);
-            }
-        }
+        $this->scheduleRepo->store($request);
         return $this->index();
     }
 
     public function update(Request $request){      
-        $schedule = Schedule::find($request->id);
-
-        $schedule->color_id = $request->color_id;
-        $schedule->title = $request->title;
-        // $schedule->all_day = $request->all_day;
-        $schedule->start_date = $request->start_date;
-        $schedule->end_date = $request->end_date;
-        $schedule->location = $request->location;
-        $schedule->meeting_id = $request->meeting;
-        $schedule->type_id = $request->type;
-        $schedule->description = $request->description;
-        $schedule->pattern = $request->pattern;
-        if($schedule->pattern == 2){
-            $schedule->wday = $request->day_repeat;
-        }elseif($schedule->pattern == 3){
-            $schedule->mday = $request->day_repeat;
-        }
-        $schedule->save();
+        // $schedule = Schedule::find($request->id);
+        // $schedule->color_id = $request->color_id;
+        // $schedule->title = $request->title;
+        // // $schedule->all_day = $request->all_day;
+        // $schedule->start_date = $request->start_date;
+        // $schedule->end_date = $request->end_date;
+        // $schedule->location = $request->location;
+        // $schedule->meeting_id = $request->meeting;
+        // $schedule->type_id = $request->type;
+        // $schedule->description = $request->description;
+        // $schedule->pattern = $request->pattern;
+        // if($schedule->pattern == 2){
+        //     $schedule->wday = $request->day_repeat;
+        // }elseif($schedule->pattern == 3){
+        //     $schedule->mday = $request->day_repeat;
+        // }
+        // $schedule->save();
         
-        if($request->attendees != null){
-            $users = User::where('id','!=',Auth::id())->get();
-            $attendees = UserSchedule::where('schedule_id',$schedule->id)->where('user_id','!=',Auth::id())->pluck('user_id')->toArray();
-            foreach($users as $user){
-                if(in_array($user->id, explode(",", $request->attendees)) && !in_array($user->id, $attendees)){
-                    $schedule->users()->attach($user->id);
-                }else{
-                    $schedule->users()->detach($user->id);
-                }
-            }
-        }
+        // if($request->attendees != null){
+        //     $users = User::where('id','!=',Auth::id())->get();
+        //     $attendees = UserSchedule::where('schedule_id',$schedule->id)->where('user_id','!=',Auth::id())->pluck('user_id')->toArray();
+        //     foreach($users as $user){
+        //         if(in_array($user->id, explode(",", $request->attendees)) && !in_array($user->id, $attendees)){
+        //             $schedule->users()->attach($user->id);
+        //         }else{
+        //             $schedule->users()->detach($user->id);
+        //         }
+        //     }
+        // }
+        $this->scheduleRepo->updateSchedule($request);
         return $this->index();
     }
 

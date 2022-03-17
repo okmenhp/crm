@@ -3,9 +3,14 @@
 namespace App\Repositories;
 
 use App\Models\ColorSchedule;
+use App\Models\Schedule;
+use App\Models\User;
+use App\Models\UserSchedule;
 use App\Repositories\Support\AbstractRepository;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
+use GuzzleHttp\Psr7\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ScheduleRepository extends AbstractRepository {
 
@@ -35,6 +40,137 @@ class ScheduleRepository extends AbstractRepository {
             'password' => 'min:6|max:32',
             'c_password' => 'min:6|max:32|same:password',
         ];
+    }
+
+    public function getSchedule(){
+        $data = array();
+        $schedules = Schedule::whereIn('id', User::find(Auth::id())->schedules()->pluck('schedule_id')->toArray())->get();
+        foreach($schedules as $schedule){
+            $sdata['id'] = "1";
+            $sdata['calendarId'] = $schedule->id;
+            $sdata['category'] = "time";
+            $range = Carbon::parse($schedule->start_date)->diffInDays(Carbon::parse($schedule->end_date));
+            if($range > 0){
+                $sdata['title'] = $schedule->title;
+            }else{
+                $sdata['title'] = date('H:i', strtotime($schedule->start_date))." ".$schedule->title;
+            }
+            // $schedule->all_day == 1 ? $sdata['isAllDay'] = true : $sdata['isAllDay'] = false;
+            $sdata['bgColor'] = $schedule->color_id != null ? ColorSchedule::find($schedule->color_id)->value : null;
+            $sdata['borderColor'] = $schedule->color_id != null ? ColorSchedule::find($schedule->color_id)->value : null;
+            $sdata['start'] = $schedule->start_date;
+            $sdata['end'] = $schedule->end_date;
+            $sdata['raw']['schedule_id'] = $schedule->id;
+            $sdata['raw']['location'] = $schedule->location;
+            $sdata['raw']['meeting_id'] = $schedule->meeting_id;
+            $sdata['raw']['description'] = $schedule->description;
+            $sdata['raw']['pattern'] = $schedule->pattern;
+            $sdata['raw']['type_id'] = $schedule->type_id;
+            array_push($data, $sdata);
+        }
+        return $data;
+    }
+
+    public function store($request){
+        $data = array();
+        $last_record_uid = Schedule::latest()->first();
+        if($last_record_uid == null){
+            $last_record_uid = 0;
+        }else{
+            $last_record_uid = ++$last_record_uid->uid;
+        }
+        $data['uid'] = $last_record_uid;
+        if($request->pattern == 1){
+            $data['color_id'] = $request->color_id;
+            $data['title'] = $request->title;
+            // $data['all_day'] = $request->all_day;
+            $data['start_date'] = $request->start_date;
+            $data['end_date'] = $request->end_date;
+            $data['location'] = $request->location;
+            $data['meeting_id'] = $request->meeting;
+            $data['type_id'] = $request->type;
+            $data['description'] = $request->description;
+            $data['pattern'] = $request->pattern;
+            $schedule = Schedule::create($data);
+            $schedule->users()->attach(Auth::id());
+            if($request->attendees != null){
+                $attendees = explode(",", $request->attendees);
+                foreach($attendees as $attendee){
+                    $schedule->users()->attach($attendee);
+                }
+            }
+        }else if($request->pattern != 1){
+            $days = explode(",", $request->day_repeat);
+            if($request->pattern == 2){
+                $data['wday'] = $request->day_repeat;
+            }else if($request->pattern == 3){
+                $data['mday'] = $request->day_repeat;
+            }
+            $start_time = Carbon::parse($request->start_date)->format('H:i:s');
+            $end_time = Carbon::parse($request->end_date)->format('H:i:s');
+            $schedule_periods = CarbonPeriod::create(date('Y-m-d', strtotime($request->start_date)), date('Y-m-d', strtotime($request->end_date)))->toArray();
+            if($request->pattern == 4){
+                $date_range = $this->getEveryDay($schedule_periods);
+            }else{
+                $date_range = $request->pattern == 2 ? $this->getDateByWeekDay($days, $schedule_periods) : $this->getDateByMonthDay($days, $schedule_periods);
+            }
+
+            foreach($date_range as $record){
+                $data['color_id'] = $request->color_id;
+                $data['title'] = $request->title;
+                // $data['all_day'] = $request->all_day;
+                $data['start_date'] = date('Y-m-d', strtotime($record))." ".$start_time;
+                $data['end_date'] = date('Y-m-d', strtotime($record))." ".$end_time;
+                $data['location'] = $request->location;
+                $data['meeting_id'] = $request->meeting;
+                $data['type_id'] = $request->type;
+                $data['description'] = $request->description;
+                $data['pattern'] = $request->pattern;
+                $schedule = Schedule::create($data);
+                $schedule->users()->attach(Auth::id());
+                if($request->attendees != null){
+                    $attendees = explode(",", $request->attendees);
+                    foreach($attendees as $attendee){
+                        $schedule->users()->attach($attendee);
+                    }
+                }
+            }
+        }
+    }
+
+    public function updateSchedule($request){
+        $record = Schedule::find($request->id);
+        $schedules = Schedule::where('uid', $record->uid)->get();
+        foreach($schedules as $schedule){
+            $schedule->color_id = $request->color_id;
+            $schedule->title = $request->title;
+            // $schedule->all_day = $request->all_day;
+            $schedule->start_date = $request->start_date;
+            $schedule->end_date = $request->end_date;
+            $schedule->location = $request->location;
+            $schedule->meeting_id = $request->meeting;
+            $schedule->type_id = $request->type;
+            $schedule->description = $request->description;
+            $schedule->pattern = $request->pattern;
+            if($schedule->pattern == 2){
+                $schedule->wday = $request->day_repeat;
+            }elseif($schedule->pattern == 3){
+                $schedule->mday = $request->day_repeat;
+            }
+            $schedule->save();
+            
+            if($request->attendees != null){
+                $users = User::where('id','!=',Auth::id())->get();
+                $attendees = UserSchedule::where('schedule_id',$schedule->id)->where('user_id','!=',Auth::id())->pluck('user_id')->toArray();
+                foreach($users as $user){
+                    if(in_array($user->id, explode(",", $request->attendees)) && !in_array($user->id, $attendees)){
+                        $schedule->users()->attach($user->id);
+                    }else{
+                        $schedule->users()->detach($user->id);
+                    }
+                }
+            }
+        }
     }
 
     public function getDateByWeekDay($wdays, $schedule_periods){

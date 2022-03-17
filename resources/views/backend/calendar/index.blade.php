@@ -85,6 +85,28 @@
                     <!-- calendar sidebar end -->
                     <!-- calendar view start  -->
                     <div class="calendar-view">
+                        <div class="px-1 py-1 row d-flex justify-content-between">
+                            <div class="ml-1 col-md-5">
+                                <label for="search-title">Tìm kiếm theo tên lịch trình</label>
+                                <input type="text" name="search-title" class="form-control has-icon-left" placeholder="Nhập tên lịch trình">
+                            </div>
+                            <div class="mr-1 col-md-5 search-user-box">
+                                <label for="search-user">Tìm kiếm theo người dùng</label>
+                                <select name="search-user" class="select2 form-control" id="search-user" multiple>
+                                    <option value="">Tuấn Anh</option>
+                                    <option value="">Tiến Đạt</option>
+                                    <option value="">Quang Minh</option>
+                                    <option value="">Minh Ngọc</option>
+                                    <option value="">Thu Hoài</option>
+                                    <option value="">Tuấn Anh</option>
+                                    <option value="">Tiến Đạt</option>
+                                    <option value="">Quang Minh</option>
+                                    <option value="">Minh Ngọc</option>
+                                    <option value="">Thu Hoài</option>
+                                </select>
+                            </div>
+                        </div>
+                        <hr class="my-0">
                         <div class="calendar-action d-flex align-items-center flex-wrap">
                             <!-- sidebar toggle button for small sceen -->
                             <button class="btn btn-icon sidebar-toggle-btn">
@@ -120,45 +142,6 @@
                                             <span>Tháng</span>
                                         </a>
                                     </li>
-                                    {{-- <li role="presentation">
-                                        <a class="dropdown-menu-title dropdown-item" role="menuitem"
-                                            data-action="toggle-weeks2">
-                                            <i class='bx bx-calendar-check mr-50'></i>
-                                            <span>2 tuần</span>
-                                        </a>
-                                    </li>
-                                    <li role="presentation">
-                                        <a class="dropdown-menu-title dropdown-item" role="menuitem"
-                                            data-action="toggle-weeks3">
-                                            <i class='bx bx-calendar-check mr-50'></i>
-                                            <span>3 tuần</span>
-                                        </a>
-                                    </li> --}}
-                                    {{-- <li role="presentation" class="dropdown-divider"></li>
-                                    <li role="presentation">
-                                        <div role="menuitem" data-action="toggle-workweek" class="dropdown-item">
-                                            <input type="checkbox" class="tui-full-calendar-checkbox-square"
-                                                value="toggle-workweek" checked>
-                                            <span class="checkbox-title bg-primary"></span>
-                                            <span>Hiển thị ngày cuối tuần</span>
-                                        </div>
-                                    </li>
-                                    <li role="presentation">
-                                        <div role="menuitem" data-action="toggle-start-day-1" class="dropdown-item">
-                                            <input type="checkbox" class="tui-full-calendar-checkbox-square"
-                                                value="toggle-start-day-1">
-                                            <span class="checkbox-title"></span>
-                                            <span>Bắt đầu từ thứ 2</span>
-                                        </div>
-                                    </li>
-                                    <li role="presentation">
-                                        <div role="menuitem" data-action="toggle-narrow-weekend" class="dropdown-item">
-                                            <input type="checkbox" class="tui-full-calendar-checkbox-square"
-                                                value="toggle-narrow-weekend">
-                                            <span class="checkbox-title"></span>
-                                            <span>Narrower than weekdays</span>
-                                        </div>
-                                    </li> --}}
                                 </ul>
                             </div>
                             <!-- calenadar next and previous navigate button -->
