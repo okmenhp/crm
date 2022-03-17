@@ -204,8 +204,9 @@
                                 Inbox</a><a class="dropdown-item" href="app-todo.html"><i
                                     class="bx bx-check-square mr-50"></i> Task</a><a class="dropdown-item"
                                 href="app-chat.html"><i class="bx bx-message mr-50"></i> Chats</a> --}}
-                            <div class="dropdown-divider mb-0"></div><a class="dropdown-item" href="{{route('logout')}}"><i
-                                    class="bx bx-power-off mr-50"></i> Đăng xuất</a>
+                            <div class="dropdown-divider mb-0"></div>
+                            <a class="dropdown-item" href="{{route('logout')}}">
+                                <i class="bx bx-power-off mr-50"></i> Đăng xuất</a>
                         </div>
                     </li>
                 </ul>
