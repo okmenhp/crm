@@ -30,15 +30,22 @@ class KanbanController extends BaseController
         $input = $request->all();
         $res = \DB::table('list')->where('list.project_id', $input['project_id'])->join('task','list.id','=','task.list_id')->select('task.id as id','task.created_at as dueDate','task.name as title', 'list.id as list_id','list.name as list_name')->where('task.parent_id', null)->get()->groupBy('list_id');
         $item = [];
-        
+        $res = \DB::table('list')->where('project_id', $input['project_id'])->get();
         foreach($res as $key => $r){
-            $object = new \stdClass();
-            $object->id = strval($key);
-            $object->title = $r['0']->list_name;
-            $object->item = $r;
-            $item[] = $object;
+            $res[$key]->title = $r->name;
+            $res[$key]->id = strval($r->id);
+            $res[$key]->item = \DB::table('task')->where('list_id', $r->id)->get();
         }
-        return $this->success($item);
+        
+        // foreach($res as $key => $r){
+        //     $object = new \stdClass();
+        //     $object->id = strval($key);
+        //     $object->title = $r['0']->list_name;
+        //     $object->item = $r;
+        //     $item[] = $object;
+        // }
+        // dd($item);
+        return $this->success($res);
     }
 
     public function create_board(Request $request)

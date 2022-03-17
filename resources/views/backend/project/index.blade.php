@@ -140,17 +140,7 @@
                                                 </tr>
                                                 @endforeach
                                             </tbody>
-                                            <tfoot>
-                                                <tr>
-                                                    <th>id</th>
-                                                    <th>Dự án</th>
-                                                    <th>Hợp đồng</th>
-                                                    <th>Người phụ trách</th>
-                                                    <th>Tiến độ</th>
-                                                    <th>Tình trạng</th>
-                                                    <th>Thao tác</th>
-                                                </tr>
-                                            </tfoot>
+                                           
                                         </table>
                                     </div>
                                 </div>
