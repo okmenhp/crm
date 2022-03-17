@@ -56,59 +56,60 @@ class CustomerContactorController extends Controller
     public function store(Request $request, $customer_id)
     {
         // //
-        // $input = $request->all();
-        // $validator = \Validator::make($input, $this->customerContactorRepo->validateCreate());
-        // if ($validator->fails()) {
-        //     return redirect()->back()->withErrors($validator)->withInput();
-        // }
-        // $input['customer_id'] = $customer_id;
-        // $res = $this->customerContactorRepo->create($input);
-        // if ($res) {
-        //     // return redirect()->back()->with('success', 'Thêm người liên lạc thành công');
-        //     // return redirect()->route('admin.customer.index')->with('success', 'Thêm mới thành công');
-        //     return redirect()->route('admin.customer.edit', $customer_id)->with('error', 'Thêm mới thành công');
-        // } else {
-        //     return redirect()->route('admin.customer.edit', $customer_id)->with('error', 'Thêm mới thất bại');
-        // }
-        $apiFormat = [];
-        $apiFormat['status'] = \Config::get('constants.STATUS.INACTIVE');
         $input = $request->all();
-        dd($input);
         $validator = \Validator::make($input, $this->customerContactorRepo->validateCreate());
         if ($validator->fails()) {
-            $apiFormat['message'] = $validator->errors()->first();
-            return response()->json($apiFormat);
+            return redirect()->back()->withErrors($validator)->withInput();
         }
-        $dataSave = [
-            'name'             => $request->input('name'),
-            'customer_type_id' => $request->input('customer_type_id'),
-            'position'         => $request->input('position'),
-            'gender'           => $request->has('gender'),
-            'date_of_birth'    => $request->date_of_birth ? Carbon::createFromFormat('d/m/Y', $request->date_of_birth)->format('mm/dd/YYYY') : null,
-            'id_card'          => $request->input('id_card'),
-            'phone_number'     => $request->input('phone_number'),
-            'email'            => $request->input('email'),
-            'skype'            => $request->input('skype'),
-            'zalo'             => $request->input('zalo'),
-            'wechat'           => $request->input('wechat'),
-            'whatsapp'         => $request->input('whatsapp'),
-            'address'          => $request->input('address'),
-            'country_id'       => $request->input('country_id'),
-            'note'             => $request->input('note'),
-            'customer_id'      => $customer_id,
-        ];
-        try {
-            DB::beginTransaction();
-            $result = $this->customerContactorRepo->create($dataSave);
-            dd($result);
-            DB::commit();
-            $apiFormat['status']    = \Config::get('constants.STATUS.ACTIVE');
-            $apiFormat['message']   = 'Thêm mới thành công';
-        } catch (\Exception $e) {
-            $apiFormat['message'] = $e->getMessage();
-            DB::rollBack();
+        $input['customer_id'] = $customer_id;
+        $res = $this->customerContactorRepo->create($input);
+        if ($res) {
+            return redirect()->back()->with('success', 'Thêm người liên lạc thành công');
+            // // return redirect()->route('admin.customer.index')->with('success', 'Thêm mới thành công');
+            // return redirect()->route('admin.customer.edit', $customer_id)->with('error', 'Thêm mới thành công');
+        } else {
+            // return redirect()->route('admin.customer.edit', $customer_id)->with('error', 'Thêm mới thất bại');
+            return redirect()->back()->with('error', 'Có lỗi xảy ra. Vui lòng thử lại');
         }
-        return response()->json($apiFormat);
+        // $apiFormat = [];
+        // $apiFormat['status'] = \Config::get('constants.STATUS.INACTIVE');
+        // $input = $request->all();
+        // dd($input);
+        // $validator = \Validator::make($input, $this->customerContactorRepo->validateCreate());
+        // if ($validator->fails()) {
+        //     $apiFormat['message'] = $validator->errors()->first();
+        //     return response()->json($apiFormat);
+        // }
+        // $dataSave = [
+        //     'name'             => $request->input('name'),
+        //     'customer_type_id' => $request->input('customer_type_id'),
+        //     'position'         => $request->input('position'),
+        //     'gender'           => $request->has('gender'),
+        //     'date_of_birth'    => $request->date_of_birth ? Carbon::createFromFormat('d/m/Y', $request->date_of_birth)->format('mm/dd/YYYY') : null,
+        //     'id_card'          => $request->input('id_card'),
+        //     'phone_number'     => $request->input('phone_number'),
+        //     'email'            => $request->input('email'),
+        //     'skype'            => $request->input('skype'),
+        //     'zalo'             => $request->input('zalo'),
+        //     'wechat'           => $request->input('wechat'),
+        //     'whatsapp'         => $request->input('whatsapp'),
+        //     'address'          => $request->input('address'),
+        //     'country_id'       => $request->input('country_id'),
+        //     'note'             => $request->input('note'),
+        //     'customer_id'      => $customer_id,
+        // ];
+        // try {
+        //     DB::beginTransaction();
+        //     $result = $this->customerContactorRepo->create($dataSave);
+        //     dd($result);
+        //     DB::commit();
+        //     $apiFormat['status']    = \Config::get('constants.STATUS.ACTIVE');
+        //     $apiFormat['message']   = 'Thêm mới thành công';
+        // } catch (\Exception $e) {
+        //     $apiFormat['message'] = $e->getMessage();
+        //     DB::rollBack();
+        // }
+        // return response()->json($apiFormat);
     }
 
     /**

@@ -102,7 +102,10 @@ class TaskController extends BaseController
      */
     public function edit()
     {
-        return view('backend/department/edit');
+        $user_array = $this->userRepo->all();
+        $project_array = $this->projectRepo->all();
+        $task_array = $this->taskRepo->all();
+        return view('backend/task/edit', compact('user_array','project_array','task_array'));
     }
 
     /**

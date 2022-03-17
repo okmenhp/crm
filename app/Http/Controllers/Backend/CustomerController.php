@@ -155,4 +155,47 @@ class CustomerController extends BaseController
             return redirect()->back()->with('error', 'Không tồn tại bản ghi');
         }
     }
+
+    /**
+     * update  customer note
+     */
+    public function addNote(Request $request, $id)
+    {
+        // $note = $request->input('note');
+        // $validator = \Validator::make($input, $this->customerRepo->validateUpdate($id));
+        // if ($validator->fails()) {
+        //     return redirect()->back()->withErrors($validator)->withInput();
+        // }
+        // // $input['status'] = isset($input['status']) ? 1 : 0;
+        // $this->customerRepo->update($input, $id);
+        // // return redirect()->route('admin.customer.edit')->with('success', 'Cập nhật thành công');
+        // return redirect()->back()->with('success', 'Cập nhật thành công');
+    }
+
+    public function updateStatus(Request $request)
+    {
+        $status = $request->input('status');
+        if ($status == Config::get('constants.STATUS.ACTIVE')) {
+            $statusAfter = Config::get('constants.STATUS.INACTIVE');
+        } else {
+            $statusAfter = Config::get('constants.STATUS.ACTIVE');
+        }
+        try {
+            DB::beginTransaction();
+            $result = $this->user->update([
+                "status" => $statusAfter
+            ], $request->input('id'));
+            if ($result->status == Config::get('constants.STATUS.INACTIVE') && $result->access_token != '') {
+                try {
+                    JWTAuth::setToken($result->access_token)->invalidate();
+                } catch (\Exception/*\Tymon\JWTAuth\Exceptions\TokenBlacklistedException*/ $e) {
+                }
+            }
+            DB::commit();
+            return response()->json(['data' => $result, 'error' => false]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['error' => true, 'message' => ""]);
+        }
+    }
 }

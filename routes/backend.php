@@ -106,7 +106,8 @@ Route::group(['middleware' => 'admin'], function () {
     Route::post('/calendar/meeting/create',  ['as' => 'admin.calendar.meeting.create', 'uses' => 'Backend\CalendarController@createMeeting']);
     Route::post('/calendar/meeting/update',  ['as' => 'admin.calendar.meeting.update', 'uses' => 'Backend\CalendarController@updateMeeting']);
     Route::post('/calendar/meeting/delete',  ['as' => 'admin.calendar.meeting.delete', 'uses' => 'Backend\CalendarController@deleteMeeting']);
-    
+
+
     //Kanban
     Route::get('/kanban/{project_id}',  ['as' => 'admin.kanban.index', 'uses' => 'Backend\KanbanController@index']);
 
@@ -137,10 +138,11 @@ Route::group(['middleware' => 'admin'], function () {
     // Nguoi lien lac cua khach hang
     // Route::get('/customer-contactor',  ['as' => 'admin.customer_contactor.index', 'uses' => 'Backend\CustomerContactorController@index']);
     // Route::get('/customer-contactor/create',  ['as' => 'admin.customer_contactor.create', 'uses' => 'Backend\CustomerContactorController@create']);
-    // Route::post('/customer-contactor/store',  ['as' => 'admin.customer_contactor.store', 'uses' => 'Backend\CustomerContactorController@store']);
+    Route::post('/customer-contactor/store',  ['as' => 'admin.customer_contactor.store', 'uses' => 'Backend\CustomerContactorController@store']);
     Route::get('/customer-contactor/edit/{id}',  ['as' => 'admin.customer_contactor.edit', 'uses' => 'Backend\CustomerContactorController@edit']);
     Route::post('/customer-contactor/update/{id}',  ['as' => 'admin.customer_contactor.update', 'uses' => 'Backend\CustomerContactorController@update']);
     Route::delete('/customer-contactor/delete/{id}',  ['as' => 'admin.customer_contactor.destroy', 'uses' => 'Backend\CustomerContactorController@destroy']);
+    Route::delete('/customer-contactor/updatenote/{id}',  ['as' => 'admin.customer_contactor.addNote', 'uses' => 'Backend\CustomerContactorController@addNote']);
     // Route::post('contactorDatatable', [
     //     'uses' => 'Backend\CustomerContactorController@contactorDatatable'
     // ]);
