@@ -15,14 +15,13 @@
                         data-ticon="bx-disc"></i></a></li>
         </ul>
     </div>
-    
     <div class="shadow-bottom"></div>
     <div class="main-menu-content">
         <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation"
             data-icon-style="lines">
             <li class=" navigation-header text-truncate"><span data-i18n="Apps">Trang chủ</span>
             </li>
-            <li @if(Route::currentRouteName() === 'admin.index') class="nav-item nav-item-active" @else class="nav-item" @endif><a href="/home"><i class="fal fa-home"></i><span
+            <li class=" nav-item"><a @if(Route::currentRouteName() === 'admin.index') class="a-active" @endif href="/home"><i class="fal fa-home"></i><span
                         class="menu-title text-truncate" data-i18n="Email">Trang chủ</span></a>
             </li>
             <li class=" navigation-header text-truncate"><span data-i18n="Apps">Nhân sự</span>
