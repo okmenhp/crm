@@ -15,33 +15,39 @@
                         data-ticon="bx-disc"></i></a></li>
         </ul>
     </div>
-
     <div class="shadow-bottom"></div>
     <div class="main-menu-content">
         <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation"
             data-icon-style="lines">
-            <li class=" navigation-header text-truncate"><span data-i18n="Apps">Trang chủ</span>
+            <li class="navigation-header text-truncate"><span data-i18n="Apps">Trang chủ</span>
             </li>
-            <li @if(Route::currentRouteName()==='admin.index' ) class="nav-item nav-item-active" @else class="nav-item"
-                @endif><a href="/home"><i class="fal fa-home"></i><span class="menu-title text-truncate"
+
+            <li @if(Route::currentRouteName()==='admin.index' ) class="active nav-item" @else class="nav-item" @endif><a
+                    href="/home"><i class="fal fa-home"></i><span class="menu-title text-truncate"
                         data-i18n="Email">Trang chủ</span></a>
+
             </li>
             <li class=" navigation-header text-truncate"><span data-i18n="Apps">Nhân sự</span>
             </li>
-            <li class=" nav-item"><a href="{{ route('admin.position.index') }}"><i class="fal fa-poll-people"></i><span
-                        class="menu-title text-truncate" data-i18n="Email">Quản lý
+            <li @if(Route::currentRouteName()==='admin.position.index' ) class="active nav-item" @else class="nav-item"
+                @endif><a href="{{ route('admin.position.index') }}"><i class="fal fa-poll-people"></i><span
+                        class="menu-title text-truncate" data-i18n="Email">Quản
+                        lý
                         chức vụ</span></a>
             </li>
-            <li class=" nav-item"><a href="/department"><i class="fal fa-users-class"></i><span
+            <li @if(Route::currentRouteName()==='admin.department.index' ) class="active nav-item" @else
+                class="nav-item" @endif><a href="/department"><i class="fal fa-users-class"></i><span
                         class="menu-title text-truncate" data-i18n="Chat">Quản lý phòng ban</span></a>
             </li>
-            <li class=" nav-item"><a href="/employee"><i class="fal fa-users"></i><span class="menu-title text-truncate"
+            <li @if(Route::currentRouteName()==='admin.position.index' ) class="active nav-item" @else class="nav-item"
+                @endif><a href="/employee"><i class="fal fa-users"></i><span class="menu-title text-truncate"
                         data-i18n="Todo">Quản lý nhân viên</span></a>
             </li>
             <li class=" navigation-header text-truncate"><span data-i18n="Apps">File</span>
             </li>
             <li class=" nav-item"><a href="{{ route('admin.file.index', 0) }}"><i class="fal fa-folder-tree"></i><span
-                        class="menu-title text-truncate" data-i18n="Todo">Quản lý
+                        class="menu-title text-truncate" data-i18n="Todo">Quản
+                        lý
                         file</span></a>
             </li>
             <li class=" navigation-header text-truncate"><span data-i18n="Apps">Lịch trình</span>
@@ -93,7 +99,8 @@
             <li class=" navigation-header text-truncate"><span data-i18n="Apps">Khách hàng</span>
             </li>
             {{-- <li class=" nav-item"><a href="{{ route('admin.customer.index') }}"><i class="fal fa-angel"></i><span
-                class="menu-title text-truncate" data-i18n="Todo">Quản lý khách hàng</span></a>
+                class="menu-title text-truncate" data-i18n="Todo">Quản lý khách
+                hàng</span></a>
             </li> --}}
 
             <li class=" nav-item">
