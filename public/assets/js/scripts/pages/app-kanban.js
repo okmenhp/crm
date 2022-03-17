@@ -41,7 +41,7 @@ $(function () {
       enabled: true,                                              // add a button to board for easy item creation
       content: '+ Thêm thẻ mới',                                                // text or html content of the board button
       class: 'kanban-title-button btn btn-default btn-xs',         // default class of the button
-      footer: false                                                // position the button on footer
+      footer: true                                                // position the button on footer
     },
 
     // click on current kanban-item
