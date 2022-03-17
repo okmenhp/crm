@@ -29,31 +29,33 @@
             </li>
             <li class=" navigation-header text-truncate"><span data-i18n="Apps">Nhân sự</span>
             </li>
-            <li @if(Route::currentRouteName()==='admin.position.index' ) class="active nav-item" @else class="nav-item"
+            <li @if(Route::currentRouteName()==='admin.position.index' ||Route::currentRouteName()==='admin.position.create' ||Route::currentRouteName()==='admin.position.edit') class="active nav-item" @else class="nav-item"
                 @endif><a href="{{ route('admin.position.index') }}"><i class="fal fa-poll-people"></i><span
                         class="menu-title text-truncate" data-i18n="Email">Quản
                         lý
                         chức vụ</span></a>
             </li>
-            <li @if(Route::currentRouteName()==='admin.department.index' ) class="active nav-item" @else
+            <li @if(Route::currentRouteName()==='admin.department.index' ||Route::currentRouteName()==='admin.position.create' ||Route::currentRouteName()==='admin.position.edit') class="active nav-item" @else
                 class="nav-item" @endif><a href="/department"><i class="fal fa-users-class"></i><span
                         class="menu-title text-truncate" data-i18n="Chat">Quản lý phòng ban</span></a>
             </li>
-            <li @if(Route::currentRouteName()==='admin.position.index' ) class="active nav-item" @else class="nav-item"
+            <li @if(Route::currentRouteName()==='admin.employee.index' ) class="active nav-item" @else class="nav-item"
                 @endif><a href="/employee"><i class="fal fa-users"></i><span class="menu-title text-truncate"
                         data-i18n="Todo">Quản lý nhân viên</span></a>
             </li>
             <li class=" navigation-header text-truncate"><span data-i18n="Apps">File</span>
             </li>
-            <li class=" nav-item"><a href="{{ route('admin.file.index', 0) }}"><i class="fal fa-folder-tree"></i><span
+            <li @if(Route::currentRouteName()==='admin.file.index' ) class="active nav-item" @else class="nav-item"
+                @endif><a href="{{ route('admin.file.index', 0) }}"><i class="fal fa-folder-tree"></i><span
                         class="menu-title text-truncate" data-i18n="Todo">Quản
                         lý
                         file</span></a>
             </li>
             <li class=" navigation-header text-truncate"><span data-i18n="Apps">Lịch trình</span>
             </li>
-            {{-- <li class=" nav-item"><a href="{{ route('admin.calendar.index', 0) }}"><i
-                class="fal fa-calendar"></i><span class="menu-title text-truncate" data-i18n="Todo">Quản lý lịch
+            {{-- <li @if(Route::currentRouteName()==='admin.calendar.index' ) class="active nav-item" @else class="nav-item"
+                @endif><a href="{{ route('admin.calendar.index', 0) }}"><i class="fal fa-calendar"></i><span
+                class="menu-title text-truncate" data-i18n="Todo">Quản lý lịch
                 trình</span></a>
             </li> --}}
             <li class=" nav-item">
@@ -87,10 +89,14 @@
             <!-- <li class=" nav-item"><a href="/project-type"><i class="fa-solid fa-bars-progress"></i><span
                         class="menu-title text-truncate" data-i18n="Todo">Quản lý loại dự án</span></a>
             </li> -->
-            <li class=" nav-item"><a href="/project"><i class="fal fa-project-diagram"></i><span
-                        class="menu-title text-truncate" data-i18n="Todo">Quản lý dự án</span></a>
+            <li @if(Route::currentRouteName()==='admin.project.index'
+                ||Route::currentRouteName()==='admin.project.create' ||Route::currentRouteName()==='admin.project.edit'
+                ) class="active nav-item" @else class="nav-item" @endif><a href="/project"><i
+                        class="fal fa-project-diagram"></i><span class="menu-title text-truncate" data-i18n="Todo">Quản
+                        lý dự án</span></a>
             </li>
-            <li class=" nav-item"><a href="/task"><i class="fal fa-briefcase"></i><span class="menu-title text-truncate"
+            <li @if(Route::currentRouteName()==='admin.task.index' ||Route::currentRouteName()==='admin.project.create' ||Route::currentRouteName()==='admin.project.edit') class="active nav-item" @else class="nav-item"
+                @endif><a href="/task"><i class="fal fa-briefcase"></i><span class="menu-title text-truncate"
                         data-i18n="Todo">Quản lý công việc</span></a>
             </li>
             <!-- <li class=" nav-item"><a href="/problem"><i class="fal fa-exclamation-square"></i><span
