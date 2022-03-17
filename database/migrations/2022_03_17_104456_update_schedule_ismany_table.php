@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddAmountToDepartmentTable extends Migration
+class UpdateScheduleIsmanyTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,7 @@ class AddAmountToDepartmentTable extends Migration
      */
     public function up()
     {
-        Schema::table('department', function (Blueprint $table) {
-            $table->integer('amount')->nullable();
-        });
+        //
     }
 
     /**
@@ -25,8 +23,8 @@ class AddAmountToDepartmentTable extends Migration
      */
     public function down()
     {
-        Schema::table('department', function (Blueprint $table) {
-            //
+        Schema::table('schedule', function (Blueprint $table) {
+            $table->tinyInteger('is_many')->default(0);
         });
     }
 }

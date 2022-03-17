@@ -77,3 +77,8 @@
     height: 1rem;
     border-radius: 30px;
 }
+
+.search-user-box .select2-selection{
+    max-height: 5rem;
+    overflow-y: scroll;
+}

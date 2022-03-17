@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class RemoveUserIdTask extends Migration
+class UpdateScheduleTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,7 @@ class RemoveUserIdTask extends Migration
      */
     public function up()
     {
-        Schema::table('task', function($table) {
-            $table->dropColumn('user_id');
-         });
+        //
     }
 
     /**
@@ -25,6 +23,8 @@ class RemoveUserIdTask extends Migration
      */
     public function down()
     {
-        //
+        Schema::table('schedule', function (Blueprint $table) {
+            $table->integer('color_id');
+        });
     }
 }
