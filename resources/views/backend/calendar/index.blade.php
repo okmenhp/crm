@@ -86,23 +86,21 @@
                     <!-- calendar view start  -->
                     <div class="calendar-view">
                         <div class="px-1 py-1 row d-flex justify-content-between">
-                            <div class="ml-1 col-md-5">
+                            <div class="col-md-5">
                                 <label for="search-title">Tìm kiếm theo tên lịch trình</label>
-                                <input type="text" name="search-title" class="form-control has-icon-left" placeholder="Nhập tên lịch trình">
+                                <div class="input-group">
+                                    <input type="text" name="search-title input-group-btn" id="search-title" class="form-control has-icon-left" placeholder="Nhập tên lịch trình">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-primary search-title-button" type="button"><i class="bx bx-search"></i></button>
+                                    </div>
+                                </div>
                             </div>
                             <div class="mr-1 col-md-5 search-user-box">
                                 <label for="search-user">Tìm kiếm theo người dùng</label>
                                 <select name="search-user" class="select2 form-control" id="search-user" multiple>
-                                    <option value="">Tuấn Anh</option>
-                                    <option value="">Tiến Đạt</option>
-                                    <option value="">Quang Minh</option>
-                                    <option value="">Minh Ngọc</option>
-                                    <option value="">Thu Hoài</option>
-                                    <option value="">Tuấn Anh</option>
-                                    <option value="">Tiến Đạt</option>
-                                    <option value="">Quang Minh</option>
-                                    <option value="">Minh Ngọc</option>
-                                    <option value="">Thu Hoài</option>
+                                    @foreach($users as $user)
+                                        <option value="{{$user->id}}" @if($user->id == Auth::id()) selected @endif>{{$user->full_name}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>

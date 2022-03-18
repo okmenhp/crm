@@ -22,7 +22,8 @@ class CalendarController extends BaseController
         $types = TypeSchedule::all();
         $meetings = Meeting::all();
         $colors = ColorSchedule::all();
-        return view('backend/calendar/index', compact('types','meetings', 'colors'));
+        $users = User::all();
+        return view('backend/calendar/index', compact('types','meetings', 'colors', 'users'));
     }
 
     public function type()

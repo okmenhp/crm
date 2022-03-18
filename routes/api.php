@@ -44,8 +44,8 @@ Route::get('project/index','Api\ProjectController@index')->name('api.project.ind
 Route::post('schedule/index','Api\ScheduleController@index')->name('api.schedule.index');
 Route::post('schedule/detail','Api\ScheduleController@detail')->name('api.schedule.detail');
 Route::post('schedule/defaultFormInsert','Api\ScheduleController@defaultFormInsert')->name('api.schedule.defaultFormInsert');
-Route::post('schedule/insert','Api\ScheduleController@insert')->name('api.schedule.insert');
-Route::post('schedule/update','Api\ScheduleController@update')->name('api.schedule.update');
+// Route::post('schedule/insert','Api\ScheduleController@insert')->name('api.schedule.insert');
+// Route::post('schedule/update','Api\ScheduleController@update')->name('api.schedule.update');
 Route::post('schedule/dataScheduleChange','Api\ScheduleController@dataScheduleChange')->name('api.schedule.dataScheduleChange');
 Route::post('schedule/delete','Api\ScheduleController@delete')->name('api.schedule.delete');
 Route::post('schedule/filter','Api\ScheduleController@filter')->name('api.schedule.filter');
