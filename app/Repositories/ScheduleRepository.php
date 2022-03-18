@@ -242,8 +242,7 @@ class ScheduleRepository extends AbstractRepository {
     // Filter
     public function getFilterSchedule($request){
         $data = array();
-        $schedules = Schedule::whereIn('id', User::find(Auth::id())->schedules()->pluck('schedule_id')->toArray())->get();
-
+        $schedules = Schedule::all();
         foreach($schedules as $schedule){
             $sdata['isVisible'] = true;
             if($request->search_user != null){
@@ -257,20 +256,20 @@ class ScheduleRepository extends AbstractRepository {
                 }
             }else{
                 $sdata['isVisible'] = false;
-                break;
+                continue;
             }
             if($request->type != null){
                 if(!in_array($schedule->type_id, explode(',', $request->type))){
                     $sdata['isVisible'] = false;
-                    break;
+                    continue;
                 }
             }else{
                 $sdata['isVisible'] = false;
-                break;
+                continue;
             }
-            if(!str_contains($schedule->title, $request->search_title)) { 
+            if(!str_contains($schedule->title, $request->search_title)) {
                 $sdata['isVisible'] = false;
-                break;
+                continue;
             }
             $sdata['id'] = "1";
             $sdata['calendarId'] = $schedule->id;
@@ -300,6 +299,7 @@ class ScheduleRepository extends AbstractRepository {
             $sdata['raw']['type_id'] = $schedule->type_id;
             array_push($data, $sdata);
         }
+        // dd($data);
         return $data;
     }
 }

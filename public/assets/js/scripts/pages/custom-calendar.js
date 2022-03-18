@@ -317,6 +317,8 @@ $('input[name="type-schedule"][value=all]').on('change', function(){
 $('input[name="type-schedule"]').on('change', function(){
     if($(this).prop('checked')){
         $('input[name="type-schedule"][value=all]').prop('checked', true)
+    }else{
+        $('input[name="type-schedule"][value=all]').prop('checked', false)
     }
     filterSchedule()
 })
