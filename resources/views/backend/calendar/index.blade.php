@@ -39,8 +39,24 @@
     <div class="app-content content">
         <div class="content-overlay"></div>
         <div class="content-wrapper">
+            <!-- BEGIN: Navbar -->
             <div class="content-header row">
+                <div class="content-header-left col-12 mb-2 mt-1">
+                    <div class="breadcrumbs-top">
+                        <h5 class="content-header-title float-left pr-1 mb-0">Quản lý lịch trình</h5>
+                        <div class="breadcrumb-wrapper d-none d-sm-block">
+                            <ol class="breadcrumb p-0 mb-0 pl-1">
+                                <li class="breadcrumb-item"><a href="/"><i class="bx bx-home-alt"></i></a>
+                                </li>
+                                <li class="breadcrumb-item active">
+                                    Quản lý lịch trình
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
             </div>
+            <!-- END: Navbar -->
             <div class="content-body">
                 <!-- calendar Wrapper  -->
                 <div class="calendar-wrapper position-relative">
