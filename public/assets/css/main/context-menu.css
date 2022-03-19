@@ -29,9 +29,6 @@
 }
 .context-menu li:hover a { color: #FFFFFF; }
 
-.select2-container--default{
-  z-index: 999999;
-}
 
 .todo-input{
    border: none;

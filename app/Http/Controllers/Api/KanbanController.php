@@ -28,14 +28,39 @@ class KanbanController extends BaseController
 
     public function index(Request $request){
         $input = $request->all();
-        $res = \DB::table('list')->where('list.project_id', $input['project_id'])->join('task','list.id','=','task.list_id')->select('task.id as id','task.created_at as dueDate','task.name as title', 'list.id as list_id','list.name as list_name')->where('task.parent_id', null)->get()->groupBy('list_id');
+        // $res = \DB::table('list')->where('list.project_id', $input['project_id'])->join('task','list.id','=','task.list_id')->select('task.id as id','task.created_at as dueDate','task.name as title', 'list.id as list_id','list.name as list_name')->where('task.parent_id', null)->get()->groupBy('list_id');
         $item = [];
-        $res = \DB::table('list')->where('project_id', $input['project_id'])->get();
+        $res = \DB::table('list')->where('project_id', $input['project_id'])->orderBy('ordering','asc')->get();
+
         foreach($res as $key => $r){
             $res[$key]->title = $r->name;
             $res[$key]->id = strval($r->id);
-            $res[$key]->item = \DB::table('task')->where('list_id', $r->id)->get();
+            $item = \DB::table('task')->where('list_id', $r->id)->select('*','task.name as title')->get();
+            foreach($item as $key_item => $it){
+                if($it->status == 1){
+                    $item[$key_item]->border = "primary";
+                }elseif($it->status == 2){
+                    $item[$key_item]->border = "danger";
+                }
+                elseif($it->status == 3){
+                    $item[$key_item]->border = "success";
+                }
+                elseif($it->status == 4){
+                    $item[$key_item]->border = "warning";
+                }
+                else{
+                    $item[$key_item]->border = "secondary";
+                }
+                if($it->intended_end_time){
+                $item[$key_item]->dueDate = date('d-m-Y', strtotime($it->intended_end_time));
+                }
+                $us = \DB::table('user_task')->where('task_id', $it->id)->get()->pluck('user_id');
+                $item[$key_item]->users = \DB::table('user')->whereIn('id', $us)->get()->pluck('avatar');
+               //dd($item[$key_item]->users);
+            }
+            $res[$key]->item = $item;
         }
+       
         
         // foreach($res as $key => $r){
         //     $object = new \stdClass();
@@ -45,6 +70,7 @@ class KanbanController extends BaseController
         //     $item[] = $object;
         // }
         // dd($item);
+        //dd($res);
         return $this->success($res);
     }
 
@@ -89,6 +115,17 @@ class KanbanController extends BaseController
         $tyle =  Task::where('parent_id', $parent_id)->where('is_checked' ,1)->count() / Task::where('parent_id', $parent_id)->count();
         $tyle = $tyle * 100;
         return $this->success($tyle);
+    }
+
+    
+     public function arrange_board(Request $request)
+    {
+        $input = $request->all();
+        dd($input);
+        foreach($input['arrange_board'] as $ar_board){
+            \DB::table('list')->where('id', $ar_board['id'])->update(['ordering' => $ar_board['ordering']]);
+        }
+        return $this->success();
     }
 
 }
