@@ -99,6 +99,10 @@
                 @endif><a href="/task"><i class="fal fa-briefcase"></i><span class="menu-title text-truncate"
                         data-i18n="Todo">Quản lý công việc</span></a>
             </li>
+            <li @if(Route::currentRouteName()==='admin.task.gantt') class="active nav-item" @else class="nav-item"
+                @endif><a href="/gantt"><i class="fal fa-briefcase"></i><span class="menu-title text-truncate"
+                        data-i18n="Todo">Biểu đồ Gantt</span></a>
+            </li>
             <!-- <li class=" nav-item"><a href="/problem"><i class="fal fa-exclamation-square"></i><span
                         class="menu-title text-truncate" data-i18n="Todo">Quản lý vấn đề</span></a>
             </li> -->
