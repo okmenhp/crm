@@ -33,6 +33,7 @@ Route::post('kanban/create-board','Api\KanbanController@create_board')->name('ap
 Route::post('kanban/update-card','Api\KanbanController@update_card')->name('api.kanban.update_card');
 Route::post('kanban/update-board','Api\KanbanController@update_board')->name('api.kanban.update_board');
 Route::post('kanban/card-detail','Api\KanbanController@card_detail')->name('api.kanban.card_detail');
+Route::post('kanban/arrange-board','Api\KanbanController@arrange_board')->name('api.kanban.arrange_board');
 //Route::post('kanban/add-card','Api\KanbanController@add_card')->name('api.kanban.add_card');
 
 //project
@@ -54,4 +55,7 @@ Route::get('calendar/meeting/edit','Api\ScheduleController@meetingEdit')->name('
 
 Route::post('task/checked','Api\KanbanController@checked')->name('api.task.checked');
 Route::post('task/add-subtask','Api\TaskController@add_sub_task')->name('api.task.add_sub_task');
+
+
+
 

@@ -133,6 +133,7 @@ $(function () {
         }
       }).done(function(resp) {
          let data = resp.data;
+         $('input[name="name"]').val(data.name);
          $("#manager_id").val(data.manager_id).change();
          $("#status").val(data.status).change();
          $("#level").val(data.level).change();

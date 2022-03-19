@@ -21,19 +21,38 @@
 <div class="context-menu pr-1 pl-1">
   <div class="form-group">
       <label class="mt-1">Chọn user</label>
-      <select class="form-control select2-icons " data-icon="" multiple="" style="z-index: 1000000 !important;">
+      <select class="form-control " data-icon="" multiple="" style="z-index: 1000000 !important;">
           <option style="z-index: 1000000 !important;">123</option>
           <option>456</option>
       </select>
     <button class="btn btn-primary mt-1">Lưu</button>
     </div>  
-     
 </div>
+
 <input type="hidden" name="" id="project_id" value="{{$project_id}}">
 <div class="app-content content">
     <div class="content-overlay"></div>
     <div class="content-wrapper">
         <div class="content-header row">
+        <div class="content-header-left col-12 mb-2 mt-1">
+            <div class="breadcrumbs-top">
+                <h5 class="content-header-title float-left pr-1 mb-0">Quản lý công việc</h5>
+                <div class="breadcrumb-wrapper d-none d-sm-block">
+                    <ol class="breadcrumb p-0 mb-0 pl-1">
+                        <li class="breadcrumb-item"><a href="/home"><i class="bx bx-home-alt"></i></a>
+                        </li> >>
+                        <a style="margin-top: 1px;"    href="{{route('admin.project.index')}}"><li class="breadcrumb-item active">
+                            Dự án
+                        </li>
+                        </a>  >> 
+                        <a style="margin-top: 1px;"  href="{{route('admin.project.index')}}"><li class="breadcrumb-item active">
+                            Danh sách công việc
+                        </li>
+                        </a>
+                    </ol>
+                </div>
+            </div>
+        </div>
         </div>
         <div class="content-body">
             <!-- Basic Kanban App -->
@@ -181,11 +200,11 @@
                                     <div class="row">
                                     <div class="form-group col-6">
                                         <label>Bắt đầu dự kiến</label>
-                                        <input name="intended_start_time" id="intended_start_time" type="datetime-local" class="form-control edit-kanban-item-date" placeholder="">
+                                        <input name="intended_start_time" id="intended_start_time" type="date" class="form-control " placeholder="">
                                     </div>
                                     <div class="form-group col-6">
                                         <label>Kết thúc dự kiến</label>
-                                        <input name="intended_end_time" id="intended_end_time" type="datetime-local" class="form-control edit-kanban-item-date" placeholder="">
+                                        <input name="intended_end_time" id="intended_end_time" type="date" class="form-control" placeholder="">
                                     </div>
                                     </div>      
                                     <div class="row">
@@ -193,7 +212,7 @@
                                             <div class="form-group">
                                                 <label>Người quản lý</label>
                                                 <div class="d-flex align-items-center">
-                                                    <select class="form-control select2" id="manager_id" name="manager_id">    
+                                                    <select class="form-control" style="color: black !important;" id="manager_id" name="manager_id">    
                                                      @foreach($user_option as $u_o)
                                                          <option value="{{$u_o->id}}">{{$u_o->full_name}}</option>
                                                      @endforeach
@@ -230,7 +249,7 @@
                                      <div class="col-6">
                                             <div class="form-group">
                                                 <label>Độ ưu tiên</label>
-                                                <select id="level" name="level" class="form-control">
+                                                <select style="color:black !important;" id="level" name="level" class="form-control">
                                                     <option value="1" class="" >Thấp</option>
                                                     <option value="2" class="" selected>Trung bình</option>
                                                     <option value="3" class="">Cao</option>
@@ -271,71 +290,7 @@
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <label>Danh sách công việc con</label>
-                                        {{-- <div class="todo-app-area">
-                                          <div class="todo-app-list-wrapper">
-                                            <div class="todo-app-list">
-                                              <div class="todo-fixed-search d-flex justify-content-between align-items-center">
-                                                <div class="sidebar-toggle d-block d-lg-none">
-                                                  <i class="bx bx-menu"></i>
-                                                </div>
-                                                <fieldset class="form-group position-relative has-icon-left m-0 flex-grow-1">
-                                                  <input type="text" class="form-control todo-search" id="todo-search" placeholder="Search Task">
-                                                  <div class="form-control-position">
-                                                    <i class="bx bx-search"></i>
-                                                  </div>
-                                                </fieldset>
-                                                <div class="todo-sort dropdown mr-1">
-                                                  <button class="btn dropdown-toggle sorting" type="button" id="sortDropdown" data-toggle="dropdown"
-                                                    aria-haspopup="true" aria-expanded="false">
-                                                    <i class="bx bx-filter"></i>
-                                                    <span>Sort</span>
-                                                  </button>
-                                                  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="sortDropdown">
-                                                    <a class="dropdown-item ascending" href="javascript:void(0);">Ascending</a>
-                                                    <a class="dropdown-item descending" href="javascript:void(0);">Descending</a>
-                                                  </div>
-                                                </div>
-                                              </div>
-                                              <div class="todo-task-list list-group">
-                                                <!-- task list start -->
-                                                <ul class="todo-task-list-wrapper list-unstyled" id="todo-task-list-drag newRow">
-                                                  <li class="todo-item todo-li" data-name="David Smith">
-                                                    <div class="todo-title-wrapper d-flex justify-content-sm-between justify-content-end align-items-center">
-                                                      <div class="todo-title-area d-flex">
-                                                        <i class='bx bx-grid-vertical handle'></i>
-                                                        <div class="checkbox">
-                                                          <input type="checkbox" class="checkbox-input" id="checkbox1">
-                                                          <label for="checkbox1"></label>
-                                                        </div>
-                                                        <div class="edit-subtask">
-                                                        <p class="todo-title mx-50 m-0 truncate todo-p">Effective Hypnosis Quit Smoking Methods</p>
-                                                        </div>
-                                                      </div>
-                                                      <div class="todo-item-action d-flex align-items-center">
-                                                        <div class="todo-badge-wrapper d-flex">
-                                                          <span class="badge badge-light-primary badge-pill">Frontend</span>
-                                                        </div>
-                                                        <div class="avatar">
-                                                          <img src="../../../assets/images/portrait/small/avatar-s-1.jpg" alt="avatar" height="30"
-                                                            width="30">
-                                                        </div>
-                                                        <div class="avatar">
-                                                          <img src="../../../assets/images/portrait/small/avatar-s-1.jpg" alt="avatar" height="30"
-                                                            width="30">
-                                                        </div>
-                                                        <a class='todo-item-user ml-75'><i class="bx bx-user"></i></a>
-                                                        <a class='todo-item-delete ml-75'><i class="bx bx-trash"></i></a>
-                                                      </div>
-                                                    </div>
-                                                  </li>
-                                                   
-                                                </ul>
-                                            </div>
-
-                                          </div>
-
-                                        </div>
-                                        </div> --}}
+    
 
                                         <div id="newRow">
                                               
