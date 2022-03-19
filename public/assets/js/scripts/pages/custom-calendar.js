@@ -87,12 +87,12 @@ function showData(data){
                     }
                 }else{
                     if(i==8){
-                        $('.repeat-day-selected').append('<a class="border rounded bg-primary pr-0 day-added" data-day="'+i+'" style="padding: 0.5rem">'+
+                        $('.repeat-day-selected').append('<a class="border rounded bg-primary pr-0 day-added" data-day="'+i+'" data-pattern="'+data.data.pattern+'" style="padding: 0.5rem">'+
                                                             '<span class="text-white">CN</span>'+
                                                             '<button class="border border-0 bg-transparent" aria-hidden="true"><span class="text-danger">&times;</span></button>'+
                                                         '</a>')
                     }else{
-                        $('.repeat-day-selected').append('<a class="border rounded bg-primary pr-0 day-added" data-day="'+i+'" style="padding: 0.5rem">'+
+                        $('.repeat-day-selected').append('<a class="border rounded bg-primary pr-0 day-added" data-day="'+i+'" data-pattern="'+data.data.pattern+'" style="padding: 0.5rem">'+
                                                             '<span class="text-white">Thứ '+i+'</span>'+
                                                             '<button class="border border-0 bg-transparent" aria-hidden="true"><span class="text-danger">&times;</span></button>'+
                                                         '</a>')
@@ -240,16 +240,14 @@ function dataChangeSchedule(action){
     data.append('description', description)
     
     $.ajax({
-        // url: action == 1 ? "api/schedule/insert" : "api/schedule/update",
         url: "api/schedule/dataScheduleChange",
         type: "POST",
         data: data,
         processData: false,
         contentType: false, 
         enctype: 'multipart/form-data',
-        success: function(data){
-            calendar.clear()                
-            calendar.createSchedules(data.data)
+        success: function(){
+            filterSchedule()
             swal({
                 icon: "success",
                 text: action == 1 ? "Thêm mới thành công" : "Chỉnh sửa thành công",
@@ -283,11 +281,24 @@ function deleteSchedule(id, type){
     })
 }
 
-function filterSchedule(type){
+function filterSchedule(){
+    let data = new FormData();
+    let type_changed = []
+    $('input[name="type-schedule"]:checked').each(function(){
+        $(this).val() != "all" ? type_changed.push($(this).val()) : false
+    })
+    data.append('type', type_changed)
+    let search_user = $('#search-user').val()
+    data.append('search_user', search_user)
+    let search_title = $('#search-title').val()
+    data.append('search_title', search_title)
     $.ajax({
         url: "api/schedule/filter",
         type: "POST",
-        data: {type},
+        data: data,
+        processData: false,
+        contentType: false, 
+        enctype: 'multipart/form-data',
         success: function(data){
             calendar.clear()
             calendar.createSchedules(data.data)
@@ -295,7 +306,7 @@ function filterSchedule(type){
     })
 }
 
-// lọc lịch theo type
+// thay đổi giá trị lọc lịch
 $('input[name="type-schedule"][value=all]').on('change', function(){
     if($(this).prop('checked')){
         $('input[name="type-schedule"]').prop('checked', true)
@@ -304,15 +315,20 @@ $('input[name="type-schedule"][value=all]').on('change', function(){
     }
 })
 $('input[name="type-schedule"]').on('change', function(){
-    var type_changed = []
     if($(this).prop('checked')){
         $('input[name="type-schedule"][value=all]').prop('checked', true)
+    }else{
+        $('input[name="type-schedule"][value=all]').prop('checked', false)
     }
-    $('input[name="type-schedule"]:checked').each(function(){
-        $(this).val() != "all" ? type_changed.push($(this).val()) : false
-    })
-    filterSchedule(type_changed)
+    filterSchedule()
 })
+$('.search-title-button').click(function(){
+    filterSchedule()
+})
+$('#search-user').on('change', function(){
+    filterSchedule()
+})
+
 // calendar handling - end
 
 function isFillForm(){
@@ -347,7 +363,6 @@ $('#btn-new-schedule').click(function(){
 })
 
 $('#calendarModal .final-button').click(function(){
-    
     if(isFillForm()){
         $('#schedule-id').val() == "" ? dataChangeSchedule(1) : dataChangeSchedule(2) //action: 1-thêm mới | 2-sửa
     }
@@ -384,7 +399,7 @@ function defaultFormInsert(){
             $('.btn-select-color .color').css('background', color.find('.color').css('background-color'))
             $('.btn-select-color .text').html(color.find('span').html())
             $('#start-date').val(data.current_datetime)
-            $('#end-date').val(data.current_datetime)
+            $('#end-date').val('')
             $('#end-date').attr("min", $('#start-date').val())
             $('#start-date').attr("max", $('#end-date').val())
             $('#location').val('')
@@ -469,7 +484,6 @@ $("body").delegate('.day-added button', 'click', function(){
     var father = $(this).parent()
     var value = father.data('day')
     var name = father.find('span').html()
-    console.log(father.data('pattern'))
     if(father.data('pattern') == 2){
         $('#wday').append($('<option>', {
             value: value,
@@ -579,14 +593,4 @@ $('.calendar-view .calendar-action .dropdown-menu .dropdown-item').click(functio
         $('#calendarTypeName').html('Tháng')
         calendar.changeView('month', true);
     }
-    // else if($(this).data('action') == 'toggle-weeks2'){ // 2 week view
-    //     $('#calendarTypeName').html('2 Tuần')
-    //     calendar.setOptions({month: {visibleWeeksCount: 2}}, true);
-    //     calendar.changeView('month', true);
-    // }else if($(this).data('action') == 'toggle-weeks3'){ // 3 week view
-    //     $('#calendarTypeName').html('3 Tuần')
-    //     calendar.setOptions({month: {visibleWeeksCount: 3}}, true);
-    //     calendar.changeView('month', true);
-    // }
-    // getApi($(this).data('action'))
 })

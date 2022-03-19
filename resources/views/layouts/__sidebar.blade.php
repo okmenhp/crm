@@ -63,20 +63,20 @@
                     <i class="fal fa-calendar"></i>
                     <span class="menu-title text-truncate" data-i18n="Todo">Quản lý lịch trình</span>
                 </a>
-                <ul class="menu-content">
-                    <li>
+                <ul class="menu-content @if(Route::currentRouteName()==='admin.calendar.index' || Route::currentRouteName()==='admin.calendar.type' || Route::currentRouteName()==='admin.calendar.meeting') active @endif">
+                    <li class="@if(Route::currentRouteName()==='admin.calendar.index') active @endif">
                         <a class="d-flex align-items-center" href="{{ route('admin.calendar.index') }}">
                             <i class="bx bx-right-arrow-alt"></i>
                             <span class="menu-item text-truncate" data-i18n="Invoice List">Lịch trình</span>
                         </a>
                     </li>
-                    <li>
+                    <li class="@if(Route::currentRouteName()==='admin.calendar.type') active @endif">
                         <a class="d-flex align-items-center" href="{{ route('admin.calendar.type') }}">
                             <i class="bx bx-right-arrow-alt"></i>
                             <span class="menu-item text-truncate" data-i18n="Invoice List">Loại lịch trình</span>
                         </a>
                     </li>
-                    <li>
+                    <li class="@if(Route::currentRouteName()==='admin.calendar.meeting') active @endif">
                         <a class="d-flex align-items-center" href="{{ route('admin.calendar.meeting') }}">
                             <i class="bx bx-right-arrow-alt"></i>
                             <span class="menu-item text-truncate" data-i18n="Invoice List">Phòng họp</span>

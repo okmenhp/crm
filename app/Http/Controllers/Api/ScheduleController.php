@@ -45,38 +45,15 @@ class ScheduleController extends Controller
 
     public function dataScheduleChange(Request $request){
         $this->scheduleRepo->dataScheduleChange($request);
-        return $this->index();
     }
 
     public function delete(Request $request){
-        // $schedule = Schedule::find($request->id);
-        // $day_selected = Carbon::parse($request->date_selected)->format('Y-m-d h:i:s');
-        // // 0: hiện tại và trước đó | 1: hiện tại và sau đó | 2/else: tất cả
-        // if($request->type == 0){
-        //     $schedule['start_date'] = Carbon::parse($day_selected)->addDays(1)->format('Y-m-d h:i:s');
-        //     $schedule->save();
-        // }elseif($request->type == 1){
-        //     $schedule['end_date'] = Carbon::parse($day_selected)->subDays(1)->format('Y-m-d h:i:s');
-        //     $schedule->save();
-        // }else{
-        //     Schedule::find($request->id)->delete();
-        //     UserSchedule::where('schedule_id',$request->id)->delete();
-        // }
         $this->scheduleRepo->deleteSchedule($request);
         return $this->index();
     }
 
     public function filter(Request $request){
-        $data = array();
-        $schedules = Schedule::whereIn('id', User::find(Auth::id())->schedules()->pluck('schedule_id')->toArray())->get();
-        foreach($schedules as $schedule){
-            if($schedule->pattern == 1){
-                $sdata = $this->scheduleRepo->getFilterScheduleNormal($schedule, $request->type);
-                array_push($data, $sdata);
-            }else{
-                $data = array_merge($data, $this->scheduleRepo->getFilterDataRepeat($schedule, $request->type));
-            }
-        }
+        $data = $this->scheduleRepo->getFilterSchedule($request);
         return response()->json(['data'=>$data]);
     }
 
