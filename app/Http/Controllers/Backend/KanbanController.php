@@ -22,4 +22,6 @@ class KanbanController extends BaseController
         $user_html = \App\Helpers\StringHelper::getSelectFullNameOptions($user_option);
         return view('backend/kanban/index', compact('records','project_id','user_html','user_option'));
     }
+
+  
 }

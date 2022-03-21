@@ -8,6 +8,7 @@
     overflow-x: auto;
     display: flex;
     align-items: flex-start
+    height: 1000px;
 }
 
 .kanban-container .kanban-board {

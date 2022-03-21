@@ -17,7 +17,7 @@ function index(){
       }
     }).done(function(resp) {
        kanban_board_data = resp.data;
-       console.log(kanban_board_data);
+       //console.log(kanban_board_data);
     });
 }
 
@@ -200,7 +200,7 @@ $(function () {
         for (kanban_users in kanban_board_data[kanban_data].item[kanban_item].users) {
           board_item_users +=
             '<li class="avatar pull-up my-0">' +
-            '<img class="media-object rounded-circle" src=" ' +
+            '<img class="media-object rounded-circle" src="' +
             kanban_board_data[kanban_data].item[kanban_item].users[kanban_users] +
             '" alt="Avatar" height="24" width="24">' +
             "</li>";
