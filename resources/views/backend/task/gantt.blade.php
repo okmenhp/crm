@@ -1,5 +1,6 @@
 @section('css')
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="{{asset('assets/vendors/js/extensions/moment.min.js')}}"></script>
 <script>window.jQuery || document.write(decodeURIComponent('%3Cscript src="js/jquery.min.js"%3E%3C/script%3E'))</script>
 <script src="https://cdn3.devexpress.com/jslib/21.2.5/js/dx-gantt.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn3.devexpress.com/jslib/21.2.5/css/dx.common.css" />
@@ -25,70 +26,106 @@
 </div>
 <!-- END: Content-->
 <script type="text/javascript">
-var tasks = []
-var dependencies = []
-var resources = []
-var resourceAssignments = []
-$(document).ready(function(){
-  $.ajax({
-    url: "/api/project/gantt",
-    type: "GET",
-    success: function(data){
-        tasks = data.tasks
-        dependencies = data.dependencies
-        resources = data.resources
-        resourceAssignments = data.resourceAssignments
-    }
-  })
-})
-var gantt = $('#gantt').dxGantt({
-    tasks: {
-      dataSource: tasks,
-    },
-    dependencies: {
-      dataSource: dependencies,
-    },
-    resources: {
-      dataSource: resources,
-    },
-    resourceAssignments: {
-      dataSource: resourceAssignments,
-    },
-    editing: {
+$('#gantt').dxGantt({
+   editing: {
       enabled: true,
-    },
-    validation: {
+   },
+   validation: {
       autoUpdateParentTasks: true,
-    },
-    toolbar: {
+   },
+   toolbar: {
       items: [
-        'undo',
-        'redo',
-        'separator',
-        'collapseAll',
-        'expandAll',
-        'separator',
-        'addTask',
-        'deleteTask',
-        'separator',
-        'zoomIn',
-        'zoomOut',
+      'undo',
+      'redo',
+      'separator',
+      'collapseAll',
+      'expandAll',
+      'separator',
+      'addTask',
+      'deleteTask',
+      'separator',
+      'zoomIn',
+      'zoomOut',
       ],
-    },
-    columns: [{
+   },
+   columns: [{
       dataField: 'title',
-      caption: 'Subject',
+      caption: 'Tên công việc',
       width: 300,
-    }, {
+   }, {
       dataField: 'start',
-      caption: 'Start Date',
-    }, {
+      caption: 'Ngày bắt đầu',
+   }, {
       dataField: 'end',
-      caption: 'End Date',
-    }],
-    scaleType: 'weeks',
-    taskListWidth: 500,
+      caption: 'Ngày kết thúc',
+   }],
+   scaleType: 'weeks',
+   taskListWidth: 500,
+   onTaskUpdated: function (e) {
+      var data = new FormData();
+      if(e.values.end == null && e.values.start != null){
+         data.append('type_time', 1)
+         data.append('start_default', e.values.start)
+         data.append('start', moment(e.values.start).format('Y-MM-DD HH:mm:ss'))
+      }else if(e.values.start == null && e.values.end != null){
+         data.append('type_time', 2)
+         data.append('end_default', e.values.end)
+         data.append('end', moment(e.values.end).format('Y-MM-DD HH:mm:ss'))
+      }else{
+         data.append('type_time', 3)
+      }
+      data.append('key', e.key)
+      $.ajax({
+         url: "/api/project/gantt-update",
+         type: "POST",
+         data: data,
+         processData: false,
+         contentType: false, 
+         enctype: 'multipart/form-data',
+         success: function(data){
+            let gantt = $("#gantt").dxGantt("instance");
+            if(data.type_time == 1){
+               gantt.updateTask(data.key, {start: data.start_default});
+            }else if(data.type_time == 2){
+               gantt.updateTask(data.key, {end: data.end_default});
+            }
+         }
+      })
+   },
+   onTaskInserted: function (e) {
+      console.log(e)
+   },
+   onTaskDblClick: function (e) {
+      console.log(e)
+   }
 });
+
+$(document).ready(function(){
+   $.ajax({
+      url: "/api/project/gantt",
+      type: "GET",
+      success: function(data){
+         tasks = data.tasks
+         dependencies = data.dependencies
+         resources = data.resources
+         resourceAssignments = data.resourceAssignments
+         $('#gantt').dxGantt({
+            tasks: {
+               dataSource: tasks,
+            },
+            dependencies: {
+               dataSource: dependencies,
+            },
+            resources: {
+               dataSource: resources,
+            },
+            resourceAssignments: {
+               dataSource: resourceAssignments,
+            }
+         });
+      }
+   })
+})
 
 </script>
 
