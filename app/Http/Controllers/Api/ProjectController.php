@@ -4,12 +4,14 @@ namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\BaseController;
+use App\Models\ListProject;
 use App\Models\Project;
 use App\Models\Task;
 use App\Models\User;
 use App\Traits\ApiResponse;
 use Storage;
 use App\Repositories\ProjectRepository;
+use Illuminate\Support\Facades\DB;
 
 class ProjectController extends BaseController
 {
@@ -45,8 +47,11 @@ class ProjectController extends BaseController
         return $this->success($res);
     }
 
-    public function gantt(){
-        $projects = Project::all();
+    public function gantt(Request $request){
+        $project = Project::find($request->id);
+        $lists = ListProject::where('project_id', $project->id)->get();
+        $tasks = DB::table('task')->join('list', 'task.list_id', 'list.id')->get();
+        dd($tasks);
         $tasks_all = Task::all();
         $users = User::all();
         $resources = array();

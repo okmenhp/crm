@@ -19,6 +19,7 @@
         <!-- BEGIN: Navbar -->
         @include('layouts/__navbar')
         <!-- END: Navbar -->
+        <input type="hidden" id="project-id" value="{{$id}}">
         <div class="content-body">
             <div id="gantt"> </div>
         </div>
@@ -101,9 +102,15 @@ $('#gantt').dxGantt({
 });
 
 $(document).ready(function(){
+   var data = new FormData();
+   data.append('id', $('#project-id').val())
    $.ajax({
       url: "/api/project/gantt",
-      type: "GET",
+      type: "POST",
+      data: data,
+      processData: false,
+      contentType: false, 
+      enctype: 'multipart/form-data',
       success: function(data){
          tasks = data.tasks
          dependencies = data.dependencies
@@ -129,18 +136,4 @@ $(document).ready(function(){
 
 </script>
 
-@stop
-@section('script')
-<!-- BEGIN: Page Vendor JS-->
-<script src="assets/vendors/js/tables/datatable/jquery.dataTables.min.js"></script>
-<script src="assets/vendors/js/tables/datatable/dataTables.bootstrap4.min.js"></script>
-<script src="assets/vendors/js/tables/datatable/dataTables.buttons.min.js"></script>
-<script src="assets/vendors/js/tables/datatable/buttons.bootstrap4.min.js"></script>
-<!-- END: Page Vendor JS-->
-<!--
-BEGIN: Page JS-->
-<script src="assets/js/scripts/pages/app-users.min.js"></script>
-<script src="assets/js/scripts/datatables/datatable.min.js"></script>
-<!--
-END: Page JS-->
 @stop

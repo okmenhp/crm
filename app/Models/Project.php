@@ -15,7 +15,7 @@ class Project extends Model
     protected $primaryKey = 'id';
     protected $fillable = ['name','created_by','manager','name','description','visibility','attachment','status'];
 
-     public function created_at() {
+    public function created_at() {
         return date("d/m/Y", strtotime($this->created_at));
     }
 

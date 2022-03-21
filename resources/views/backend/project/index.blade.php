@@ -146,6 +146,8 @@
                                                     <td>
                                                         <a href="{{route('admin.kanban.index', $record->id)}}"
                                                             title='Sửa'><i class="far fa-edit"></i></a>
+                                                        <a href="{{route('admin.task.gantt', ['id'=>$record->id])}}"
+                                                            title='Biểu đồ Gantt' class="mx-1"><i class="fa fa-chart-network"></i></a>
                                                         <form style="display: inline-block" method="POST"
                                                             action="{{ route('admin.project.destroy', $record->id) }}">
                                                             @csrf
