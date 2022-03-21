@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\BaseController;
+use App\Models\Project;
 use App\Repositories\TaskRepository;
 use App\Repositories\EmployeeRepository;
 use App\Repositories\DepartmentRepository;
@@ -132,7 +133,8 @@ class TaskController extends BaseController
         return redirect()->route('admin.task.index')->with('success', 'Xoá thành công');
     }
 
-    public function gantt(){
-        return view('backend/task/gantt');
+    public function gantt(Request $request){
+        $id = $request->id;
+        return view('backend/project/gantt', compact('id'));
     }
 }

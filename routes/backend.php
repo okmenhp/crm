@@ -32,7 +32,7 @@ Route::group(['middleware' => 'admin'], function () {
     Route::get('/task/edit/{id}',  ['as' => 'admin.task.edit', 'uses' => 'Backend\TaskController@edit']);
     Route::post('/task/update/{id}',  ['as' => 'admin.task.update', 'uses' => 'Backend\TaskController@update']);
     Route::delete('/task/delete/{id}',  ['as' => 'admin.task.destroy', 'uses' => 'Backend\TaskController@destroy']);
-    Route::get('/gantt',  ['as' => 'admin.task.gantt', 'uses' => 'Backend\TaskController@gantt']);
+    Route::get('/task/gantt',  ['as' => 'admin.task.gantt', 'uses' => 'Backend\TaskController@gantt']);
     //Vấn đề
     Route::get('/problem',  ['as' => 'admin.problem.index', 'uses' => 'Backend\ProblemController@index']);
     Route::get('/problem/create',  ['as' => 'admin.problem.create', 'uses' => 'Backend\ProblemController@create']);

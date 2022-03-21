@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddStatusFromTaskTable extends Migration
+class AddIscheckedToTaskTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class AddStatusFromTaskTable extends Migration
     public function up()
     {
         Schema::table('task', function (Blueprint $table) {
-             $table->integer('status')->nullable();
+            //
         });
     }
 
@@ -26,7 +26,7 @@ class AddStatusFromTaskTable extends Migration
     public function down()
     {
         Schema::table('task', function (Blueprint $table) {
-            //
+            $table->tinyInteger('is_checked')->default(0);
         });
     }
 }
