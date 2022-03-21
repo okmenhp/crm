@@ -131,4 +131,8 @@ class TaskController extends BaseController
         $this->taskRepo->delete($id);
         return redirect()->route('admin.task.index')->with('success', 'Xoá thành công');
     }
+
+    public function gantt(){
+        return view('backend/task/gantt');
+    }
 }

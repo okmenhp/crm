@@ -40,6 +40,7 @@ Route::post('kanban/arrange-board','Api\KanbanController@arrange_board')->name('
 Route::get('project/index','Api\ProjectController@index')->name('api.project.index');
 // Route::get('project/create-project','Api\ProjectController@create')->name('api.project.create');
 // Route::get('project/update-project','Api\ProjectController@update')->name('api.project.update');
+Route::get('project/gantt','Api\ProjectController@gantt')->name('api.project.gantt');
 
 //schedule
 Route::post('schedule/index','Api\ScheduleController@index')->name('api.schedule.index');
