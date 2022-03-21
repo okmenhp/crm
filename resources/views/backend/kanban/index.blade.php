@@ -511,6 +511,31 @@
     $('.todo-p').on('click',function(){
        
     });
+
+  
+    $(document).on('blur','.kanban-title-board', function(){
+        let list_id = $(this).closest('.kanban-board')[0].attributes[0].value;
+        let name = $(this).html();
+        update_board(list_id, name);
+    });
+
+    function update_board(list_id, name){
+        $.ajax({
+        type: "post",
+        url: '/api/kanban/update_board',
+        dataType: 'JSON',
+        data: {
+          list_id : list_id,
+          name : name
+        }
+      }).done(function(resp) {
+
+      });
+    }
+
+
+   
+    
  
 </script>
 

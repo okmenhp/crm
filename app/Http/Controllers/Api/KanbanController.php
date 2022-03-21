@@ -128,4 +128,10 @@ class KanbanController extends BaseController
         return $this->success();
     }
 
+    public function update_board(Request $request){
+        $input = $request->all();
+        $this->listRepo->update($input, $input['list_id']);
+        return $this->success();
+    }
+
 }
