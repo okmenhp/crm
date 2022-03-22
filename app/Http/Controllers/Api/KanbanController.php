@@ -121,7 +121,6 @@ class KanbanController extends BaseController
      public function arrange_board(Request $request)
     {
         $input = $request->all();
-        dd($input);
         foreach($input['arrange_board'] as $ar_board){
             \DB::table('list')->where('id', $ar_board['id'])->update(['ordering' => $ar_board['ordering']]);
         }

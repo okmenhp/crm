@@ -522,7 +522,7 @@
     function update_board(list_id, name){
         $.ajax({
         type: "post",
-        url: '/api/kanban/update_board',
+        url: '/api/kanban/update-board',
         dataType: 'JSON',
         data: {
           list_id : list_id,
