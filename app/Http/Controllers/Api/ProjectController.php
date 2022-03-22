@@ -50,31 +50,27 @@ class ProjectController extends BaseController
     public function gantt(Request $request){
         $project = Project::find($request->id);
         $lists = ListProject::where('project_id', $project->id)->get();
-        $tasks = DB::table('task')->join('list', 'task.list_id', 'list.id')->get();
-        dd($tasks);
-        $tasks_all = Task::all();
+        $tasks_all = DB::table('task')->join('list', 'task.list_id', 'list.id')->where('list.project_id', $project->id)->get();
         $users = User::all();
         $resources = array();
         $tasks = array();
         $dependencies = array();
         $resourceAssignments = array();
+        // add resource
         foreach($users as $user){
             $resource['id'] = $user->id;
             $resource['text'] = $user->full_name;
             array_push($resources, $resource);
         }
-        foreach($projects as $key => $project){
-            $sub_task['id'] = $project->id;
-            $sub_task['parentId'] = null;
-            $sub_task['title'] = $project->name;
-            $sub_task['start'] = $project->start_date;
-            $sub_task['end'] = $project->end_date;
+        //add task & dependencies & resourceAssignments
+        foreach($lists as $key => $list){
+            $sub_task['id'] = 'l'.$list->id;
+            $sub_task['parentId'] = 'p'.$list->project_id;
+            $sub_task['title'] = $list->name;
+            $sub_task['start'] = Project::find($list->project_id)->start_date;
+            $sub_task['end'] = Project::find($list->project_id)->end_date;
             $sub_task['progress'] = 0;
             array_push($tasks, $sub_task);
-            $resourceAssignment['id'] = $key;
-            $resourceAssignment['taskId'] = $project->id;
-            $resourceAssignment['resourceId'] = $project->member_id == null ? 0 : $project->member_id;
-            array_push($resourceAssignments, $resourceAssignment);
         }
         foreach($tasks_all as $key => $task){
             if($task->intended_start_time == null && $task->parent_id != null){
@@ -102,6 +98,13 @@ class ProjectController extends BaseController
             $resourceAssignment['resourceId'] = $task->manager_id == null ? 0 : $task->manager_id;
             array_push($resourceAssignments, $resourceAssignment);
         }
+        $sub_task['id'] = 'p'.$project->id;
+        $sub_task['parentId'] = 0;
+        $sub_task['title'] = $project->name;
+        $sub_task['start'] = $project->start_date;
+        $sub_task['end'] = $project->end_date;
+        $sub_task['progress'] = 0;
+        array_push($tasks, $sub_task);
 
         return response()->json(['resources'=>$resources, 'tasks'=>$tasks, 'dependencies'=>$dependencies, 'resourceAssignments'=>$resourceAssignments]);
     }
